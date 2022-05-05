@@ -53,7 +53,6 @@ benthic_wq <- read_csv("https://portal.edirepository.org/nis/dataviewer?packagei
   clean_names() %>% 
   glimpse()
 
-
 #Water year type from waterYearType package
 #the only function in package brings in water year type data frame
 water_year <- water_year_indices
@@ -95,46 +94,49 @@ ggplot(visits_most_eff,aes(x = year, y = number_of_site_visits))+
 #format EDI data-------------------------
 
 #filter CPUE data set to just the three longterm stations
-cpue_long <- benthic_cpue %>% 
+cpue_oldest <- benthic_cpue %>% 
   #only three longest surveyed stations
   filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C") %>% 
+  #how many rows if we just look at distinct date, station, organism code, cpue
+  #necessary to do this because I think there is a duplication error throughout this data set
+  distinct(sample_date,station_code,genus, species,organism_code,mean_cpue) %>% 
   glimpse()
-
-benthic_cpue_focus <- cpue_long %>% 
-  select(station_code,sample_date,lab_sample_number,organism_code,mean_cpue) %>% 
-  arrange(sample_date,station_code,lab_sample_number,organism_code)
-
-#how many rows if we just look at distinct date, station, organism code, cpue
-cpue_dist <- cpue_long %>% 
-  distinct(sample_date,station_code,organism_code,mean_cpue)
-
 
 #try various approaches for excluding rare taxa
 #how many taxa remain if only keeping those that are present in 
 #at least 5% of samples? 10% of samples?
 
-total <- cpue_long %>% 
+total <- cpue_oldest %>% 
   #see if date and station combo give same number
   distinct(sample_date, station_code) %>%  
   count()
-#date x station = 1399
-#roughly speaking there should be 3 stations x 12 samples x 45 years
-3*12*45
-#1620, so the date x station number is probably correct
-#makes sense that there could be more than one lab sample ID per sample
+samp_denom <-as.numeric(total[1,1])
 
-cpue_norare <- cpue_long %>% 
+cpue_sample_prop <- cpue_oldest %>% 
   group_by(genus,species,organism_code) %>% 
   #rows with an organism absent are already removed in original data frame
   #so row counts by taxon should be number of samples with the taxon
-  summarise(n=n()) %>% 
+  summarise(n_samp=n()) %>% 
   #order rows by number of samples, most to least
-  arrange(-n)
-#count how many samples each taxon appears in
-#count how many samples there are in total
-#divide former by later and filter to just those over a certain threshold
-#count how many taxa are retained at each threshold
-#could be a good thing to plot
+  arrange(-n_samp) %>% 
+  mutate(prop = n_samp/samp_denom) %>% 
+  glimpse()
+
+#plot histogram of proportion of samples containing species
+ggplot(cpue_sample_prop, aes(x=prop))+
+  geom_histogram()
+
+#filter to just the species in more than 5% of samples
+cpue_5plus <- cpue_sample_prop %>% 
+  filter(prop>0.05)
+#dropped from 243 to 65 taxa
+
+#filter to just the species in more than 10% of samples
+cpue_10plus <- cpue_sample_prop %>% 
+  filter(prop>0.10)
+#dropped from 243 to 42 taxa; 17.3% of taxa retained
+
+
 
 
 #generate annual mean CPUE values for each taxon
