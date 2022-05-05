@@ -5,6 +5,7 @@
 #1975 - October 2020
 #Catch per unit effort (CPUE)
 #Organisms/m2 = (sum per visit /# of grabs per visit)/(0.052 grabs/meter squared)
+#GRTS amphipod papers says ponar sample was to a depth that varied from 4-10 cm with sediment type
 
 #to do list
 #add water year type to abundance data (note that invert data categorized by calendar year)
@@ -13,6 +14,7 @@
 #required packages
 library(tidyverse)
 library(janitor)
+library(lubridate) #format date
 library(hms)
 library(readxl) #importing data from excel files
 library(waterYearType) #lists all water year types 1901 - 2017
@@ -52,6 +54,9 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
 benthic_wq <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=98b400de8472d2a3d2e403141533a2cc") %>% 
   clean_names() %>% 
   glimpse()
+
+#EMP water quality stations
+wq_stn <- read_csv("https://pasta.lternet.edu/package/data/eml/edi/458/4/827aa171ecae79731cc50ae0e590e5af")
 
 #Water year type from waterYearType package
 #the only function in package brings in water year type data frame
@@ -155,6 +160,87 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
   geom_point()+
   geom_line()+
   facet_wrap(vars(organism_code),scales="free",nrow=6)
+
+#explore water quality data----------------
+
+#reduce data set to just the columns of interest
+glimpse(benthic_wq)
+
+wq_format <- benthic_wq %>% 
+  #format date
+  mutate(sample_date = mdy(date)) %>% 
+  select(station
+         , sample_date
+         , time
+         , secchi
+         , turbidity_surface 
+         , turbidity_bottom
+         ,sp_cnd_surface 
+         ,sp_cnd_bottom
+         , wt_surface 
+         , wt_bottom
+         ,do_surface
+         ,do_bottom 
+  ) %>% 
+  glimpse()
+
+#look at earliest date that each of these parameters was collected
+wq_format_min <- wq_format %>% 
+  #convert wide to long; probably easier that way
+  pivot_longer(cols= c(secchi:do_bottom), names_to = "parameter", values_to = "value") %>% 
+  #drop rows with NAs for value
+  filter(!is.na(value)) %>% 
+  group_by(parameter) %>% 
+  summarize(year_min = min(sample_date))
+#bottom measurements started in 2017 so can't use those
+#but might be good to see how correlated bottom and top measurements are
+#all other parameters go back to 1975 so they probably work, as least for stations where WQ and benthic overlap
+
+wq_format_focus <- wq_format %>%
+  #add month column
+  mutate(month = month(sample_date)
+        , year = year(sample_date)) %>% 
+  select(station
+         , sample_date
+         , month
+         , year
+         , secchi
+         , turbidity_surface 
+         ,sp_cnd_surface 
+         , wt_surface 
+         ,do_surface
+  ) %>% 
+  glimpse()
+
+
+#Combine benthic invert and WQ data------------------
+#match benthic and wq stations
+#but first need to match up names; they're similar but not the same generally
+
+#add column with benthic station names that does not include R, L, C
+#I think then the WQ and benthic stations will match
+benthic_cpue_mod <- benthic_cpue %>% 
+  #drop month column with name
+  select(-month) %>% 
+  #add column that drops the last two characters of the benthic station names so they will match the WQ station names
+  mutate(station = substr(station_code,1,nchar(station_code)-2)
+         ,month = month(sample_date)
+         ) %>% 
+  #drop the date column so R doesn't try to match the non-matching dates for benthic vs wq data
+  select(-sample_date) %>% 
+  glimpse()
+
+#combine benthic and WQ stations
+#should match by station, year, month
+glimpse(benthic_cpue_mod)
+unique(benthic_cpue_mod$station)
+
+glimpse(wq_format_focus)
+unique(wq_format_focus$station)
+
+#join benthic and wq
+bwq <-left_join(benthic_cpue_mod,wq_format_focus)
+
 
 #look at water quality data and pick the best parameters for our purposes based largely on how long they've been 
 #consistently collected
