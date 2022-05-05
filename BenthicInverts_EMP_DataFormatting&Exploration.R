@@ -262,6 +262,12 @@ ggplot(btemp,aes(x=wt_surface_r, y=n))+
   geom_bar(stat="identity")+
   facet_wrap(vars(organism_code),scales="free",nrow=6)+
   ggtitle("water temperature")
+#are these plots telling me that the taxa are not frequently found at high temps
+#or that high temp samples are just not commonly observed?
+#maybe useful to plot the mean CPUE at each temperature level rather than just frequency
+#if CPUEs are lower at higher temps that might be better evidence
+#if CPUEs are about as high at high temps as more moderate temps, then lower frequency at higher
+#temps just means there are fewer samples at those temps
 
 #calculate 95th percentile temperature for each taxa
 btemp_q95 <- bwp %>% 
@@ -272,4 +278,6 @@ btemp_q95 <- bwp %>%
 ggplot(btemp_q95, aes(x=temp_q95))+
   geom_histogram()
 
+#consider looking at physiological limits for all Bay-Delta taxa regardless of how common they are
+#to see how the distribution of thermal tolerances 
 
