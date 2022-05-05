@@ -91,7 +91,7 @@ ggplot(visits_most_eff,aes(x = year, y = number_of_site_visits))+
   facet_grid(station_code~.)
 #after about 1980, sampling is pretty consistently high except for 2004-2005
 
-#format EDI data-------------------------
+#Create Table L (taxon x sample)-------------------------
 
 #filter CPUE data set to just the three longterm stations
 cpue_oldest <- benthic_cpue %>% 
@@ -99,7 +99,7 @@ cpue_oldest <- benthic_cpue %>%
   filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C") %>% 
   #how many rows if we just look at distinct date, station, organism code, cpue
   #necessary to do this because I think there is a duplication error throughout this data set
-  distinct(sample_date,station_code,genus, species,organism_code,mean_cpue) %>% 
+  distinct(year,sample_date,station_code,genus, species,organism_code,mean_cpue) %>% 
   glimpse()
 
 #try various approaches for excluding rare taxa
@@ -129,117 +129,48 @@ ggplot(cpue_sample_prop, aes(x=prop))+
 #filter to just the species in more than 5% of samples
 cpue_5plus <- cpue_sample_prop %>% 
   filter(prop>0.05)
-#dropped from 243 to 65 taxa
+#dropped from 243 to 65 taxa; 26.7% taxa retained
 
 #filter to just the species in more than 10% of samples
-cpue_10plus <- cpue_sample_prop %>% 
+cpue_common <- cpue_sample_prop %>% 
   filter(prop>0.10)
 #dropped from 243 to 42 taxa; 17.3% of taxa retained
 
+#combine proportion info with main data frame and then filter to those with more than 10%
+#or use a join function to just keep the taxa taht are in more than 10% of samples
+cpue_oldest_prop <- left_join(cpue_oldest,cpue_sample_prop) %>% 
+  #only keep the taxa that appear in at least 10% of taxa
+  filter(prop>0.10) %>%
+  select(-c(n_samp,prop))
 
-
-
+#this is basically Table L; it just needs to be reshaped so it is a taxon x sample matrix
 #generate annual mean CPUE values for each taxon
+#consider changing this to water year instead of calendar year
+cpue_mean_annual <- cpue_oldest_prop %>% 
+  group_by(year,station_code,organism_code) %>% 
+  summarize(cpue_annual=mean(mean_cpue))
+
+#make a big faceted plot showing time series of each taxon in each station
+ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=station_code))+
+  geom_point()+
+  geom_line()+
+  facet_wrap(vars(organism_code),scales="free",nrow=6)
+
+#look at water quality data and pick the best parameters for our purposes based largely on how long they've been 
+#consistently collected
+
+#match wq with all sample data
+
+#filter to just the common taxa
+
+#plot distributions by taxa and wq parameter
+
+#calculat 95th percentile (temp, sal) or 5th percentile (DO, turb)
 
 
 
-#read in and format data from sharepoint--------------------
 
-#Define path on SharePoint site for data
-#sharepoint_path <- normalizePath(
-#  file.path(
-#    Sys.getenv("USERPROFILE"),
-#    "California Department of Water Resources/Drought Synthesis - Component data sets"
-#  )
-#)  
 
-#read in data from excel file
-#separate the taxonomy in the headers from the abundance data
-#eventually combine these into one data frame
-
-#first the abundances
-#abundance <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
-#                        #specify sheet and cell range
-#                        , range = "75-20 CPUE m2!A8:PD4534"
-#                        , col_names = T
-#                        )
-#glimpse(abundance) #looks like columns were categorized correctly when imported
-
-#then the taxonomy
-#taxonomy <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
-#                        #specify sheet and cell range
-#                       , range = "75-20 CPUE m2!E2:PD8"
-#                       , col_names = F
-#                       )
-#glimpse(taxonomy)
-
-#then station data
-#stations <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
-#                       #specify sheet 
-#                       , sheet = "75-19 station locations"
-#                       , col_names = T
-#)
-#glimpse(stations) #column types look good
-           
-#convert abundance data frame from wide to long
-#names(abundance)
-#abund <- abundance %>% 
-#  pivot_longer(cols = "2970":"1093"
-#               ,names_to = "sp_code"
-#               , values_to = "cpue") %>% 
-#  clean_names() #from janitor package
-#glimpse(abund) #column types look correct
-
-#convert taxonomy data frame from wide to long 
-#simple approach is probably just a transpose
-#taxon <- data.frame(t(taxonomy)) %>% 
-#  rename(phylum = X1
-#         ,class = X2
-#         ,order = X3
-#         ,family = X4
-#         ,genus = X5
-#         ,species = X6
-#         ,sp_code = X7
-#  )
-#glimpse(taxon) #column types look correct
-
-#join abundance and taxonomy data
-#sp_abund <-left_join(abund,taxon)
-
-#explore station data
-#almost no stations that cover full time period starting in 1975 to present
-
-#stns <- stations %>% 
-  #simplify names
-#  clean_names() %>% #from janitor package
-  #some more column name changes
-#  rename(station_code = site_code #to match column in abundance df
-#         ,start = "period_of_record_from"
-#         ,end = "period_of_record_to")
-
-#replace "Present" with current year
-#stns$end2<-str_replace_all(stns$end, "Present", "2020")
-#need to decide how to categorize stations in a useful way
-#mostly should focus on active stations 
-#but there are some historical stations with many years of data
-
-#explore abundance data
-
-#range of dates
-#range(sp_abund$date) #"1975-05-19 UTC" "2020-10-20 UTC"
-
-#look at stations
-#unique(sp_abund$station_code) #53 stations
-
-#look at histograms of frequencies by species
-
-#look at histogram of total abundances by species
-
-#look at which species are most abundant in wet years vs Critical years
-#also look at Rosie's proposed definitions for multi-year periods of drought vs. wet
-#also look at Betsy's manuscript
-
-#create definition for rare taxa and exclude them from data set
 
 
 
