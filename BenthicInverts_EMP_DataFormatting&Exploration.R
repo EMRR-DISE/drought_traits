@@ -232,48 +232,39 @@ benthic_cpue_mod <- benthic_cpue %>%
 
 #combine benthic and WQ stations
 #should match by station, year, month
-glimpse(benthic_cpue_mod)
-unique(benthic_cpue_mod$station)
-
-glimpse(wq_format_focus)
-unique(wq_format_focus$station)
-
-#join benthic and wq
 bwq <-left_join(benthic_cpue_mod,wq_format_focus)
 
+#next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
+#first combine main data frame with the proportion of samples data frame
+#should combine by genus, species, organism_code
+bwp <- inner_join(bwq, cpue_common) 
 
-#look at water quality data and pick the best parameters for our purposes based largely on how long they've been 
-#consistently collected
+#a couple quick checks
+range(bwp$prop) 
+#0.1000715 0.7698356
+#looks right
 
-#match wq with all sample data
+ctax <- unique(bwp$organism_code)
+#got the right number of taxa (n=42)
 
-#filter to just the common taxa
+#plot distributions by taxa and wq parameter-----------------------
+#need to spend some time figuring out how to do this with map functions
 
-#plot distributions by taxa and wq parameter
+#count number of samples containing a given taxa across range of temperatures
+btemp <- bwp %>% 
+  #create a new column that rounds temperature to nearest degree
+  #otherwise bins are too small to be useful
+  mutate(wt_surface_r = round(wt_surface,0)) %>% 
+  group_by(organism_code,wt_surface_r) %>% 
+  count()
 
-#calculat 95th percentile (temp, sal) or 5th percentile (DO, turb)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#plot temperature
+ggplot(btemp,aes(x=wt_surface_r, y=n))+
+  geom_bar(stat="identity")+
+  facet_wrap(vars(organism_code),scales="free",nrow=6)+
+  ggtitle("water temperature")
 
 
-
+  #calculat 95th percentile (temp, sal) or 5th percentile (DO, turb)
 
 
