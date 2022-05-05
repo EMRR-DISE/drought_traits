@@ -18,110 +18,216 @@ library(readxl) #importing data from excel files
 library(waterYearType) #lists all water year types 1901 - 2017
 
 #read in data from EDI-----------------------
+#https://portal.edirepository.org/nis/metadataviewer?packageid=edi.1036.1
 
 #station data
-stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=4e6948186ad756dc2b6de4de41b601f3")
+benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
+  clean_names() %>% 
+  glimpse()
 
 #benthic invert CPUE
+#data have been converted to CPUE (organisms/m2)
+#replicate grabs have been averaged for each site visit
+#all non-occurrence (zero) data for a site visit has been removed
+#Nick: samples with no organisms at all are probably included as "No catch"
+benthic_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=1dfeb0e5a58f2167faca4087b717aae4") %>% 
+  clean_names() %>% 
+  glimpse()
+
+#organism key list
+#probably don't need this because this info is also in the cpue data frame
+#benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=d0f0dd3c1835fe5b669342f8c8e77024")
+
+#total annual site visits, 1975-2020
+benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=ae8df5b1a7b1406e01ee7934a2f38822") %>% 
+  clean_names() %>% 
+  glimpse()
+
+#total annual grab samples, 1975-2020
+benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=c377b4b8f9c1c7168214be6604a4a5e5") %>% 
+  clean_names() %>% 
+  glimpse()
+
+#EMP water quality data
+benthic_wq <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=98b400de8472d2a3d2e403141533a2cc") %>% 
+  clean_names() %>% 
+  glimpse()
 
 
-#read in data from sharepoint--------------------
+#Water year type from waterYearType package
+#the only function in package brings in water year type data frame
+water_year <- water_year_indices
+#glimpse(water_year) #looks like column types are correct
+
+#explore sampling effort-----------
+
+visits <- benthic_visits %>%
+  #drop years with no visits
+  filter(number_of_site_visits!=0) %>%
+  #look at number of years with visits by station
+  group_by(station_code) %>% 
+  summarise(n=n())
+
+#plot histogram to see distribution of number of years with visits for sites
+ggplot(visits, aes(x=n))+
+  geom_histogram()
+#very few stations with 40+ years of data, as expected
+
+#filter out any stations with less than 40 years of data
+visits_most <- visits %>% 
+  filter(n>40)
+unique(visits_many$station_code)
+#
+
+#now take a closer look at effort for those mostly complete stations
+visits_most_eff <- benthic_visits %>% 
+  #just keep the three needed stations
+  #redo this so it isn't hard coded
+  filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C")
+
+#plot effort by station
+ggplot(visits_most_eff,aes(x = year, y = number_of_site_visits))+
+  geom_point()+
+  geom_line()+
+  facet_grid(station_code~.)
+#after about 1980, sampling is pretty consistently high except for 2004-2005
+
+#format EDI data-------------------------
+
+#filter CPUE data set to just the three longterm stations
+cpue_long <- benthic_cpue %>% 
+  #only three longest surveyed stations
+  filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C") %>% 
+  glimpse()
+
+benthic_cpue_focus <- cpue_long %>% 
+  select(station_code,sample_date,lab_sample_number,organism_code,mean_cpue) %>% 
+  arrange(sample_date,station_code,lab_sample_number,organism_code)
+
+#how many rows if we just look at distinct date, station, organism code, cpue
+cpue_dist <- cpue_long %>% 
+  distinct(sample_date,station_code,organism_code,mean_cpue)
+
+
+#try various approaches for excluding rare taxa
+#how many taxa remain if only keeping those that are present in 
+#at least 5% of samples? 10% of samples?
+
+total <- cpue_long %>% 
+  #see if date and station combo give same number
+  distinct(sample_date, station_code) %>%  
+  count()
+#date x station = 1399
+#roughly speaking there should be 3 stations x 12 samples x 45 years
+3*12*45
+#1620, so the date x station number is probably correct
+#makes sense that there could be more than one lab sample ID per sample
+
+cpue_norare <- cpue_long %>% 
+  group_by(genus,species,organism_code) %>% 
+  #rows with an organism absent are already removed in original data frame
+  #so row counts by taxon should be number of samples with the taxon
+  summarise(n=n()) %>% 
+  #order rows by number of samples, most to least
+  arrange(-n)
+#count how many samples each taxon appears in
+#count how many samples there are in total
+#divide former by later and filter to just those over a certain threshold
+#count how many taxa are retained at each threshold
+#could be a good thing to plot
+
+
+#generate annual mean CPUE values for each taxon
+
+
+
+#read in and format data from sharepoint--------------------
 
 #Define path on SharePoint site for data
-sharepoint_path <- normalizePath(
-  file.path(
-    Sys.getenv("USERPROFILE"),
-    "California Department of Water Resources/Drought Synthesis - Component data sets"
-  )
-)  
+#sharepoint_path <- normalizePath(
+#  file.path(
+#    Sys.getenv("USERPROFILE"),
+#    "California Department of Water Resources/Drought Synthesis - Component data sets"
+#  )
+#)  
 
 #read in data from excel file
 #separate the taxonomy in the headers from the abundance data
 #eventually combine these into one data frame
 
 #first the abundances
-abundance <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
-                        #specify sheet and cell range
-                        , range = "75-20 CPUE m2!A8:PD4534"
-                        , col_names = T
-                        )
+#abundance <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
+#                        #specify sheet and cell range
+#                        , range = "75-20 CPUE m2!A8:PD4534"
+#                        , col_names = T
+#                        )
 #glimpse(abundance) #looks like columns were categorized correctly when imported
 
-
 #then the taxonomy
-taxonomy <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
-                        #specify sheet and cell range
-                       , range = "75-20 CPUE m2!E2:PD8"
-                       , col_names = F
-                       )
+#taxonomy <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
+#                        #specify sheet and cell range
+#                       , range = "75-20 CPUE m2!E2:PD8"
+#                       , col_names = F
+#                       )
 #glimpse(taxonomy)
 
 #then station data
-stations <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
-                       #specify sheet 
-                       , sheet = "75-19 station locations"
-                       , col_names = T
-)
+#stations <- read_excel(path = paste0(sharepoint_path,"/BenthicInverts_EMP_CPUE_1975-Oct2020_20210511.xlsx")
+#                       #specify sheet 
+#                       , sheet = "75-19 station locations"
+#                       , col_names = T
+#)
 #glimpse(stations) #column types look good
            
-#Water year type from waterYearType package
-#the only function in package brings in water year type data frame
-water_year <- water_year_indices
-#glimpse(water_year) #looks like column types are correct
-
-#format and combine data sets----------
-
 #convert abundance data frame from wide to long
 #names(abundance)
-abund <- abundance %>% 
-  pivot_longer(cols = "2970":"1093"
-               ,names_to = "sp_code"
-               , values_to = "cpue") %>% 
-  clean_names() #from janitor package
+#abund <- abundance %>% 
+#  pivot_longer(cols = "2970":"1093"
+#               ,names_to = "sp_code"
+#               , values_to = "cpue") %>% 
+#  clean_names() #from janitor package
 #glimpse(abund) #column types look correct
 
 #convert taxonomy data frame from wide to long 
 #simple approach is probably just a transpose
-taxon <- data.frame(t(taxonomy)) %>% 
-  rename(phylum = X1
-         ,class = X2
-         ,order = X3
-         ,family = X4
-         ,genus = X5
-         ,species = X6
-         ,sp_code = X7
-  )
+#taxon <- data.frame(t(taxonomy)) %>% 
+#  rename(phylum = X1
+#         ,class = X2
+#         ,order = X3
+#         ,family = X4
+#         ,genus = X5
+#         ,species = X6
+#         ,sp_code = X7
+#  )
 #glimpse(taxon) #column types look correct
 
 #join abundance and taxonomy data
-sp_abund <-left_join(abund,taxon)
+#sp_abund <-left_join(abund,taxon)
 
-#explore station data---------------
+#explore station data
 #almost no stations that cover full time period starting in 1975 to present
 
-stns <- stations %>% 
+#stns <- stations %>% 
   #simplify names
-  clean_names() %>% #from janitor package
+#  clean_names() %>% #from janitor package
   #some more column name changes
-  rename(station_code = site_code #to match column in abundance df
-         ,start = "period_of_record_from"
-         ,end = "period_of_record_to")
+#  rename(station_code = site_code #to match column in abundance df
+#         ,start = "period_of_record_from"
+#         ,end = "period_of_record_to")
 
 #replace "Present" with current year
-stns$end2<-str_replace_all(stns$end, "Present", "2020")
+#stns$end2<-str_replace_all(stns$end, "Present", "2020")
 #need to decide how to categorize stations in a useful way
 #mostly should focus on active stations 
 #but there are some historical stations with many years of data
 
-
-
-#explore abundance data---------------
+#explore abundance data
 
 #range of dates
-range(sp_abund$date) #"1975-05-19 UTC" "2020-10-20 UTC"
+#range(sp_abund$date) #"1975-05-19 UTC" "2020-10-20 UTC"
 
 #look at stations
-unique(sp_abund$station_code) #53 stations
+#unique(sp_abund$station_code) #53 stations
 
 #look at histograms of frequencies by species
 
