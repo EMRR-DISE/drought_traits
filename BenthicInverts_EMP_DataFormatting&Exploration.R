@@ -253,7 +253,6 @@ ctax <- unique(bwp$organism_code)
 #count number of samples containing a given taxa across range of temperatures
 btemp <- bwp %>% 
   #create a new column that rounds temperature to nearest degree
-  #otherwise bins are too small to be useful
   mutate(wt_surface_r = round(wt_surface,0)) %>% 
   group_by(organism_code,wt_surface_r) %>% 
   count()
@@ -264,7 +263,13 @@ ggplot(btemp,aes(x=wt_surface_r, y=n))+
   facet_wrap(vars(organism_code),scales="free",nrow=6)+
   ggtitle("water temperature")
 
+#calculate 95th percentile temperature for each taxa
+btemp_q95 <- bwp %>% 
+  group_by(organism_code) %>% 
+  summarize(temp_q95 = quantile(wt_surface, probs=0.95, na.rm=T))
 
-  #calculat 95th percentile (temp, sal) or 5th percentile (DO, turb)
+#now plot the distribution of the 95th quantiles across taxa
+ggplot(btemp_q95, aes(x=temp_q95))+
+  geom_histogram()
 
 
