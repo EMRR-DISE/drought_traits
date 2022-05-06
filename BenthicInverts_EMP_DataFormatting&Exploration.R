@@ -15,7 +15,6 @@
 library(tidyverse)
 library(janitor)
 library(lubridate) #format date
-library(hms)
 library(readxl) #importing data from excel files
 library(waterYearType) #lists all water year types 1901 - 2017
 
@@ -37,8 +36,7 @@ benthic_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packag
   glimpse()
 
 #organism key list
-#probably don't need this because this info is also in the cpue data frame
-#benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=d0f0dd3c1835fe5b669342f8c8e77024")
+benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=d0f0dd3c1835fe5b669342f8c8e77024")
 
 #total annual site visits, 1975-2020
 benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=ae8df5b1a7b1406e01ee7934a2f38822") %>% 
@@ -81,7 +79,6 @@ ggplot(visits, aes(x=n))+
 visits_most <- visits %>% 
   filter(n>40)
 unique(visits_many$station_code)
-#
 
 #now take a closer look at effort for those mostly complete stations
 visits_most_eff <- benthic_visits %>% 
@@ -98,24 +95,43 @@ ggplot(visits_most_eff,aes(x = year, y = number_of_site_visits))+
 
 #Create Table L (taxon x sample)-------------------------
 
+#first add back in the rows with zeros
+#need to include zeros in the calculations of annual mean CPUE
+#probably easiest to convert to wide form and then back to long form
+benthic_cpue_with_zeros <- benthic_cpue %>% 
+  #drop unneeded columns
+  select(sample_date,station_code, organism_code,mean_cpue) %>% 
+  #sort by organism code so when I replace NA with zero the starting column is always the same
+  arrange(organism_code) %>%     
+  #only keep unique rows; current EDI data set has an error so lots of rows are duplicated
+  distinct(sample_date,station_code, organism_code,mean_cpue) %>% 
+  #make data frame wide which will add NA every time an organism was detected in a visit 
+  pivot_wider(id_cols = c(sample_date,station_code),names_from = organism_code,values_from=mean_cpue) %>% 
+  #replace NAs with zeros; maybe find a way to do this that is less hard coded
+  mutate(across('0':'8000', ~replace_na(.,0))) %>% 
+  #make long version again
+  pivot_longer(cols= c('0':'8000'), names_to = "organism_code", values_to = "mean_cpue")
+
+
 #filter CPUE data set to just the three longterm stations
-cpue_oldest <- benthic_cpue %>% 
+cpue_oldest <- benthic_cpue_with_zeros %>% 
   #only three longest surveyed stations
   filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C") %>% 
-  #how many rows if we just look at distinct date, station, organism code, cpue
-  #necessary to do this because I think there is a duplication error throughout this data set
-  distinct(year,sample_date,station_code,genus, species,organism_code,mean_cpue) %>% 
   glimpse()
 
 #try various approaches for excluding rare taxa
 #how many taxa remain if only keeping those that are present in 
 #at least 5% of samples? 10% of samples?
 
+#need to calculate total number of samples
 total <- cpue_oldest %>% 
-  #see if date and station combo give same number
+  #look at distinct combinations of station and date
   distinct(sample_date, station_code) %>%  
   count()
-samp_denom <-as.numeric(total[1,1])
+samp_denom <-as.numeric(total[1,1]) #1399
+
+#STOPPED UPDATING SCRIPT WITH DATA SET THAT INCLUDES ZEROS HERE------------------
+#need to continue working on that below
 
 cpue_sample_prop <- cpue_oldest %>% 
   group_by(genus,species,organism_code) %>% 
