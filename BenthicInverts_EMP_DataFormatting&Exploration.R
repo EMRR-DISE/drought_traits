@@ -78,7 +78,7 @@ ggplot(visits, aes(x=n))+
 #filter out any stations with less than 40 years of data
 visits_most <- visits %>% 
   filter(n>40)
-unique(visits_many$station_code)
+unique(visits_most$station_code)
 
 #now take a closer look at effort for those mostly complete stations
 visits_most_eff <- benthic_visits %>% 
@@ -105,7 +105,7 @@ benthic_cpue_with_zeros <- benthic_cpue %>%
   arrange(organism_code) %>%     
   #only keep unique rows; current EDI data set has an error so lots of rows are duplicated
   distinct(sample_date,station_code, organism_code,mean_cpue) %>% 
-  #make data frame wide which will add NA every time an organism was detected in a visit 
+  #make data frame wide which will add NA every time an organism was not detected in a visit 
   pivot_wider(id_cols = c(sample_date,station_code),names_from = organism_code,values_from=mean_cpue) %>% 
   #replace NAs with zeros; maybe find a way to do this that is less hard coded
   mutate(across('0':'8000', ~replace_na(.,0))) %>% 
@@ -119,6 +119,17 @@ cpue_oldest <- benthic_cpue_with_zeros %>%
   filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C") %>% 
   glimpse()
 
+#number of visits differs among years. which month(s) are most consistently sampled through time?
+vmonth <- cpue_oldest %>% 
+  mutate(month=month(sample_date)
+         ,year=year(sample_date)
+         ) %>% 
+  distinct(station_code, year, month) %>%  #1389 instead of 1399, not sure why the difference
+  group_by(station_code,month) %>% 
+  summarise(n=n()) %>% 
+  arrange(station_code,-n)
+#each month has 35-43 years of visits; October is most sampled month
+
 #try various approaches for excluding rare taxa
 #how many taxa remain if only keeping those that are present in 
 #at least 5% of samples? 10% of samples?
@@ -130,13 +141,12 @@ total <- cpue_oldest %>%
   count()
 samp_denom <-as.numeric(total[1,1]) #1399
 
-#STOPPED UPDATING SCRIPT WITH DATA SET THAT INCLUDES ZEROS HERE------------------
-#need to continue working on that below
-
-cpue_sample_prop <- cpue_oldest %>% 
-  group_by(genus,species,organism_code) %>% 
-  #rows with an organism absent are already removed in original data frame
-  #so row counts by taxon should be number of samples with the taxon
+#calculate the proportion of samples in which each taxon is present
+cpue_sample_prop <- cpue_oldest %>%
+  #drop rows where cpue is zero for sake of counting samples in which species are present
+  filter(mean_cpue!=0) %>%   
+  group_by(organism_code) %>% 
+  #row counts by taxon now should be number of samples with the taxon
   summarise(n_samp=n()) %>% 
   #order rows by number of samples, most to least
   arrange(-n_samp) %>% 
@@ -162,14 +172,27 @@ cpue_common <- cpue_sample_prop %>%
 cpue_oldest_prop <- left_join(cpue_oldest,cpue_sample_prop) %>% 
   #only keep the taxa that appear in at least 10% of taxa
   filter(prop>0.10) %>%
-  select(-c(n_samp,prop))
+  #drop unneeded columns
+  select(-c(n_samp,prop)) %>% 
+  #add year column back in
+  mutate(year=year(sample_date)) %>%
+  #sort by date, station, organism code
+  arrange(sample_date, station_code, organism_code)
 
-#this is basically Table L; it just needs to be reshaped so it is a taxon x sample matrix
 #generate annual mean CPUE values for each taxon
 #consider changing this to water year instead of calendar year
 cpue_mean_annual <- cpue_oldest_prop %>% 
   group_by(year,station_code,organism_code) %>% 
   summarize(cpue_annual=mean(mean_cpue))
+#keep in mind that number of samples per station varies among years
+#probably should drop years with, say, only one sample because hard to compare with other years
+#could also just use data for the sampling month that is best represented across all years (Oct)
+#instead of calculating annual means based on a variable number of samples
+
+#make Table L which is taxon x sample matrix
+TableL <- cpue_mean_annual %>% 
+  pivot_wider(id_cols = c(station_code,year),names_from = organism_code,values_from=cpue_annual)  
+#probably just need to now combine station and year into a row name and format as matrix
 
 #make a big faceted plot showing time series of each taxon in each station
 ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=station_code))+
