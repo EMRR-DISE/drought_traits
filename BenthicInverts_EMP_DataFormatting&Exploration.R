@@ -203,7 +203,7 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
 #explore water quality data----------------
 
 #reduce data set to just the columns of interest
-glimpse(benthic_wq)
+#glimpse(benthic_wq)
 
 wq_format <- benthic_wq %>% 
   #format date
@@ -235,12 +235,13 @@ wq_format_min <- wq_format %>%
 #but might be good to see how correlated bottom and top measurements are
 #all other parameters go back to 1975 so they probably work, as least for stations where WQ and benthic overlap
 
+#only keep the WQ parameters that, more or less, cover the full benthic time series
 wq_format_focus <- wq_format %>%
   #add month column
   mutate(month = month(sample_date)
         , year = year(sample_date)) %>% 
   select(station
-         , sample_date
+         #, sample_date #drop because different from benthic sample dates
          , month
          , year
          , secchi
@@ -253,30 +254,60 @@ wq_format_focus <- wq_format %>%
 
 
 #Combine benthic invert and WQ data------------------
-#match benthic and wq stations
-#but first need to match up names; they're similar but not the same generally
+#need to do a bit of work to match up station names; they're similar but not the same generally
+#start with the full benthic data set (with zeros) instead of just the selected stations
+#we want to look at where the target taxa are broadly in the environmental gradients
 
 #add column with benthic station names that does not include R, L, C
-#I think then the WQ and benthic stations will match
-benthic_cpue_mod <- benthic_cpue %>% 
-  #drop month column with name
-  select(-month) %>% 
-  #add column that drops the last two characters of the benthic station names so they will match the WQ station names
+#then the WQ and benthic stations will match
+benthic_cpue_mod <- benthic_cpue_with_zeros %>% 
+  #add column that drops the last two characters of the benthic station names 
+  #so they will match the WQ station names
   mutate(station = substr(station_code,1,nchar(station_code)-2)
+         #add month which will be used to match sampling months between benthic and wq
          ,month = month(sample_date)
-         ) %>% 
-  #drop the date column so R doesn't try to match the non-matching dates for benthic vs wq data
-  select(-sample_date) %>% 
-  glimpse()
+         ,year=year(sample_date)
+  ) %>% 
+ glimpse()
 
 #combine benthic and WQ stations
 #should match by station, year, month
-bwq <-left_join(benthic_cpue_mod,wq_format_focus)
+bwq <-left_join(benthic_cpue_mod,wq_format_focus) %>% 
+  #change organism code from numeric to character
+  #so it matches with cpue_common data frame
+  mutate(organism_code=as.character(organism_code)) %>% 
+  glimpse()
 
 #next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #first combine main data frame with the proportion of samples data frame
-#should combine by genus, species, organism_code
-bwp <- inner_join(bwq, cpue_common) 
+#should combine by organism_code
+bwp <- inner_join(bwq, cpue_common) %>% 
+  #create a new column that rounds temperature to nearest degree
+  mutate(wt_surface_r = round(wt_surface,0)) 
+
+unique(bwp$wt_surface_r) 
+#why are there NAs for the rounded temp?
+#probably cases in which WQ not collected in month of benthic data 
+#but could be other reason
+
+#look at rows with NA for temp
+temp_na <- bwp %>% 
+  filter(is.na(wt_surface_r))
+#are are a whole group of benthic visits with no WQ
+#look closer at those
+
+#which visits are missing WQ?
+wq_miss <- bwp %>% 
+  #start with focus on temp but should filter to where any WQ parameter is NA
+  filter(is.na(wt_surface)) %>% 
+  #look at visits with NA
+  distinct(station, sample_date) %>%  #664 visits
+  #arrange(sample_date, station) %>% 
+  group_by(station) %>% 
+  count()
+#mostly D24, C9, D41A so look into those
+#are the WQ data missing or just not matched up to the benthic data well?
+
 
 #a couple quick checks
 range(bwp$prop) 
@@ -289,18 +320,21 @@ ctax <- unique(bwp$organism_code)
 #plot distributions by taxa and wq parameter-----------------------
 #need to spend some time figuring out how to do this with map functions
 
-#count number of samples containing a given taxa across range of temperatures
+#calculate mean CPUE by temperature for each taxa
 btemp <- bwp %>% 
-  #create a new column that rounds temperature to nearest degree
-  mutate(wt_surface_r = round(wt_surface,0)) %>% 
-  group_by(organism_code,wt_surface_r) %>% 
-  count()
+  group_by(organism_code,wt_surface_r) %>%
+  summarize(spp_temp_mean = mean(mean_cpue))
+#there are NAs in the temperature column but not sure why; figure that out
 
 #plot temperature
-ggplot(btemp,aes(x=wt_surface_r, y=n))+
+ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
   geom_bar(stat="identity")+
   facet_wrap(vars(organism_code),scales="free",nrow=6)+
   ggtitle("water temperature")
+#Warning message:Removed 42 rows containing missing values (position_stack)
+#probably because of the temp = NA which I need to figure out
+#are bimodal distributions indicative of multiple spp lumped together?
+
 #are these plots telling me that the taxa are not frequently found at high temps
 #or that high temp samples are just not commonly observed?
 #maybe useful to plot the mean CPUE at each temperature level rather than just frequency
