@@ -334,13 +334,9 @@ ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
 #Warning message:Removed 42 rows containing missing values (position_stack)
 #probably because of the temp = NA which I need to figure out
 #are bimodal distributions indicative of multiple spp lumped together?
-
-#are these plots telling me that the taxa are not frequently found at high temps
-#or that high temp samples are just not commonly observed?
-#maybe useful to plot the mean CPUE at each temperature level rather than just frequency
-#if CPUEs are lower at higher temps that might be better evidence
-#if CPUEs are about as high at high temps as more moderate temps, then lower frequency at higher
-#temps just means there are fewer samples at those temps
+#consider also plotting proportion of samples at each temperature
+#consider making another panel of plots for rarer taxa, which might show a stronger 
+#response than the most common taxa (eg, >5% but <10% of samples)
 
 #calculate 95th percentile temperature for each taxa
 btemp_q95 <- bwp %>% 
