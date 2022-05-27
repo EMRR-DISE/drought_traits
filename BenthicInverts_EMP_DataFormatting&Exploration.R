@@ -15,10 +15,60 @@
 library(tidyverse)
 library(janitor)
 library(lubridate) #format date
-library(readxl) #importing data from excel files
+library(sf) #working with spatial data
+#library(readxl) #importing data from excel files
 library(waterYearType) #lists all water year types 1901 - 2017
 
-#read in data from EDI-----------------------
+# Notes -----------------------------
+
+#create a shapefile for our project and then filter benthic data with it
+
+#improve filtering code - pick stations based on how many years of data
+#, not hard coded by name
+
+#figure out why so many NAs for matches between invert cpue and wq means
+
+#use map functions to plot multiple panels of wq vs abundances
+
+#research ways to exclude rare taxa
+#consider plotting the proportion of taxa retained vs proportion of samples occupied
+#eg, going from at least 5% of samples to at least 10% of samples
+#dropped from 243 to 42 taxa; dropped from 26.7% taxa retained to 17.3% of taxa retained
+#rare could be based on proportion of presence in samples
+#or number of individuals out of all individuals
+#or x% of species with lowest abundances
+#proportion of maximum: x% of max abundance of most common species
+#will drop out some management relevant species because they are rare
+
+
+#should find a way to look at how rare (ie, excluded) taxa respond to water years
+#they might show stronger responses
+
+#get help from Dave to make the project shape file for Bay-Delta
+#this will define the area in which we will use stations and other data
+#maybe use st_union from sf package
+#https://gis.stackexchange.com/questions/321281/using-sf-to-combine-polygons-that-share-borders
+
+#add column that shows water year instead of calendar year
+
+
+#steps
+
+#read in data on abundances and wq
+
+#determine which stations meet our criteria for time and space
+
+#filter abundance data set to just the needed stations
+
+#exclude rare taxa (eg, those taht appear in fewer than 10% of samples)
+
+#calculate annual CPUE for each remaining taxa
+
+#format data as station by taxon matrix (ie, Table L)
+
+
+# Read in data from EDI-----------------------
+
 #https://portal.edirepository.org/nis/metadataviewer?packageid=edi.1036.1
 
 #station data
@@ -61,7 +111,13 @@ wq_stn <- read_csv("https://pasta.lternet.edu/package/data/eml/edi/458/4/827aa17
 water_year <- water_year_indices
 #glimpse(water_year) #looks like column types are correct
 
-#explore sampling effort-----------
+# Read in region shapefile--------
+region <- read_sf(dsn = "./spatial_files", layer = "region")
+
+
+# Filter stations spatially -----------
+#Only keep the ones that fall within our spatial region
+#as defined by the region shapefile
 
 visits <- benthic_visits %>%
   #drop years with no visits
@@ -74,6 +130,71 @@ visits <- benthic_visits %>%
 ggplot(visits, aes(x=n))+
   geom_histogram()
 #very few stations with 40+ years of data, as expected
+
+#plot stations on a map
+
+#add geometry column to station metadata data frame
+benthic_stn_g <- benthic_stn %>% 
+  #specify the crs which the metadata online says is wgs84
+  st_as_sf(coords = c(x='longitude',y='latitude'), 
+           crs = 4326 #EPSG code for WGS84
+           ,remove=F #retains original columns
+  ) %>%  
+  mutate(status = as.factor(status)) %>% 
+  glimpse()
+
+#look at coordinate reference system (CRS) of regions and basemap
+st_crs(region) #WGS84 which is EPSG = 4326
+st_crs(WW_Delta) #NAD83 which is EPSG = 4269; need to change to WGS84
+
+#change basemap CRS to WGS84 (4326) 
+#Note: the difference is so subtle is probably doesn't even matter
+WW_Delta_4326 <- st_transform(WW_Delta, crs = 4326)
+
+#map all stations
+(map_benthic <-ggplot()+
+    #CDFW Delta waterways
+    geom_sf(data= WW_Delta_4326, fill= "skyblue3", color= "black")+
+    #subregions
+    geom_sf(data =region, aes(fill=SubRegion,alpha=0.8))+
+    #all stations
+    geom_sf(data =benthic_stn_g, aes(fill=status),shape= 22, size= 2.5)+
+    #add title
+    ggtitle("All Benthic Invert Stations")+
+    theme_bw()
+)
+
+#use region shapefile to filter stations to just those that meet our criteria
+benthic_station_r <- benthic_stn_g %>% 
+  st_filter(region) 
+#drops two rows as expected (ie, the San Pablo Bay stations)
+
+#look at rows with missing lat/long
+#there shouldn't be any
+benthic_cpue_m <- benthic_cpue %>%
+  distinct(station_code, year, month, latitude,longitude) %>% 
+  filter((is.na(latitude) | is.na(longitude))) %>% 
+  distinct(station_code)
+#all data for D7-C is missing lat/long but no other stations with missing lat/long
+#can get the the lat/long for D7-C from the station metadata file
+#but it doesn't matter much for my purposes here
+
+#now do this filtering with the sample data set
+benthic_cpue_g <- benthic_cpue %>% 
+  #specify the crs 
+  st_as_sf(coords = c(x='longitude',y='latitude'), 
+           crs = 4326 #EPSG code for WGS84
+           ,remove=T #remove original columns
+           ,na.fail=F #create geometry column despite missing D7-C lat/long 
+  ) %>%  
+  #filter out any stations beyond our region bounds using our region shapefile
+  st_filter(region) %>% 
+  #remove geometry because we probably don't need it from here on
+  st_set_geometry(NULL) %>%  
+  glimpse()
+
+# Filter the stations based on time series completeness------------
+#ie, stations that include mostly continuous sampling 1975-present
 
 #filter out any stations with less than 40 years of data
 visits_most <- visits %>% 
@@ -95,7 +216,7 @@ ggplot(visits_most_eff,aes(x = year, y = number_of_site_visits))+
 
 #Create Table L (taxon x sample)-------------------------
 
-#first add back in the rows with zeros
+#first add back in the rows with zeros for CPUE
 #need to include zeros in the calculations of annual mean CPUE
 #probably easiest to convert to wide form and then back to long form
 benthic_cpue_with_zeros <- benthic_cpue %>% 
@@ -114,6 +235,10 @@ benthic_cpue_with_zeros <- benthic_cpue %>%
 
 
 #filter CPUE data set to just the three longterm stations
+#to get rid of hard coding of filter by station names
+#could create data frame with number of years of data by station,
+#join that to this data frame and filter by number of years of visits
+#use something like "visits" df
 cpue_oldest <- benthic_cpue_with_zeros %>% 
   #only three longest surveyed stations
   filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C") %>% 
@@ -168,7 +293,7 @@ cpue_common <- cpue_sample_prop %>%
 #dropped from 243 to 42 taxa; 17.3% of taxa retained
 
 #combine proportion info with main data frame and then filter to those with more than 10%
-#or use a join function to just keep the taxa taht are in more than 10% of samples
+#or use a join function to just keep the taxa that are in more than 10% of samples
 cpue_oldest_prop <- left_join(cpue_oldest,cpue_sample_prop) %>% 
   #only keep the taxa that appear in at least 10% of taxa
   filter(prop>0.10) %>%
@@ -283,7 +408,9 @@ bwq <-left_join(benthic_cpue_mod,wq_format_focus) %>%
 #should combine by organism_code
 bwp <- inner_join(bwq, cpue_common) %>% 
   #create a new column that rounds temperature to nearest degree
-  mutate(wt_surface_r = round(wt_surface,0)) 
+  mutate(wt_surface_r = round(wt_surface,0)
+         ,do_surface_r = round(do_surface,0)
+         ) 
 
 unique(bwp$wt_surface_r) 
 #why are there NAs for the rounded temp?
@@ -325,6 +452,9 @@ btemp <- bwp %>%
   group_by(organism_code,wt_surface_r) %>%
   summarize(spp_temp_mean = mean(mean_cpue))
 #there are NAs in the temperature column but not sure why; figure that out
+bdo <- bwp %>% 
+  group_by(organism_code,do_surface_r) %>%
+  summarize(spp_do_mean = mean(mean_cpue))
 
 #plot temperature
 ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
@@ -337,6 +467,19 @@ ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
 #consider also plotting proportion of samples at each temperature
 #consider making another panel of plots for rarer taxa, which might show a stronger 
 #response than the most common taxa (eg, >5% but <10% of samples)
+
+ys1 <- c("mpg","cyl","disp")
+ys1 %>% map(function(y) 
+  ggplot(mtcars, aes(hp)) + geom_point(aes_string(y=y)))
+
+
+#use map function 
+ys <- c(
+  #"secchi","turbidity_surface", "sp_cnd_surface",
+  "wt_surface_r","do_surface_r" )
+
+ys %>% map(function(y) 
+  ggplot(bwp, aes(mean_cpue)) + geom_point(aes_string(y=y)))
 
 #calculate 95th percentile temperature for each taxa
 btemp_q95 <- bwp %>% 
