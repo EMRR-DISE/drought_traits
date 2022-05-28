@@ -52,6 +52,8 @@ region_focal <- regions_4326 %>%
     ggtitle("Focal Region")+
     theme_bw()
 )
+#ggsave(file = "RegionMap.png",type ="cairo-png",width=20, units="in",dpi=300)
+
 
 #write the shapefile
 #st_write(region_focal, "spatial_files/region.shp")
