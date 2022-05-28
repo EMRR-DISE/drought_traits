@@ -1,27 +1,29 @@
-#Drought Synthesis
-#Special Studies Project
+#Special Studies Drought Synthesis
 #Environmental Monitoring Program data
 #Benthic Invertebrate Survey data
+
+#Nick Rasmussen, nicholas.rasmussen@water.ca.gov
+
+# Metadata notes ---------------------------
 #1975 - October 2020
 #Catch per unit effort (CPUE)
 #Organisms/m2 = (sum per visit /# of grabs per visit)/(0.052 grabs/meter squared)
 #GRTS amphipod papers says ponar sample was to a depth that varied from 4-10 cm with sediment type
 
-#to do list
-#add water year type to abundance data (note that invert data categorized by calendar year)
-#create map showing all stations, active and historic
+# Load required packages -----------------
 
-#required packages
-library(tidyverse)
-library(janitor)
+library(tidyverse) #suite of data science tools
+library(contentid) #reduce time of reloading large data sets
+library(janitor) #used to quickly clean up column names
 library(lubridate) #format date
-library(sf) #working with spatial data
+library(sf) #work with spatial data like shapefiles
+library(deltamapr) #Bay-Delta spatial data
 #library(readxl) #importing data from excel files
 library(waterYearType) #lists all water year types 1901 - 2017
 
-# Notes -----------------------------
+# To do list -----------------------------
 
-#create a shapefile for our project and then filter benthic data with it
+#add water year type to abundance data (note that invert data categorized by calendar year)
 
 #improve filtering code - pick stations based on how many years of data
 #, not hard coded by name
@@ -40,36 +42,16 @@ library(waterYearType) #lists all water year types 1901 - 2017
 #proportion of maximum: x% of max abundance of most common species
 #will drop out some management relevant species because they are rare
 
-
 #should find a way to look at how rare (ie, excluded) taxa respond to water years
 #they might show stronger responses
 
-#get help from Dave to make the project shape file for Bay-Delta
-#this will define the area in which we will use stations and other data
-#maybe use st_union from sf package
-#https://gis.stackexchange.com/questions/321281/using-sf-to-combine-polygons-that-share-borders
 
-#add column that shows water year instead of calendar year
+# Read in the data-----------------------
 
-
-#steps
-
-#read in data on abundances and wq
-
-#determine which stations meet our criteria for time and space
-
-#filter abundance data set to just the needed stations
-
-#exclude rare taxa (eg, those taht appear in fewer than 10% of samples)
-
-#calculate annual CPUE for each remaining taxa
-
-#format data as station by taxon matrix (ie, Table L)
-
-
-# Read in data from EDI-----------------------
-
+#most of what I need is published on EDI
 #https://portal.edirepository.org/nis/metadataviewer?packageid=edi.1036.1
+#Betsy said next version will likely be available in June 2022
+#it will correct some issues with existing data and add the 2021 data
 
 #station data
 benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
@@ -81,7 +63,8 @@ benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
 #replicate grabs have been averaged for each site visit
 #all non-occurrence (zero) data for a site visit has been removed
 #Nick: samples with no organisms at all are probably included as "No catch"
-benthic_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=1dfeb0e5a58f2167faca4087b717aae4") %>% 
+#Nick: there's an issue with the data where all rows are duplicated a number of times equal to the number of grabs per visit
+benthic_cpue <- read_csv(resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=1dfeb0e5a58f2167faca4087b717aae4"))) %>% 
   clean_names() %>% 
   glimpse()
 
@@ -99,56 +82,47 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
   glimpse()
 
 #EMP water quality data
-benthic_wq <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=98b400de8472d2a3d2e403141533a2cc") %>% 
+benthic_wq <- read_csv(resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=98b400de8472d2a3d2e403141533a2cc"))) %>% 
   clean_names() %>% 
   glimpse()
 
 #EMP water quality stations
-wq_stn <- read_csv("https://pasta.lternet.edu/package/data/eml/edi/458/4/827aa171ecae79731cc50ae0e590e5af")
+wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=827aa171ecae79731cc50ae0e590e5af") %>% 
+  clean_names() %>% 
+  glimpse()
 
 #Water year type from waterYearType package
 #the only function in package brings in water year type data frame
 water_year <- water_year_indices
 #glimpse(water_year) #looks like column types are correct
 
-# Read in region shapefile--------
-region <- read_sf(dsn = "./spatial_files", layer = "region")
+# Read in region shapefile
+region_shape <- read_sf(dsn = "./spatial_files", layer = "region")
 
 
 # Filter stations spatially -----------
-#Only keep the ones that fall within our spatial region
+
+#Only keep the stations that fall within our spatial region
 #as defined by the region shapefile
 
-visits <- benthic_visits %>%
-  #drop years with no visits
-  filter(number_of_site_visits!=0) %>%
-  #look at number of years with visits by station
-  group_by(station_code) %>% 
-  summarise(n=n())
-
-#plot histogram to see distribution of number of years with visits for sites
-ggplot(visits, aes(x=n))+
-  geom_histogram()
-#very few stations with 40+ years of data, as expected
-
-#plot stations on a map
-
-#add geometry column to station metadata data frame
+#start by looking at file with just the station metadata
+#add geometry column 
 benthic_stn_g <- benthic_stn %>% 
   #specify the crs which the metadata online says is wgs84
-  st_as_sf(coords = c(x='longitude',y='latitude'), 
+  st_as_sf(coords = c(x='longitude',y='latitude'), #identify the lat/long columns
            crs = 4326 #EPSG code for WGS84
-           ,remove=F #retains original columns
+           ,remove=F #retains original lat/long columns
   ) %>%  
+  #make station status a factor; needed for color coding in map below
   mutate(status = as.factor(status)) %>% 
   glimpse()
 
-#look at coordinate reference system (CRS) of regions and basemap
-st_crs(region) #WGS84 which is EPSG = 4326
+#look at coordinate reference system (CRS) 
+#of the basemap, which is built into deltamapr, and our region shapefile 
+st_crs(region_shape) #WGS84 which is EPSG = 4326
 st_crs(WW_Delta) #NAD83 which is EPSG = 4269; need to change to WGS84
 
 #change basemap CRS to WGS84 (4326) 
-#Note: the difference is so subtle is probably doesn't even matter
 WW_Delta_4326 <- st_transform(WW_Delta, crs = 4326)
 
 #map all stations
@@ -156,7 +130,7 @@ WW_Delta_4326 <- st_transform(WW_Delta, crs = 4326)
     #CDFW Delta waterways
     geom_sf(data= WW_Delta_4326, fill= "skyblue3", color= "black")+
     #subregions
-    geom_sf(data =region, aes(fill=SubRegion,alpha=0.8))+
+    geom_sf(data =region_shape, aes(fill=SubRegion,alpha=0.8))+
     #all stations
     geom_sf(data =benthic_stn_g, aes(fill=status),shape= 22, size= 2.5)+
     #add title
@@ -164,62 +138,105 @@ WW_Delta_4326 <- st_transform(WW_Delta, crs = 4326)
     theme_bw()
 )
 
-#use region shapefile to filter stations to just those that meet our criteria
-benthic_station_r <- benthic_stn_g %>% 
-  st_filter(region) 
-#drops two rows as expected (ie, the San Pablo Bay stations)
+#filter stations to just those within the shapefile bounds
+benthic_stn_r <- benthic_stn_g %>% 
+  st_filter(region_shape) 
+#drops two rows as expected (ie, the two San Pablo Bay stations)
 
-#look at rows with missing lat/long
+#next do this spatial filtering with the sample data set
+
+#first, look at rows with missing lat/long
 #there shouldn't be any
-benthic_cpue_m <- benthic_cpue %>%
+benthic_cpue_mcoords <- benthic_cpue %>%
+  #reduce data set to just distinct combos of station, date, and lat/long
   distinct(station_code, year, month, latitude,longitude) %>% 
+  #filter to just the rows with missing coordinates
   filter((is.na(latitude) | is.na(longitude))) %>% 
+  #look at which stations have missing lat/long
   distinct(station_code)
 #all data for D7-C is missing lat/long but no other stations with missing lat/long
 #can get the the lat/long for D7-C from the station metadata file
-#but it doesn't matter much for my purposes here
 
-#now do this filtering with the sample data set
-benthic_cpue_g <- benthic_cpue %>% 
+#do the spatial filter on the cpue data set
+benthic_cpue_sf <- benthic_cpue %>% 
+  #add lat/long for D7-C
+  mutate(
+    latitude_wgs84 = case_when(station_code=="D7-C" ~ 38.11713
+      ,TRUE ~ as.numeric(latitude))
+    ,longitude_wgs84 = case_when(station_code=="D7-C" ~ -122.0396
+    ,TRUE ~ as.numeric(longitude)))  %>% 
   #specify the crs 
-  st_as_sf(coords = c(x='longitude',y='latitude'), 
+  st_as_sf(coords = c(x='longitude_wgs84',y='latitude_wgs84'), 
            crs = 4326 #EPSG code for WGS84
            ,remove=T #remove original columns
            ,na.fail=F #create geometry column despite missing D7-C lat/long 
   ) %>%  
   #filter out any stations beyond our region bounds using our region shapefile
-  st_filter(region) %>% 
+  st_filter(region_shape) %>% 
   #remove geometry because we probably don't need it from here on
   st_set_geometry(NULL) %>%  
   glimpse()
 
-# Filter the stations based on time series completeness------------
+unique(benthic_cpue_sf$station_code) #"D7-C" is included now
+
+# Filter the stations based on time series completeness ------------
+
 #ie, stations that include mostly continuous sampling 1975-present
 
+#count the number of years with visits by station
+visit_years <- benthic_visits %>%
+  #drop years with no visits
+  filter(number_of_site_visits!=0) %>%
+  #look at number of years with visits by station
+  group_by(station_code) %>% 
+  summarise(years=n())
+
+#plot histogram to see distribution of number of years with visits for sites
+ggplot(visit_years, aes(x=years))+
+  geom_histogram()
+#very few stations with 40+ years of data, as expected
+
 #filter out any stations with less than 40 years of data
-visits_most <- visits %>% 
-  filter(n>40)
-unique(visits_most$station_code)
+visits_many <- visit_years %>% 
+  filter(years>39)
+unique(visits_many$station_code)
+#only three stations left: "D28A-L" "D4-L"   "D7-C" 
 
 #now take a closer look at effort for those mostly complete stations
-visits_most_eff <- benthic_visits %>% 
+visits_many_eff <- benthic_visits %>% 
   #just keep the three needed stations
   #redo this so it isn't hard coded
   filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C")
 
 #plot effort by station
-ggplot(visits_most_eff,aes(x = year, y = number_of_site_visits))+
+ggplot(visits_many_eff,aes(x = year, y = number_of_site_visits))+
   geom_point()+
   geom_line()+
   facet_grid(station_code~.)
 #after about 1980, sampling is pretty consistently high except for 2004-2005
 
-#Create Table L (taxon x sample)-------------------------
+#now filter the full abundance data set using number of years of visits as criterion
+#only keep samples from stations with at least 40 years of visits
+
+#first add # of years of visits as column to abundance data frame
+#glimpse(benthic_cpue_sf)
+#glimpse(visit_years)
+#should join based on station_code
+benthic_cpue_stf <- left_join(benthic_cpue_sf, visit_years) %>% 
+  #then use years column to filter out any stations with less than 40 years of visits
+  filter(years>39)
+
+#make sure the three stations, and only the three stations, are retained
+unique(benthic_cpue_stf$station_code)
+#yes, "D4-L"   "D7-C"   "D28A-L"
+
+# Add zeros for absences back into data set-------------------------
 
 #first add back in the rows with zeros for CPUE
 #need to include zeros in the calculations of annual mean CPUE
 #probably easiest to convert to wide form and then back to long form
-benthic_cpue_with_zeros <- benthic_cpue %>% 
+#start with data set already filtered spatially and temporally
+benthic_cpue_with_zeros <- benthic_cpue_stf %>% 
   #drop unneeded columns
   select(sample_date,station_code, organism_code,mean_cpue) %>% 
   #sort by organism code so when I replace NA with zero the starting column is always the same
@@ -254,6 +271,8 @@ vmonth <- cpue_oldest %>%
   summarise(n=n()) %>% 
   arrange(station_code,-n)
 #each month has 35-43 years of visits; October is most sampled month
+
+# Remove rare taxa -------------------
 
 #try various approaches for excluding rare taxa
 #how many taxa remain if only keeping those that are present in 
@@ -304,8 +323,12 @@ cpue_oldest_prop <- left_join(cpue_oldest,cpue_sample_prop) %>%
   #sort by date, station, organism code
   arrange(sample_date, station_code, organism_code)
 
-#generate annual mean CPUE values for each taxon
+# Calculate annual mean CPUE------------------
+
+#could use a different summary statistic (eg, median)
 #consider changing this to water year instead of calendar year
+
+#generate annual mean CPUE values for each taxon
 cpue_mean_annual <- cpue_oldest_prop %>% 
   group_by(year,station_code,organism_code) %>% 
   summarize(cpue_annual=mean(mean_cpue))
@@ -313,6 +336,8 @@ cpue_mean_annual <- cpue_oldest_prop %>%
 #probably should drop years with, say, only one sample because hard to compare with other years
 #could also just use data for the sampling month that is best represented across all years (Oct)
 #instead of calculating annual means based on a variable number of samples
+
+# Format Table L (station-year x taxon) -----------
 
 #make Table L which is taxon x sample matrix
 TableL <- cpue_mean_annual %>% 
@@ -325,7 +350,7 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
   geom_line()+
   facet_wrap(vars(organism_code),scales="free",nrow=6)
 
-#explore water quality data----------------
+# Explore water quality data----------------
 
 #reduce data set to just the columns of interest
 #glimpse(benthic_wq)
