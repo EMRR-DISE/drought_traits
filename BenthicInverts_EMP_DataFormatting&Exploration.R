@@ -160,6 +160,7 @@ benthic_cpue_mcoords <- benthic_cpue %>%
 #do the spatial filter on the cpue data set
 benthic_cpue_sf <- benthic_cpue %>% 
   #add lat/long for D7-C
+  #otherwise this site gets dropped during the spatial filter below
   mutate(
     latitude_wgs84 = case_when(station_code=="D7-C" ~ 38.11713
       ,TRUE ~ as.numeric(latitude))
@@ -184,6 +185,8 @@ unique(benthic_cpue_sf$station_code) #"D7-C" is included now
 #ie, stations that include mostly continuous sampling 1975-present
 
 #count the number of years with visits by station
+#this is a bit oversimplified because visits per year also vary
+#but it's a good start
 visit_years <- benthic_visits %>%
   #drop years with no visits
   filter(number_of_site_visits!=0) %>%
@@ -217,10 +220,7 @@ ggplot(visits_many_eff,aes(x = year, y = number_of_site_visits))+
 
 #now filter the full abundance data set using number of years of visits as criterion
 #only keep samples from stations with at least 40 years of visits
-
 #first add # of years of visits as column to abundance data frame
-#glimpse(benthic_cpue_sf)
-#glimpse(visit_years)
 #should join based on station_code
 benthic_cpue_stf <- left_join(benthic_cpue_sf, visit_years) %>% 
   #then use years column to filter out any stations with less than 40 years of visits
@@ -230,13 +230,14 @@ benthic_cpue_stf <- left_join(benthic_cpue_sf, visit_years) %>%
 unique(benthic_cpue_stf$station_code)
 #yes, "D4-L"   "D7-C"   "D28A-L"
 
-# Add zeros for absences back into data set-------------------------
+# Add zeros for absences back into abundance data set-------------------------
 
-#first add back in the rows with zeros for CPUE
-#need to include zeros in the calculations of annual mean CPUE
+#these zeros were excluded from EDI data set, presumably to reduce total number of rows
+#need to include zeros in the calculations of annual mean CPUE below
 #probably easiest to convert to wide form and then back to long form
+
 #start with data set already filtered spatially and temporally
-benthic_cpue_with_zeros <- benthic_cpue_stf %>% 
+benthic_cpue_stfz <- benthic_cpue_stf %>% 
   #drop unneeded columns
   select(sample_date,station_code, organism_code,mean_cpue) %>% 
   #sort by organism code so when I replace NA with zero the starting column is always the same
@@ -246,23 +247,13 @@ benthic_cpue_with_zeros <- benthic_cpue_stf %>%
   #make data frame wide which will add NA every time an organism was not detected in a visit 
   pivot_wider(id_cols = c(sample_date,station_code),names_from = organism_code,values_from=mean_cpue) %>% 
   #replace NAs with zeros; maybe find a way to do this that is less hard coded
-  mutate(across('0':'8000', ~replace_na(.,0))) %>% 
+  mutate(across('0':'7500', ~replace_na(.,0))) %>% 
   #make long version again
-  pivot_longer(cols= c('0':'8000'), names_to = "organism_code", values_to = "mean_cpue")
+  pivot_longer(cols= c('0':'7500'), names_to = "organism_code", values_to = "mean_cpue")
 
-
-#filter CPUE data set to just the three longterm stations
-#to get rid of hard coding of filter by station names
-#could create data frame with number of years of data by station,
-#join that to this data frame and filter by number of years of visits
-#use something like "visits" df
-cpue_oldest <- benthic_cpue_with_zeros %>% 
-  #only three longest surveyed stations
-  filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C") %>% 
-  glimpse()
-
-#number of visits differs among years. which month(s) are most consistently sampled through time?
-vmonth <- cpue_oldest %>% 
+#number of visits differs among years
+#which month(s) are most consistently sampled through time?
+vmonth <- benthic_cpue_stfz %>% 
   mutate(month=month(sample_date)
          ,year=year(sample_date)
          ) %>% 
@@ -279,14 +270,14 @@ vmonth <- cpue_oldest %>%
 #at least 5% of samples? 10% of samples?
 
 #need to calculate total number of samples
-total <- cpue_oldest %>% 
+total <- benthic_cpue_stfz %>% 
   #look at distinct combinations of station and date
   distinct(sample_date, station_code) %>%  
   count()
 samp_denom <-as.numeric(total[1,1]) #1399
 
 #calculate the proportion of samples in which each taxon is present
-cpue_sample_prop <- cpue_oldest %>%
+cpue_sample_prop <- benthic_cpue_stfz %>%
   #drop rows where cpue is zero for sake of counting samples in which species are present
   filter(mean_cpue!=0) %>%   
   group_by(organism_code) %>% 
@@ -313,7 +304,7 @@ cpue_common <- cpue_sample_prop %>%
 
 #combine proportion info with main data frame and then filter to those with more than 10%
 #or use a join function to just keep the taxa that are in more than 10% of samples
-cpue_oldest_prop <- left_join(cpue_oldest,cpue_sample_prop) %>% 
+benthic_cpue_stfz_prop <- left_join(benthic_cpue_stfz,cpue_sample_prop) %>% 
   #only keep the taxa that appear in at least 10% of taxa
   filter(prop>0.10) %>%
   #drop unneeded columns
@@ -329,7 +320,7 @@ cpue_oldest_prop <- left_join(cpue_oldest,cpue_sample_prop) %>%
 #consider changing this to water year instead of calendar year
 
 #generate annual mean CPUE values for each taxon
-cpue_mean_annual <- cpue_oldest_prop %>% 
+cpue_mean_annual <- benthic_cpue_stfz_prop %>% 
   group_by(year,station_code,organism_code) %>% 
   summarize(cpue_annual=mean(mean_cpue))
 #keep in mind that number of samples per station varies among years
