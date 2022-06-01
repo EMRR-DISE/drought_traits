@@ -11,6 +11,8 @@
 #GRTS amphipod papers says ponar sample was to a depth that varied from 4-10 cm with sediment type
 
 # Load required packages -----------------
+#all packages available on CRAN except deltamapr
+#see GitHub repository for deltamapr at https://github.com/InteragencyEcologicalProgram/deltamapr
 
 library(tidyverse) #suite of data science tools
 library(contentid) #reduce time of reloading large data sets
@@ -25,10 +27,10 @@ library(waterYearType) #lists all water year types 1901 - 2017
 
 #add water year type to abundance data (note that invert data categorized by calendar year)
 
-#improve filtering code - pick stations based on how many years of data
-#, not hard coded by name
-
 #figure out why so many NAs for matches between invert cpue and wq means
+
+#Note: need to confirm with Betsy that is is reasonable to assume that all taxa were searched for in all 
+#samples through time
 
 #use map functions to plot multiple panels of wq vs abundances
 
@@ -41,9 +43,6 @@ library(waterYearType) #lists all water year types 1901 - 2017
 #or x% of species with lowest abundances
 #proportion of maximum: x% of max abundance of most common species
 #will drop out some management relevant species because they are rare
-
-#should find a way to look at how rare (ie, excluded) taxa respond to water years
-#they might show stronger responses
 
 
 # Read in the data-----------------------
@@ -101,11 +100,14 @@ region_shape <- read_sf(dsn = "./spatial_files", layer = "region")
 
 
 # Filter stations spatially -----------
+#Note should add some more checks of latitude/longitude columns before filtering
+#eg, see if any coordinates fall outside Bay-Delta, indicating error in coordinates
+#already checked for NAs in lat/long
 
 #Only keep the stations that fall within our spatial region
 #as defined by the region shapefile
 
-#start by looking at file with just the station metadata
+#start by looking at data frame with just the station metadata
 #add geometry column 
 benthic_stn_g <- benthic_stn %>% 
   #specify the crs which the metadata online says is wgs84
@@ -143,7 +145,7 @@ benthic_stn_r <- benthic_stn_g %>%
   st_filter(region_shape) 
 #drops two rows as expected (ie, the two San Pablo Bay stations)
 
-#next do this spatial filtering with the sample data set
+#next do this spatial filtering with the (much larger) survey data set
 
 #first, look at rows with missing lat/long
 #there shouldn't be any
@@ -170,7 +172,7 @@ benthic_cpue_sf <- benthic_cpue %>%
   st_as_sf(coords = c(x='longitude_wgs84',y='latitude_wgs84'), 
            crs = 4326 #EPSG code for WGS84
            ,remove=T #remove original columns
-           ,na.fail=F #create geometry column despite missing D7-C lat/long 
+           #,na.fail=F #create geometry column despite missing D7-C lat/long 
   ) %>%  
   #filter out any stations beyond our region bounds using our region shapefile
   st_filter(region_shape) %>% 
@@ -181,6 +183,8 @@ benthic_cpue_sf <- benthic_cpue %>%
 unique(benthic_cpue_sf$station_code) #"D7-C" is included now
 
 # Filter the stations based on time series completeness ------------
+#Note: maybe it makes sense to filter data temporally before spatially
+#that way, we can map stations that have long time series to see their distribution before spatial filter
 
 #ie, stations that include mostly continuous sampling 1975-present
 
@@ -235,6 +239,8 @@ unique(benthic_cpue_stf$station_code)
 #these zeros were excluded from EDI data set, presumably to reduce total number of rows
 #need to include zeros in the calculations of annual mean CPUE below
 #probably easiest to convert to wide form and then back to long form
+#Note: need to confirm with Betsy that is is reasonable to assume that all taxa were searched for in all 
+#samples through time
 
 #start with data set already filtered spatially and temporally
 benthic_cpue_stfz <- benthic_cpue_stf %>% 
@@ -245,12 +251,14 @@ benthic_cpue_stfz <- benthic_cpue_stf %>%
   #only keep unique rows; current EDI data set has an error so lots of rows are duplicated
   distinct(sample_date,station_code, organism_code,mean_cpue) %>% 
   #make data frame wide which will add NA every time an organism was not detected in a visit 
-  pivot_wider(id_cols = c(sample_date,station_code),names_from = organism_code,values_from=mean_cpue) %>% 
-  #replace NAs with zeros; maybe find a way to do this that is less hard coded
-  mutate(across('0':'7500', ~replace_na(.,0))) %>% 
+  pivot_wider(id_cols = c(sample_date,station_code),names_from = organism_code,values_from=mean_cpue) %>%   
+  #replace NAs with zeros
+  mutate(across(where(is.numeric), ~replace_na(.,0))) %>% 
   #make long version again
-  pivot_longer(cols= c('0':'7500'), names_to = "organism_code", values_to = "mean_cpue")
+  pivot_longer(where(is.numeric), names_to = "organism_code", values_to = "mean_cpue") %>% 
+  glimpse()
 
+  
 #number of visits differs among years
 #which month(s) are most consistently sampled through time?
 vmonth <- benthic_cpue_stfz %>% 
@@ -394,7 +402,7 @@ wq_format_focus <- wq_format %>%
   glimpse()
 
 
-#Combine benthic invert and WQ data------------------
+# Combine benthic invert and WQ data------------------
 #need to do a bit of work to match up station names; they're similar but not the same generally
 #start with the full benthic data set (with zeros) instead of just the selected stations
 #we want to look at where the target taxa are broadly in the environmental gradients
@@ -460,7 +468,7 @@ range(bwp$prop)
 ctax <- unique(bwp$organism_code)
 #got the right number of taxa (n=42)
 
-#plot distributions by taxa and wq parameter-----------------------
+# Plot distributions by taxa and wq parameter-----------------------
 #need to spend some time figuring out how to do this with map functions
 
 #calculate mean CPUE by temperature for each taxa
