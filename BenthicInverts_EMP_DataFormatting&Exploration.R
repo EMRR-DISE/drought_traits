@@ -273,16 +273,71 @@ vmonth <- benthic_cpue_stfz %>%
 
 # Remove rare taxa -------------------
 
+#NOTE: should determine what proportion of bay-delta wide taxa are represented
+#in the three stations I have kept
+
 #try various approaches for excluding rare taxa
-#how many taxa remain if only keeping those that are present in 
-#at least 5% of samples? 10% of samples?
+#how many taxa remain if only keeping those that are present in: 
+# just drop a fixed proportion of species (eg, least abundant 25% of spp)
+        #this approach keeps too many taxa: 183 remain of 243 spp (75% of spp)
+# comprise at least 5% of total abundances
+        #keeps too few taxa: 7 taxa remain out of 243 (2.9% of taxa remaining)
+# remove those below 5% of abundance of the most abundant spp
+        #keeps too few taxa: 14 spp remain out of 243 (5.8% of spp)
+# found in at least 5% of samples
+        #keeps quite a few: 65 of 243 taxa remaining; 26.7% taxa retained
+# found in at least 10% of samples
+        #keeps a manageable number: 42 of 243 taxa remaining; 17.3% of taxa retained
+
+#calculate total number of individuals
+total_individuals <- sum(benthic_cpue_stfz$mean_cpue) 
+
+#calculate proportion of total individuals each spp comprises
+cpue_indiv_prop <- benthic_cpue_stfz %>%
+  group_by(organism_code) %>% 
+  #row counts by taxon now should be number of samples with the taxon
+  summarise(n_indiv=sum(mean_cpue)) %>% 
+  #order rows by number of samples, most to least
+  arrange(-n_indiv) %>% 
+  mutate(prop = n_indiv/total_individuals
+         ,rank = as.numeric(n():1)
+         ,rank_prop = rank/n()
+         #determine abundance of most abundant taxa
+         ,prop_dom = n_indiv/max(n_indiv)
+         ) %>% 
+  glimpse()
+
+#plot histogram of proportion of individuals each ssp comprises
+ggplot(cpue_indiv_prop, aes(x=prop))+
+  geom_histogram()
+
+#plot histogram of proportion of individuals for each spp relative to
+#the most abundant spp
+ggplot(cpue_indiv_prop, aes(x=prop_dom))+
+  geom_histogram()
+#almost all species are rare compared to most abundant spp (>5% dominant spp abundance)
+
+#drop the 25% of species with lowest total individuals
+cpue_rarest25 <- cpue_indiv_prop %>% 
+  filter(rank_prop > 0.25)
+#keeps 183 of 243 species (75.3% of taxa remaining)
+
+#drop all ssp that comprise less than 5% of all individuals
+cpue_indiv_5plus <- cpue_indiv_prop %>% 
+  filter(prop > 0.05)
+#only 7 taxa remain out of 243 (2.9% of taxa remaining)
+
+#drop all ssp with abundances less that 5% of that of most abundant spp
+cpue_prop_dom_5plus <- cpue_indiv_prop %>% 
+  filter(prop_dom > 0.05)
+#only 14 spp remain out of 243 (5.8% of spp)
 
 #need to calculate total number of samples
-total <- benthic_cpue_stfz %>% 
+total_samples <- benthic_cpue_stfz %>% 
   #look at distinct combinations of station and date
   distinct(sample_date, station_code) %>%  
   count()
-samp_denom <-as.numeric(total[1,1]) #1399
+samp_denom <-as.numeric(total_samples[1,1]) #1399
 
 #calculate the proportion of samples in which each taxon is present
 cpue_sample_prop <- benthic_cpue_stfz %>%
