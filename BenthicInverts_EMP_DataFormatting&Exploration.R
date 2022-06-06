@@ -22,6 +22,7 @@ library(sf) #work with spatial data like shapefiles
 library(deltamapr) #Bay-Delta spatial data
 #library(readxl) #importing data from excel files
 library(waterYearType) #lists all water year types 1901 - 2017
+library(here)
 
 # To do list -----------------------------
 
@@ -116,8 +117,9 @@ water_year <- water_year_indices
 #glimpse(water_year) #looks like column types are correct
 
 # Read in region shapefile
-region_shape <- read_sf(dsn = "./spatial_files", layer = "region")
-
+region_shape <- read_sf(here("spatial_files/region.shp"))
+# Is this region shapefile in deltamapr? If so, we can call it directly in the
+  # code by name instead of importing a local copy.
 
 # Filter stations spatially -----------
 #Note should add some more checks of latitude/longitude columns before filtering
