@@ -121,6 +121,56 @@ region_shape <- read_sf(here("spatial_files/region.shp"))
 # Is this region shapefile in deltamapr? If so, we can call it directly in the
   # code by name instead of importing a local copy.
 
+
+# Filter the stations based on time series completeness ------------
+# Note: Decided to filter data temporally before spatially that way, we can map
+  # stations that have long time series to see their distribution before spatial
+  # filter
+
+#ie, stations that include mostly continuous sampling 1975-present
+
+#count the number of years with visits by station
+#this is a bit oversimplified because visits per year also vary
+#but it's a good start
+visit_years <- benthic_visits %>%
+  #drop years with no visits
+  filter(number_of_site_visits != 0) %>%
+  #look at number of years with visits by station
+  count(station_code, name = "years")
+
+#plot histogram to see distribution of number of years with visits for sites
+ggplot(visit_years, aes(x=years))+
+  geom_histogram()
+#very few stations with 40+ years of data, as expected
+
+#filter out any stations with less than 40 years of data
+sta_visits_many <- visit_years %>% 
+  filter(years >= 40) %>% 
+  pull(station_code)
+
+sta_visits_many
+#only three stations left: "D28A-L" "D4-L"   "D7-C" 
+
+#now take a closer look at effort for those mostly complete stations - 
+#just keep the three needed stations
+visits_many_eff <- benthic_visits %>% filter(station_code %in% sta_visits_many)
+
+#plot effort by station
+ggplot(visits_many_eff,aes(x = year, y = number_of_site_visits))+
+  geom_point()+
+  geom_line()+
+  facet_grid(station_code~.)
+#after about 1980, sampling is pretty consistently high except for 2004-2005
+
+#now filter the full abundance data set using number of years of visits as criterion
+#only keep samples from stations with at least 40 years of visits
+benthic_cpue_f <- benthic_cpue %>% filter(station_code %in% sta_visits_many)
+
+#make sure the three stations, and only the three stations, are retained
+unique(benthic_cpue_f$station_code)
+#yes, "D4-L"   "D7-C"   "D28A-L"
+
+
 # Filter stations spatially -----------
 #Note should add some more checks of latitude/longitude columns before filtering
 #eg, see if any coordinates fall outside Bay-Delta, indicating error in coordinates
@@ -204,57 +254,6 @@ benthic_cpue_sf <- benthic_cpue %>%
 
 unique(benthic_cpue_sf$station_code) #"D7-C" is included now
 
-# Filter the stations based on time series completeness ------------
-#Note: maybe it makes sense to filter data temporally before spatially
-#that way, we can map stations that have long time series to see their distribution before spatial filter
-
-#ie, stations that include mostly continuous sampling 1975-present
-
-#count the number of years with visits by station
-#this is a bit oversimplified because visits per year also vary
-#but it's a good start
-visit_years <- benthic_visits %>%
-  #drop years with no visits
-  filter(number_of_site_visits!=0) %>%
-  #look at number of years with visits by station
-  group_by(station_code) %>% 
-  summarise(years=n())
-
-#plot histogram to see distribution of number of years with visits for sites
-ggplot(visit_years, aes(x=years))+
-  geom_histogram()
-#very few stations with 40+ years of data, as expected
-
-#filter out any stations with less than 40 years of data
-visits_many <- visit_years %>% 
-  filter(years>39)
-unique(visits_many$station_code)
-#only three stations left: "D28A-L" "D4-L"   "D7-C" 
-
-#now take a closer look at effort for those mostly complete stations
-visits_many_eff <- benthic_visits %>% 
-  #just keep the three needed stations
-  #redo this so it isn't hard coded
-  filter(station_code == "D28A-L" | station_code == "D4-L"   | station_code == "D7-C")
-
-#plot effort by station
-ggplot(visits_many_eff,aes(x = year, y = number_of_site_visits))+
-  geom_point()+
-  geom_line()+
-  facet_grid(station_code~.)
-#after about 1980, sampling is pretty consistently high except for 2004-2005
-
-#now filter the full abundance data set using number of years of visits as criterion
-#only keep samples from stations with at least 40 years of visits
-#first add # of years of visits as column to abundance data frame
-#should join based on station_code
-benthic_cpue_stf <- left_join(benthic_cpue_sf, visit_years) %>% 
-  #then use years column to filter out any stations with less than 40 years of visits
-  filter(years>39)
-
-#make sure the three stations, and only the three stations, are retained
-unique(benthic_cpue_stf$station_code)
-#yes, "D4-L"   "D7-C"   "D28A-L"
 
 # Add zeros for absences back into abundance data set-------------------------
 
