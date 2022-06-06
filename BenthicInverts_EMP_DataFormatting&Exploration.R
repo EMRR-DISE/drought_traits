@@ -81,9 +81,29 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
   glimpse()
 
 #EMP water quality data
-benthic_wq <- read_csv(resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=98b400de8472d2a3d2e403141533a2cc"))) %>% 
+benthic_wq <- 
+  read_csv(
+    resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=98b400de8472d2a3d2e403141533a2cc")),
+    col_types = cols_only(
+      Station = "c",
+      Date = col_date("%m/%d/%Y"),
+      Time = "t",
+      Secchi = "c",
+      TurbiditySurface = "c",
+      TurbidityBottom = "c",
+      SpCndSurface = "c",
+      SpCndBottom = "c",
+      WTSurface = "c",
+      WTBottom = "c",
+      DOSurface = "c",
+      DOBottom = "c"
+    )
+  ) %>% 
   clean_names() %>% 
   glimpse()
+# turbidity_surface has two ND values at MD10A - not sure if this matters; if it
+  # does, we'll need to decide if we're okay with substituting 0 or some other
+  # number for these
 
 #EMP water quality stations
 wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=827aa171ecae79731cc50ae0e590e5af") %>% 
