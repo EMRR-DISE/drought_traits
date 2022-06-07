@@ -275,6 +275,12 @@ vmonth <- benthic_cpue_stfz %>%
 
 #NOTE: should determine what proportion of bay-delta wide taxa are represented
 #in the three stations I have kept
+spp_all <- unique(benthic_cpue$organism_code)
+#408 taxa in data set; 243 in those three stations
+#so 59.6% of Bay-Delta taxa captured by our stations
+
+#also consider creating species accumulation curves to see how well we have sampled 
+#the community of the sites; a bit hard in a large tidal system
 
 #try various approaches for excluding rare taxa
 #how many taxa remain if only keeping those that are present in: 
@@ -288,32 +294,39 @@ vmonth <- benthic_cpue_stfz %>%
         #keeps quite a few: 65 of 243 taxa remaining; 26.7% taxa retained
 # found in at least 10% of samples
         #keeps a manageable number: 42 of 243 taxa remaining; 17.3% of taxa retained
+#Note that sampling not equal across years, which potentially causes problems
+#with using the presence in x% of samples metrics
+#eg, lower sampling early in series could bias against taxa that were only common
+#in early years
 
-#calculate total number of individuals
-total_individuals <- sum(benthic_cpue_stfz$mean_cpue) 
+#look at which taxa are retained across methods. are the most common ones the same?
 
-#calculate proportion of total individuals each spp comprises
+#calculate abundance metrics by taxon
 cpue_indiv_prop <- benthic_cpue_stfz %>%
   group_by(organism_code) %>% 
-  #row counts by taxon now should be number of samples with the taxon
-  summarise(n_indiv=sum(mean_cpue)) %>% 
-  #order rows by number of samples, most to least
-  arrange(-n_indiv) %>% 
-  mutate(prop = n_indiv/total_individuals
-         ,rank = as.numeric(n():1)
-         ,rank_prop = rank/n()
-         #determine abundance of most abundant taxa
-         ,prop_dom = n_indiv/max(n_indiv)
+  #sum cpue across all samples by taxon
+  summarise(indiv_n=sum(mean_cpue)) %>% 
+  #order rows by total cpue, most to least
+  arrange(-indiv_n)  %>% 
+  mutate(
+    #calculate the proportion of all individuals that a taxon comprises
+    indiv_prop = indiv_n/sum(indiv_n)
+    #rank all taxa by total cpue and determine their quantile
+    ,rank_prop = as.numeric(n():1)/n()
+    #determine the taxon with highest total cpue and 
+    #then calculate the proportion of this max cpue each taxon comprises 
+    ,dom_prop = indiv_n/max(indiv_n)
          ) %>% 
   glimpse()
 
 #plot histogram of proportion of individuals each ssp comprises
-ggplot(cpue_indiv_prop, aes(x=prop))+
+ggplot(cpue_indiv_prop, aes(x=indiv_prop))+
   geom_histogram()
+#vast majority of taxa comprise less than 1.25% of total individuals
 
 #plot histogram of proportion of individuals for each spp relative to
 #the most abundant spp
-ggplot(cpue_indiv_prop, aes(x=prop_dom))+
+ggplot(cpue_indiv_prop, aes(x=dom_prop))+
   geom_histogram()
 #almost all species are rare compared to most abundant spp (>5% dominant spp abundance)
 
@@ -335,6 +348,7 @@ cpue_prop_dom_5plus <- cpue_indiv_prop %>%
 #need to calculate total number of samples
 total_samples <- benthic_cpue_stfz %>% 
   #look at distinct combinations of station and date
+  #necessary because there's a row for each taxon within each sample
   distinct(sample_date, station_code) %>%  
   count()
 samp_denom <-as.numeric(total_samples[1,1]) #1399
