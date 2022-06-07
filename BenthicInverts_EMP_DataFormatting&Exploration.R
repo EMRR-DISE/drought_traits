@@ -264,26 +264,29 @@ benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg)
 
 #these zeros were excluded from EDI data set, presumably to reduce total number of rows
 #need to include zeros in the calculations of annual mean CPUE below
-#probably easiest to convert to wide form and then back to long form
 #Note: need to confirm with Betsy that is is reasonable to assume that all taxa were searched for in all 
 #samples through time
 
 #start with data set already filtered spatially and temporally
-benthic_cpue_stfz <- benthic_cpue_stf %>% 
-  #drop unneeded columns
-  select(sample_date,station_code, organism_code,mean_cpue) %>% 
-  #sort by organism code so when I replace NA with zero the starting column is always the same
-  arrange(organism_code) %>%     
+benthic_cpue_stfu <- benthic_cpue_stf %>% 
   #only keep unique rows; current EDI data set has an error so lots of rows are duplicated
-  distinct(sample_date,station_code, organism_code,mean_cpue) %>% 
-  #make data frame wide which will add NA every time an organism was not detected in a visit 
-  pivot_wider(id_cols = c(sample_date,station_code),names_from = organism_code,values_from=mean_cpue) %>%   
-  #replace NAs with zeros
-  mutate(across(where(is.numeric), ~replace_na(.,0))) %>% 
-  #make long version again
-  pivot_longer(where(is.numeric), names_to = "organism_code", values_to = "mean_cpue") %>% 
-  glimpse()
+  distinct(sample_date, station_code, organism_code, mean_cpue) %>% 
+  # Convert organism_code to character since it represents discrete organisms
+  mutate(organism_code = as.character(organism_code))
 
+# Pull out one record with organism_code = 0 (no catch) since we don't need to
+  # add "no catch" to every sample
+benthic_cpue_no_catch <- benthic_cpue_stfu %>% filter(organism_code == "0")
+# The mean_cpue for this one record without catch is 4.81 - this doesn't seem
+  # correct, may need to look into this
+
+# Fill in zeros for absent organisms within each sample
+benthic_cpue_stfz <- benthic_cpue_stfu %>% 
+  # Pull out record with "no catch"
+  filter(organism_code != "0") %>% 
+  complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0)) %>% 
+  # Add back record with "no catch"
+  bind_rows(benthic_cpue_no_catch)
   
 #number of visits differs among years
 #which month(s) are most consistently sampled through time?
