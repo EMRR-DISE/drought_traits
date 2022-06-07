@@ -179,6 +179,36 @@ unique(benthic_cpue_f$station_code)
 #Only keep the stations that fall within our spatial region
 #as defined by the region shapefile
 
+# Check to see if station coordinates in metadata and cpue tables match
+benthic_stn_coord <- benthic_stn %>% 
+  select(
+    station_code = site_code, 
+    latitude, 
+    longitude
+  )
+
+benthic_cpue_coord <- benthic_cpue %>% distinct(station_code, latitude, longitude)
+
+setequal(benthic_cpue_coord, benthic_stn_coord)
+# FALSE - look for where records don't match
+sta_coord_match <- 
+  full_join(
+    benthic_stn_coord, 
+    benthic_cpue_coord,
+    by = "station_code",
+    suffix = c("_meta", "_cpue")
+  ) %>% 
+  mutate(
+    lat_equal = latitude_meta == latitude_cpue,
+    long_equal = longitude_meta == longitude_cpue
+  )
+
+sta_coord_match %>% filter(lat_equal == FALSE | long_equal == FALSE | is.na(lat_equal) | is.na(long_equal))
+# D7-C is missing coordinates in the cpue table
+# 4 other stations have coordinates that don't match between the tables,
+# however, the values are practically identical, so it doesn't matter.
+# We'll use the benthic_stn table to define station coordinates
+
 #start by looking at data frame with just the station metadata
 #add geometry column 
 benthic_stn_g <- benthic_stn %>% 
@@ -187,72 +217,47 @@ benthic_stn_g <- benthic_stn %>%
            crs = 4326 #EPSG code for WGS84
            ,remove=F #retains original lat/long columns
   ) %>%  
-  #make station status a factor; needed for color coding in map below
-  mutate(status = as.factor(status)) %>% 
+  #make a combined station status - sampling effort column; needed for color coding in map below
+  mutate(
+    sample_effort = if_else(site_code %in% sta_visits_many, "LongPOR", "ShortPOR"),
+    status_effort = paste(status, sample_effort, sep = "_")
+  ) %>% 
   glimpse()
 
-#look at coordinate reference system (CRS) 
-#of the basemap, which is built into deltamapr, and our region shapefile 
-st_crs(region_shape) #WGS84 which is EPSG = 4326
-st_crs(WW_Delta) #NAD83 which is EPSG = 4269; need to change to WGS84
+# Dissolve region shapefile to just the outside perimeter, removing subregions
+region_shape_diss <- region_shape %>% 
+  # Convert to WGS 84, UTM zone 11N
+  st_transform(crs = 32611) %>% 
+  # Add a 0.5 meter buffer to remove slivers within perimeter
+  st_buffer(0.5) %>%
+  # Dissolve subregions
+  st_union()
 
-#change basemap CRS to WGS84 (4326) 
-WW_Delta_4326 <- st_transform(WW_Delta, crs = 4326)
+#Convert coordinate reference system (CRS) of basemap and benthic_stn_g to 32611
+WW_Delta_32611 <- st_transform(WW_Delta, crs = 32611)
+benthic_stn_g_32611 <- st_transform(benthic_stn_g, crs = 32611)
 
 #map all stations
 (map_benthic <-ggplot()+
     #CDFW Delta waterways
-    geom_sf(data= WW_Delta_4326, fill= "skyblue3", color= "black")+
-    #subregions
-    geom_sf(data =region_shape, aes(fill=SubRegion,alpha=0.8))+
+    geom_sf(data= WW_Delta_32611, fill= "skyblue3", color= "black", alpha = 0.6)+
+    #region perimeter
+    geom_sf(data =region_shape_diss, alpha = 0.4, size = 1, color = "red", fill = "grey") +
     #all stations
-    geom_sf(data =benthic_stn_g, aes(fill=status),shape= 22, size= 2.5)+
+    geom_sf(data =benthic_stn_g_32611, aes(fill = status_effort), shape = 22, size = 2.5) +
     #add title
     ggtitle("All Benthic Invert Stations")+
     theme_bw()
 )
 
 #filter stations to just those within the shapefile bounds
-benthic_stn_r <- benthic_stn_g %>% 
-  st_filter(region_shape) 
+stn_within_reg <- benthic_stn_g_32611 %>% 
+  st_filter(region_shape_diss) %>% 
+  pull(site_code)
 #drops two rows as expected (ie, the two San Pablo Bay stations)
 
-#next do this spatial filtering with the (much larger) survey data set
-
-#first, look at rows with missing lat/long
-#there shouldn't be any
-benthic_cpue_mcoords <- benthic_cpue %>%
-  #reduce data set to just distinct combos of station, date, and lat/long
-  distinct(station_code, year, month, latitude,longitude) %>% 
-  #filter to just the rows with missing coordinates
-  filter((is.na(latitude) | is.na(longitude))) %>% 
-  #look at which stations have missing lat/long
-  distinct(station_code)
-#all data for D7-C is missing lat/long but no other stations with missing lat/long
-#can get the the lat/long for D7-C from the station metadata file
-
-#do the spatial filter on the cpue data set
-benthic_cpue_sf <- benthic_cpue %>% 
-  #add lat/long for D7-C
-  #otherwise this site gets dropped during the spatial filter below
-  mutate(
-    latitude_wgs84 = case_when(station_code=="D7-C" ~ 38.11713
-      ,TRUE ~ as.numeric(latitude))
-    ,longitude_wgs84 = case_when(station_code=="D7-C" ~ -122.0396
-    ,TRUE ~ as.numeric(longitude)))  %>% 
-  #specify the crs 
-  st_as_sf(coords = c(x='longitude_wgs84',y='latitude_wgs84'), 
-           crs = 4326 #EPSG code for WGS84
-           ,remove=T #remove original columns
-           #,na.fail=F #create geometry column despite missing D7-C lat/long 
-  ) %>%  
-  #filter out any stations beyond our region bounds using our region shapefile
-  st_filter(region_shape) %>% 
-  #remove geometry because we probably don't need it from here on
-  st_set_geometry(NULL) %>%  
-  glimpse()
-
-unique(benthic_cpue_sf$station_code) #"D7-C" is included now
+#next filter the survey data set to stations within the shapefile bounds
+benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg)
 
 
 # Add zeros for absences back into abundance data set-------------------------
