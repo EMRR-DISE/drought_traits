@@ -406,6 +406,8 @@ cpue_mean_annual <- benthic_cpue_stfz_prop %>%
 #instead of calculating annual means based on a variable number of samples
 
 # Format Table L (station-year x taxon) -----------
+# once this is done, it would be good to do some NMDS to see how communities compare
+# among stations and among water year types; maybe work with Leela on that
 
 #make Table L which is taxon x sample matrix
 TableL <- cpue_mean_annual %>% 
@@ -419,6 +421,9 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
   facet_wrap(vars(organism_code),scales="free",nrow=6)
 
 # Explore water quality data----------------
+#should carefully read over the metadata for this data set at some point
+#should do more QAQC checks of WQ data before combining with benthic invert data
+#including plots of WQ through time
 
 #reduce data set to just the columns of interest
 #glimpse(benthic_wq)
