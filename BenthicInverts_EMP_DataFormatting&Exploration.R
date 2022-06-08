@@ -118,8 +118,6 @@ water_year <- water_year_indices
 
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
-# Is this region shapefile in deltamapr? If so, we can call it directly in the
-  # code by name instead of importing a local copy.
 
 
 # Filter the stations based on time series completeness ------------
@@ -224,35 +222,26 @@ benthic_stn_g <- benthic_stn %>%
   ) %>% 
   glimpse()
 
-# Dissolve region shapefile to just the outside perimeter, removing subregions
-region_shape_diss <- region_shape %>% 
-  # Convert to WGS 84, UTM zone 11N
-  st_transform(crs = 32611) %>% 
-  # Add a 0.5 meter buffer to remove slivers within perimeter
-  st_buffer(0.5) %>%
-  # Dissolve subregions
-  st_union()
-
-#Convert coordinate reference system (CRS) of basemap and benthic_stn_g to 32611
-WW_Delta_32611 <- st_transform(WW_Delta, crs = 32611)
-benthic_stn_g_32611 <- st_transform(benthic_stn_g, crs = 32611)
+#Convert coordinate reference system (CRS) of basemap and benthic_stn_g to EPSG = 26910
+WW_Delta_26910 <- st_transform(WW_Delta, crs = 26910)
+benthic_stn_g_26910 <- st_transform(benthic_stn_g, crs = 26910)
 
 #map all stations
 (map_benthic <-ggplot()+
     #CDFW Delta waterways
-    geom_sf(data= WW_Delta_32611, fill= "skyblue3", color= "black", alpha = 0.6)+
+    geom_sf(data= WW_Delta_26910, fill= "skyblue3", color= "black", alpha = 0.6)+
     #region perimeter
-    geom_sf(data =region_shape_diss, alpha = 0.4, size = 1, color = "red", fill = "grey") +
+    geom_sf(data =region_shape, alpha = 0.4, size = 1, color = "red", fill = "grey") +
     #all stations
-    geom_sf(data =benthic_stn_g_32611, aes(fill = status_effort), shape = 22, size = 2.5) +
+    geom_sf(data =benthic_stn_g_26910, aes(fill = status_effort), shape = 22, size = 2.5, alpha = 0.8) +
     #add title
     ggtitle("All Benthic Invert Stations")+
     theme_bw()
 )
 
 #filter stations to just those within the shapefile bounds
-stn_within_reg <- benthic_stn_g_32611 %>% 
-  st_filter(region_shape_diss) %>% 
+stn_within_reg <- benthic_stn_g_26910 %>% 
+  st_filter(region_shape) %>% 
   pull(site_code)
 #drops two rows as expected (ie, the two San Pablo Bay stations)
 
