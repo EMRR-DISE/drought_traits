@@ -263,11 +263,20 @@ benthic_cpue_stfu <- benthic_cpue_stf %>%
   # Convert organism_code to character since it represents discrete organisms
   mutate(organism_code = as.character(organism_code))
 
-# Pull out one record with organism_code = 0 (no catch) since we don't need to
-  # add "no catch" to every sample
-benthic_cpue_no_catch <- benthic_cpue_stfu %>% filter(organism_code == "0")
-# The mean_cpue for this one record without catch is 4.81 - this doesn't seem
+# Pull out one record with organism_code = 0 (no catch) and add in all
+  # organism_codes along with mean_cpue = 0 to indicate no catch
+# NOTE: The mean_cpue for this one record without catch is 4.81 - this doesn't seem
   # correct, may need to look into this
+benthic_cpue_no_catch <- benthic_cpue_stfu %>% 
+  filter(organism_code == "0") %>% 
+  complete(
+    sample_date,
+    station_code,
+    organism_code = unique(benthic_cpue_stfu$organism_code),
+    fill = list(mean_cpue = 0)
+  ) %>% 
+  # Don't include record for "no catch" in the end
+  filter(organism_code != "0")
 
 # Fill in zeros for absent organisms within each sample
 benthic_cpue_stfz <- benthic_cpue_stfu %>% 
