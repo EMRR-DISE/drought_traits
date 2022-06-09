@@ -507,6 +507,7 @@ organisms_common <- cpue_common %>%
   pull(organism_code)
 
 #NOTE: check to make sure it removed and retained all the right taxa
+#NOTE2: How best to round wq values, especially SC for comparing with CPUE? look at distribution of WQ values
 bwp <- bwq %>% 
   filter(organism_code %in% organisms_common) %>% 
   #create a new column that rounds WQ parameters to nearest degree
@@ -514,7 +515,15 @@ bwp <- bwq %>%
   mutate(wt_surface_r = round(wt_surface,0)
          ,do_surface_r = round(do_surface,0)
          ,turbidity_surface_r = round(turbidity_surface,0)
+         ,sp_cnd_surface_r = round(sp_cnd_surface,-2)
          ) %>% 
+  #drop unneeded columns
+  select(-c(sp_cnd_surface,wt_surface,do_surface,turbidity_surface)) %>%  
+    glimpse()
+
+#maybe it's easier if we convert from wide to long
+bwp_long <- bwp %>% 
+  pivot_longer(c(secchi:sp_cnd_surface_r),names_to = "parameter", values_to = "value") %>%  
   glimpse()
 
 unique(bwp$wt_surface_r) 
@@ -550,9 +559,13 @@ ctax <- unique(bwp$organism_code)
 #got the right number of taxa (n=42)
 
 # Plot distributions by taxa and wq parameter-----------------------
-#need to spend some time figuring out how to do this with map functions
 
-#calculate mean CPUE by temperature for each taxa
+#calculate mean cpue for each level of each WQ parameter
+bwp_means <- bwp_long %>% 
+  group_by(organism_code,parameter,value) %>% 
+  summarise(cpue = mean(mean_cpue,na.rm=T))
+
+#calculate mean CPUE just by temperature for each taxa
 btemp <- bwp %>% 
   group_by(organism_code,wt_surface_r) %>%
   summarize(spp_temp_mean = mean(mean_cpue))
@@ -560,6 +573,7 @@ btemp <- bwp %>%
 bdo <- bwp %>% 
   group_by(organism_code,do_surface_r) %>%
   summarize(spp_do_mean = mean(mean_cpue))
+
 
 #plot temperature
 ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
@@ -580,7 +594,7 @@ ys1 %>% map(function(y)
 
 #use map function 
 ys <- c(
-  #"secchi","turbidity_surface", "sp_cnd_surface",
+  #"secchi","turbidity_surface_r", "sp_cnd_surface_r",
   "wt_surface_r","do_surface_r" )
 
 ys %>% map(function(y) 
