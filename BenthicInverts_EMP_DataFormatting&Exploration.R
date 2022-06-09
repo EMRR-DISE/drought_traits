@@ -20,7 +20,6 @@ library(janitor) #used to quickly clean up column names
 library(lubridate) #format date
 library(sf) #work with spatial data like shapefiles
 library(deltamapr) #Bay-Delta spatial data
-#library(readxl) #importing data from excel files
 library(waterYearType) #lists all water year types 1901 - 2017
 library(here)
 
@@ -34,17 +33,6 @@ library(here)
 #samples through time
 
 #use map functions to plot multiple panels of wq vs abundances
-
-#research ways to exclude rare taxa
-#consider plotting the proportion of taxa retained vs proportion of samples occupied
-#eg, going from at least 5% of samples to at least 10% of samples
-#dropped from 243 to 42 taxa; dropped from 26.7% taxa retained to 17.3% of taxa retained
-#rare could be based on proportion of presence in samples
-#or number of individuals out of all individuals
-#or x% of species with lowest abundances
-#proportion of maximum: x% of max abundance of most common species
-#will drop out some management relevant species because they are rare
-
 
 # Read in the data-----------------------
 
@@ -89,15 +77,15 @@ benthic_wq <-
       Station = "c",
       Date = col_date("%m/%d/%Y"),
       Time = "t",
-      Secchi = "c",
-      TurbiditySurface = "c",
-      TurbidityBottom = "c",
-      SpCndSurface = "c",
-      SpCndBottom = "c",
-      WTSurface = "c",
-      WTBottom = "c",
-      DOSurface = "c",
-      DOBottom = "c"
+      Secchi = "d",
+      TurbiditySurface = "d", #some non-detects present
+      TurbidityBottom = "d",
+      SpCndSurface = "d",
+      SpCndBottom = "d",
+      WTSurface = "d",
+      WTBottom = "d",
+      DOSurface = "d",
+      DOBottom = "d"
     )
   ) %>% 
   clean_names() %>% 
@@ -170,12 +158,10 @@ unique(benthic_cpue_f$station_code)
 
 
 # Filter stations spatially -----------
-#Note should add some more checks of latitude/longitude columns before filtering
-#eg, see if any coordinates fall outside Bay-Delta, indicating error in coordinates
-#already checked for NAs in lat/long
-
 #Only keep the stations that fall within our spatial region
 #as defined by the region shapefile
+#NOTE: for benthic inverts, no additional station filtering will occur
+#because all three within our focal region
 
 # Check to see if station coordinates in metadata and cpue tables match
 benthic_stn_coord <- benthic_stn %>% 
@@ -300,14 +286,11 @@ vmonth <- benthic_cpue_stfz %>%
 
 # Remove rare taxa -------------------
 
-#NOTE: should determine what proportion of bay-delta wide taxa are represented
+#what proportion of bay-delta wide taxa are represented
 #in the three stations I have kept
 spp_all <- unique(benthic_cpue$organism_code)
 #408 taxa in data set; 243 in those three stations
 #so 59.6% of Bay-Delta taxa captured by our stations
-
-#also consider creating species accumulation curves to see how well we have sampled 
-#the community of the sites; a bit hard in a large tidal system
 
 #try various approaches for excluding rare taxa
 #how many taxa remain if only keeping those that are present in: 
@@ -326,7 +309,7 @@ spp_all <- unique(benthic_cpue$organism_code)
 #eg, lower sampling early in series could bias against taxa that were only common
 #in early years
 
-#look at which taxa are retained across methods. are the most common ones the same?
+#should look at which taxa are retained across methods. are the most common ones the same?
 
 #calculate abundance metrics by taxon
 cpue_indiv_prop <- benthic_cpue_stfz %>%
@@ -364,12 +347,12 @@ cpue_rarest25 <- cpue_indiv_prop %>%
 
 #drop all ssp that comprise less than 5% of all individuals
 cpue_indiv_5plus <- cpue_indiv_prop %>% 
-  filter(prop > 0.05)
+  filter(indiv_prop > 0.05)
 #only 7 taxa remain out of 243 (2.9% of taxa remaining)
 
 #drop all ssp with abundances less that 5% of that of most abundant spp
 cpue_prop_dom_5plus <- cpue_indiv_prop %>% 
-  filter(prop_dom > 0.05)
+  filter(dom_prop > 0.05)
 #only 14 spp remain out of 243 (5.8% of spp)
 
 #need to calculate total number of samples
@@ -452,53 +435,34 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
 #should do more QAQC checks of WQ data before combining with benthic invert data
 #including plots of WQ through time
 
-#reduce data set to just the columns of interest
-#glimpse(benthic_wq)
-
-wq_format <- benthic_wq %>% 
-  #format date
-  mutate(sample_date = mdy(date)) %>% 
-  select(station
-         , sample_date
-         , time
-         , secchi
-         , turbidity_surface 
-         , turbidity_bottom
-         ,sp_cnd_surface 
-         ,sp_cnd_bottom
-         , wt_surface 
-         , wt_bottom
-         ,do_surface
-         ,do_bottom 
-  ) %>% 
-  glimpse()
-
-#look at earliest date that each of these parameters was collected
-wq_format_min <- wq_format %>% 
+#look at earliest date that each of the WQ parameters was collected
+wq_start <- benthic_wq %>% 
   #convert wide to long; probably easier that way
-  pivot_longer(cols= c(secchi:do_bottom), names_to = "parameter", values_to = "value") %>% 
+  pivot_longer(cols= c(secchi:turbidity_bottom), names_to = "parameter", values_to = "value") %>%    
   #drop rows with NAs for value
   filter(!is.na(value)) %>% 
   group_by(parameter) %>% 
-  summarize(year_min = min(sample_date))
+  summarize(year_min = min(date)) %>% 
+  arrange(parameter)
 #bottom measurements started in 2017 so can't use those
 #but might be good to see how correlated bottom and top measurements are
 #all other parameters go back to 1975 so they probably work, as least for stations where WQ and benthic overlap
 
 #only keep the WQ parameters that, more or less, cover the full benthic time series
-wq_format_focus <- wq_format %>%
+wq_focus <- benthic_wq %>%
   #add month column
-  mutate(month = month(sample_date)
-        , year = year(sample_date)) %>% 
+  mutate(month = month(date)
+        , year = year(date)
+        ) %>% 
   select(station
-         #, sample_date #drop because different from benthic sample dates
+         #, date #drop because different from benthic sample dates
          , month
          , year
          , secchi
          , turbidity_surface 
-         ,sp_cnd_surface 
+         , sp_cnd_surface 
          , wt_surface 
-         ,do_surface
+         , do_surface
   ) %>% 
   glimpse()
 
@@ -510,7 +474,12 @@ wq_format_focus <- wq_format %>%
 
 #add column with benthic station names that does not include R, L, C
 #then the WQ and benthic stations will match
-benthic_cpue_mod <- benthic_cpue_with_zeros %>% 
+benthic_cpue_mod <- benthic_cpue %>% 
+  #remove duplicate rows that exist as error in orginal data set
+  distinct(station_code, sample_date, organism_code, mean_cpue) %>% 
+  #add in zeros for taxa absence from samples
+  #NOTE: should mostly drop the "no catch" (organism_code = 0)
+  complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0)) %>%   
   #add column that drops the last two characters of the benthic station names 
   #so they will match the WQ station names
   mutate(station = substr(station_code,1,nchar(station_code)-2)
@@ -518,11 +487,13 @@ benthic_cpue_mod <- benthic_cpue_with_zeros %>%
          ,month = month(sample_date)
          ,year=year(sample_date)
   ) %>% 
+  #reduce data frame to just the needed columns
+  select(station, year, month, organism_code, mean_cpue) %>%
  glimpse()
 
 #combine benthic and WQ stations
 #should match by station, year, month
-bwq <-left_join(benthic_cpue_mod,wq_format_focus) %>% 
+bwq <-left_join(benthic_cpue_mod,wq_focus) %>% 
   #change organism code from numeric to character
   #so it matches with cpue_common data frame
   mutate(organism_code=as.character(organism_code)) %>% 
@@ -531,11 +502,20 @@ bwq <-left_join(benthic_cpue_mod,wq_format_focus) %>%
 #next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #first combine main data frame with the proportion of samples data frame
 #should combine by organism_code
-bwp <- inner_join(bwq, cpue_common) %>% 
-  #create a new column that rounds temperature to nearest degree
+
+organisms_common <- cpue_common %>% 
+  pull(organism_code)
+
+#NOTE: check to make sure it removed and retained all the right taxa
+bwp <- bwq %>% 
+  filter(organism_code %in% organisms_common) %>% 
+  #create a new column that rounds WQ parameters to nearest degree
+  #some don't need rounding because they are already whole number values
   mutate(wt_surface_r = round(wt_surface,0)
          ,do_surface_r = round(do_surface,0)
-         ) 
+         ,turbidity_surface_r = round(turbidity_surface,0)
+         ) %>% 
+  glimpse()
 
 unique(bwp$wt_surface_r) 
 #why are there NAs for the rounded temp?
@@ -545,7 +525,7 @@ unique(bwp$wt_surface_r)
 #look at rows with NA for temp
 temp_na <- bwp %>% 
   filter(is.na(wt_surface_r))
-#are are a whole group of benthic visits with no WQ
+#are are a whole group of benthic visits with no WQ (n = 28,014)
 #look closer at those
 
 #which visits are missing WQ?
@@ -553,7 +533,7 @@ wq_miss <- bwp %>%
   #start with focus on temp but should filter to where any WQ parameter is NA
   filter(is.na(wt_surface)) %>% 
   #look at visits with NA
-  distinct(station, sample_date) %>%  #664 visits
+  distinct(station, year, month) %>%  #664 visits
   #arrange(sample_date, station) %>% 
   group_by(station) %>% 
   count()
@@ -562,7 +542,7 @@ wq_miss <- bwp %>%
 
 
 #a couple quick checks
-range(bwp$prop) 
+#range(bwp$prop) 
 #0.1000715 0.7698356
 #looks right
 
