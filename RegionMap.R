@@ -16,27 +16,26 @@ R_EDSM_Subregions_1617P1
 st_crs(R_EDSM_Subregions_1617P1) #NAD83 / UTM zone 10N which is EPSG = 26910
 st_crs(WW_Delta) #NAD83 which is EPSG = 4269
 
-#change CRS to WGS84 (4326) which is what most (all?) station coordinates will be in
+#change CRS of WW_Delta to EPSG = 26910
 #Note: the difference is so subtle is probably doesn't even matter
-regions_4326 <- st_transform(R_EDSM_Subregions_1617P1, crs = 4326)
-WW_Delta_4326 <- st_transform(WW_Delta, crs = 4326)
+WW_Delta_26910 <- st_transform(WW_Delta, crs = 26910)
 
 #look at bounding box for delta regions
-bdb <- st_bbox(regions_4326)
+bdb <- st_bbox(R_EDSM_Subregions_1617P1)
 
 #make map
 (map_region_all<-ggplot()+
     #CDFW Delta waterways
-    geom_sf(data= WW_Delta_4326, fill= "skyblue3", color= "black")+
+    geom_sf(data = WW_Delta_26910, fill= "skyblue3", color= "black")+
     #EDSM 2017-18 Phase 1 Strata
-    geom_sf(data =regions_4326, aes(fill=SubRegion,alpha=0.8))+
+    geom_sf(data = R_EDSM_Subregions_1617P1, aes(fill=SubRegion), alpha=0.8)+
     #add title
     ggtitle("R_EDSM_Subregions_1617P1")+
     theme_bw()
 )
 
 #filter out some unneeded subregions
-region_focal <- regions_4326 %>% 
+region_focal <- R_EDSM_Subregions_1617P1 %>% 
   filter(!grepl("Napa", SubRegion)
          & SubRegion!="Suisun Marsh" 
          & SubRegion!="East San Pablo Bay"
@@ -45,24 +44,22 @@ region_focal <- regions_4326 %>%
 #remake map with reduced subregions  
 (map_region_focal<-ggplot()+
     #CDFW Delta waterways
-    geom_sf(data= WW_Delta_4326, fill= "skyblue3", color= "black")+
+    geom_sf(data= WW_Delta_26910, fill= "skyblue3", color= "black")+
     #reduced region
-    geom_sf(data =region_focal, aes(fill=SubRegion,alpha=0.8))+
+    geom_sf(data =region_focal, aes(fill=SubRegion), alpha=0.8)+
     #add title
     ggtitle("Focal Region")+
     theme_bw()
 )
 #ggsave(file = "RegionMap.png",type ="cairo-png",width=20, units="in",dpi=300)
 
+# Dissolve region shapefile to just the outside perimeter, removing subregions
+region_focal_diss <- region_focal %>% 
+  # Add a 0.5 meter buffer to remove slivers within perimeter
+  st_buffer(0.5) %>%
+  # Dissolve subregions
+  st_union()
 
-#write the shapefile
-#st_write(region_focal, "spatial_files/region.shp")
-#got some warning messages
+#write the shapefile of just the outside perimeter
+write_sf(region_focal_diss, "spatial_files/region.shp")
 
-  
-  
-  
-  
-  
-  
-  
