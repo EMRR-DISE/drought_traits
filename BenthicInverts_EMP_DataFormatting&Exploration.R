@@ -569,11 +569,47 @@ bwp_means <- bwp_long %>%
 btemp <- bwp %>% 
   group_by(organism_code,wt_surface_r) %>%
   summarize(spp_temp_mean = mean(mean_cpue))
-#there are NAs in the temperature column but not sure why; figure that out
-bdo <- bwp %>% 
-  group_by(organism_code,do_surface_r) %>%
-  summarize(spp_do_mean = mean(mean_cpue))
 
+btemp_1130 <- btemp %>% 
+  filter(organism_code =="1130")
+
+#there are NAs in the temperature column but not sure why; figure that out
+
+ggplot(btemp_1130,aes(x=wt_surface_r, y=spp_temp_mean))+
+  geom_bar(stat="identity")+
+  ggtitle("water temperature")
+
+temp_plot <- function(df, ocode){
+  ggplot(df,aes(x=wt_surface_r, y=spp_temp_mean))+
+    geom_bar(stat="identity")+
+    ggtitle(ocode)
+}
+
+temp_plot(btemp_1130,"1130")
+
+btemp_nest <- btemp %>% 
+  nest(odata=-organism_code) %>% 
+  mutate(plots = map2(odata,organism_code, temp_plot))
+
+
+
+walk2(btemp_nest$plots,btemp_nest$organism_code
+      ,~ggsave(filename=paste0("BenthicInverts_Temperature/Temp_",.y,".png")
+               ,plot = .x
+               ))
+
+bwp_means_plot <- bwp_means %>%
+  group_by(parameter) %>%
+  nest() %>% 
+  map(function(y)
+    #now generalize the plotting
+  ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
+  geom_bar(stat="identity")+
+  facet_wrap(vars(organism_code),scales="free",nrow=6)+
+  ggtitle("water temperature")
+  )
+map(function(y) 
+  ggplot(mtcars, aes(hp)) + geom_point(aes_string(y=y)))
 
 #plot temperature
 ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
@@ -587,18 +623,9 @@ ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
 #consider making another panel of plots for rarer taxa, which might show a stronger 
 #response than the most common taxa (eg, >5% but <10% of samples)
 
-ys1 <- c("mpg","cyl","disp")
-ys1 %>% map(function(y) 
-  ggplot(mtcars, aes(hp)) + geom_point(aes_string(y=y)))
 
 
-#use map function 
-ys <- c(
-  #"secchi","turbidity_surface_r", "sp_cnd_surface_r",
-  "wt_surface_r","do_surface_r" )
 
-ys %>% map(function(y) 
-  ggplot(bwp, aes(mean_cpue)) + geom_point(aes_string(y=y)))
 
 #calculate 95th percentile temperature for each taxa
 btemp_q95 <- bwp %>% 
