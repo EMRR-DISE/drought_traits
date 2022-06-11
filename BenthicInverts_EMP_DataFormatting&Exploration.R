@@ -264,6 +264,12 @@ benthic_cpue_no_catch <- benthic_cpue_stfu %>%
   # Don't include record for "no catch" in the end
   filter(organism_code != "0")
 
+#look at all no catch samples in whole data set
+benthic_cpue_no_catch1 <- benthic_cpue %>% 
+  filter(organism_code == "0") %>% 
+  distinct(station_code,sample_date,organism_code,mean_cpue)
+#5 samples and all have non-zero CPUE; ask Betsy about that
+
 # Fill in zeros for absent organisms within each sample
 benthic_cpue_stfz <- benthic_cpue_stfu %>% 
   # Pull out record with "no catch"
@@ -503,19 +509,22 @@ bwq <-left_join(benthic_cpue_mod,wq_focus) %>%
 #first combine main data frame with the proportion of samples data frame
 #should combine by organism_code
 
+#pull out column that contains the codes of organisms retained in the data set
 organisms_common <- cpue_common %>% 
   pull(organism_code)
 
 #NOTE: check to make sure it removed and retained all the right taxa
 #NOTE2: How best to round wq values, especially SC for comparing with CPUE? look at distribution of WQ values
+#NOTE3: consider standardizing (ie, generating z-scores) WQ parameters 
+#so their range is similar across parameter
 bwp <- bwq %>% 
   filter(organism_code %in% organisms_common) %>% 
   #create a new column that rounds WQ parameters to nearest degree
   #some don't need rounding because they are already whole number values
-  mutate(wt_surface_r = round(wt_surface,0)
-         ,do_surface_r = round(do_surface,0)
-         ,turbidity_surface_r = round(turbidity_surface,0)
-         ,sp_cnd_surface_r = round(sp_cnd_surface,-2)
+  mutate(temp_r = round(wt_surface,0)
+         ,do_r = round(do_surface,0)
+         ,turb_r = round(turbidity_surface,0)
+         ,sc_r = round(sp_cnd_surface,-2)
          ) %>% 
   #drop unneeded columns
   select(-c(sp_cnd_surface,wt_surface,do_surface,turbidity_surface)) %>%  
@@ -523,24 +532,24 @@ bwp <- bwq %>%
 
 #maybe it's easier if we convert from wide to long
 bwp_long <- bwp %>% 
-  pivot_longer(c(secchi:sp_cnd_surface_r),names_to = "parameter", values_to = "value") %>%  
+  pivot_longer(c(secchi:sc_r),names_to = "parameter", values_to = "value") %>%  
   glimpse()
 
-unique(bwp$wt_surface_r) 
+unique(bwp$temp_r) 
 #why are there NAs for the rounded temp?
 #probably cases in which WQ not collected in month of benthic data 
 #but could be other reason
 
 #look at rows with NA for temp
 temp_na <- bwp %>% 
-  filter(is.na(wt_surface_r))
+  filter(is.na(temp_r))
 #are are a whole group of benthic visits with no WQ (n = 28,014)
 #look closer at those
 
 #which visits are missing WQ?
 wq_miss <- bwp %>% 
   #start with focus on temp but should filter to where any WQ parameter is NA
-  filter(is.na(wt_surface)) %>% 
+  filter(is.na(temp_r)) %>% 
   #look at visits with NA
   distinct(station, year, month) %>%  #664 visits
   #arrange(sample_date, station) %>% 
@@ -559,60 +568,21 @@ ctax <- unique(bwp$organism_code)
 #got the right number of taxa (n=42)
 
 # Plot distributions by taxa and wq parameter-----------------------
+#probably should plot sample sizes for each level of each parameter too
 
 #calculate mean cpue for each level of each WQ parameter
 bwp_means <- bwp_long %>% 
   group_by(organism_code,parameter,value) %>% 
   summarise(cpue = mean(mean_cpue,na.rm=T))
 
-#calculate mean CPUE just by temperature for each taxa
-btemp <- bwp %>% 
-  group_by(organism_code,wt_surface_r) %>%
-  summarize(spp_temp_mean = mean(mean_cpue))
+#start with just temperature panel
+#filter data to just temp
+bwp_means_temp <- bwp_means %>% 
+  filter(parameter == "temp_r") %>% 
+  glimpse()
 
-btemp_1130 <- btemp %>% 
-  filter(organism_code =="1130")
-
-#there are NAs in the temperature column but not sure why; figure that out
-
-ggplot(btemp_1130,aes(x=wt_surface_r, y=spp_temp_mean))+
-  geom_bar(stat="identity")+
-  ggtitle("water temperature")
-
-temp_plot <- function(df, ocode){
-  ggplot(df,aes(x=wt_surface_r, y=spp_temp_mean))+
-    geom_bar(stat="identity")+
-    ggtitle(ocode)
-}
-
-temp_plot(btemp_1130,"1130")
-
-btemp_nest <- btemp %>% 
-  nest(odata=-organism_code) %>% 
-  mutate(plots = map2(odata,organism_code, temp_plot))
-
-
-
-walk2(btemp_nest$plots,btemp_nest$organism_code
-      ,~ggsave(filename=paste0("BenthicInverts_Temperature/Temp_",.y,".png")
-               ,plot = .x
-               ))
-
-bwp_means_plot <- bwp_means %>%
-  group_by(parameter) %>%
-  nest() %>% 
-  map(function(y)
-    #now generalize the plotting
-  ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
-  geom_bar(stat="identity")+
-  facet_wrap(vars(organism_code),scales="free",nrow=6)+
-  ggtitle("water temperature")
-  )
-map(function(y) 
-  ggplot(mtcars, aes(hp)) + geom_point(aes_string(y=y)))
-
-#plot temperature
-ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
+#faceted plot showiing distribution for all taxa
+ggplot(bwp_means_temp,aes(x=value, y=cpue))+
   geom_bar(stat="identity")+
   facet_wrap(vars(organism_code),scales="free",nrow=6)+
   ggtitle("water temperature")
@@ -622,6 +592,36 @@ ggplot(btemp,aes(x=wt_surface_r, y=spp_temp_mean))+
 #consider also plotting proportion of samples at each temperature
 #consider making another panel of plots for rarer taxa, which might show a stronger 
 #response than the most common taxa (eg, >5% but <10% of samples)
+
+#make plotting function for panels of plots showing distribution of abundances across env gradients
+distr_plot <- function(df, param){
+  ggplot(df,aes(x=value, y=cpue))+
+    geom_bar(stat="identity")+
+    facet_wrap(vars(organism_code),scales="free",nrow=6)+
+    ggtitle(param)
+}
+
+#test the function
+test<-distr_plot(bwp_means_temp,"water temperature")
+ggsave(test,filename="test.png",dpi=300, width = 8, height = 8, units = "in")
+#worked fine
+
+#nest data by parameter in preparation for making panels of plots
+#make a plot of distribution across temp gradient for every taxon
+parameter_nest <- bwp_means %>% 
+  nest(abund_distr = -parameter) %>%  
+  mutate(plots = map2(abund_distr,parameter, distr_plot))
+
+
+#now save plot panel for every parameter
+walk2(parameter_nest$plots,parameter_nest$parameter
+      ,~ggsave(filename=paste0("BenthicInverts_WQ_Gradient/TaxonAbundace_",.y,".png")
+               ,plot = .x
+               ,dpi = 300
+               ,width = 12
+               ,height = 8
+               ,units = "in"
+      ))
 
 
 
