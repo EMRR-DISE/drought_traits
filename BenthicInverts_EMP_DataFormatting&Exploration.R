@@ -72,20 +72,17 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
 #EMP water quality data
 benthic_wq <- 
   read_csv(
-    resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=98b400de8472d2a3d2e403141533a2cc")),
+    resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.6&entityid=dfeaee030be901ae00b8c0449ea39e9c")),
     col_types = cols_only(
       Station = "c",
-      Date = col_date("%m/%d/%Y"),
+      Date = col_date("%Y-%m-%d"),
       Time = "t",
       Secchi = "d",
-      TurbiditySurface = "d", #some non-detects present
-      TurbidityBottom = "d",
+      TurbiditySurface_FNU = "d", #some non-detects present
+      TurbiditySurface_NTU = "d", #some non-detects present
       SpCndSurface = "d",
-      SpCndBottom = "d",
       WTSurface = "d",
-      WTBottom = "d",
       DOSurface = "d",
-      DOBottom = "d"
     )
   ) %>% 
   clean_names() %>% 
@@ -445,15 +442,15 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
 #look at earliest date that each of the WQ parameters was collected
 wq_start <- benthic_wq %>% 
   #convert wide to long; probably easier that way
-  pivot_longer(cols= c(secchi:turbidity_bottom), names_to = "parameter", values_to = "value") %>%    
+  pivot_longer(cols= c(secchi:turbidity_surface_ntu), names_to = "parameter", values_to = "value") %>%    
   #drop rows with NAs for value
   filter(!is.na(value)) %>% 
   group_by(parameter) %>% 
   summarize(year_min = min(date)) %>% 
   arrange(parameter)
-#bottom measurements started in 2017 so can't use those
-#but might be good to see how correlated bottom and top measurements are
-#all other parameters go back to 1975 so they probably work, as least for stations where WQ and benthic overlap
+#all parameters go back to 1975 so they probably work, as least for stations where WQ and benthic overlap
+#turbidity units changed in 2018, so need to decide how to handle that
+#I thought NTU and FNU were basically the same
 
 #only keep the WQ parameters that, more or less, cover the full benthic time series
 wq_focus <- benthic_wq %>%
@@ -465,7 +462,8 @@ wq_focus <- benthic_wq %>%
          , month
          , year
          , secchi
-         , turbidity_surface 
+         , turbidity_surface_fnu
+         , turbidity_surface_ntu
          , sp_cnd_surface 
          , wt_surface 
          , do_surface
@@ -481,10 +479,11 @@ wq_focus <- benthic_wq %>%
 #add column with benthic station names that does not include R, L, C
 #then the WQ and benthic stations will match
 benthic_cpue_mod <- benthic_cpue %>% 
-  #remove duplicate rows that exist as error in orginal data set
-  distinct(station_code, sample_date, organism_code, mean_cpue) %>% 
-  #add in zeros for taxa absence from samples
-  #NOTE: should mostly drop the "no catch" (organism_code = 0)
+  #reduce df to just the needed columns
+  select(station_code, sample_date, organism_code, mean_cpue) %>% 
+  #for now, just drop the five samples with no organisms at all
+  #probably should include these so we know where all the organisms are not
+  filter(organism_code!=0) %>% 
   complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0)) %>%   
   #add column that drops the last two characters of the benthic station names 
   #so they will match the WQ station names
@@ -504,6 +503,12 @@ bwq <-left_join(benthic_cpue_mod,wq_focus) %>%
   #so it matches with cpue_common data frame
   mutate(organism_code=as.character(organism_code)) %>% 
   glimpse()
+
+#look for cases where data didn't match properly
+bwq_issues <- bwq %>% 
+  #just need to look at station matching so simplify to remove organism codes
+  distinct(station,year,month,secchi, turbidity_surface, sp_cnd_surface, wt_surface, do_surface) %>% 
+  filter(is.na(secchi) | is.na(turbidity_surface) | is.na(sp_cnd_surface) | is.na(wt_surface) | is.na(do_surface) )
 
 #next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #first combine main data frame with the proportion of samples data frame
