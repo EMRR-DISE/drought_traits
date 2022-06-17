@@ -5,7 +5,7 @@
 #Nick Rasmussen, nicholas.rasmussen@water.ca.gov
 
 # Metadata notes ---------------------------
-#1975 - October 2020
+#1975 - 2021
 #Catch per unit effort (CPUE)
 #Organisms/m2 = (sum per visit /# of grabs per visit)/(0.052 grabs/meter squared)
 #GRTS amphipod papers says ponar sample was to a depth that varied from 4-10 cm with sediment type
@@ -25,6 +25,9 @@ library(here)
 
 # To do list -----------------------------
 
+#check functions in smonitor package for code that will automate process of checking for
+#data set updates on EDI
+
 #add water year type to abundance data (note that invert data categorized by calendar year)
 
 #figure out why so many NAs for matches between invert cpue and wq means
@@ -37,35 +40,32 @@ library(here)
 # Read in the data-----------------------
 
 #most of what I need is published on EDI
-#https://portal.edirepository.org/nis/metadataviewer?packageid=edi.1036.1
-#Betsy said next version will likely be available in June 2022
-#it will correct some issues with existing data and add the 2021 data
+#https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=1036&revision=2
 
 #station data
-benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
+benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
   clean_names() %>% 
   glimpse()
 
-#benthic invert CPUE
+#benthic invert CPUE, 1975-2021
 #data have been converted to CPUE (organisms/m2)
 #replicate grabs have been averaged for each site visit
 #all non-occurrence (zero) data for a site visit has been removed
 #Nick: samples with no organisms at all are probably included as "No catch"
-#Nick: there's an issue with the data where all rows are duplicated a number of times equal to the number of grabs per visit
-benthic_cpue <- read_csv(resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=1dfeb0e5a58f2167faca4087b717aae4"))) %>% 
+benthic_cpue <- read_csv(resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=df1caeb717202f06171601f793ca46bf"))) %>% 
   clean_names() %>% 
   glimpse()
 
 #organism key list
-benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=d0f0dd3c1835fe5b669342f8c8e77024")
+benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=d0f0dd3c1835fe5b669342f8c8e77024")
 
-#total annual site visits, 1975-2020
-benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=ae8df5b1a7b1406e01ee7934a2f38822") %>% 
+#total annual site visits, 1975-2021
+benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=304bc4562046e0a6c35fbad3e2c85645") %>% 
   clean_names() %>% 
   glimpse()
 
-#total annual grab samples, 1975-2020
-benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.1&entityid=c377b4b8f9c1c7168214be6604a4a5e5") %>% 
+#total annual grab samples, 1975-2021
+benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=c6c7b2ed7165cfa93cc1eda43fbb29f5") %>% 
   clean_names() %>% 
   glimpse()
 
@@ -109,10 +109,6 @@ region_shape <- read_sf(here("spatial_files/region.shp"))
 
 
 # Filter the stations based on time series completeness ------------
-# Note: Decided to filter data temporally before spatially that way, we can map
-  # stations that have long time series to see their distribution before spatial
-  # filter
-
 #ie, stations that include mostly continuous sampling 1975-present
 
 #count the number of years with visits by station
@@ -166,7 +162,7 @@ unique(benthic_cpue_f$station_code)
 # Check to see if station coordinates in metadata and cpue tables match
 benthic_stn_coord <- benthic_stn %>% 
   select(
-    station_code = site_code, 
+    station_code, 
     latitude, 
     longitude
   )
@@ -188,8 +184,7 @@ sta_coord_match <-
   )
 
 sta_coord_match %>% filter(lat_equal == FALSE | long_equal == FALSE | is.na(lat_equal) | is.na(long_equal))
-# D7-C is missing coordinates in the cpue table
-# 4 other stations have coordinates that don't match between the tables,
+# 4 stations have coordinates that don't match between the tables,
 # however, the values are practically identical, so it doesn't matter.
 # We'll use the benthic_stn table to define station coordinates
 
@@ -203,7 +198,7 @@ benthic_stn_g <- benthic_stn %>%
   ) %>%  
   #make a combined station status - sampling effort column; needed for color coding in map below
   mutate(
-    sample_effort = if_else(site_code %in% sta_visits_many, "LongPOR", "ShortPOR"),
+    sample_effort = if_else(station_code %in% sta_visits_many, "LongPOR", "ShortPOR"),
     status_effort = paste(status, sample_effort, sep = "_")
   ) %>% 
   glimpse()
@@ -228,12 +223,15 @@ benthic_stn_g_26910 <- st_transform(benthic_stn_g, crs = 26910)
 #filter stations to just those within the shapefile bounds
 stn_within_reg <- benthic_stn_g_26910 %>% 
   st_filter(region_shape) %>% 
-  pull(site_code)
+  pull(station_code)
 #drops two rows as expected (ie, the two San Pablo Bay stations)
 
 #next filter the survey data set to stations within the shapefile bounds
 benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg)
 
+#check which stations are included
+unique(benthic_cpue_stf$station_code)
+#three stations as expected: "D4-L"   "D7-C"   "D28A-L"
 
 # Add zeros for absences back into abundance data set-------------------------
 
@@ -244,8 +242,8 @@ benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg)
 
 #start with data set already filtered spatially and temporally
 benthic_cpue_stfu <- benthic_cpue_stf %>% 
-  #only keep unique rows; current EDI data set has an error so lots of rows are duplicated
-  distinct(sample_date, station_code, organism_code, mean_cpue) %>% 
+  #simplify df to just the needed columns
+  select(station_code, sample_date, organism_code, mean_cpue) %>% 
   # Convert organism_code to character since it represents discrete organisms
   mutate(organism_code = as.character(organism_code))
 
@@ -253,6 +251,8 @@ benthic_cpue_stfu <- benthic_cpue_stf %>%
   # organism_codes along with mean_cpue = 0 to indicate no catch
 # NOTE: The mean_cpue for this one record without catch is 4.81 - this doesn't seem
   # correct, may need to look into this
+#checked with Betsy - she gave no catch rows a CPUE value just so they didn't get
+#filtered out; for these rows, CPUE value is meaningless and should be zero
 benthic_cpue_no_catch <- benthic_cpue_stfu %>% 
   filter(organism_code == "0") %>% 
   complete(
@@ -268,7 +268,8 @@ benthic_cpue_no_catch <- benthic_cpue_stfu %>%
 benthic_cpue_no_catch1 <- benthic_cpue %>% 
   filter(organism_code == "0") %>% 
   distinct(station_code,sample_date,organism_code,mean_cpue)
-#5 samples and all have non-zero CPUE; ask Betsy about that
+#5 samples and all have non-zero CPUE; Betsy said they're just meaningless placeholder numbers
+#only one of these is relevant to our study
 
 # Fill in zeros for absent organisms within each sample
 benthic_cpue_stfz <- benthic_cpue_stfu %>% 
@@ -344,7 +345,7 @@ ggplot(cpue_indiv_prop, aes(x=indiv_prop))+
 #the most abundant spp
 ggplot(cpue_indiv_prop, aes(x=dom_prop))+
   geom_histogram()
-#almost all species are rare compared to most abundant spp (>5% dominant spp abundance)
+#almost all species are rare compared to most abundant spp (<5% dominant spp abundance)
 
 #drop the 25% of species with lowest total individuals
 cpue_rarest25 <- cpue_indiv_prop %>% 
@@ -395,13 +396,14 @@ cpue_common <- cpue_sample_prop %>%
   filter(prop>0.10)
 #dropped from 243 to 42 taxa; 17.3% of taxa retained
 
+#create vector of organism codes to then filter main df
+organisms_common <- cpue_common %>% 
+  pull(organism_code)
+
 #combine proportion info with main data frame and then filter to those with more than 10%
 #or use a join function to just keep the taxa that are in more than 10% of samples
-benthic_cpue_stfz_prop <- left_join(benthic_cpue_stfz,cpue_sample_prop) %>% 
-  #only keep the taxa that appear in at least 10% of taxa
-  filter(prop>0.10) %>%
-  #drop unneeded columns
-  select(-c(n_samp,prop)) %>% 
+benthic_cpue_stfz_com <- benthic_cpue_stfz %>% 
+  filter(organism_code %in% organisms_common) %>% 
   #add year column back in
   mutate(year=year(sample_date)) %>%
   #sort by date, station, organism code
@@ -410,16 +412,15 @@ benthic_cpue_stfz_prop <- left_join(benthic_cpue_stfz,cpue_sample_prop) %>%
 # Calculate annual mean CPUE------------------
 
 #could use a different summary statistic (eg, median)
-#consider changing this to water year instead of calendar year
+#consider changing this to water year instead of calendar year,
+#though sampling per year is probably based on calendar year
 
 #generate annual mean CPUE values for each taxon
-cpue_mean_annual <- benthic_cpue_stfz_prop %>% 
+cpue_mean_annual <- benthic_cpue_stfz_com %>% 
   group_by(year,station_code,organism_code) %>% 
   summarize(cpue_annual=mean(mean_cpue))
 #keep in mind that number of samples per station varies among years
 #probably should drop years with, say, only one sample because hard to compare with other years
-#could also just use data for the sampling month that is best represented across all years (Oct)
-#instead of calculating annual means based on a variable number of samples
 
 # Format Table L (station-year x taxon) -----------
 # once this is done, it would be good to do some NMDS to see how communities compare
@@ -461,7 +462,6 @@ wq_focus <- benthic_wq %>%
         , year = year(date)
         ) %>% 
   select(station
-         #, date #drop because different from benthic sample dates
          , month
          , year
          , secchi
@@ -508,10 +508,6 @@ bwq <-left_join(benthic_cpue_mod,wq_focus) %>%
 #next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #first combine main data frame with the proportion of samples data frame
 #should combine by organism_code
-
-#pull out column that contains the codes of organisms retained in the data set
-organisms_common <- cpue_common %>% 
-  pull(organism_code)
 
 #NOTE: check to make sure it removed and retained all the right taxa
 #NOTE2: How best to round wq values, especially SC for comparing with CPUE? look at distribution of WQ values
