@@ -19,6 +19,7 @@ library(contentid) #reduce time of reloading large data sets
 library(janitor) #used to quickly clean up column names
 library(lubridate) #format date
 library(sf) #work with spatial data like shapefiles
+library(ggrepel) #nonoverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
 library(waterYearType) #lists all water year types 1901 - 2017
 library(here)
@@ -439,6 +440,47 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
 #should do more QAQC checks of WQ data before combining with benthic invert data
 #including plots of WQ through time
 
+#map all the WQ stations and categorize them by status
+#presumably lat/long in wq station metadata is WGS84 but EDI description doesn't specify
+wq_stn_g <- wq_stn %>% 
+  #drop the floating EZ stations; otherwise get an error because of NA for lat/long
+  filter(!is.na(latitude) & !is.na(longitude)) %>% 
+  #specify the crs (wgs84)
+  st_as_sf(coords = c(x='longitude',y='latitude'), #identify the lat/long columns
+           crs = 4326 #EPSG code for WGS84
+           ,remove=F #retains original lat/long columns
+  ) %>%  
+  glimpse()
+
+#Convert coordinate reference system (CRS) of basemap and benthic_stn_g to EPSG = 26910
+wq_stn_g_26910 <- st_transform(wq_stn_g, crs = 26910)
+
+#create object from bounding box for the stations
+#add a buffer around points to improve map aesthetic
+bbox_p <- st_bbox(st_buffer(wq_stn_g_26910,2000))
+
+#map all stations
+(map_wq <-ggplot()+
+    #CDFW Delta waterways
+    geom_sf(data= WW_Delta_26910, fill= "skyblue3", color= "black", alpha = 0.6)+
+    #all stations
+    geom_sf(data =wq_stn_g_26910, aes(fill = status), shape = 22, size = 2.5, alpha = 0.8) +
+    #add station names as labels and make sure they don't overlap each other or the points
+    geom_sf_label(data = wq_stn_g_26910, aes(x=longitude,y=latitude, label=station) #label the points
+                     ,nudge_x = -0.008, nudge_y = 0.008 #can specify the magnitude of nudges if necessary
+                     , size = 2 #adjust size and position relative to points
+                     ,inherit.aes = F #tells it to look at points not base layer
+    ) + 
+    #zoom in on region where stations are located using bounding box
+    coord_sf( 
+      xlim =c(bbox_p$xmin,bbox_p$xmax)
+      ,ylim = c(bbox_p$ymin,bbox_p$ymax)
+    )+
+    #add title
+    ggtitle("All WQ Stations")+
+    theme_bw()
+)
+
 #look at earliest date that each of the WQ parameters was collected
 wq_start <- benthic_wq %>% 
   #convert wide to long; probably easier that way
@@ -453,7 +495,7 @@ wq_start <- benthic_wq %>%
 #I thought NTU and FNU were basically the same
 
 #only keep the WQ parameters that, more or less, cover the full benthic time series
-wq_focus <- benthic_wq %>%
+wq_focus1 <- benthic_wq %>%
   #add month column
   mutate(month = month(date)
         , year = year(date)
@@ -469,6 +511,36 @@ wq_focus <- benthic_wq %>%
          , do_surface
   ) %>% 
   glimpse()
+
+#decide how to deal with different turbidity units
+#first see whether they are ever both collected
+#if not, for now just combine them into a single column
+#talk to Morgan to decide what is best to do
+wq_focus_turb <- wq_focus %>% 
+  filter(!is.na(turbidity_surface_fnu) & !is.na(turbidity_surface_ntu))
+#no cases in which both were recorded which makes combining the two simpler
+
+#modify WQ data set so turbidity is just one column
+wq_focus <- wq_focus1 %>% 
+  mutate(turbidity_surface = coalesce(turbidity_surface_fnu,turbidity_surface_ntu)) %>% 
+  #drop the unneeded turbidity columns
+  select(-c(turbidity_surface_fnu,turbidity_surface_ntu))
+
+#create long form for plotting
+wq_focus_long <- wq_focus %>% 
+  pivot_longer(c(secchi:turbidity_surface),names_to = "parameter", values_to = "value")  
+  
+#plot histograms for each WQ parameter
+ggplot(wq_focus_long,aes(x=value))+
+  geom_histogram()+
+  facet_wrap(vars(parameter),scales="free",nrow=3)+
+  ggtitle("WQ distributions")
+#fairly different looking distributions
+#Do and Temp normal-ish; others right skewed, especially SC
+
+#NOTE: also should look at correlations among all the WQ parameters
+#eg, water temperature and DO will likely be highly correlated
+
 
 
 # Combine benthic invert and WQ data------------------
@@ -518,6 +590,7 @@ bwq_issues <- bwq %>%
 #NOTE2: How best to round wq values, especially SC for comparing with CPUE? look at distribution of WQ values
 #NOTE3: consider standardizing (ie, generating z-scores) WQ parameters 
 #so their range is similar across parameter
+#for plotting, can also probably just specify bin widths
 bwp <- bwq %>% 
   filter(organism_code %in% organisms_common) %>% 
   #create a new column that rounds WQ parameters to nearest degree
@@ -544,7 +617,7 @@ unique(bwp$temp_r)
 #look at rows with NA for temp
 temp_na <- bwp %>% 
   filter(is.na(temp_r))
-#are are a whole group of benthic visits with no WQ (n = 28,014)
+#are are a whole group of benthic visits with no WQ (n = 28,308)
 #look closer at those
 
 #which visits are missing WQ?
@@ -558,6 +631,9 @@ wq_miss <- bwp %>%
   count()
 #mostly D24, C9, D41A so look into those
 #are the WQ data missing or just not matched up to the benthic data well?
+#D24 is not an active station (2016-2017, 1975-1995) which probably mostly explains the issue; NZ068 (2017-2021)is next to D24 so could probably sub for D24
+#C9 is currently an active station but very incomplete time series; no other nearby D-EMP stations but maybe continuous station
+#D41A is currently active station (2004-present) but doesn't go back that far; D41 (1980-present) is nearby and could sub for D41A
 
 
 #a couple quick checks
@@ -570,6 +646,7 @@ ctax <- unique(bwp$organism_code)
 
 # Plot distributions by taxa and wq parameter-----------------------
 #probably should plot sample sizes for each level of each parameter too
+#how often are extreme mean values based on a single year (or sample within year)?
 
 #calculate mean cpue for each level of each WQ parameter
 bwp_means <- bwp_long %>% 
