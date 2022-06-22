@@ -439,6 +439,9 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
 #should carefully read over the metadata for this data set at some point
 #should do more QAQC checks of WQ data before combining with benthic invert data
 #including plots of WQ through time
+#should look for outliers too
+#WQ data aren't collected at same time as benthic samples
+#so calculate how far apart in time benthic and WQ samples are for each pair
 
 #map all the WQ stations and categorize them by status
 #presumably lat/long in wq station metadata is WGS84 but EDI description doesn't specify
@@ -524,11 +527,47 @@ wq_focus_turb <- wq_focus %>%
 wq_focus <- wq_focus1 %>% 
   mutate(turbidity_surface = coalesce(turbidity_surface_fnu,turbidity_surface_ntu)) %>% 
   #drop the unneeded turbidity columns
-  select(-c(turbidity_surface_fnu,turbidity_surface_ntu))
+  select(-c(turbidity_surface_fnu,turbidity_surface_ntu))  
+  
 
-#create long form for plotting
+#create long form for plotting 
 wq_focus_long <- wq_focus %>% 
-  pivot_longer(c(secchi:turbidity_surface),names_to = "parameter", values_to = "value")  
+  pivot_longer(c(secchi:turbidity_surface),names_to = "parameter", values_to = "value")  %>% 
+  glimpse()
+
+#turb_mean <-mean(wq_focus_turb$value,na.rm=T) #17.92123
+#turb_sd <- sd(wq_focus_turb$value,na.rm=T) #16.86459
+
+#look at effects of standardizing and log transforming turbidity
+#someone on ResearchGate recommended power normalization 
+#for dealing with skewed distributions and making different parameters comparable
+#https://www.researchgate.net/post/log_transformation_and_standardization_which_should_come_first
+wq_focus_turb <- wq_focus_long %>% 
+  filter(parameter == "turbidity_surface") %>% 
+  mutate(
+    tlog = log(value)
+    #for power normalization, typical values range 0.1-0.5
+    #0.1 resulted in most normal looking distribution
+    ,pwr_norm_0.1 = sign(value)*abs(value)^0.1 
+    ,zscore = (value-mean(value,na.rm=T))/sd(value,na.rm = T)
+    ,ztlog = (tlog-mean(tlog,na.rm=T)/sd(tlog,na.rm=T))
+    ) %>% 
+  pivot_longer(c(value:ztlog),names_to = "type", values_to = "value2")  %>% 
+  glimpse()
+
+turb_means <- wq_focus_turb %>% 
+  group_by(type) %>% 
+  summarise(turb_mean = mean(value2,na.rm=T)
+            ,turb_sd = sd(value2,na.rm = T)
+            )
+  
+
+#plot histograms for different forms of turbidity values
+ggplot(wq_focus_turb,aes(x=value2))+
+  geom_histogram()+
+  facet_wrap(vars(type),scales="free",nrow=4)+
+  ggtitle("Turbidity")
+  
   
 #plot histograms for each WQ parameter
 ggplot(wq_focus_long,aes(x=value))+
@@ -538,10 +577,16 @@ ggplot(wq_focus_long,aes(x=value))+
 #fairly different looking distributions
 #Do and Temp normal-ish; others right skewed, especially SC
 
+#make same plot with data log transformed
+ggplot(wq_focus_long,aes(x=log(value)))+
+  geom_histogram()+
+  facet_wrap(vars(parameter),scales="free",nrow=3)+
+  ggtitle("WQ distributions")
+
 #NOTE: also should look at correlations among all the WQ parameters
 #eg, water temperature and DO will likely be highly correlated
 
-
+#need to decide whether to use turbidity or secchi 
 
 # Combine benthic invert and WQ data------------------
 #need to do a bit of work to match up station names; they're similar but not the same generally
@@ -681,7 +726,7 @@ distr_plot <- function(df, param){
 
 #test the function
 test<-distr_plot(bwp_means_temp,"water temperature")
-ggsave(test,filename="test.png",dpi=300, width = 8, height = 8, units = "in")
+#ggsave(test,filename="test.png",dpi=300, width = 8, height = 8, units = "in")
 #worked fine
 
 #nest data by parameter in preparation for making panels of plots
