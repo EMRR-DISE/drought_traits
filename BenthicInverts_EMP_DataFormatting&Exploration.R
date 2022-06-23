@@ -519,7 +519,7 @@ wq_focus1 <- benthic_wq %>%
 #first see whether they are ever both collected
 #if not, for now just combine them into a single column
 #talk to Morgan to decide what is best to do
-wq_focus_turb <- wq_focus %>% 
+wq_focus_turb <- wq_focus1 %>% 
   filter(!is.na(turbidity_surface_fnu) & !is.na(turbidity_surface_ntu))
 #no cases in which both were recorded which makes combining the two simpler
 
@@ -545,14 +545,19 @@ wq_focus_long <- wq_focus %>%
 wq_focus_turb <- wq_focus_long %>% 
   filter(parameter == "turbidity_surface") %>% 
   mutate(
-    tlog = log(value)
+    nlog = log(value)
     #for power normalization, typical values range 0.1-0.5
     #0.1 resulted in most normal looking distribution
     ,pwr_norm_0.1 = sign(value)*abs(value)^0.1 
+    #calcuate z-score to standardize data (mean = 0, SD = 1)
+    #NOTE: should have a normal-ish distribution before standardization
     ,zscore = (value-mean(value,na.rm=T))/sd(value,na.rm = T)
-    ,ztlog = (tlog-mean(tlog,na.rm=T)/sd(tlog,na.rm=T))
+    #normalize data (all values between 0 and 1)
+    ,normalize = (value-min(value,na.rm=T))/(max(value,na.rm=T)-min(value,na.rm=T))
+    ,znlog = (nlog-mean(nlog,na.rm=T)/sd(nlog,na.rm=T))
+    ,zpwr_norm_0.1 = (pwr_norm_0.1-mean(pwr_norm_0.1,na.rm=T))/sd(pwr_norm_0.1,na.rm=T)
     ) %>% 
-  pivot_longer(c(value:ztlog),names_to = "type", values_to = "value2")  %>% 
+  pivot_longer(c(value:zpwr_norm_0.1),names_to = "type", values_to = "value2")  %>% 
   glimpse()
 
 turb_means <- wq_focus_turb %>% 
@@ -692,6 +697,12 @@ ctax <- unique(bwp$organism_code)
 # Plot distributions by taxa and wq parameter-----------------------
 #probably should plot sample sizes for each level of each parameter too
 #how often are extreme mean values based on a single year (or sample within year)?
+
+#instead of averaging CPUE by WQ parameter bins, just plot raw data
+#should produce unimodal curve for most taxa
+#for taxa for which CPUE distribution is not fully within Bay-Delta gradient,
+#we could try to extrapolate out to estimate where most extreme non-zero CPUE
+#would be; not ideal to extrapolate beyond data but could check against literature
 
 #calculate mean cpue for each level of each WQ parameter
 bwp_means <- bwp_long %>% 
