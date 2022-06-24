@@ -14,6 +14,8 @@
 #all packages available on CRAN except deltamapr
 #see GitHub repository for deltamapr at https://github.com/InteragencyEcologicalProgram/deltamapr
 
+library(data.table) #matches data by nearest date 
+#NOTE: data.table masks some useful tidyverse functions so load first
 library(tidyverse) #suite of data science tools
 library(contentid) #reduce time of reloading large data sets
 library(janitor) #used to quickly clean up column names
@@ -546,13 +548,8 @@ bbox_p <- st_bbox(st_buffer(wq_stn_g_26910,2000))
     theme_bw()
 )
 
-
-#look at which WQ stations best match to benthic stations spatially
+#Examine spatial matches between WQ and benthic stations----------------
 #probably just the stations between the two surveys with the most similar names
-#caveat is that data probably are not collected at both stations at all times
-#however, if wq not available for benthic sample, then benthic data not used 
-#because no other stations reasonably close
-#
 
 #create simplified df's of the station locations for both surveys
 benthic_stn_ltm <- benthic_stn %>% 
@@ -580,6 +577,7 @@ benthic_stn_ltm$wq_station <- wq_stn_ltm$station[max.col(-mat)]
 #add distance between pairs of benthic and wq stations (in meters)
 benthic_stn_ltm$near_dist_m <- mat[matrix(c(1:53, max.col(-mat)), ncol = 2)]
 
+#sort stations by location for easy visual examination
 benthic_stn_ltm <- benthic_stn_ltm %>% 
   arrange(longitude,latitude)
 
@@ -630,7 +628,6 @@ wq_stn_g_ltm <- wq_stn_g %>%
 
 #combine benthic and wq stations
 stations_all <- bind_rows(benthic_stn_g_ltm, wq_stn_g_ltm)
-
 
 # Define color palette for Surveys 
 color_pal <- colorFactor(palette = "viridis", domain = stations_all$type)
@@ -719,10 +716,18 @@ wq_focus <- wq_focus1 %>%
   mutate(turbidity_surface = coalesce(turbidity_surface_fnu,turbidity_surface_ntu)
          #make date into dttm so I can round date to nearest month
          , date_time = as_datetime(date)
-         ,date_r = round_date(date_time, unit="month")
-          ) %>% 
+                   ) %>% 
   #drop the unneeded turbidity columns
-  select(-c(turbidity_surface_fnu,turbidity_surface_ntu))  %>% 
+  #station, and date_time must be first two columns
+  #for samples to match by closest date
+  select(station
+         ,date_time
+         ,secchi
+         ,sp_cnd_surface
+         ,wt_surface
+         ,do_surface
+         ,turbidity_surface
+  )  %>% 
   glimpse()
   
 
@@ -795,9 +800,9 @@ ggplot(wq_focus_long,aes(x=log(value)))+
 #we want to look at where the target taxa are broadly in the environmental gradients
 
 #add column with benthic station names that does not include R, L, C
-#then the WQ and benthic stations will match
-#IMPORTANT: In many cases, one set of monthly WQ values will match to multiple stations
-#this might be OK as long as the WQ station and all benthic stations are in close proximity
+#then the WQ and benthic stations will match; generally station C is closest to WQ station
+#NOTE: In many cases, one set of monthly WQ values will match to multiple benthic stations (up to three)
+#NOTE: there are sometimes multiple WQ samples per station so some benthic samples could have multiple WQ matches
 benthic_cpue_mod <- benthic_cpue %>% 
   #reduce df to just the needed columns
   select(station_code, sample_date, organism_code, mean_cpue) %>% 
@@ -808,90 +813,131 @@ benthic_cpue_mod <- benthic_cpue %>%
   #add column that drops the last two characters of the benthic station names 
   #so they will match the WQ station names
   mutate(station = substr(station_code,1,nchar(station_code)-2)
-         #round the date to nearest month for best matching benthic and WQ samples
-         ,date_r = round_date(sample_date, unit="month")
-  ) %>% 
+         ) %>% 
   #reduce data frame to just the needed columns
-  select(station, station_code, date_r, sample_date, organism_code, mean_cpue) %>%
+  select(
+    #station, and date_time must be first two columns
+    #for samples to match by closest date
+          station
+         #change name of date column so it's the same as wq data set
+         , date_time = sample_date
+         , station_code
+         , organism_code
+         , mean_cpue
+    ) %>%
  glimpse()
 
-date_rounding <- benthic_cpue_mod %>% 
-  distinct(sample_date,date_r)
-
 #combine benthic and WQ stations
-#should match by station, date_r
+#should match by station and closest date_time (dttm)
+#NOTE: wq and benthic stations differ in when they're sampled
+#so the best matching wq for a benthic sample might be in a different year
+#we will have to decide how much difference in date is acceptable; probably 15 days max
+#https://stackoverflow.com/questions/28072542/merge-nearest-date-and-related-variables-from-a-another-dataframe-by-group?noredirect=1&lq=1
 glimpse(benthic_cpue_mod)
 glimpse(wq_focus)
 
-#using left join should just add wq data to benthic data where ever possible
-#NOTE: looks like there is more than one WQ measurement per month for some months
-#so need to match the wq date that is closest to the benthic date 
-#what if we try only keeping pairs of data if they were collected within ten days?
-bwq <-left_join(benthic_cpue_mod,wq_focus) %>% 
-  #change organism code from numeric to character
-  #so it matches with cpue_common data frame
-  mutate(organism_code=as.character(organism_code)
-         , date_diff = abs(as.numeric(as_date(sample_date) - as_date(date_time))) 
-         ) %>% 
+#convert data frames to data tables
+setDT(benthic_cpue_mod)
+setDT(wq_focus)
+
+setkey(wq_focus, station, date_time)[, dateMatch:=date_time]
+comb_wq_b <- wq_focus[benthic_cpue_mod, roll='nearest']
+count(matched)-count(benthic_cpue_mod) 
+#same number of rows between benthic_cpue_mod and new df which is good sign
+
+#performs some quick visual checks to make sure the closest date matching worked properly
+#looks like the match worked fine
+
+wq_focus <- wq_focus %>% 
+  arrange(date_time,station)
+
+benthic_focus <- benthic_cpue_mod %>% 
+  distinct(station_code,date_time) %>% 
+  arrange(date_time,station_code)
+
+comb_wq_b_d <- comb_wq_b %>% 
+  distinct(station,station_code, date_time, dateMatch) %>% 
+  arrange(date_time,station_code)
+  
+#clean up combined data frame a bit
+bwq <- comb_wq_b %>% 
+  mutate(
+    #add column that calculates difference in dates between wq and benthic samples
+    date_diff = abs(as.numeric(as_date(date_time) - as_date(dateMatch)))
+    #change organism code from numeric to character
+    #so it matches with cpue_common data frame
+    ,organism_code=as.character(organism_code)
+  ) %>% 
+  #filter out any cases in which closest wq and benthic sample time match 
+  #exceeds 15 days 
+  #a bit more time difference than I might use for more vagile organisms
+  #but a lot of benthic inverts don't move that much
+  filter(date_diff<15) %>% 
+  select(
+    b_stn = station_code
+    ,wq_stn = station
+    ,b_date = date_time
+    ,wq_date = dateMatch
+    ,date_diff
+    ,organism = organism_code
+    ,mean_cpue
+    ,temp = wt_surface
+    ,do = do_surface
+    ,scond = sp_cnd_surface
+    ,secchi
+    ,turb = turbidity_surface
+    ) %>% 
   glimpse()
 
 #histogram of difference in dates between benthic and WQ samples
 bwq_dates <- bwq %>% 
-  distinct(station,sample_date,date_diff)
+  distinct(b_stn,b_date,wq_date,date_diff)
+
+range(bwq_dates$date_diff) 
+# before filtering out big date differences, range was 0 to 4626
+
 ggplot(bwq_dates,aes(x=date_diff))+
   geom_histogram()
+#some date differences are insanely large
+#because stations weren't sampled in same month or year in some cases
 
-dates_far <- bwq %>% 
-  distinct(date_r,sample_date,date, date_diff)  
-  #filter(date_diff> 27)
+dates_far <- bwq_dates %>% 
+  filter(date_diff> 15) %>% 
+  arrange(-date_diff)
+#771 cases
 
-#why are there more rows in bwq than in benthic_cpue_mod?
-count(bwq)-count(benthic_cpue_mod) #462,170 more rows
-
-b_dist1 <- benthic_cpue_mod %>% 
-  distinct(station_code, month,year)
-
-b_dist2 <- bwq %>% 
-  distinct(station_code, month,year)
-
-count(b_dist1)-count(b_dist2) #0
-#so difference not due to differences in combo of station and date
-
-
-#try inner join which will only keep the cases in which benthic and wq match
-bwq2 <-inner_join(benthic_cpue_mod,wq_focus) %>% 
-  #change organism code from numeric to character
-  #so it matches with cpue_common data frame
-  mutate(organism_code=as.character(organism_code)) %>% 
-  glimpse()
-count(bwq2)-count(benthic_cpue_mod) #190,185 more rows
+#what proportion of benthic invert samples had no usable discrete wq data?
+count(benthic_focus) # starting number of benthic samples: 4625
+count(benthic_focus)-count(bwq_dates) #number without wq: 845
+(count(benthic_focus)-count(bwq_dates))/count(benthic_focus) 
+#proportion without wq data: 18.3% 
 
 #look for cases where WQ data are missing
 bwq_issues <- bwq %>% 
   #just need to look at station matching so simplify to remove organism codes
-  distinct(station,year,month,secchi, turbidity_surface, sp_cnd_surface, wt_surface, do_surface) %>% 
-  filter(is.na(secchi) | is.na(turbidity_surface) | is.na(sp_cnd_surface) | is.na(wt_surface) | is.na(do_surface) )
+  distinct(wq_stn,b_date,secchi, turb, scond, temp,do) %>% 
+  filter(is.na(secchi) | is.na(turb) | is.na(scond) | is.na(temp) | is.na(do) )
 
 #just look at cases in which there is no wq data
 bwq_issues2 <- bwq %>% 
   #just need to look at station matching so simplify to remove organism codes
-  distinct(station,year,month,secchi, turbidity_surface, sp_cnd_surface, wt_surface, do_surface) %>% 
-  filter(is.na(secchi) & is.na(turbidity_surface) & is.na(sp_cnd_surface) & is.na(wt_surface) & is.na(do_surface) )
+  distinct(station,year,month,secchi, turb, scond, temp, do) %>% 
+  filter(is.na(secchi) & is.na(turb) & is.na(scond) & is.na(temp) & is.na(do) )
 #most cases of NAs for WQ data are due to total lack of WQ data, not just individual missing measurements
 
 #next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #NOTE: check to make sure it removed and retained all the right taxa
 bwp <- bwq %>% 
-  filter(organism_code %in% organisms_common) %>% 
+  filter(organism %in% organisms_common) %>% 
   #create a new column that rounds WQ parameters to nearest degree
   #some don't need rounding because they are already whole number values
-  mutate(temp_r = round(wt_surface,0)
-         ,do_r = round(do_surface,0)
-         ,turb_r = round(turbidity_surface,0)
-         ,sc_r = round(sp_cnd_surface,-2)
+  mutate(temp_r = round(temp,0)
+         ,do_r = round(do,0)
+         ,turb_r = round(turb,0)
+         ,sc_r = round(scond,-2)
          ) %>% 
   #drop unneeded columns
-  select(-c(sp_cnd_surface,wt_surface,do_surface,turbidity_surface)) %>%  
+  select(-c(scond,temp,do,turb)) %>%  
     glimpse()
 
 #maybe it's easier if we convert from wide to long
@@ -931,7 +977,7 @@ wq_miss <- bwp %>%
 #0.1000715 0.7698356
 #looks right
 
-ctax <- unique(bwp$organism_code)
+ctax <- unique(bwp$organism)
 #got the right number of taxa (n=42)
 
 # Plot distributions by taxa and wq parameter-----------------------
@@ -946,7 +992,7 @@ ctax <- unique(bwp$organism_code)
 
 #calculate mean cpue for each level of each WQ parameter
 bwp_means <- bwp_long %>% 
-  group_by(organism_code,parameter,value) %>% 
+  group_by(organism,parameter,value) %>% 
   summarise(cpue = mean(mean_cpue,na.rm=T))
 
 #start with just temperature panel
@@ -958,7 +1004,7 @@ bwp_means_temp <- bwp_means %>%
 #faceted plot showing distribution for all taxa across temperature gradient
 ggplot(bwp_means_temp,aes(x=value, y=cpue))+
   geom_bar(stat="identity")+
-  facet_wrap(vars(organism_code),scales="free",nrow=6)+
+  facet_wrap(vars(organism),scales="free",nrow=6)+
   ggtitle("water temperature")
 #Warning message:Removed 42 rows containing missing values (position_stack)
 #probably because of the temp = NA which I need to figure out
@@ -971,7 +1017,7 @@ ggplot(bwp_means_temp,aes(x=value, y=cpue))+
 distr_plot <- function(df, param){
   ggplot(df,aes(x=value, y=cpue))+
     geom_bar(stat="identity")+
-    facet_wrap(vars(organism_code),scales="free",nrow=6)+
+    facet_wrap(vars(organism),scales="free",nrow=6)+
     ggtitle(param)
 }
 
@@ -1003,8 +1049,8 @@ walk2(parameter_nest$plots,parameter_nest$parameter
 
 #calculate 95th percentile temperature for each taxa
 btemp_q95 <- bwp %>% 
-  group_by(organism_code) %>% 
-  summarize(temp_q95 = quantile(wt_surface, probs=0.95, na.rm=T))
+  group_by(organism) %>% 
+  summarize(temp_q95 = quantile(temp, probs=0.95, na.rm=T))
 
 #now plot the distribution of the 95th quantiles across taxa
 ggplot(btemp_q95, aes(x=temp_q95))+
