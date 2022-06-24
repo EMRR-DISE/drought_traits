@@ -19,12 +19,17 @@ library(contentid) #reduce time of reloading large data sets
 library(janitor) #used to quickly clean up column names
 library(lubridate) #format date
 library(sf) #work with spatial data like shapefiles
-library(ggrepel) #nonoverlapping point labels on maps
+library(geosphere) #matching stations by distance
+library(leaflet) #make interactive maps
+library(ggrepel) #no-noverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
-library(waterYearType) #lists all water year types 1901 - 2017
+#library(waterYearType) #lists all water year types 1901 - 2017
 library(here)
 
 # To do list -----------------------------
+
+#make sure there isn't overlap in taxa between zoop and benthic inverts
+#eg, I saw ostracods in benthic inverts data which are probably also in zoop
 
 #check functions in smonitor package for code that will automate process of checking for
 #data set updates on EDI
@@ -99,7 +104,7 @@ wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=ed
 
 #Water year type from waterYearType package
 #the only function in package brings in water year type data frame
-water_year <- water_year_indices
+#water_year <- water_year_indices
 #glimpse(water_year) #looks like column types are correct
 
 # Read in region shapefile
@@ -243,7 +248,50 @@ benthic_cpue_stfu <- benthic_cpue_stf %>%
   #simplify df to just the needed columns
   select(station_code, sample_date, organism_code, mean_cpue) %>% 
   # Convert organism_code to character since it represents discrete organisms
-  mutate(organism_code = as.character(organism_code))
+  mutate(organism_code = as.character(organism_code)) %>% 
+  glimpse()
+
+#look at all no catch samples in whole data set
+benthic_cpue_no_catch_all <- benthic_cpue %>% 
+  filter(organism_code == "0") %>% 
+  distinct(station_code,sample_date,organism_code,mean_cpue)
+#5 samples and all have non-zero CPUE for no catch
+#Betsy said they're just meaningless placeholder numbers
+#still confusing though that 4 of 5 visits have more than one row
+#and include non-zero CPUE values for them
+
+#try to filter visits with no catch 
+#how to filter by combination of station and date found in another df?
+#haven't figured it out yet
+#nc <- benthic_cpue %>% 
+#  filter(station_code %in% benthic_cpue_no_catch_all$station_code) 
+
+#look at 5 visits with no catch
+nc1 <- benthic_cpue %>% 
+  filter(station_code == "D7-C" & sample_date =="2012-05-24" )
+#many CPUE values for this visit despite entry for no catch
+
+nc2 <- benthic_cpue %>% 
+  filter(station_code == "P8-R" & sample_date =="2012-07-18" )
+#many CPUE values for this visit despite entry for no catch
+
+nc3 <- benthic_cpue %>% 
+  filter(station_code == "C9-L" & sample_date =="2013-04-11" )
+#many CPUE values for this visit despite entry for no catch
+
+nc4 <- benthic_cpue %>% 
+  filter(station_code == "D16-L" & sample_date =="2015-09-15" )
+#many CPUE values for this visit despite entry for no catch
+
+nc5 <- benthic_cpue %>% 
+  filter(station_code == "D24-L" & sample_date =="2017-02-22" )
+#only one row as expected (ie, no catch)
+
+#combine all no catch into one df
+no_catch_visits <- rbind(nc1,nc2,nc3,nc4,nc5)
+
+#write the csv file with the confusing no catch samples to send to Betsy
+#write_csv(no_catch_visits,"./BenthicInverts/benthic_inverts_no_catch_samples.csv")
 
 # Pull out one record with organism_code = 0 (no catch) and add in all
   # organism_codes along with mean_cpue = 0 to indicate no catch
@@ -262,21 +310,33 @@ benthic_cpue_no_catch <- benthic_cpue_stfu %>%
   # Don't include record for "no catch" in the end
   filter(organism_code != "0")
 
-#look at all no catch samples in whole data set
-benthic_cpue_no_catch1 <- benthic_cpue %>% 
-  filter(organism_code == "0") %>% 
-  distinct(station_code,sample_date,organism_code,mean_cpue)
-#5 samples and all have non-zero CPUE; Betsy said they're just meaningless placeholder numbers
-#only one of these is relevant to our study
-
 # Fill in zeros for absent organisms within each sample
 benthic_cpue_stfz <- benthic_cpue_stfu %>% 
   # Pull out record with "no catch"
   filter(organism_code != "0") %>% 
-  complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0)) %>% 
+  complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0))  %>% 
   # Add back record with "no catch"
-  bind_rows(benthic_cpue_no_catch)
-  
+  #for now, not adding this back in
+  #there's an issue with this no catch sample in the original data set
+  #even though it is no catch there are still CPUEs for other taxa
+  #as a result, adding this back in create duplicates
+  #once I hear back from Betsy on how to handle this, I'll fix it
+  #bind_rows(benthic_cpue_no_catch)
+  glimpse()
+
+#look at no catch sample
+no_catch_d7 <- benthic_cpue_stfz %>% 
+  filter(station_code == "D7-C" & sample_date =="2012-05-24" )
+#extra set of rows for D7-C from 5/24/12
+
+#look at number of distinct combinations of date, station, organism, cpue
+#should be same number of rows as benthic_cpue_stfz
+benthic_cpue_stfz2 <- benthic_cpue_stfz %>% 
+  distinct(sample_date, station_code, organism_code, mean_cpue)
+count(benthic_cpue_stfz)-count(benthic_cpue_stfz2)
+#zero, now that I commented out code above that adds back in rows of zero CPUE
+#for the supposed no catch sample (D7-C from 5/24/12) 
+
 #number of visits differs among years
 #which month(s) are most consistently sampled through time?
 vmonth <- benthic_cpue_stfz %>% 
@@ -405,7 +465,8 @@ benthic_cpue_stfz_com <- benthic_cpue_stfz %>%
   #add year column back in
   mutate(year=year(sample_date)) %>%
   #sort by date, station, organism code
-  arrange(sample_date, station_code, organism_code)
+  arrange(sample_date, station_code, organism_code) %>% 
+  glimpse()
 
 # Calculate annual mean CPUE------------------
 
@@ -434,6 +495,7 @@ ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=stat
   geom_point()+
   geom_line()+
   facet_wrap(vars(organism_code),scales="free",nrow=6)
+
 
 # Explore water quality data----------------
 #should carefully read over the metadata for this data set at some point
@@ -484,6 +546,132 @@ bbox_p <- st_bbox(st_buffer(wq_stn_g_26910,2000))
     theme_bw()
 )
 
+
+#look at which WQ stations best match to benthic stations spatially
+#probably just the stations between the two surveys with the most similar names
+#caveat is that data probably are not collected at both stations at all times
+#however, if wq not available for benthic sample, then benthic data not used 
+#because no other stations reasonably close
+#
+
+#create simplified df's of the station locations for both surveys
+benthic_stn_ltm <- benthic_stn %>% 
+  select(station_code,longitude,latitude) %>% 
+  glimpse()
+
+wq_stn_ltm <- wq_stn %>% 
+  #drop the floating EZ stations which have NA for lat/long
+  filter(!is.na(latitude) & !is.na(longitude)) %>% 
+  select(station,longitude,latitude) %>% 
+  glimpse()
+
+  
+# create distance matrix
+#https://stackoverflow.com/questions/31668163/geographic-geospatial-distance-between-2-lists-of-lat-lon-points-coordinates/31668415#31668415
+mat <- distm(benthic_stn_ltm[,c('longitude','latitude')], wq_stn_ltm[,c('longitude','latitude')], fun=distVincentyEllipsoid)
+
+# assign the name to the point in list1 based on shortest distance in the matrix
+benthic_stn_ltm$wq_station <- wq_stn_ltm$station[max.col(-mat)]
+#as expected, the wq station with the name most similar to the benthic station name
+#is pretty much always the closest in space
+#exception: benthic D12-C is closest to WQ D14A
+#though D14A is closer, the habitat of WQ D12 is still more similar to D12-C, which is still fairly close
+
+#add distance between pairs of benthic and wq stations (in meters)
+benthic_stn_ltm$near_dist_m <- mat[matrix(c(1:53, max.col(-mat)), ncol = 2)]
+
+benthic_stn_ltm <- benthic_stn_ltm %>% 
+  arrange(longitude,latitude)
+
+#range of distances between pairs
+range(benthic_stn_ltm$near_dist_m) #0.7769833 3596.4906952 (meters)
+
+#histogram of distances between pairs
+ggplot(benthic_stn_ltm, aes(x=near_dist_m)) + 
+  geom_histogram()
+#as expected vast majority of station pairs are very close together
+#look closer at the two that are over 2000 m
+
+#look at two pairs with large distances
+benthic_stn_ltm_far <- benthic_stn_ltm %>% 
+  filter(near_dist_m>2000)
+
+#look at sampling effort per month by station
+#there are periods when sampling occurred twice per month
+wq_effort <- benthic_wq %>% 
+  mutate(year = year(date)
+         ,month = month(date)
+         ,ym = ym(str_c(year,"-", month))) %>% 
+  group_by(station, ym) %>% 
+  count() %>% 
+  glimpse()
+
+#make leaflet map of all wq and benthic stations
+
+# Prepare station coordinates for leaflet map
+
+#benthic
+#lat/long are already in WGS84 (crs = 4326)
+benthic_stn_g_ltm <- benthic_stn_g %>%
+  add_column(type = "benthic") %>% 
+  select(type
+         , station = station_code
+         , geometry) 
+#st_crs(benthic_stn_g_ltm)
+
+#WQ
+#lat/long are already in WGS84 (crs = 4326)
+wq_stn_g_ltm <- wq_stn_g %>%
+  add_column(type = "wq") %>% 
+  select(type
+         , station
+         , geometry) 
+#st_crs(wq_stn_g_ltm)
+
+#combine benthic and wq stations
+stations_all <- bind_rows(benthic_stn_g_ltm, wq_stn_g_ltm)
+
+
+# Define color palette for Surveys 
+color_pal <- colorFactor(palette = "viridis", domain = stations_all$type)
+
+# Create map using leaflet
+leaflet() %>% 
+  addTiles() %>%
+  addCircleMarkers(
+    data = stations_all,
+    radius = 5,
+    fillColor = ~color_pal(type),
+    fillOpacity = 0.8,
+    weight = 0.5,
+    color = "black",
+    opacity = 1,
+    label = paste0("station: ", stations_all$station)
+  ) %>% 
+  addLegend(
+    position = "topright",
+    pal = color_pal,
+    values = stations_all$type,
+    title = "Type"
+  )
+
+
+#look at range of sampling effort     
+range(wq_effort$n) # up to 8 samples per month
+
+#histogram of sampling effort per month
+ggplot(wq_effort, aes(x=n))+
+  geom_histogram()
+
+#plot number of samples per month by station
+ggplot(wq_effort, aes(x=ym, y = n))+
+  geom_point()+
+  geom_line()+
+  facet_wrap("station")
+#too many stations to visualize well
+#just look at subset that are relevant to benthic inverts
+#probably should make a leaflet map to look at wq and benthic stations
+
 #look at earliest date that each of the WQ parameters was collected
 wq_start <- benthic_wq %>% 
   #convert wide to long; probably easier that way
@@ -499,13 +687,16 @@ wq_start <- benthic_wq %>%
 
 #only keep the WQ parameters that, more or less, cover the full benthic time series
 wq_focus1 <- benthic_wq %>%
-  #add month column
+  #add month and year column
+  #will be used to match WQ to benthic samples
   mutate(month = month(date)
         , year = year(date)
         ) %>% 
+  #columns to keep
   select(station
          , month
          , year
+         , date
          , secchi
          , turbidity_surface_fnu
          , turbidity_surface_ntu
@@ -525,9 +716,14 @@ wq_focus_turb <- wq_focus1 %>%
 
 #modify WQ data set so turbidity is just one column
 wq_focus <- wq_focus1 %>% 
-  mutate(turbidity_surface = coalesce(turbidity_surface_fnu,turbidity_surface_ntu)) %>% 
+  mutate(turbidity_surface = coalesce(turbidity_surface_fnu,turbidity_surface_ntu)
+         #make date into dttm so I can round date to nearest month
+         , date_time = as_datetime(date)
+         ,date_r = round_date(date_time, unit="month")
+          ) %>% 
   #drop the unneeded turbidity columns
-  select(-c(turbidity_surface_fnu,turbidity_surface_ntu))  
+  select(-c(turbidity_surface_fnu,turbidity_surface_ntu))  %>% 
+  glimpse()
   
 
 #create long form for plotting 
@@ -600,47 +796,91 @@ ggplot(wq_focus_long,aes(x=log(value)))+
 
 #add column with benthic station names that does not include R, L, C
 #then the WQ and benthic stations will match
+#IMPORTANT: In many cases, one set of monthly WQ values will match to multiple stations
+#this might be OK as long as the WQ station and all benthic stations are in close proximity
 benthic_cpue_mod <- benthic_cpue %>% 
   #reduce df to just the needed columns
   select(station_code, sample_date, organism_code, mean_cpue) %>% 
   #for now, just drop the five samples with no organisms at all
   #probably should include these so we know where all the organisms are not
   filter(organism_code!=0) %>% 
-  complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0)) %>%   
+  complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0)) %>% 
   #add column that drops the last two characters of the benthic station names 
   #so they will match the WQ station names
   mutate(station = substr(station_code,1,nchar(station_code)-2)
-         #add month which will be used to match sampling months between benthic and wq
-         ,month = month(sample_date)
-         ,year=year(sample_date)
+         #round the date to nearest month for best matching benthic and WQ samples
+         ,date_r = round_date(sample_date, unit="month")
   ) %>% 
   #reduce data frame to just the needed columns
-  select(station, year, month, organism_code, mean_cpue) %>%
+  select(station, station_code, date_r, sample_date, organism_code, mean_cpue) %>%
  glimpse()
 
+date_rounding <- benthic_cpue_mod %>% 
+  distinct(sample_date,date_r)
+
 #combine benthic and WQ stations
-#should match by station, year, month
+#should match by station, date_r
+glimpse(benthic_cpue_mod)
+glimpse(wq_focus)
+
+#using left join should just add wq data to benthic data where ever possible
+#NOTE: looks like there is more than one WQ measurement per month for some months
+#so need to match the wq date that is closest to the benthic date 
+#what if we try only keeping pairs of data if they were collected within ten days?
 bwq <-left_join(benthic_cpue_mod,wq_focus) %>% 
+  #change organism code from numeric to character
+  #so it matches with cpue_common data frame
+  mutate(organism_code=as.character(organism_code)
+         , date_diff = abs(as.numeric(as_date(sample_date) - as_date(date_time))) 
+         ) %>% 
+  glimpse()
+
+#histogram of difference in dates between benthic and WQ samples
+bwq_dates <- bwq %>% 
+  distinct(station,sample_date,date_diff)
+ggplot(bwq_dates,aes(x=date_diff))+
+  geom_histogram()
+
+dates_far <- bwq %>% 
+  distinct(date_r,sample_date,date, date_diff)  
+  #filter(date_diff> 27)
+
+#why are there more rows in bwq than in benthic_cpue_mod?
+count(bwq)-count(benthic_cpue_mod) #462,170 more rows
+
+b_dist1 <- benthic_cpue_mod %>% 
+  distinct(station_code, month,year)
+
+b_dist2 <- bwq %>% 
+  distinct(station_code, month,year)
+
+count(b_dist1)-count(b_dist2) #0
+#so difference not due to differences in combo of station and date
+
+
+#try inner join which will only keep the cases in which benthic and wq match
+bwq2 <-inner_join(benthic_cpue_mod,wq_focus) %>% 
   #change organism code from numeric to character
   #so it matches with cpue_common data frame
   mutate(organism_code=as.character(organism_code)) %>% 
   glimpse()
+count(bwq2)-count(benthic_cpue_mod) #190,185 more rows
 
-#look for cases where data didn't match properly
+#look for cases where WQ data are missing
 bwq_issues <- bwq %>% 
   #just need to look at station matching so simplify to remove organism codes
   distinct(station,year,month,secchi, turbidity_surface, sp_cnd_surface, wt_surface, do_surface) %>% 
   filter(is.na(secchi) | is.na(turbidity_surface) | is.na(sp_cnd_surface) | is.na(wt_surface) | is.na(do_surface) )
 
-#next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
-#first combine main data frame with the proportion of samples data frame
-#should combine by organism_code
+#just look at cases in which there is no wq data
+bwq_issues2 <- bwq %>% 
+  #just need to look at station matching so simplify to remove organism codes
+  distinct(station,year,month,secchi, turbidity_surface, sp_cnd_surface, wt_surface, do_surface) %>% 
+  filter(is.na(secchi) & is.na(turbidity_surface) & is.na(sp_cnd_surface) & is.na(wt_surface) & is.na(do_surface) )
+#most cases of NAs for WQ data are due to total lack of WQ data, not just individual missing measurements
 
+#next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #NOTE: check to make sure it removed and retained all the right taxa
-#NOTE2: How best to round wq values, especially SC for comparing with CPUE? look at distribution of WQ values
-#NOTE3: consider standardizing (ie, generating z-scores) WQ parameters 
-#so their range is similar across parameter
-#for plotting, can also probably just specify bin widths
 bwp <- bwq %>% 
   filter(organism_code %in% organisms_common) %>% 
   #create a new column that rounds WQ parameters to nearest degree
@@ -715,7 +955,7 @@ bwp_means_temp <- bwp_means %>%
   filter(parameter == "temp_r") %>% 
   glimpse()
 
-#faceted plot showiing distribution for all taxa
+#faceted plot showing distribution for all taxa across temperature gradient
 ggplot(bwp_means_temp,aes(x=value, y=cpue))+
   geom_bar(stat="identity")+
   facet_wrap(vars(organism_code),scales="free",nrow=6)+
