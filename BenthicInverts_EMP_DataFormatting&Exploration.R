@@ -832,6 +832,11 @@ benthic_cpue_mod <- benthic_cpue %>%
 #NOTE: wq and benthic stations differ in when they're sampled
 #so the best matching wq for a benthic sample might be in a different year
 #we will have to decide how much difference in date is acceptable; probably 15 days max
+#this approach also means there won't be any cases in which there are NAs for all wq parameters for a benthic sample
+#as long as at least one set of wq data was collected at the station at some time
+#it's just that the wq data that will match the benthic sample will be from a potentially very distant time
+#NOTE: it might be a problem that up to three benthic samples share same wq data in terms of building regressions
+#might need to pick of the three stations, generally prioritizing the station that retains the most data
 #https://stackoverflow.com/questions/28072542/merge-nearest-date-and-related-variables-from-a-another-dataframe-by-group?noredirect=1&lq=1
 glimpse(benthic_cpue_mod)
 glimpse(wq_focus)
@@ -921,16 +926,25 @@ bwq_issues <- bwq %>%
 #just look at cases in which there is no wq data
 bwq_issues2 <- bwq %>% 
   #just need to look at station matching so simplify to remove organism codes
-  distinct(station,year,month,secchi, turb, scond, temp, do) %>% 
+  distinct(b_stn,b_date,secchi, turb, scond, temp, do) %>% 
   filter(is.na(secchi) & is.na(turb) & is.na(scond) & is.na(temp) & is.na(do) )
-#most cases of NAs for WQ data are due to total lack of WQ data, not just individual missing measurements
+#zero - because we matched benthic samples with closest wq data
+#as long as at least one set of wq data was collected at a station, there will always be a match,
+#though a very poor one in some cases, and those have already been filtered out (ie, any date difference over 15 d)
 
 #next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #NOTE: check to make sure it removed and retained all the right taxa
-bwp <- bwq %>% 
+bw_of <- bwq %>% 
   filter(organism %in% organisms_common) %>% 
+  glimpse()
+
+ctax <- unique(bw_of$organism)
+#got the right number of taxa (n=42)
+
+bwp <- bw_of %>% 
   #create a new column that rounds WQ parameters to nearest degree
   #some don't need rounding because they are already whole number values
+  #NOTE: need to try a better approach
   mutate(temp_r = round(temp,0)
          ,do_r = round(do,0)
          ,turb_r = round(turb,0)
@@ -940,6 +954,8 @@ bwp <- bwq %>%
   select(-c(scond,temp,do,turb)) %>%  
     glimpse()
 
+
+
 #maybe it's easier if we convert from wide to long
 bwp_long <- bwp %>% 
   pivot_longer(c(secchi:sc_r),names_to = "parameter", values_to = "value") %>%  
@@ -947,38 +963,22 @@ bwp_long <- bwp %>%
 
 unique(bwp$temp_r) 
 #why are there NAs for the rounded temp?
-#probably cases in which WQ not collected in month of benthic data 
-#but could be other reason
+#probably cases in which WQ not collected in sample that best matched benthic sample date
 
 #look at rows with NA for temp
 temp_na <- bwp %>% 
   filter(is.na(temp_r))
-#are are a whole group of benthic visits with no WQ (n = 28,308)
-#look closer at those
+#126)
 
 #which visits are missing WQ?
 wq_miss <- bwp %>% 
   #start with focus on temp but should filter to where any WQ parameter is NA
   filter(is.na(temp_r)) %>% 
   #look at visits with NA
-  distinct(station, year, month) %>%  #664 visits
-  #arrange(sample_date, station) %>% 
-  group_by(station) %>% 
+  distinct(b_stn,b_date) %>%
+  group_by(b_stn) %>% 
   count()
-#mostly D24, C9, D41A so look into those
-#are the WQ data missing or just not matched up to the benthic data well?
-#D24 is not an active station (2016-2017, 1975-1995) which probably mostly explains the issue; NZ068 (2017-2021)is next to D24 so could probably sub for D24
-#C9 is currently an active station but very incomplete time series; no other nearby D-EMP stations but maybe continuous station
-#D41A is currently active station (2004-present) but doesn't go back that far; D41 (1980-present) is nearby and could sub for D41A
-
-
-#a couple quick checks
-#range(bwp$prop) 
-#0.1000715 0.7698356
-#looks right
-
-ctax <- unique(bwp$organism)
-#got the right number of taxa (n=42)
+#just three samples missing temp, which is pretty good
 
 # Plot distributions by taxa and wq parameter-----------------------
 #probably should plot sample sizes for each level of each parameter too
@@ -1045,16 +1045,93 @@ walk2(parameter_nest$plots,parameter_nest$parameter
 
 
 
+#try generating distributions a different way---------------------------
+#plotting raw data isn't working
+#try normalizing or standardizing wq data 
+#then calculating mean cpue for each unit or half unit
+#then try producing curve from that
+
+#start with plotting relationship between temperature and CPUE for one taxon
+
+#first filter dataset to one taxon
+bw_temp_ex <- bw_of %>% 
+  filter(organism==4510) %>% 
+  glimpse()
+
+bw_temp_exz <- bw_of %>% 
+  filter(organism==4510 & mean_cpue>0) %>% 
+  glimpse()
+
+#plot showing distribution for this one taxon across the temperature gradient
+#with zeros
+ggplot(bw_temp_ex,aes(x=temp, y=mean_cpue))+
+  geom_point()+
+  stat_smooth(method='lm', formula = y~poly(x,2))+
+  ylim(0,5)+
+  ggtitle("water temperature")
+
+#plot showing distribution for this one taxon across the temperature gradient
+#without zeros
+ggplot(bw_temp_exz,aes(x=temp, y=mean_cpue))+
+  geom_point()+
+  stat_smooth(method='lm', formula = y~poly(x,2))+
+  ylim(0,50)+
+  ggtitle("water temperature")
+
+#faceted plot showing distribution for all taxa across temperature gradient
+ggplot(bwq,aes(x=wt_surface, y=mean_cpue))+
+  geom_point()+
+  geom_smooth(method='lm', na.rm=T)+
+  facet_wrap(vars(organism_code),scales="free",nrow=6)+
+  ggtitle("water temperature")
+
+
+#make plotting function for panels of plots showing distribution of abundances across env gradients
+distr_plot <- function(df, param){
+  ggplot(df,aes(x=value, y=cpue))+
+    geom_bar(stat="identity")+
+    facet_wrap(vars(organism_code),scales="free",nrow=6)+
+    ggtitle(param)
+}
+
+#test the function
+test<-distr_plot(bwp_means_temp,"water temperature")
+
+#nest data by parameter in preparation for making panels of plots
+#make a plot of distribution across temp gradient for every taxon
+parameter_nest <- bwp_means %>% 
+  nest(abund_distr = -parameter) %>%  
+  mutate(plots = map2(abund_distr,parameter, distr_plot))
+
+
+#now save plot panel for every parameter
+walk2(parameter_nest$plots,parameter_nest$parameter
+      ,~ggsave(filename=paste0("BenthicInverts_WQ_Gradient/TaxonAbundace_",.y,".png")
+               ,plot = .x
+               ,dpi = 300
+               ,width = 12
+               ,height = 8
+               ,units = "in"
+      ))
+
+
+
+
+
+
+
+
+
 
 
 #calculate 95th percentile temperature for each taxa
-btemp_q95 <- bwp %>% 
-  group_by(organism) %>% 
-  summarize(temp_q95 = quantile(temp, probs=0.95, na.rm=T))
+#btemp_q95 <- bwp %>% 
+#  group_by(organism) %>% 
+#  summarize(temp_q95 = quantile(temp, probs=0.95, na.rm=T))
 
 #now plot the distribution of the 95th quantiles across taxa
-ggplot(btemp_q95, aes(x=temp_q95))+
-  geom_histogram()
+#ggplot(btemp_q95, aes(x=temp_q95))+
+ # geom_histogram()
 
 #consider looking at physiological limits for all Bay-Delta taxa regardless of how common they are
 #to see how the distribution of thermal tolerances 
