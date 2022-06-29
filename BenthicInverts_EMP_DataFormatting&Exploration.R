@@ -492,6 +492,13 @@ TableL <- cpue_mean_annual %>%
   pivot_wider(id_cols = c(station_code,year),names_from = organism_code,values_from=cpue_annual)  
 #probably just need to now combine station and year into a row name and format as matrix
 
+#separate label columns from cpue columns for NMDS analysis
+b_pred <- TableL[1:2]
+b_dat <- TableL [3:44]
+
+#write_csv(b_pred,"BenthicInverts/benthic_nmds_predictors.csv")
+#write_csv(b_dat,"BenthicInverts/benthic_nmds_abundance_matrix.csv")
+
 #make a big faceted plot showing time series of each taxon in each station
 ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=station_code))+
   geom_point()+
@@ -1034,14 +1041,14 @@ parameter_nest <- bwp_means %>%
 
 
 #now save plot panel for every parameter
-walk2(parameter_nest$plots,parameter_nest$parameter
-      ,~ggsave(filename=paste0("BenthicInverts_WQ_Gradient/TaxonAbundace_",.y,".png")
-               ,plot = .x
-               ,dpi = 300
-               ,width = 12
-               ,height = 8
-               ,units = "in"
-      ))
+#walk2(parameter_nest$plots,parameter_nest$parameter
+#      ,~ggsave(filename=paste0("BenthicInverts_WQ_Gradient/TaxonAbundace_",.y,".png")
+#               ,plot = .x
+#               ,dpi = 300
+#               ,width = 12
+#               ,height = 8
+#               ,units = "in"
+#      ))
 
 
 
@@ -1061,6 +1068,16 @@ bw_temp_ex <- bw_of %>%
 bw_temp_exz <- bw_of %>% 
   filter(organism==4510 & mean_cpue>0) %>% 
   glimpse()
+
+#distributions of taxon abundances across temperature gradient
+#aren't working well
+#it could be that temperature tolerance varies across other
+#wq parameters, like salinity
+#it could also be that phenology is causing issues
+#for a given taxon consider plotting temperature vs cpue
+#for each month of the year
+#maybe also plot temp vs cpue for a given value of another
+#wq parameter like salinity
 
 #plot showing distribution for this one taxon across the temperature gradient
 #with zeros
@@ -1105,14 +1122,14 @@ parameter_nest <- bwp_means %>%
 
 
 #now save plot panel for every parameter
-walk2(parameter_nest$plots,parameter_nest$parameter
-      ,~ggsave(filename=paste0("BenthicInverts_WQ_Gradient/TaxonAbundace_",.y,".png")
-               ,plot = .x
-               ,dpi = 300
-               ,width = 12
-               ,height = 8
-               ,units = "in"
-      ))
+#walk2(parameter_nest$plots,parameter_nest$parameter
+#      ,~ggsave(filename=paste0("BenthicInverts_WQ_Gradient/TaxonAbundace_",.y,".png")
+#               ,plot = .x
+#               ,dpi = 300
+#               ,width = 12
+#               ,height = 8
+#               ,units = "in"
+#      ))
 
 
 
