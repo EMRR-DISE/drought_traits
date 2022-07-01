@@ -60,7 +60,7 @@ benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
 #replicate grabs have been averaged for each site visit
 #all non-occurrence (zero) data for a site visit has been removed
 #Nick: samples with no organisms at all are probably included as "No catch"
-benthic_cpue <- read_csv(resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=df1caeb717202f06171601f793ca46bf"))) %>% 
+benthic_invert_cpue <- read_csv(resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=df1caeb717202f06171601f793ca46bf"))) %>% 
   clean_names() %>% 
   glimpse()
 
@@ -95,6 +95,9 @@ benthic_wq <-
   ) %>% 
   clean_names() %>% 
   glimpse()
+
+glimpse(benthic_wq)
+glimpse(benthic_cpue)
 # turbidity_surface has two ND values at MD10A - not sure if this matters; if it
   # does, we'll need to decide if we're okay with substituting 0 or some other
   # number for these
@@ -112,6 +115,52 @@ wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=ed
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
 
+
+#Look at no catch samples ------------------------
+
+#look at all no catch samples in whole data set
+benthic_cpue_no_catch_all <- benthic_invert_cpue %>% 
+  filter(organism_code == "0") %>% 
+  distinct(station_code,sample_date,organism_code,mean_cpue)
+#5 samples and all have non-zero CPUE for no catch
+#Betsy said the cpues are just meaningless placeholder numbers
+#should change the cpues to zeros,
+#at least for those that are true no catch samples
+
+#look closer at five samples with no catch
+#need to specify that the filter date is a date because in dataset it is a date-time
+#probably not the most efficient way to code this
+#asked Betsy about these samples with no catch entries
+no_catch_visits <- benthic_invert_cpue %>% 
+  filter(
+    #the first three samples include erroneous no catch entries
+    #just drop the no catch rows for these
+    (station_code == "D7-C" & sample_date == as.Date("2012-05-24")) |
+      (station_code == "P8-R" & sample_date == as.Date("2012-07-18" )) |
+      (station_code == "C9-L" & sample_date == as.Date("2013-04-11" )) |
+      #one of four grabs was no catch just need to drop the no catch row
+      (station_code == "D16-L" & sample_date == as.Date("2015-09-15" )) |
+      #a true no catch sample; only one row as expected (ie, no catch)
+      #keep this in data set
+      (station_code == "D24-L" & sample_date == as.Date("2017-02-22" ))
+  )
+
+#write the csv file with the confusing no catch samples to send to Betsy
+#write_csv(no_catch_visits,"./BenthicInverts/benthic_inverts_no_catch_samples.csv")
+
+#filtered out the four unneeded no catch rows
+#NOTE: one of the five no catch samples was a true no catch D24-L on 2017-02-22 so not filtered out
+benthic_cpue <- benthic_invert_cpue %>% 
+  filter(
+    !(
+      (station_code == "D7-C" & sample_date == as.Date("2012-05-24") & organism_code == "0") |
+        (station_code == "P8-R" & sample_date == as.Date("2012-07-18") & organism_code == "0") |
+        (station_code == "C9-L" & sample_date == as.Date("2013-04-11") & organism_code == "0") |
+        (station_code == "D16-L" & sample_date == as.Date("2015-09-15") & organism_code == "0") 
+    )
+  )
+#count(benthic_invert_cpue)-count(benthic_cpue) 
+#looks like it removed the four rows as expected
 
 # Filter the stations based on time series completeness ------------
 #ie, stations that include mostly continuous sampling 1975-present
@@ -238,6 +287,7 @@ benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg)
 unique(benthic_cpue_stf$station_code)
 #three stations as expected: "D4-L"   "D7-C"   "D28A-L"
 
+
 # Add zeros for absences back into abundance data set-------------------------
 
 #these zeros were excluded from EDI data set, presumably to reduce total number of rows
@@ -252,48 +302,6 @@ benthic_cpue_stfu <- benthic_cpue_stf %>%
   # Convert organism_code to character since it represents discrete organisms
   mutate(organism_code = as.character(organism_code)) %>% 
   glimpse()
-
-#look at all no catch samples in whole data set
-benthic_cpue_no_catch_all <- benthic_cpue %>% 
-  filter(organism_code == "0") %>% 
-  distinct(station_code,sample_date,organism_code,mean_cpue)
-#5 samples and all have non-zero CPUE for no catch
-#Betsy said they're just meaningless placeholder numbers
-#still confusing though that 4 of 5 visits have more than one row
-#and include non-zero CPUE values for them
-
-#try to filter visits with no catch 
-#how to filter by combination of station and date found in another df?
-#haven't figured it out yet
-#nc <- benthic_cpue %>% 
-#  filter(station_code %in% benthic_cpue_no_catch_all$station_code) 
-
-#look at 5 visits with no catch
-nc1 <- benthic_cpue %>% 
-  filter(station_code == "D7-C" & sample_date =="2012-05-24" )
-#many CPUE values for this visit despite entry for no catch
-
-nc2 <- benthic_cpue %>% 
-  filter(station_code == "P8-R" & sample_date =="2012-07-18" )
-#many CPUE values for this visit despite entry for no catch
-
-nc3 <- benthic_cpue %>% 
-  filter(station_code == "C9-L" & sample_date =="2013-04-11" )
-#many CPUE values for this visit despite entry for no catch
-
-nc4 <- benthic_cpue %>% 
-  filter(station_code == "D16-L" & sample_date =="2015-09-15" )
-#many CPUE values for this visit despite entry for no catch
-
-nc5 <- benthic_cpue %>% 
-  filter(station_code == "D24-L" & sample_date =="2017-02-22" )
-#only one row as expected (ie, no catch)
-
-#combine all no catch into one df
-no_catch_visits <- rbind(nc1,nc2,nc3,nc4,nc5)
-
-#write the csv file with the confusing no catch samples to send to Betsy
-#write_csv(no_catch_visits,"./BenthicInverts/benthic_inverts_no_catch_samples.csv")
 
 # Pull out one record with organism_code = 0 (no catch) and add in all
   # organism_codes along with mean_cpue = 0 to indicate no catch
