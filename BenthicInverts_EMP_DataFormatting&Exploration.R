@@ -143,7 +143,7 @@ no_catch_visits <- benthic_invert_cpue %>%
       #a true no catch sample; only one row as expected (ie, no catch)
       #keep this in data set
       (station_code == "D24-L" & sample_date == as.Date("2017-02-22" ))
-  )
+  ) 
 
 #write the csv file with the confusing no catch samples to send to Betsy
 #write_csv(no_catch_visits,"./BenthicInverts/benthic_inverts_no_catch_samples.csv")
@@ -158,9 +158,22 @@ benthic_cpue <- benthic_invert_cpue %>%
         (station_code == "C9-L" & sample_date == as.Date("2013-04-11") & organism_code == "0") |
         (station_code == "D16-L" & sample_date == as.Date("2015-09-15") & organism_code == "0") 
     )
-  )
+  ) 
+#this isn't actually what I want to do
+#I need to replace the no catch with a series of rows with all taxa showing cpue as zero
+#see Dave's code in the section for adding back in zeros for absences
+#%>% 
+  #change cpue for the one remaining no catch record from a meaningless non-zero number to zero
+  #mutate(mean_cpue2 = case_when(organism_code=="0" ~ 0,TRUE ~ mean_cpue))
 #count(benthic_invert_cpue)-count(benthic_cpue) 
 #looks like it removed the four rows as expected
+
+#look at all no catch samples in whole data set again
+#should just be one sample and there is
+#need to change cpue to zero still
+benthic_cpue_no_catch_all2 <- benthic_cpue %>% 
+  filter(organism_code == "0") %>% 
+  distinct(station_code,sample_date,organism_code,mean_cpue)
 
 # Filter the stations based on time series completeness ------------
 #ie, stations that include mostly continuous sampling 1975-present
