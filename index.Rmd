@@ -1,0 +1,15 @@
+---
+title: "Drought Traits Synthesis Study"
+author: "Drought Traits Synthesis Team"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Analysis
+
+[Sampling Location Map](Sample_Location_Map.html)
+
