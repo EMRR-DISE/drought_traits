@@ -49,11 +49,13 @@ df_coord <- read_excel(path = fp_coord, sheet = "Data")
 sf_coord <- df_coord %>% 
   select(
     taxon,
+    program,
     station,
     latitude = lat_wgs84,
     longitude = long_wgs84
   ) %>% 
   drop_na(latitude, longitude) %>% 
+  filter(program %in% c("EMP", "MWTR")) %>% 
   st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
 
 # Import Region polygon
