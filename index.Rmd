@@ -3,6 +3,15 @@ title: "Drought Traits Synthesis Study"
 author: "Drought Traits Synthesis Team"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: html_document
+editor_options: 
+  chunk_output_type: console
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = 'docs',
+      envir = globalenv()
+    )
+  })
 ---
 
 ```{r setup, include=FALSE}
