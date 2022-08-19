@@ -31,7 +31,7 @@ rm(list= ls()[!(ls() %in% c("dt1", "dt2", "dt4", "dt5", "trawls"))])
 
 library(tidyverse)
 library(readxl)
-library(janitor)
+library(janitor) # clean variable names
 library(tsibble) # yearweek()
 library(dataRetrieval) # addWaterYear()
 library(lubridate) # yday()
@@ -49,8 +49,8 @@ wy_day_new = function(x, start.month = 10L){
 # loaded here:
 
 # read data ----
-dt1 <- read_csv("fish_data/dt1.csv") # trawl data, 1976-2001
-dt2 <- read_csv("fish_data/dt2.csv") # trawl data, 2002-2021
+dt1 <- read_csv("fish_data/dt1.csv") # trawl data, 1976-2001; ignore parsing issues
+dt2 <- read_csv("fish_data/dt2.csv") # trawl data, 2002-2021; ignore parsing issues
 dt4 <- read_csv("fish_data/dt4.csv") # organism names
 dt5 <- read_csv("fish_data/dt5.csv") # location & station latitude & longitude
 
@@ -74,10 +74,34 @@ history_mwtr_sta <- trawls %>%
   group_by(region_code, location, station_code) %>% 
   summarise(year_start = min(year(sample_date)), 
             year_end = max(year(sample_date)),
-            n = n())
-write_csv(history_mwtr_sta, "fish_data/history_mwtr_sta.csv")
+            n = n()) # crude measure of effort; not really "sample size"
+print(history_mwtr_sta, n = Inf)
+
+## limit location x station to those w n>10000 and add lat/lon for ea station
+select_locations <- history_mwtr_sta %>% 
+  filter(n > 10000) %>% 
+  left_join(dt5) %>% 
+  select(location, station_code, latitude, longitude, 
+         year_start, year_end, method_code, n)
+
+write_csv(select_locations, "fish_data/select_locations.csv")
 
 rm(dt1, dt2) # BIG objects no longer needed
+
+## limit trawl data to those from the selected locations & gear = MWTR
+trawls_select <- trawls %>% 
+  filter(station_code == "SR043M" |     # Clarksburg
+           station_code == "SR055M" |   # Sherwood Harbor
+           station_code == "SB018M" |   # Chipps Island
+           station_code == "SB018N" |    # Chipps Island
+           station_code == "SB018S" |    # Chipps Island
+           station_code == "SB018X")    # Chipps Island
+
+write_csv(trawls_select, "fish_data/trawls_select.csv")
+
+#####################
+### SCRATCH ###
+#####################
 
 # calc cpue ----
 # for selected species: Chinook (lumping runs), Delta smelt, white sturgeon (too
