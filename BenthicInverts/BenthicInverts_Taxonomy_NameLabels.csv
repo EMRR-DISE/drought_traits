@@ -1,0 +1,479 @@
+OrganismCode,Phylum,Class_level,Order_level,Family_level,Genus,Species,species_name,Common_name
+0,No catch,No catch,No catch,No catch,No catch,No catch,No catch,No organisms in sample
+1000,Cnidaria,Hydrozoa,Hydrida,Hydridae,Hydra,sp. A,Hydra isopod sp. A,"Hydra, Hydrozoan"
+1001,Cnidaria,Anthozoa,Actinaria,Diadumenidae,Diadumene,sp. A,Diadumene isopod sp. A,Sea Anemone
+1005,Cnidaria,Anthozoa,Actiniara,Isophelliidae,Flosmaris,grandis,Flosmaris grandis,White burrowing anemone
+1010,Platyhelminthes,Turbellaria,Tricladida,Planariidae,Girardia,tigrina,Girardia tigrina,"Turbellarian, Flat Worm"
+1020,Platyhelminthes,Turbellaria,Tricladida,Planariidae,Unknown,planariid sp. A,planariid isopod sp. A,"Turbellarian, Flat Worm"
+1030,Platyhelminthes,Turbellaria,Tricladida,Unknown,Unknown,triclad sp. A,triclad isopod sp. A,"Turbellarian, Flat Worm"
+1050,Platyhelminthes,Turbellaria,Tricladida,Unknown,Unknown,triclad sp. B,triclad sp. B,"Turbellarian, Flat Worm"
+1080,Platyhelminthes,Turbellaria,Tricladida,Unknown,Unknown,triclad sp. D,triclad sp. D,"Turbellarian, Flat Worm"
+1085,Platyhelminthes,Turbellaria,Tricladida,Unknown,Unknown,triclad sp. E,triclad sp. E,"Turbellarian, Flat Worm"
+1090,Platyhelminthes,Turbellaria,Unknown,Unknown,Unknown,turbellarian sp. A,turbellarian isopod sp. A,"Turbellarian, Flat Worm"
+1091,Platyhelminthes,Turbellaria,Unknown,Unknown,Unknown,turbellarian sp. B,turbellarian sp. B,"Turbellarian, Flat Worm"
+1092,Platyhelminthes,Turbellaria,Unknown,Unknown,Unknown,turbellarian sp. C,turbellarian sp. C,"Turbellarian, Flat Worm"
+1093,Platyhelminthes,Turbellaria,Unknown,Unknown,Unknown,turbellarian sp. D,turbellarian sp. D,"Turbellarian, Flat Worm"
+1094,Platyhelminthes,Turbellaria,Unknown,Unknown,Unknown,turbellarian sp. E,turbellarian sp. E,"Turbellarian, Flat Worm"
+1095,Platyhelminthes,Turbellaria,Unknown,Unknown,Unknown,turbellarian sp. F,turbellarian sp. F,Unknown turbellarian sp. F
+1110,Nemertea,Anopla,Paleonemertea,Unknown,Unknown,paleonemertean sp. A,paleonemertean isopod sp. A,"Nemertean, Ribbon Worm"
+1130,Nemertea,Enopla,Hoplonemertea,Tetrastemmatidae,Prostoma,graecense,Prostoma graecense,"Nemertean, Ribbon Worm"
+1150,Nemertea,Unknown,Unknown,Unknown,Nemertea,sp. A,Nemertea isopod sp. A,"Nemertean, Ribbon Worm"
+1151,Nemertea,Unknown,Unknown,Unknown,Nemertea,sp. B,Nemertea sp. B,"Nemertean, Ribbon Worm"
+1200,Nematoda,Unknown,Unknown,Unknown,Unknown,Unknown,Unknown,"Nemas, Nematodes"
+1205,Nematoda,Unknown,Dorylaimida,Alaimidae,Amphidelus,sp. A,Amphidelus isopod sp. A,"Nemas, Nematodes"
+1210,Nematoda,Adenophorea,Araeolaimida,Plectidae,Teratocephalus,sp. A,Teratocephalus isopod sp. A,"Nemas, Nematodes"
+1220,Nematoda,Adenophorea,Mononchida,Mononchidae,Mononchulus,sp. A,Mononchulus isopod sp. A,"Nemas, Nematodes"
+1230,Nematoda,Adenophorea,Dorylaimida,Dorylaimidae,Dorylaimus,sp. A,Dorylaimus isopod sp. A,Spear Neamtodes
+1270,Nematoda,Adenophorea,Dorylaimida,Dorylaimidae,Actinolaiminae,sp. A,Actinolaiminae isopod sp. A,"Nemas, Nematodes"
+1290,Nematoda,Adenophorea,Mermithida,Mermithidae,Mermithid,sp. A,Mermithid isopod sp. A,"Nemas, Nematodes"
+1295,Nematoda,Unknown,Unknown,Unknown,Unknown,nematode sp. A,nematode isopod sp. A,"Nemas, Nematodes"
+1296,Nematoda,Unknown,Unknown,Unknown,Unknown,nematode sp. B,nematode sp. B,"Nemas, Nematodes"
+1297,Nematoda,Unknown,Unknown,Unknown,Unknown,nematode sp. C,nematode sp. C,"Nemas, Nematodes"
+1298,Nematoda,Unknown,Unknown,Unknown,Unknown,nematode sp. D,nematode sp. D,"Nemas, Nematodes"
+1299,Nematoda,Unknown,Unknown,Unknown,Nema,sp. E,Nema sp. E,"Nemas, Nematodes"
+2000,Nematomorpha,Gordioidea,Gordiodea,Gordiidae,Gordius,sp. A,Gordius isopod sp. A,Horsehair worm
+2005,Annelida,Oligochaeta,Tubificida,Naididae,Arcteonais,lomondi,Arcteonais lomondi,Tubificid Worm
+2010,Annelida,Oligochaeta,Tubificida,Naididae,Bratislavia,bilongata,Bratislavia bilongata,Tubificid Worm
+2011,Annelida,Oligochaeta,Tubificida,Naididae,Bratislavia,unidentata,Bratislavia unidentata,Tubificid Worm
+2030,Annelida,Oligochaeta,Tubificida,Naididae,Chaetogaster,diaphanus,Chaetogaster diaphanus,Tubificid Worm
+2050,Annelida,Oligochaeta,Tubificida,Naididae,Chaetogaster,limnaei,Chaetogaster limnaei,Tubificid Worm
+2070,Annelida,Oligochaeta,Tubificida,Naididae,Dero,digitata,Dero digitata,Tubificid Worm
+2075,Annelida,Oligochaeta,Tubificida,Naididae,Dero,lodeni,Dero lodeni,Tubificid Worm
+2080,Annelida,Oligochaeta,Tubificida,Naididae,Dero,nivea,Dero nivea,Tubificid Worm
+2090,Annelida,Oligochaeta,Tubificida,Naididae,Dero,trifida,Dero trifida,Tubificid Worm
+2095,Annelida,Oligochaeta,Tubificida,Naididae,Dero,vaga,Dero vaga,Tubificid Worm
+2100,Annelida,Oligochaeta,Tubificida,Naididae,Haemonais,waldvogeli,Haemonais waldvogeli,Tubificid Worm
+2104,Annelida,Oligochaeta,Tubificida,Naididae,Nais,alpina,Nais alpina,Tubificid Worm
+2105,Annelida,Oligochaeta,Tubificida,Naididae,Nais,barbata,Nais barbata,Tubificid Worm
+2110,Annelida,Oligochaeta,Tubificida,Naididae,Nais,communis / variabilis,Nais communis / variabilis,Tubificid Worm
+2120,Annelida,Oligochaeta,Tubificida,Naididae,Nais,elinguis,Nais elinguis,Tubificid Worm
+2130,Annelida,Oligochaeta,Tubificida,Naididae,Nais,pardalis,Nais pardalis,Tubificid Worm
+2150,Annelida,Oligochaeta,Tubificida,Naididae,Nais,pseudobtusa,Nais pseudobtusa,Tubificid Worm
+2170,Annelida,Oligochaeta,Tubificida,Naididae,Nais,simplex,Nais simplex,Tubificid Worm
+2190,Annelida,Oligochaeta,Tubificida,Naididae,Ophidonais,serpentina,Ophidonais serpentina,Tubificid Worm
+2210,Annelida,Oligochaeta,Tubificida,Naididae,Paranais,frici,Paranais frici,Tubificid Worm
+2230,Annelida,Oligochaeta,Tubificida,Naididae,Pristina,breviseta,Pristina breviseta,Tubificid Worm
+2250,Annelida,Oligochaeta,Tubificida,Naididae,Pristina,leidyi,Pristina leidyi,Tubificid Worm
+2251,Annelida,Oligochaeta,Tubificida,Naididae,Pristina,sp. A,Pristina isopod sp. A,Tubificid Worm
+2260,Annelida,Oligochaeta,Tubificida,Naididae,Pristinella,jenkinae,Pristinella jenkinae,Tubificid Worm
+2265,Annelida,Oligochaeta,Tubificida,Naididae,Ripistes,parasita,Ripistes parasita,Tubificid Worm
+2270,Annelida,Oligochaeta,Tubificida,Naididae,Slavina,appendiculata,Slavina appendiculata,Tubificid Worm
+2280,Annelida,Oligochaeta,Tubificida,Naididae,Specaria,josinae,Specaria josinae,Tubificid Worm
+2285,Annelida,Oligochaeta,Tubificida,Naididae,Stephensoniana,trivandrana,Stephensoniana trivandrana,Tubificid Worm
+2290,Annelida,Oligochaeta,Tubificida,Naididae,Stylaria,lacustris,Stylaria lacustris,Tubificid Worm
+2300,Annelida,Oligochaeta,Tubificida,Naididae,Uncinais,uncinata,Uncinais uncinata,Tubificid Worm
+2310,Annelida,Oligochaeta,Tubificida,Naididae,Vejdovskyella,comata,Vejdovskyella comata,Tubificid Worm
+2330,Annelida,Oligochaeta,Tubificida,Naididae,Vejdovskyella,intermedia,Vejdovskyella intermedia,Tubificid Worm
+2410,Annelida,Oligochaeta,Tubificida,Naididae,Aulodrilus,limnobius,Aulodrilus limnobius,Tubificid Worm
+2430,Annelida,Oligochaeta,Tubificida,Naididae,Aulodrilus,pigueti,Aulodrilus pigueti,Tubificid Worm
+2450,Annelida,Oligochaeta,Tubificida,Naididae,Aulodrilus,japonicus,Aulodrilus japonicus,Tubificid Worm
+2470,Annelida,Oligochaeta,Tubificida,Naididae,Bothrioneurum,vejdovskyanum,Bothrioneurum vejdovskyanum,Tubificid Worm
+2490,Annelida,Oligochaeta,Tubificida,Naididae,Branchiura,sowerbyi,Branchiura sowerbyi,Tubificid Worm
+2510,Annelida,Oligochaeta,Tubificida,Naididae,Ilyodrilus,frantzi,Ilyodrilus frantzi,Tubificid Worm
+2530,Annelida,Oligochaeta,Tubificida,Naididae,Ilyodrilus,templetoni,Ilyodrilus templetoni,Tubificid Worm
+2540,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,claparedianus,Limnodrilus claparedianus,Tubificid Worm
+2550,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,hoffmeisteri,Limnodrilus hoffmeisteri,Tubificid Worm
+2570,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,udekemianus,Limnodrilus udekemianus,Tubificid Worm
+2580,Annelida,Oligochaeta,Tubificida,Naididae,Monopylephorus,evertus,Monopylephorus evertus,Tubificid Worm
+2581,Annelida,Oligochaeta,Tubificida,Naididae,Monopylephorus,sp. A,Monopylephorus isopod sp. A,Oligochaete
+2590,Annelida,Oligochaeta,Tubificida,Naididae,Potamothrix,bavaricus,Potamothrix bavaricus,Tubificid Worm
+2600,Annelida,Oligochaeta,Tubificida,Naididae,Potamothrix,sp. A,Potamothrix isopod sp. A,Tubificid Worm
+2610,Annelida,Oligochaeta,Tubificida,Naididae,Psammoryctides,californianus,Psammoryctides californianus,Tubificid Worm
+2630,Annelida,Oligochaeta,Tubificida,Naididae,Quistadrilus,multisetosus,Quistadrilus multisetosus,Tubificid Worm
+2650,Annelida,Oligochaeta,Tubificida,Naididae,Embolocephalus,nikolskyi,Embolocephalus nikolskyi,Tubificid Worm
+2652,Annelida,Oligochaeta,Tubificida,Naididae,Varichaetadrilus,harmani,Varichaetadrilus harmani,Tubificid Worm
+2655,Annelida,Oligochaeta,Tubificida,Naididae,Tectidrilus,diversus,Tectidrilus diversus,Tubificid Worm
+2660,Annelida,Oligochaeta,Tubificida,Naididae,Teneridrilus,calvus,Teneridrilus calvus,Tubificid Worm
+2670,Annelida,Oligochaeta,Tubificida,Naididae,Teneridrilus,mastix,Teneridrilus mastix,Tubificid Worm
+2690,Annelida,Oligochaeta,Tubificida,Naididae,Tubificoides,brownae,Tubificoides brownae,Tubificid Worm
+2710,Annelida,Oligochaeta,Tubificida,Naididae,Tubificoides,fraseri,Tubificoides fraseri,Tubificid Worm
+2720,Annelida,Oligochaeta,Tubificida,Naididae,Tubificoides,heterochaetus,Tubificoides heterochaetus,Tubificid Worm
+2725,Annelida,Oligochaeta,Tubificida,Naididae,Tubificoides,motei,Tubificoides motei,Tubificid Worm
+2727,Annelida,Oligochaeta,Tubificida,Naididae,Tubificoides,wasselli,Tubificoides wasselli,Tubificid Worm
+2730,Annelida,Oligochaeta,Tubificida,Naididae,Varichaetadrilus,angustipenis,Varichaetadrilus angustipenis,Tubificid Worm
+2770,Annelida,Oligochaeta,Tubificida,Enchytraeidae,Enchytraeus,sp. A,Enchytraeus isopod sp. A,Tubificid Worm
+2790,Annelida,Oligochaeta,Tubificida,Enchytraeidae,Unknown,enchytraeid sp. B,enchytraeid sp. B,Tubificid Worm
+2800,Annelida,Oligochaeta,Tubificida,Enchytraeidae,Unknown,enchytraeid sp. C,enchytraeid sp. C,Tubificid Worm
+2805,Annelida,Oligochaeta,Lumbricina,Lumbricidae,Eiseniella,tetraedra,Eiseniella tetraedra,Earthworm
+2810,Annelida,Oligochaeta,Tubificida,Sparganophilidae,Sparganophilus,eiseni,Sparganophilus eiseni,Earthworm
+2820,Annelida,Oligochaeta,Tubificida,Ocnerodrilidae,Eukerria,saltensis,Eukerria saltensis,Tubificid Worm
+2830,Annelida,Oligochaeta,Tubificida,Megascolecidae,Unknown,megascolecid sp. A,megascolecid isopod sp. A,Tubificid Worm
+2840,Annelida,Oligochaeta,Lumbriculida,Lumbriculidae,Altmanella,freidris,Altmanella freidris,Angleworm
+2850,Annelida,Oligochaeta,Lumbriculida,Lumbriculidae,Lumbriculus,variegatus,Lumbriculus variegatus,Angleworm
+2870,Annelida,Oligochaeta,Lumbriculida,Lumbriculidae,Rhynchelmis,rostrata,Rhynchelmis rostrata,Angleworm
+2871,Annelida,Oligochaeta,Lumbriculida,Lumbriculidae,Rhynchelmis,klamathensis,Rhynchelmis klamathensis,Angleworm
+2890,Annelida,Oligochaeta,Branchiobdellida,Branchiobdellidae,Cambarincola,sp. A,Cambarincola isopod sp. A,Gill Parasitic Worm
+2910,Annelida,Hirudinea,Rhynchobdellida,Glossiphoniidae,Helobdella,stagnalis,Helobdella stagnalis,Leech
+2930,Annelida,Hirudinea,Rhynchobdellida,Glossiphoniidae,Helobdella,triserialis,Helobdella triserialis,Leech
+2950,Annelida,Hirudinea,Rhynchobdellida,Glossiphoniidae,Placobdella,montifera,Placobdella montifera,Leech
+2970,Annelida,Hirudinea,Arhynchobdellida,Erpobdellidae,Mooreobdella,microstoma,Mooreobdella microstoma,Leech
+2980,Annelida,Hirudinea,Rhynchobdellida,Glossiphoniidae,Gloiobdella,elongata,Gloiobdella elongata,Leech
+3005,Annelida,Polychaeta,Eunicida,Lumbrineridae,Lumbrineris,inflata,Lumbrineris inflata,Polychaete Worm
+3008,Annelida,Polychaeta,Eunicida,Lumbrineridae,Scoletoma,erecta,Scoletoma erecta,Polychaete Worm
+3010,Annelida,Polychaeta,Eunicida,Lumbrineridae,Scoletoma,luti,Scoletoma luti,Polychaete Worm
+3030,Annelida,Polychaeta,Orbiniida,Orbiniidae,Leitoscoloplos,pugettensis,Leitoscoloplos pugettensis,Polychaete Worm
+3050,Annelida,Polychaeta,Spionida,Spionidae,Boccardiella,ligerica,Boccardiella ligerica,"Spionid, Polychaete Worm"
+3051,Annelida,Polychaeta,Spionida,Spionidae,Dipolydora,sp. A,Dipolydora isopod sp. A,"Spionid, Polychaete Worm"
+3060,Annelida,Polychaeta,Spionida,Spionidae,Dipolydora,caulleryi,Dipolydora caulleryi,"Spionid, Polychaete Worm"
+3061,Annelida,Polychaeta,Spionida,Spionidae,Dipolydora,brachycephala,Dipolydora brachycephala,"Spionid, Polychaete Worm"
+3065,Annelida,Polychaeta,Spionida,Spionidae,Prionospio,lighti,Prionospio lighti,"Spionid, Polychaete Worm"
+3070,Annelida,Polychaeta,Spionida,Spionidae,Polydora,cornuta,Polydora cornuta,"Spionid, Polychaete Worm"
+3080,Annelida,Polychaeta,Spionida,Spionidae,Dipolydora,socialis,Dipolydora socialis,"Spionid, Polychaete Worm"
+3090,Annelida,Polychaeta,Spionida,Spionidae,Pseudopolydora,kempi,Pseudopolydora kempi,"Spionid, Polychaete Worm"
+3091,Annelida,Polychaeta,Spionida,Spionidae,Pseudopolydora,paucibranchiata,Pseudopolydora paucibranchiata,"Spionid, Polychaete Worm"
+3095,Annelida,Polychaeta,Spionida,Spionidae,Scolelepis,squamata,Scolelepis squamata,"Spionid, Polychaete Worm"
+3096,Annelida,Polychaeta,Spionida,Spionidae,Scolelepis,sp. A,Scolelepis isopod sp. A,"Spionid, Polychaete Worm"
+3097,Annelida,Polychaeta,Spionida,Paraonidae,Aricidea,catherinae,Aricidea catherinae,"Spionid, Polychaete Worm"
+3098,Annelida,Polychaeta,Spionida,Paraonidae,Aricidea,lopezi,Aricidea lopezi,"Spionid, Polychaete Worm"
+3100,Annelida,Polychaeta,Spionida,Spionidae,Pygospio,californica,Pygospio californica,"Spionid, Polychaete Worm"
+3105,Annelida,Polychaeta,Spionida,Spionidae,Spiophanes,duplex,Spiophanes duplex,"Spionid, Polychaete Worm"
+3110,Annelida,Polychaeta,Spionida,Spionidae,Streblospio,benedicti,Streblospio benedicti,"Spionid, Polychaete Worm"
+3130,Annelida,Polychaeta,Spionida,Spionidae,Marenzelleria,neglecta,Marenzelleria neglecta,"Spionid, Polychaete Worm"
+3135,Annelida,Polychaeta,Spionida,Magelonidae,Magelona,sacculata,Magelona sacculata,"Spionid, Polychaete Worm"
+3138,Annelida,Polychaeta,Spionida,Cirratulidae,Chaetozone,sp. A,Chaetozone isopod sp. A,"Spionid, Polychaete Worm"
+3139,Annelida,Polychaeta,Spionida,Cirratulidae,Caulleriella,sp. A,Caulleriella isopod sp. A,"Spionid, Polychaete Worm"
+3140,Annelida,Polychaeta,Spionida,Cirratulidae,Tharyx,parvus,Tharyx parvus,"Spionid, Polychaete Worm"
+3150,Annelida,Polychaeta,Spionida,Cirratulidae,Cirriformia,moorei,Cirriformia moorei,"Spionid, Polychaete Worm"
+3160,Annelida,Polychaeta,Spionida,Cirratulidae,Cossura,sp. A,Cossura isopod sp. A,Polychaete Worm
+3170,Annelida,Polychaeta,Capitellida,Capitellidae,Heteromastus,filiformis,Heteromastus filiformis,Lug worm
+3180,Annelida,Polychaeta,Capitellida,Capitellidae,Capitella,sp. A,Capitella isopod sp. A,Lug worm
+3185,Annelida,Polychaeta,Capitellida,Capitellidae,Mediomastus,sp. A,Mediomastus isopod sp. A,Polychaete Worm
+3190,Annelida,Polychaeta,Capitellida,Maldanidae,Sabaco,elongatus,Sabaco elongatus,Bamboo Worm
+3195,Annelida,Polychaeta,Capitellida,Pectinariidae,Pectinaria,californiensis,Pectinaria californiensis,Comb worm
+3200,Annelida,Polychaeta,Ophelida,Opheliidae,Armandia,brevis,Armandia brevis,Lug worm
+3210,Annelida,Polychaeta,Phyllodocida,Nephtyidae,Nephtys,caecoides,Nephtys caecoides,Polychaete Worm
+3230,Annelida,Polychaeta,Phyllodocida,Nephtyidae,Micronephtys,cornuta,Micronephtys cornuta,Polychaete Worm
+3240,Annelida,Polychaeta,Phyllodocida,Phyllodocidae,Phyllodoce,groenlandica,Phyllodoce groenlandica,Polychaete Worm
+3245,Annelida,Polychaeta,Phyllodocida,Dorvilleidae,Schistomeringos,longicornis,Schistomeringos longicornis,Polychaete Worm
+3250,Annelida,Polychaeta,Phyllodocida,Phyllodocidae,Eteone,californica,Eteone californica,Polychaete Worm
+3270,Annelida,Polychaeta,Phyllodocida,Phyllodocidae,Eteone,lighti,Eteone lighti,Polychaete Worm
+3280,Annelida,Polychaeta,Phyllodocida,Syllidae,Exogone,lourei,Exogone lourei,Polychaete Worm
+3290,Annelida,Polychaeta,Phyllodocida,Syllidae,Sphaerosyllis,californiensis,Sphaerosyllis californiensis,Polychaete Worm
+3300,Annelida,Polychaeta,Phyllodocida,Syllidae,Megasyllis,nipponica,Megasyllis nipponica,Polychaete Worm
+3301,Annelida,Polychaeta,Phyllodocida,Syllidae,Autolytinae,sp. A,Autolytinae isopod sp. A,Polychaete Worm
+3305,Annelida,Polychaeta,Phyllodocida,Pholoididae,Pholoides,aspera,Pholoides aspera,Polychaete Worm
+3310,Annelida,Polychaeta,Phyllodocida,Polynoidae,Harmothoe,imbricata,Harmothoe imbricata,Polychaete Worm
+3311,Annelida,Polychaeta,Phyllodocida,Polynoidae,Hesperonoe,complanata,Hesperonoe complanata,Scale worm
+3320,Annelida,Polychaeta,Phyllodocida,Chrysopetalidae,Paleanotus,bellis,Paleanotus bellis,Polychaete Worm
+3330,Annelida,Polychaeta,Phyllodocida,Nereididae,Hediste,limnicola,Hediste limnicola,Polychaete Worm
+3340,Annelida,Polychaeta,Phyllodocida,Nereididae,Alitta,brandti/virens,Alitta brandti/virens,Polychaete Worm
+3370,Annelida,Polychaeta,Phyllodocida,Nereididae,Alitta,succinea,Alitta succinea,Polychaete Worm
+3375,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis,pelagica neonigripes,Nereis pelagica neonigripes,Polychaete Worm
+3380,Annelida,Polychaeta,Phyllodocida,Nereididae,Platynereis,bicanaliculata,Platynereis bicanaliculata,Polychaete Worm
+3390,Annelida,Polychaeta,Phyllodocida,Goniadidae,Glycinde,armigera,Glycinde armigera,Polychaete Worm
+3391,Annelida,Polychaeta,Phyllodocida,Glyceridae,Glycera,americana,Glycera americana,Polychaete Worm
+3394,Annelida,Polychaeta,Terebellida,Terebellidae,Neoamphitrite,sp. A,Neoamphitrite isopod sp. A,Polychaete Worm
+3395,Annelida,Polychaeta,Terebellida,Terebellidae,Amaeana,sp. A,Amaeana isopod sp. A,Polychaete Worm
+3400,Annelida,Polychaeta,Terebellida,Terebellidae,Pista,pacifica,Pista pacifica,Polychaete Worm
+3410,Annelida,Polychaeta,Sabellida,Sabellidae,Euchone,limnicola,Euchone limnicola,Polychaete Worm
+3430,Annelida,Polychaeta,Sabellida,Sabellidae,Manayunkia,speciosa,Manayunkia speciosa,Polychaete Worm
+3450,Annelida,Polychaeta,Sabellida,Sabellidae,Laonome,calida,Laonome calida,Polychaete Worm
+3460,Annelida,Polychaeta,Sabellida,Sabellidae,Myxicola,infundibulum,Myxicola infundibulum,Polychaete Worm
+3999,Arthropoda,Crustacea,Cyclopoida,Cyclopidae,Unknown,Cyclopid sp. A,Cyclopid isopod sp. A,Cyclopid copepod
+4000,Arthropoda,Crustacea,Cyclopoida,Notodelphyidae,Pygodelphys,sp. A,Pygodelphys isopod sp. A,Copepod
+4005,Arthropoda,Crustacea,Podocopida,Cyprididae,Cypricercus,sp. A,Cypricercus isopod sp. A,Ostracod
+4010,Arthropoda,Crustacea,Podocopida,Cyprididae,Eucypris,sp. A,Eucypris isopod sp. A,Ostracod
+4020,Arthropoda,Crustacea,Podocopida,Cyprididae,Herpetocypris,brevicaudata,Herpetocypris brevicaudata,Ostracod
+4030,Arthropoda,Crustacea,Podocopida,Cyprididae,Isocypris,sp. A,Isocypris isopod sp. A,Ostracod
+4040,Arthropoda,Crustacea,Podocopida,Cyprididae,Cyclocypris,sp. A,Cyclocypris isopod sp. A,Ostracod
+4050,Arthropoda,Crustacea,Podocopida,Candonidae,Candona,sp. A,Candona isopod sp. A,Ostracod
+4070,Arthropoda,Crustacea,Podocopida,Sarsiellidae,Eusarsiella,zostericola,Eusarsiella zostericola,Ostracod
+4090,Arthropoda,Crustacea,Podocopida,Cytheridae,Cyprideis,sp. A,Cyprideis isopod sp. A,Ostracod
+4100,Arthropoda,Crustacea,Mysidacea,Mysidae,Hyperacanthomysis,longirostris,Hyperacanthomysis longirostris,"Mysid, Opossom Shrimp"
+4101,Arthropoda,Crustacea,Mysidacea,Mysidae,Orientomysis,aspera,Orientomysis aspera,"Mysid, Opossom Shrimp"
+4105,Arthropoda,Crustacea,Mysidacea,Mysidae,Alienacanthomysis,macropsis,Alienacanthomysis macropsis,"Mysid, Opossom Shrimp"
+4109,Arthropoda,Crustacea,Mysidacea,Mysidae,Neomysis,kadiakensis,Neomysis kadiakensis,"Mysid, Opossom Shrimp"
+4110,Arthropoda,Crustacea,Mysidacea,Mysidae,Neomysis,mercedis,Neomysis mercedis,"Mysid, Opossom Shrimp"
+4111,Arthropoda,Crustacea,Mysidae,Mysidae,Neomysis,japonica,Neomysis japonica,"Mysid, Opossom Shrimp"
+4150,Arthropoda,Crustacea,Thoracica,Balanidae,Balanus,improvisus,Balanus improvisus,Bay Barnacle
+4210,Arthropoda,Crustacea,Cumacea,Nannastacidae,Cumella,vulgaris,Cumella vulgaris,Cumacean
+4229,Arthropoda,Crustacea,Cumacea,Leuconidae,Eudorella,pacifica,Eudorella pacifica,Cumacean
+4230,Arthropoda,Crustacea,Cumacea,Leuconidae,Nippoleucon,hinumensis,Nippoleucon hinumensis,Cumacean
+4250,Arthropoda,Crustacea,Cumacea,Leptochelidae,Leptochelia,dubia,Leptochelia dubia,Cumacean
+4270,Arthropoda,Crustacea,Tanaidacea,Tanaidae,Sinelobus,sp. A,Sinelobus isopod sp. A,Tanaidacean
+4309,Arthropoda,Crustacea,Isopoda,Idoteidae,Idotea,sp. A,Idotea isopod sp. A,Isopod
+4310,Arthropoda,Crustacea,Isopoda,Idoteidae,Synidotea,laevidorsalis,Synidotea laevidorsalis,Isopod
+4315,Arthropoda,Crustacea,Isopoda,Anthuridae,Cyathura,sp. A,Cyathura isopod sp. A,Isopod
+4320,Arthropoda,Crustacea,Isopoda,Anthuridae,Paranthura,elegans,Paranthura elegans,Isopod
+4330,Arthropoda,Crustacea,Isopoda,Asellidae,Asellus,hilgendorfii,Asellus hilgendorfii,Isopod
+4335,Arthropoda,Crustacea,Isopoda,Asellidae,Caecidotea,racovitzai,Caecidotea racovitzai,Isopod
+4337,Annelida,Polychaeta,Phyllodocida,Bopyridae,Unknown,sp. A,isopod sp. A,Parasitic isopod
+4350,Arthropoda,Crustacea,Isopoda,Sphaeromatidae,Gnorimosphaeroma,insulare,Gnorimosphaeroma insulare,"Isopod, Pill bug"
+4370,Arthropoda,Crustacea,Isopoda,Sphaeromatidae,Gnorimosphaeroma,oregonensis,Gnorimosphaeroma oregonensis,"Isopod, Pill bug"
+4390,Arthropoda,Crustacea,Isopoda,Sphaeromatidae,Sphaeroma,quoianum,Sphaeroma quoianum,"Isopod, Pill bug"
+4400,Arthropoda,Crustacea,Isopoda,Cirolanidae,Excirolana,linguifrons,Excirolana linguifrons,Isopod
+4409,Arthropoda,Crustacea,Isopoda,Munnidae,Uromunna,ubiquita,Uromunna ubiquita,"Isopod, Pill bug"
+4410,Arthropoda,Crustacea,Isopoda,Munnidae,Uromunna,sp. A,Uromunna isopod sp. A,Isopod
+4504,Arthropoda,Crustacea,Amphipoda,Podoceridae,unknown,sp. A,unknown isopod sp. A,Amphipod
+4505,Arthropoda,Crustacea,Amphipoda,Dexaminidae,Paradexamine,sp. A,Paradexamine isopod sp. A,Amphipod
+4506,Arthropoda,Crustacea,Amphipoda,Isaeidae,Photis,brevipes,Photis brevipes,Amphipod
+4510,Arthropoda,Crustacea,Amphipoda,Ampeliscidae,Ampelisca,abdita,Ampelisca abdita,Amphipod
+4520,Arthropoda,Crustacea,Amphipoda,Ampeliscidae,Ampelisca,lobata,Ampelisca lobata,Amphipod
+4524,Arthropoda,Crustacea,Amphipoda,Ampithoidae,Ampithoe,plumulosa,Ampithoe plumulosa,Amphipod
+4525,Arthropoda,Crustacea,Amphipoda,Ampithoidae,Ampithoe,valida,Ampithoe valida,Amphipod
+4529,Arthropoda,Crustacea,Amphipoda,Ischyroceridae,Jassa,slatteryi,Jassa slatteryi,Amphipod
+4530,Arthropoda,Crustacea,Amphipoda,Corophiidae,Monocorophium,acherusicum,Monocorophium acherusicum,Amphipod
+4550,Arthropoda,Crustacea,Amphipoda,Corophiidae,Sinocorophium,alienense,Sinocorophium alienense,Amphipod
+4560,Arthropoda,Crustacea,Amphipoda,Corophiidae,Sinocorophium,heteroceratum,Sinocorophium heteroceratum,Amphipod
+4570,Arthropoda,Crustacea,Amphipoda,Corophiidae,Monocorophium,insidiosum,Monocorophium insidiosum,Amphipod
+4580,Arthropoda,Crustacea,Amphipoda,Corophiidae,Monocorophium,uenoi,Monocorophium uenoi,Amphipod
+4610,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,spinicorne,Americorophium spinicorne,Amphipod
+4630,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,stimpsoni,Americorophium stimpsoni,Amphipod
+4670,Arthropoda,Crustacea,Amphipoda,Aoridae,Grandidierella,japonica,Grandidierella japonica,Amphipod
+4710,Arthropoda,Crustacea,Amphipoda,Phoxocephalidae,Grandifoxus,grandis,Grandifoxus grandis,Amphipod
+4711,Arthropoda,Crustacea,Amphipoda,Phoxocephalidae,Rhepoxynius,sp. A,Rhepoxynius isopod sp. A,Amphipod
+4715,Arthropoda,Crustacea,Amphipoda,Stenothoidae,Stenothoe,valida,Stenothoe valida,Amphipod
+4716,Arthropoda,Crustacea,Amphipoda,Stenothoidae,Stenula,modosa,Stenula modosa,Amphipod
+4720,Arthropoda,Crustacea,Amphipoda,Oedicerotidae,Americhelidium,shoemakeri,Americhelidium shoemakeri,Amphipod
+4730,Arthropoda,Crustacea,Amphipoda,Pleustidae,Gnathopleustes,pugettensis,Gnathopleustes pugettensis,Amphipod
+4740,Arthropoda,Crustacea,Amphipoda,Crangonyctidae,Crangonyx,floridanus,Crangonyx floridanus,Amphipod
+4745,Arthropoda,Crustacea,Amphipoda,Anisogammaridae,Eogammarus,confervicolus,Eogammarus confervicolus,Amphipod
+4750,Arthropoda,Crustacea,Amphipoda,Gammaridae,Gammarus,daiberi,Gammarus daiberi,Amphipod
+4770,Arthropoda,Crustacea,Amphipoda,Melitidae,Melita,nitida,Melita nitida,Amphipod
+4810,Arthropoda,Crustacea,Amphipoda,Hyalellidae,Hyalella,sp. A,Hyalella isopod sp. A,Amphipod
+4830,Arthropoda,Crustacea,Amphipoda,Caprellidae,Caprella,scaura,Caprella scaura,Skeleton Shrimp
+4835,Arthropoda,Crustacea,Amphipoda,Caprellidae,Caprella,mendax,Caprella mendax,Skeleton Shrimp
+4860,Arthropoda,Crustacea,Decapoda,Palaemonidae,Exopalaemon,modestus,Exopalaemon modestus,Siberian prawn
+4870,Arthropoda,Crustacea,Decapoda,Palaemonidae,Palaemon,macrodactylus,Palaemon macrodactylus,Oriental Shrimp
+4880,Arthropoda,Crustacea,Decapoda,Hippolytidae,Heptacarpus,stimpsoni,Heptacarpus stimpsoni,Broken back Shrimp
+4890,Arthropoda,Crustacea,Decapoda,Crangonidae,Crangon,franciscorum,Crangon franciscorum,California Bay Shrimp
+4892,Arthropoda,Crustacea,Decapoda,Crangonidae,Crangon,nigricauda,Crangon nigricauda,Blacktail Shrimp
+4910,Arthropoda,Crustacea,Decapoda,Astacidae,Pacifastacus,leniusculus,Pacifastacus leniusculus,Signal Crayfish
+4925,Arthropoda,Crustacea,Decapoda,Callianassidae,Notrypaea,californiensis,Notrypaea californiensis,Mud Shrimp
+4930,Arthropoda,Crustacea,Decapoda,Upogebiidae,Upogebia,pugettensis,Upogebia pugettensis,Blue Mud Shrimp
+4935,Arthropoda,Crustacea,Decapoda,Paguridae,Pagurus,samuelis,Pagurus samuelis,Blue-handed Hermit Crab
+4939,Arthropoda,Malacostraca,Decapoda,Cancridae,Romaleon,antennarius,Romaleon antennarius,Brown rock crab
+4940,Arthropoda,Crustacea,Decapoda,Varunidae,Eriocheir,sinensis,Eriocheir sinensis,Chinese Mitten Crab
+4941,Arthropoda,Crustacea,Decapoda,Cancridae,Romaleon,jordani,Romaleon jordani,Hairy rock crab
+4942,Arthropoda,Crustacea,Decapoda,Cancridae,Romaleon,branneri,Romaleon branneri,Furrowed rock crab
+4943,Arthropoda,Crustacea,Decapoda,Cancridae,Metacarcinus,anthonyi,Metacarcinus anthonyi,Yellow rock crab
+4944,Arthropoda,Crustacea,Decapoda,Cancridae,Metacarcinus,magister,Metacarcinus magister,Dungeness Crab
+4945,Arthropoda,Crustacea,Decapoda,Cancridae,Cancer,productus,Cancer productus,Red Rock Crab
+4947,Arthropoda,Crustacea,Decapoda,Cancridae,Metacarcinus,gracilis,Metacarcinus gracilis,Graceful rock crab
+4949,Arthropoda,Crustacea,Decapoda,Panopeidae,Lophopanopeus,leucomanus,Lophopanopeus leucomanus,Knobknee crestleg crab
+4950,Arthropoda,Crustacea,Decapoda,Panopeidae,Rhithropanopeus,harrisii,Rhithropanopeus harrisii,Harris Mud Crab
+4970,Arthropoda,Crustacea,Decapoda,Varunidae,Hemigrapsus,oregonensis,Hemigrapsus oregonensis,Shore Crab
+4980,Arthropoda,Crustacea,Decapoda,Pinnotheridae,Pinnixa,scamit,Pinnixa scamit,Pea crab
+4981,Arthropoda,Crustacea,Decapoda,Pinnotheridae,Scleroplax,granulata,Scleroplax granulata,Pea crab
+4990,Arthropoda,Crustacea,Decapoda,Majidae,Pyromaia,tuberculata,Pyromaia tuberculata,Tuberculate Pear Crab
+5010,Arthropoda,Insecta,Ephemeroptera,Baetidae,Baetis,tricaudatus,Baetis tricaudatus,Mayfly
+5020,Arthropoda,Insecta,Ephemeroptera,Baetidae,Callibaetis,sp. A,Callibaetis isopod sp. A,Mayfly
+5025,Arthropoda,Insecta,Ephemeroptera,Baetidae,Fallceon,quilleri,Fallceon quilleri,Mayfly
+5026,Arthropoda,Insecta,Ephemeroptera,Baetidae,Procloeon,sp. A,Procloeon isopod sp. A,Mayfly
+5030,Arthropoda,Insecta,Ephemeroptera,Heptageniidae,Heptagenia,sp. A,Heptagenia isopod sp. A,Mayfly
+5050,Arthropoda,Insecta,Ephemeroptera,Leptophlebiidae,Paraleptophlebia,sp. A,Paraleptophlebia isopod sp. A,Mayfly
+5060,Arthropoda,Insecta,Ephemeroptera,Ephemerellidae,Serratella,micheneri,Serratella micheneri,Mayfly
+5070,Arthropoda,Insecta,Ephemeroptera,Ephemeridae,Hexagenia,limbata californica,Hexagenia limbata californica,Mayfly
+5090,Arthropoda,Insecta,Ephemeroptera,Leptohyphidae,Tricorythodes,minutus,Tricorythodes minutus,Mayfly
+5110,Arthropoda,Insecta,Ephemeroptera,Caenidae,Caenis,latipennis,Caenis latipennis,Mayfly
+5111,Arthropoda,Insecta,Ephemeroptera,Caenidae,Cercobrachys,sp. A,Cercobrachys isopod sp. A,Mayfly
+5125,Arthropoda,Insecta,Ephemeroptera,Pseudironidae,Pseudiron,centralis,Pseudiron centralis,Mayfly
+5130,Arthropoda,Insecta,Odonata,Gomphidae,Stylurus,olivaceus,Stylurus olivaceus,Olive Clubtail dragonfly
+5132,Arthropoda,Insecta,Odonata,Libellulidae,Pachydiplax,longipennis,Pachydiplax longipennis,Blue dasher
+5140,Arthropoda,Insecta,Odonata,Coenagrionidae,Enallagma,sp. A,Enallagma isopod sp. A,Blue damselfly
+5150,Arthropoda,Insecta,Odonata,Coenagrionidae,Zoniagrion,exclamationis,Zoniagrion exclamationis,Exclamation Damselfly
+5155,Arthropoda,Insecta,Perlodidae,Perlodidae,Isoperla,sp. A,Isoperla isopod sp. A,"Stripetail, yellow stone"
+5160,Arthropoda,Insecta,Belostomatidae,Belostomatidae,Belostoma,flumineum,Belostoma flumineum,Giant water bug
+5170,Arthropoda,Insecta,Hemiptera,Naucoridae,Ambrysus,sp. A,Ambrysus isopod sp. A,Creeping Water Bug
+5190,Arthropoda,Insecta,Hemiptera,Corixidae,Corisella,inscripta,Corisella inscripta,Water Boatman
+5210,Arthropoda,Insecta,Hemiptera,Corixidae,Trichocorixa,verticalis,Trichocorixa verticalis,Water Boatman
+5225,Arthropoda,Insecta,Neuroptera,Sisyridae,Climacia,californica,Climacia californica,Spongillafly
+5226,Arthropoda,Insecta,NA,Brachycentridae,Micrasema,sp. A,Micrasema isopod sp. A,NA
+5230,Arthropoda,Insecta,Trichoptera,Hydropsychidae,Hydropsyche,californica,Hydropsyche californica,Net-Spinning Caddisfly
+5234,Arthropoda,Insecta,Trichoptera,Hydroptilidae,Hydroptila,sp. B,Hydroptila sp. B,Micro-Caddisfly
+5235,Arthropoda,Insecta,Trichoptera,Hydroptilidae,Hydroptila,sp. A,Hydroptila isopod sp. A,Micro-Caddisfly
+5236,Arthropoda,Insecta,Trichoptera,Hydroptilidae,Oxyethira,sp. A,Oxyethira isopod sp. A,Micro-Caddisfly
+5240,Arthropoda,Insecta,Trichoptera,Leptoceridae,Nectopsyche,gracilis,Nectopsyche gracilis,Long-horn Caddisfly
+5241,Arthropoda,Insecta,Trichoptera,Leptoceridae,Oecetis,sp. A,Oecetis isopod sp. A,Long-horn Caddisfly
+5242,Arthropoda,Insecta,Trichoptera,Leptoceridae,Oecetis,sp. B,Oecetis sp. B,Long-horn Caddisfly
+5243,Arthropoda,Insecta,NA,Philopotamidae,Wormaldia,gabriella,Wormaldia gabriella,NA
+5245,Arthropoda,Insecta,Trichoptera,Psychomyiidae,Tinodes,belisa,Tinodes belisa,Caddisfly
+5300,Arthropoda,Insecta,NA,Dytiscidae,Liodessus,obscurellus,Liodessus obscurellus,NA
+5305,Arthropoda,Insecta,NA,Noteridae,Suphisellus,sp. A,Suphisellus isopod sp. A,NA
+5311,Arthropoda,Insecta,NA,Gyrinidae,Gyrinus,sp. A,Gyrinus isopod sp. A,NA
+5312,Arthropoda,Insecta,NA,Hydrophilidae,Crenitis,sp. A,Crenitis isopod sp. A,NA
+5313,Arthropoda,Insecta,NA,Hydrophilidae,Helochares,sp. A,Helochares isopod sp. A,NA
+5314,Arthropoda,Insecta,NA,Hydrophilidae,Tropisternus,lateralis,Tropisternus lateralis,NA
+5315,Arthropoda,Insecta,Coleoptera,Elmidae,Dubiraphia,giulianii,Dubiraphia giulianii,Riffle Beetle
+5320,Arthropoda,Insecta,Coleoptera,Elmidae,Microcylloepus,similis,Microcylloepus similis,Riffle Beetle
+5325,Arthropoda,Insecta,Coleoptera,Ptilodactylidae,Unknown,ptilodactylidae sp. A,ptilodactylidae isopod sp. A,Toed-winged beetle
+5330,Arthropoda,Insecta,Diptera,Chaoboridae,Chaoborus,albatus,Chaoborus albatus,Phanton Midge
+5410,Arthropoda,Insecta,Diptera,Chironomidae,Procladius,sp. A,Procladius isopod sp. A,Midge
+5430,Arthropoda,Insecta,Diptera,Chironomidae,Tanypus,stellatus,Tanypus stellatus,Midge
+5450,Arthropoda,Insecta,Diptera,Chironomidae,Ablabesmyia,sp. A,Ablabesmyia isopod sp. A,Midge
+5455,Arthropoda,Insecta,Diptera,Chironomidae,Conchapelopia,sp. A,Conchapelopia isopod sp. A,Midge
+5457,Arthropoda,Insecta,Diptera,Chironomidae,Monopelopia,sp. A,Monopelopia isopod sp. A,Midge
+5458,Arthropoda,Insecta,Diptera,Chironomidae,Pentaneura,sp. A,Pentaneura isopod sp. A,Midge
+5460,Arthropoda,Insecta,Diptera,Chironomidae,Potthastia,sp. A,Potthastia isopod sp. A,Midge
+5470,Arthropoda,Insecta,Diptera,Chironomidae,Cladotanytarsus,sp. A,Cladotanytarsus isopod sp. A,Midge
+5490,Arthropoda,Insecta,Diptera,Chironomidae,Micropsectra,sp. A,Micropsectra isopod sp. A,Midge
+5500,Arthropoda,Insecta,Diptera,Chironomidae,Nimbocera,sp. A,Nimbocera isopod sp. A,Midge
+5510,Arthropoda,Insecta,Diptera,Chironomidae,Paratanytarsus,sp. A,Paratanytarsus isopod sp. A,Midge
+5511,Arthropoda,Insecta,Diptera,Chironomidae,Paratanytarsus,sp. B,Paratanytarsus sp. B,Midge
+5515,Arthropoda,Insecta,Diptera,Chironomidae,Rheotanytarsus,sp. A,Rheotanytarsus isopod sp. A,Midge
+5518,Arthropoda,Insecta,Diptera,Chironomidae,Stempellina,sp. A,Stempellina isopod sp. A,Midge
+5519,Arthropoda,Insecta,Diptera,Chironomidae,Stempellinella,sp. A,Stempellinella isopod sp. A,Midge
+5520,Arthropoda,Insecta,Diptera,Chironomidae,Tanytarsus,sp. A,Tanytarsus isopod sp. A,Midge
+5525,Arthropoda,Insecta,Diptera,Chironomidae,Tanytarsus,sp. B,Tanytarsus sp. B,Midge
+5526,Arthropoda,Insecta,Diptera,Chironomidae,Sublettea,sp. A,Sublettea isopod sp. A,Midge
+5527,Arthropoda,Insecta,Diptera,Chironomidae,unid Tanytarsini pupa,sp. A,unid Tanytarsini pupa isopod sp. A,Midge
+5529,Arthropoda,Insecta,Diptera,Chironomidae,Apedilum,sp. A,Apedilum isopod sp. A,Midge
+5530,Arthropoda,Insecta,Diptera,Chironomidae,Chironomus,attenuatus,Chironomus attenuatus,Midge
+5535,Arthropoda,Insecta,Diptera,Chironomidae,Chironomus,stigmaterus,Chironomus stigmaterus,Midge
+5540,Arthropoda,Insecta,Diptera,Chironomidae,Cladopelma,sp. A,Cladopelma isopod sp. A,Midge
+5550,Arthropoda,Insecta,Diptera,Chironomidae,Cryptochironomus,sp. A,Cryptochironomus isopod sp. A,Midge
+5570,Arthropoda,Insecta,Diptera,Chironomidae,Cryptochironomus,sp. B,Cryptochironomus sp. B,Midge
+5571,Arthropoda,Insecta,Diptera,Chironomidae,Cryptochironomus,sp. C,Cryptochironomus sp. C,Midge
+5572,Arthropoda,Insecta,Diptera,Chironomidae,Cryptochironomus,sp. D,Cryptochironomus sp. D,Midge
+5575,Arthropoda,Insecta,Diptera,Chironomidae,Cryptotendipes,sp. A,Cryptotendipes isopod sp. A,non-biting midge
+5580,Arthropoda,Insecta,Diptera,Chironomidae,Cyphomella,sp. A,Cyphomella isopod sp. A,Midge
+5590,Arthropoda,Insecta,Diptera,Chironomidae,Demicryptochironomus,sp. A,Demicryptochironomus isopod sp. A,Midge
+5600,Arthropoda,Insecta,Diptera,Chironomidae,Dicrotendipes,sp. A,Dicrotendipes isopod sp. A,Midge
+5601,Arthropoda,Insecta,Diptera,Chironomidae,Dicrotendipes,sp. B,Dicrotendipes sp. B,Midge
+5602,Arthropoda,Insecta,Diptera,Chironomidae,Dicrotendipes,sp. C,Dicrotendipes sp. C,Midge
+5610,Arthropoda,Insecta,Diptera,Chironomidae,Glyptotendipes,sp. A,Glyptotendipes isopod sp. A,Midge
+5620,Arthropoda,Insecta,Diptera,Chironomidae,Einfeldia,sp. A,Einfeldia isopod sp. A,Midge
+5630,Arthropoda,Insecta,Diptera,Chironomidae,Endochironomus,sp. A,Endochironomus isopod sp. A,Midge
+5631,Arthropoda,Insecta,Diptera,Chironomidae,Endochironomus,sp. B,Endochironomus sp. B,Midge
+5640,Arthropoda,Insecta,Diptera,Chironomidae,Endotribelos,sp. A,Endotribelos isopod sp. A,Midge
+5670,Arthropoda,Insecta,Diptera,Chironomidae,Harnischia,curtilamellata,Harnischia curtilamellata,Midge
+5675,Arthropoda,Insecta,Diptera,Chironomidae,Microchironomus,sp. A,Microchironomus isopod sp. A,Midge
+5680,Arthropoda,Insecta,Diptera,Chironomidae,Microtendipes,sp. A,Microtendipes isopod sp. A,Midge
+5685,Arthropoda,Insecta,Diptera,Chironomidae,Microtendipes,sp. B,Microtendipes sp. B,Midge
+5691,Arthropoda,Insecta,Diptera,Chironomidae,Parachironomus,sp. A,Parachironomus isopod sp. A,Midge
+5692,Arthropoda,Insecta,Diptera,Chironomidae,Parachironomus,sp. B,Parachironomus sp. B,Midge
+5710,Arthropoda,Insecta,Diptera,Chironomidae,Paracladopelma,sp. A,Paracladopelma isopod sp. A,Midge
+5711,Arthropoda,Insecta,Diptera,Chironomidae,Paracladopelma,sp. B,Paracladopelma sp. B,Midge
+5712,Arthropoda,Insecta,Diptera,Chironomidae,Paracladopelma,sp. C,Paracladopelma sp. C,Midge
+5730,Arthropoda,Insecta,Diptera,Chironomidae,Paralauterborniella,sp. A,Paralauterborniella isopod sp. A,Midge
+5750,Arthropoda,Insecta,Diptera,Chironomidae,Paratendipes,sp. A,Paratendipes isopod sp. A,Midge
+5770,Arthropoda,Insecta,Diptera,Chironomidae,Phaenopsectra,sp. A,Phaenopsectra isopod sp. A,Midge
+5790,Arthropoda,Insecta,Diptera,Chironomidae,Polypedilum,sp. A,Polypedilum isopod sp. A,Midge
+5791,Arthropoda,Insecta,Diptera,Chironomidae,Polypedilum,sp. B,Polypedilum sp. B,Midge
+5792,Arthropoda,Insecta,Diptera,Chironomidae,Polypedilum,sp. C,Polypedilum sp. C,Midge
+5800,Arthropoda,Insecta,Diptera,Chironomidae,Pseudochironomus,sp. A,Pseudochironomus isopod sp. A,Midge
+5810,Arthropoda,Insecta,Diptera,Chironomidae,Robackia,claviger,Robackia claviger,Midge
+5820,Arthropoda,Insecta,Diptera,Chironomidae,Robackia,demeijerei,Robackia demeijerei,Midge
+5830,Arthropoda,Insecta,Diptera,Chironomidae,Stenochironomus,sp. A,Stenochironomus isopod sp. A,Midge
+5850,Arthropoda,Insecta,Diptera,Chironomidae,Stictochironomus,sp. A,Stictochironomus isopod sp. A,Midge
+5851,Arthropoda,Insecta,Diptera,Chironomidae,Stictochironomus,sp. B,Stictochironomus sp. B,Midge
+5855,Arthropoda,Insecta,Diptera,Chironomidae,Synendotendipes,sp. A,Synendotendipes isopod sp. A,Midge
+5860,Arthropoda,Insecta,Diptera,Chironomidae,Xenochironomus,xenolabis,Xenochironomus xenolabis,Midge
+5870,Arthropoda,Insecta,Diptera,Chironomidae,Monodiamesa,sp. A,Monodiamesa isopod sp. A,Midge
+5873,Arthropoda,Insecta,Diptera,Chironomidae,Brillia,sp. A,Brillia isopod sp. A,Midge
+5875,Arthropoda,Insecta,Diptera,Chironomidae,Bryophaenocladius,sp. A,Bryophaenocladius isopod sp. A,Midge
+5880,Arthropoda,Insecta,Diptera,Chironomidae,Corynoneura,sp. A,Corynoneura isopod sp. A,Midge
+5890,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,bicinctus,Cricotopus bicinctus,Midge
+5910,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,sp. A,Cricotopus isopod sp. A,Midge
+5911,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,sp. B,Cricotopus sp. B,Midge
+5912,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,sp. C,Cricotopus sp. C,Midge
+5913,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,sp. D,Cricotopus sp. D,Midge
+5914,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,Sp. E,Cricotopus Sp. E,Midge
+5930,Arthropoda,Insecta,Diptera,Chironomidae,Epoicocladius,sp. A,Epoicocladius isopod sp. A,Midge
+5935,Arthropoda,Insecta,Diptera,Chironomidae,Gymnometriocnemus,sp. A,Gymnometriocnemus isopod sp. A,Midge
+5940,Arthropoda,Insecta,Diptera,Chironomidae,Hydrobaenus,sp. A,Hydrobaenus isopod sp. A,Midge
+5945,Arthropoda,Insecta,Diptera,Chironomidae,Limnophyes,sp. A,Limnophyes isopod sp. A,Midge
+5950,Arthropoda,Insecta,Diptera,Chironomidae,Nanocladius,distinctus,Nanocladius distinctus,Midge
+5970,Arthropoda,Insecta,Diptera,Chironomidae,Nanocladius,sp. A,Nanocladius isopod sp. A,Midge
+5971,Arthropoda,Insecta,Diptera,Chironomidae,Nanocladius,sp. B,Nanocladius sp. B,Midge
+5980,Arthropoda,Insecta,Diptera,Chironomidae,Orthocladius,sp. A,Orthocladius isopod sp. A,Midge
+5981,Arthropoda,Insecta,Diptera,Chironomidae,Orthocladius,sp. B,Orthocladius sp. B,Midge
+5985,Arthropoda,Insecta,Diptera,Chironomidae,Parakiefferiella,sp. A,Parakiefferiella isopod sp. A,Midge
+5989,Arthropoda,Insecta,Diptera,Chironomidae,Pseudokiefferiella,sp. A,Pseudokiefferiella isopod sp. A,Midge
+5990,Arthropoda,Insecta,Diptera,Chironomidae,Psectrocladius,sp. A,Psectrocladius isopod sp. A,Midge
+5995,Arthropoda,Insecta,Diptera,Chironomidae,Psectrocladius,sp. B,Psectrocladius sp. B,Midge
+5996,Arthropoda,Insecta,Diptera,Chironomidae,Synorthocladius,sp. A,Synorthocladius isopod sp. A,Midge
+5997,Arthropoda,Insecta,Diptera,Chironomidae,Thienemanniella,sp. A,Thienemanniella isopod sp. A,Midge
+6000,Arthropoda,Insecta,Diptera,Ceratopogonidae,Bezzia,sp. A,Bezzia isopod sp. A,"Biting Midge, No-see-um"
+6004,Arthropoda,Insecta,Diptera,Ceratopogonidae,Ceratopogon,sp. A,Ceratopogon isopod sp. A,Biting Midge
+6005,Arthropoda,Insecta,Diptera,Ceratopogonidae,Dasyhelea,sp. A,Dasyhelea isopod sp. A,Biting Midge
+6010,Arthropoda,Insecta,Diptera,Ceratopogonidae,Palpomyia,sp. A,Palpomyia isopod sp. A,"Biting Midge, No-see-um"
+6015,Arthropoda,Insecta,Diptera,Ceratopogonidae,Probezzia,sp. A,Probezzia isopod sp. A,Biting Midge
+6019,Arthropoda,Insecta,Diptera,Ceratopogonidae,Stilobezzia,sp. A,Stilobezzia isopod sp. A,Biting Midge
+6020,Arthropoda,Insecta,Diptera,Ceratopogonidae,Sphaeromias,sp. A,Sphaeromias isopod sp. A,"Biting Midge, No-see-um"
+6021,Arthropoda,Insecta,Diptera,Psychodidae,Psychoda,sp. A,Psychoda isopod sp. A,Moth Fly
+6022,Arthropoda,Insecta,Diptera,Sumuliidae,Simulium,sp. A,Simulium isopod sp. A,Blackfly
+6023,Arthropoda,Insecta,Diptera,Empididae,Neoplasta,sp. A,Neoplasta isopod sp. A,Dance Fly
+6024,Arthropoda,Insecta,Diptera,Tipulidae,Tipula,sp. A,Tipula isopod sp. A,Crane Fly
+6025,Arthropoda,Insecta,Diptera,Tipulidae,Limonia,sp. A,Limonia isopod sp. A,Crane Fly
+6026,Arthropoda,Insecta,Diptera,Dolichopodidae,Dolichopus,sp. A,Dolichopus isopod sp. A,Fly
+6028,Arthropoda,Insecta,Diptera,Stratiomyidae,Odontomyia,sp. A,Odontomyia isopod sp. A,Soldier fly
+6030,Arthropoda,Insecta,Diptera,Ephydridae,Lemnaphila,sp. A,Lemnaphila isopod sp. A,Duckweed miner fly
+6035,Arthropoda,Insecta,Diptera,Ephydridae,Unknown,ephydridid sp. A,ephydridid isopod sp. A,Unknown ephydridid sp. A
+6040,Arthropoda,Insecta,Diptera,Muscidae,Lispe,sp. A,Lispe isopod sp. A,Fly
+6223,Arthropoda,Pycnogonida,Pantopoda,Pycnogonidae,Pycnogonum,rickettsi,Pycnogonum rickettsi,Sea Spider
+6224,Arthropoda,Pycnogonida,Pantopoda,Ammotheidae,Ammothea,hilgendorfi,Ammothea hilgendorfi,Sea Spider
+6225,Arthropoda,Pycnogonida,Pantopoda,Ammotheidae,Achelia,alaskensis,Achelia alaskensis,Sea Spider
+6226,Arthropoda,Pycnogonida,Pantopoda,Pycnogonidae,Pycnogonum,stearnsi,Pycnogonum stearnsi,Sea Spider
+6227,Arthropoda,Arachnida,Hydracarina,Hygrobatidae,Hygrobates,sp. A,Hygrobates isopod sp. A,Water Mite
+6228,Arthropoda,Arachnida,Hydracarina,Hygrobatidae,Hygrobatella,sp. A,Hygrobatella isopod sp. A,Water Mite
+6229,Arthropoda,Arachnida,Hydracarina,Lebertiidae,Lebertia,sp. A,Lebertia isopod sp. A,Water Mite
+6230,Arthropoda,Arachnida,Hydracarina,Limnesiidae,Limnesia,sp. A,Limnesia isopod sp. A,Water Mite
+6250,Arthropoda,Arachnida,Hydracarina,Pionidae,Forelia,sp. A,Forelia isopod sp. A,Water Mite
+6260,Arthropoda,Arachnida,Hydracarina,Unioncolidae,Koenikea,sp. A,Koenikea isopod sp. A,Water Mite
+6265,Arthropoda,Arachnida,Hydracarina,Sperchontidae,Sperchon,sp. A,Sperchon isopod sp. A,Water Mite
+6270,Arthropoda,Arachnida,Hydracarina,Unionicolidae,Unionicola,sp. A,Unionicola isopod sp. A,Water Mite
+6290,Arthropoda,Arachnida,Hydracarina,Unionicolidae,Unionicola,sp. B,Unionicola sp. B,Water Mite
+6293,Arthropoda,Arachnida,Trombidiformes,Mideopsidae,Mideopsis,sp. A,Mideopsis isopod sp. A,Water Mite
+6295,Arthropoda,Arachnida,Arrenuriodea,Arrenuridae,Arrenurus,sp. A,Arrenurus isopod sp. A,Water Mite
+6480,Mollusca,Arachnida,Arrenuriodea,Viviparidae,Cipangopaludina,chinensis malleata,Cipangopaludina chinensis malleata,Water Mite
+6490,Mollusca,Gastropoda,Mesogastropoda,Hydrobiidae,Fluminicola,sp. A,Fluminicola isopod sp. A,Hydrobe snail
+6491,Mollusca,Gastropoda,Mesogastropoda,Unknown,Hydrobioidea,sp. A,Hydrobioidea isopod sp. A,Hydrobe snail
+6495,Mollusca,Gastropoda,Mesogastropoda,Unknown,Hydrobioidea,sp. C,Hydrobioidea sp. C,Marine Gastropod
+6496,Mollusca,Gastropoda,Mesogastropoda,Unknown,Hydrobioidea,sp. D,Hydrobioidea sp. D,Marine Gastropod
+6497,Mollusca,Gastropoda,Mesogastropoda,Unknown,Hydrobioidea,sp. E,Hydrobioidea sp. E,Unidentified Hydrobioidea
+6498,Mollusca,Gastropoda,Litterinimorpha,Rissoidae,Alvinia,sp. A,Alvinia isopod sp. A,Sea snail
+6500,Mollusca,Gastropoda,Cephalaspidea,Philinidae,Philine,auriformis,Philine auriformis,Paperbubble
+6501,Mollusca,Gastropoda,Cephalaspidea,Aglajidae,Melanochlamys,diomedea,Melanochlamys diomedea,Sea Slug
+6502,Mollusca,Gastropoda,Cephalaspidea,Philinidae,Philine,sp. A,Philine isopod sp. A,Sea Slug
+6505,Mollusca,Gastropoda,Nudibranchia,Facelinidae,Sakuraeolis,enosimensis,Sakuraeolis enosimensis,Sea Slug
+6510,Mollusca,Gastropoda,Nudibranchia,Unknown,Nudibranch,sp. A,Nudibranch isopod sp. A,Sea Slug
+6515,Mollusca,Gastropoda,Nudibranchia,Onchidorididae,Onchidoris,bilamellata,Onchidoris bilamellata,Sea Slug
+6520,Mollusca,Gastropoda,Nudibranchia,Okeniidae,Okenia,plana,Okenia plana,"Flat Okenia, Sea Slug"
+6525,Mollusca,Gastropoda,Limnophila,Lymnaeidae,Lymnaea,modicella,Lymnaea modicella,Pond snail
+6526,Mollusca,Gastropoda,Limnophila,Lymnaeidae,Lymnaea,columella,Lymnaea columella,Pond snail
+6528,Mollusca,Gastropoda,Limnophila,Lymnaeidae,Radix,auricularia,Radix auricularia,Pond snail
+6530,Mollusca,Gastropoda,Limnophila,Planorbidae,Gyraulus,circumstriatus,Gyraulus circumstriatus,Gyraulus Snail
+6560,Mollusca,Gastropoda,Limnophila,Planorbidae,Dilatata,dilatatus,Dilatata dilatatus,Menetus Snail
+6565,Mollusca,Gastropoda,Limnophila,Planorbidae,Helisoma,anceps,Helisoma anceps,Two-ridge rams-horn snail
+6570,Mollusca,Gastropoda,Limnophila,Physidae,Physa,sp. A,Physa isopod sp. A,Pouch Snail
+6590,Mollusca,Gastropoda,Limnophila,Ancylidae,Ferrissia,californica,Ferrissia californica,California Ancylid
+6610,Mollusca,Gastropoda,Mesogastropoda,Assimineidae,Assiminea,californica,Assiminea californica,California Assiminea
+6620,Mollusca,Gastropoda,Mesogastropoda,Epitoniidae,Epitonium,sp. A,Epitonium isopod sp. A,Epitonium
+6630,Mollusca,Gastropoda,Mesogastropoda,Thiaridae,Melanoides,tuberculata,Melanoides tuberculata,Red-rim Melania snail
+6640,Mollusca,Gastropoda,Neogastropoda,Nassariidae,Tritia,obsoleta,Tritia obsoleta,Eastern mudsnail
+6650,Mollusca,Gastropoda,Pyramidellida,Pyramidellidae,Odostomia,fetella,Odostomia fetella,"Gastropod, Slug"
+6660,Mollusca,Gastropoda,Mesogastropoda,Calyptraeidae,Crepidula,plana,Crepidula plana,Eastern white slipper shell
+6670,Mollusca,Bivalvia,Mytiloida,Semelidae,Theora,lubrica,Theora lubrica,Asian Semele
+6679,Mollusca,Bivalvia,Mytiloida,Mytilidae,Modiolus,modiolus,Modiolus modiolus,Northern horse mussel
+6680,Mollusca,Bivalvia,Mytiloida,Mytilidae,Modiolus,rectus,Modiolus rectus,Straight Horse Mussel
+6690,Mollusca,Bivalvia,Mytiloida,Mytilidae,Musculista,senhousia,Musculista senhousia,Green Mussel
+6710,Mollusca,Bivalvia,Mytiloida,Mytilidae,Mytilus,galloprovincialis,Mytilus galloprovincialis,Mediterranean Mussel
+6715,Mollusca,Bivalvia,Pterioida,Ostreidae,Ostrea,conchaphila,Ostrea conchaphila,Olympia Oyster
+6730,Mollusca,Bivalvia,Veneroida,Corbiculidae,Corbicula,fluminea,Corbicula fluminea,Asian Clam
+6740,Mollusca,Bivalvia,Veneroida,Sphaeriidae,Musculium,transversum,Musculium transversum,Fingernail Clam
+6750,Mollusca,Bivalvia,Veneroida,Sphaeriidae,Pisidium,casertanum,Pisidium casertanum,Ubiquitous Peaclam
+6770,Mollusca,Bivalvia,Veneroida,Sphaeriidae,Pisidium,compressum,Pisidium compressum,Ridgebeak Peaclam
+6778,Mollusca,Bivalvia,Veneroida,Cardiidae,Clinocardium,nuttallii,Clinocardium nuttallii,Nuttall Cockle
+6779,Mollusca,Bivalvia,Veneroida,Cardiidae,Cardiidae,sp. A,Cardiidae isopod sp. A,Unidentified Cardiidae
+6780,Mollusca,Bivalvia,Veneroida,Solenidae,Siliqua,lucida,Siliqua lucida,Transparent Razor
+6782,Mollusca,Bivalvia,Veneroida,Solenidae,Solen,sicarius,Solen sicarius,Jacknife Clam
+6809,Mollusca,Bivalvia,Veneroida,Tellinidae,Macoma,nasuta,Macoma nasuta,Bent-nose macoma
+6810,Mollusca,Bivalvia,Veneroida,Tellinidae,Limecola,petalum,Limecola petalum,Macoma
+6820,Mollusca,Bivalvia,Veneroida,Tellinidae,Unknown,tellinid sp. A,tellinid isopod sp. A,Tellin
+6825,Mollusca,Bivalvia,Veneroida,Tellinidae,Macoma,sp. A,Macoma isopod sp. A,Macoma
+6830,Mollusca,Bivalvia,Veneroida,Veneridae,Ruditapes,philippinarum,Ruditapes philippinarum,Japanese Littleneck
+6850,Mollusca,Bivalvia,Veneroida,Veneridae,Gemma,gemma,Gemma gemma,Amethyst Gemclam
+6860,Mollusca,Bivalvia,Veneroida,Cooperellidae,Cooperella,subdiaphana,Cooperella subdiaphana,Cooper Clam
+6869,Mollusca,Bivalvia,Myoida,Myidae,Cryptomya,californica,Cryptomya californica,California Softshell Clam
+6870,Mollusca,Bivalvia,Myoida,Myidae,Mya,arenaria,Mya arenaria,Softshell Clam
+6890,Mollusca,Bivalvia,Myoida,Corbulidae,Potamocorbula,amurensis,Potamocorbula amurensis,Brackish-water Corbula
+6895,Mollusca,Bivalvia,Myoida,Pholadidae,Zirfaea,pilsbryi,Zirfaea pilsbryi,Rough piddock
+6910,Mollusca,Bivalvia,Schizodonta,Unionidae,Anodonta,sp. A,Anodonta isopod sp. A,Floater mussel
+6915,Mollusca,Bivalvia,Pholadomyoida,Lyonsiidae,Lyonsia,californica,Lyonsia californica,California Lyonsia; sand clam
+6920,Mollusca,Bivalvia,Pholadomyoida,Thraciidae,Cyathodonta,pedroana,Cyathodonta pedroana,San Pedro thraciid
+6999,Chordata,Ascidacea,Pleurogona,Styelidae,Styela,clava,Styela clava,"Stalked sea squirt, clubbed tunicate"
+7000,Chordata,Ascidacea,Pleurogona,Molgulidae,Molgula,manhattensis,Molgula manhattensis,Sea grape
+7500,Phoronida,Unknown,Unknown,Phoronidae,Phoronopsis,harmeri,Phoronopsis harmeri,Phoronid worm
+7501,Phoronida,Unknown,Unknown,Phoronidae,Phoronis,sp. A,Phoronis isopod sp. A,Unknown phoronid
+8000,Echinodermata,Ophiuroidea,Ophiurida,Amphiuridae,Unknown,amphiurid sp. A,amphiurid isopod sp. A,Brittlestar

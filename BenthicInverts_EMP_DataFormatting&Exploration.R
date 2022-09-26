@@ -97,7 +97,6 @@ benthic_wq <-
   glimpse()
 
 glimpse(benthic_wq)
-glimpse(benthic_cpue)
 # turbidity_surface has two ND values at MD10A - not sure if this matters; if it
   # does, we'll need to decide if we're okay with substituting 0 or some other
   # number for these
@@ -372,6 +371,47 @@ vmonth <- benthic_cpue_stfz %>%
   arrange(station_code,-n)
 #each month has 35-43 years of visits; October is most sampled month
 
+#Determine how many taxa are IDed to species vs morphospecies--------------------------
+#focus on "species" column and filter by whether "sp." character string is present
+benthic_spp_morpho <- benthic_spp %>% 
+  filter(grepl(c('sp.|Sp.|Unknown'), Species))
+#208 of 478 spp are morphospecies; 44% of all species
+
+#Taxa IDed to species
+benthic_spp_true <- benthic_spp %>% 
+  filter(!grepl('sp.|Sp.|Unknown|No catch',Species))
+#269 of 478 are IDed to species; 56% of all species
+
+#add column to taxonomy data set that combines genus and specific epithet--------
+#this is tricky because many taxa are morphospecies
+
+#nearly all issues with species names can be resolved by dropping "Unknown "
+#a few others needed customized solutions
+# Making data frame with existing strings and their replacement
+tr <- data.frame(target = c("Unknown ","No catch No catch", "sp. A","unknown sp. A"),
+                 replacement = c("", "No catch", "isopod sp. A", "amphipod sp. A"))
+
+# Making the named replacement vector from tr
+replacements <- c(tr$replacement)
+names(replacements) <- c(tr$target)
+
+benthic_spp_names <- benthic_spp %>% 
+  #concatonate genus and species columns and separate them with a space
+  #also keep original two columns
+  unite("species_name1",Genus:Species,sep=" ",remove=F) %>%
+  #drop "Unknown" from species_name strings
+  #a few taxa need species names edited individually to make sense
+  mutate('species_name' = str_replace_all(species_name1,pattern = replacements)) %>% 
+  select(OrganismCode:Family_level,Genus,Species,species_name,Common_name)
+
+#make sure string changes worked
+#test <-benthic_spp_names %>% 
+ # filter(species_name2 =="sp. A" | species_name2=="unknown sp. A")
+#not found which means the find and replace worked
+
+#write file for Leela to use
+#write_csv(benthic_spp_names,"./BenthicInverts/BenthicInverts_Taxonomy_NameLabels.csv")
+  
 # Remove rare taxa -------------------
 
 #what proportion of bay-delta wide taxa are represented
