@@ -40,10 +40,6 @@ library(here)
 
 #figure out why so many NAs for matches between invert cpue and wq means
 
-#Note: need to confirm with Betsy that is is reasonable to assume that all taxa were searched for in all 
-#samples through time
-
-#use map functions to plot multiple panels of wq vs abundances
 
 # Read in the data-----------------------
 
@@ -372,15 +368,17 @@ vmonth <- benthic_cpue_stfz %>%
 #each month has 35-43 years of visits; October is most sampled month
 
 #Determine how many taxa are IDed to species vs morphospecies--------------------------
+
 #focus on "species" column and filter by whether "sp." character string is present
-benthic_spp_morpho <- benthic_spp %>% 
-  filter(grepl(c('sp.|Sp.|Unknown'), Species))
-#208 of 478 spp are morphospecies; 44% of all species
+benthic_spp_morpho2 <- benthic_spp %>% 
+  #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
+  filter(grepl(c('sp. |Sp. |Unknown|unknown'), Species))
+#204 of 478 spp are morphospecies; 43% of all species
 
 #Taxa IDed to species
 benthic_spp_true <- benthic_spp %>% 
-  filter(!grepl('sp.|Sp.|Unknown|No catch',Species))
-#269 of 478 are IDed to species; 56% of all species
+  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',Species))
+#273 of 478 are IDed to species; 57% of all species
 
 #add column to taxonomy data set that combines genus and specific epithet--------
 #this is tricky because many taxa are morphospecies
@@ -388,8 +386,10 @@ benthic_spp_true <- benthic_spp %>%
 #nearly all issues with species names can be resolved by dropping "Unknown "
 #a few others needed customized solutions
 # Making data frame with existing strings and their replacement
-tr <- data.frame(target = c("Unknown ","No catch No catch", "sp. A","unknown sp. A"),
-                 replacement = c("", "No catch", "isopod sp. A", "amphipod sp. A"))
+#there is an isopod with just "sp. A" in species column can't just find and replace though 
+#because there are lots of others that also contain "sp. A"
+tr <- data.frame(target = c("Unknown ","No catch No catch", "unknown sp. A"),
+                 replacement = c("", "No catch", "amphipod sp. A"))
 
 # Making the named replacement vector from tr
 replacements <- c(tr$replacement)
@@ -402,12 +402,13 @@ benthic_spp_names <- benthic_spp %>%
   #drop "Unknown" from species_name strings
   #a few taxa need species names edited individually to make sense
   mutate('species_name' = str_replace_all(species_name1,pattern = replacements)) %>% 
-  select(OrganismCode:Family_level,Genus,Species,species_name,Common_name)
+  select(OrganismCode:Family_level,Genus,Species,species_name,Common_name) 
 
 #make sure string changes worked
 #test <-benthic_spp_names %>% 
- # filter(species_name2 =="sp. A" | species_name2=="unknown sp. A")
-#not found which means the find and replace worked
+ #filter(species_name =="sp. A" | species_name=="unknown sp. A")
+#that isopod that is sp. A is still present because we didn't remove it yet
+#note that the higher taxonomy for this taxon is wrongly listed as Annelida
 
 #write file for Leela to use
 #write_csv(benthic_spp_names,"./BenthicInverts/BenthicInverts_Taxonomy_NameLabels.csv")
@@ -513,23 +514,70 @@ cpue_5plus <- cpue_sample_prop %>%
 #dropped from 243 to 65 taxa; 26.7% taxa retained
 
 #filter to just the species in more than 10% of samples
-cpue_common <- cpue_sample_prop %>% 
+cpue_10plus <- cpue_sample_prop %>% 
   filter(prop>0.10)
 #dropped from 243 to 42 taxa; 17.3% of taxa retained
 
-#create vector of organism codes to then filter main df
-organisms_common <- cpue_common %>% 
+#5%: create vector of organism codes to then filter main df
+organisms_common5 <- cpue_5plus %>% 
   pull(organism_code)
 
-#combine proportion info with main data frame and then filter to those with more than 10%
-#or use a join function to just keep the taxa that are in more than 10% of samples
+#10%: create vector of organism codes to then filter main df
+organisms_common10 <- cpue_10plus %>% 
+  pull(organism_code)
+
+#combine proportion info with main data frame and then filter to those with more than 5%
+#or use a join function to just keep the taxa that are in more than 5% of samples
 benthic_cpue_stfz_com <- benthic_cpue_stfz %>% 
-  filter(organism_code %in% organisms_common) %>% 
+  filter(organism_code %in% organisms_common5) %>% 
   #add year column back in
   mutate(year=year(sample_date)) %>%
   #sort by date, station, organism code
   arrange(sample_date, station_code, organism_code) %>% 
   glimpse()
+
+
+#Determine how many remaining taxa are IDed to species vs morphospecies--------------------------
+#after removing species that are in fewer than 5% or 10% of samples
+
+#5%: filter the taxonomy dataset using organism codes from data set with only taxa that are in at least 5% of samples
+benthic_spp_names_5 <-benthic_spp_names %>% 
+  #edit the column name so it matches between the two data frames
+  rename(organism_code = OrganismCode) %>% 
+  #filter to keep only taxa in at least 10% of samples using organism codes
+  filter(organism_code %in% organisms_common5) 
+
+#5%: focus on "species" column and filter by whether "sp." character string is present
+benthic_spp_morpho_5 <- benthic_spp_names_5 %>% 
+  #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
+  filter(grepl(c('sp. |Sp. |Unknown|unknown'), Species))
+#15 of 65 spp are morphospecies; 23% of all species
+#all of these are IDed to genus except one which is class level
+
+#5%: Taxa IDed to species
+benthic_spp_true_5 <- benthic_spp_names_5 %>% 
+  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',Species))
+#50 of 65 are IDed to species; 77% of all species
+
+#10%: filter the taxonomy dataset using organism codes from data set with only taxa that are in at least 10% of samples
+benthic_spp_names_10 <-benthic_spp_names %>% 
+  #edit the column name so it matches between the two data frames
+  rename(organism_code = OrganismCode) %>% 
+  #filter to keep only taxa in at least 10% of samples using organism codes
+  filter(organism_code %in% organisms_common10) 
+  
+#10%: focus on "species" column and filter by whether "sp." character string is present
+benthic_spp_morpho_10 <- benthic_spp_names_10 %>% 
+  #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
+  filter(grepl(c('sp. |Sp. |Unknown|unknown'), Species))
+#6 of 42 spp are morphospecies; 14% of all species
+#all of these are IDed to genus though
+
+#10%: Taxa IDed to species
+benthic_spp_true_10 <- benthic_spp_names_10 %>% 
+  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',Species))
+#36 of 42 are IDed to species; 86% of all species
+
 
 # Calculate annual mean CPUE------------------
 
@@ -541,6 +589,23 @@ benthic_cpue_stfz_com <- benthic_cpue_stfz %>%
 cpue_mean_annual <- benthic_cpue_stfz_com %>% 
   group_by(year,station_code,organism_code) %>% 
   summarize(cpue_annual=mean(mean_cpue))
+
+#add species names for use as vector labels
+
+#first create subset of taxonomy data set (ie, organism code, species name)
+benthic_spp_names_short <- benthic_spp_names %>%
+  #rename column
+  rename(organism_code = OrganismCode) %>% 
+  select(organism_code,species_name) %>% 
+  #reformat column type 
+  mutate(organism_code = as.character(organism_code)) %>% 
+  glimpse()
+
+#add species names to main data set
+cpue_mean_annual_nm <- left_join(cpue_mean_annual,benthic_spp_names_short) %>% 
+  #drop name codes and reorder column
+  select(year,station_code,species_name,cpue_annual) 
+  
 #keep in mind that number of samples per station varies among years
 #probably should drop years with, say, only one sample because hard to compare with other years
 
@@ -549,19 +614,20 @@ cpue_mean_annual <- benthic_cpue_stfz_com %>%
 # among stations and among water year types; maybe work with Leela on that
 
 #make Table L which is taxon x sample matrix
-TableL <- cpue_mean_annual %>% 
-  pivot_wider(id_cols = c(station_code,year),names_from = organism_code,values_from=cpue_annual)  
+TableL <- cpue_mean_annual_nm %>%
+  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual)  
 #probably just need to now combine station and year into a row name and format as matrix
 
 #separate label columns from cpue columns for NMDS analysis
 b_pred <- TableL[1:2]
-b_dat <- TableL [3:44]
+#b_dat <- TableL [3:67]
+b_dat <- TableL [3:length(TableL)]
 
-#write_csv(b_pred,"BenthicInverts/benthic_nmds_predictors.csv")
-#write_csv(b_dat,"BenthicInverts/benthic_nmds_abundance_matrix.csv")
+#write_csv(b_pred,"BenthicInverts/benthic_nmds_predictors5.csv")
+#write_csv(b_dat,"BenthicInverts/benthic_nmds_abundance_matrix5.csv")
 
 #make a big faceted plot showing time series of each taxon in each station
-ggplot(cpue_mean_annual,aes(x=year, y=cpue_annual, group=station_code,color=station_code))+
+ggplot(cpue_mean_annual_nm,aes(x=year, y=cpue_annual, group=station_code,color=station_code))+
   geom_point()+
   geom_line()+
   facet_wrap(vars(organism_code),scales="free",nrow=6)
@@ -938,7 +1004,7 @@ bwq <- comb_wq_b %>%
     #add column that calculates difference in dates between wq and benthic samples
     date_diff = abs(as.numeric(as_date(date_time) - as_date(dateMatch)))
     #change organism code from numeric to character
-    #so it matches with cpue_common data frame
+    #so it matches with cpue_10plus data frame
     ,organism_code=as.character(organism_code)
   ) %>% 
   #filter out any cases in which closest wq and benthic sample time match 
@@ -1003,7 +1069,7 @@ bwq_issues2 <- bwq %>%
 #next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #NOTE: check to make sure it removed and retained all the right taxa
 bw_of <- bwq %>% 
-  filter(organism %in% organisms_common) %>% 
+  filter(organism %in% organisms_common5) %>% 
   glimpse()
 
 ctax <- unique(bw_of$organism)
