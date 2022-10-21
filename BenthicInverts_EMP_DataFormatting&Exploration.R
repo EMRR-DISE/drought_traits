@@ -66,7 +66,8 @@ benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer
   glimpse()
 
 #organism key list
-benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=d0f0dd3c1835fe5b669342f8c8e77024")
+benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=d0f0dd3c1835fe5b669342f8c8e77024") %>% 
+  clean_names()
 
 #total annual site visits, 1975-2021
 benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=304bc4562046e0a6c35fbad3e2c85645") %>% 
@@ -115,6 +116,27 @@ wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=ed
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
 
+#Clean up organism key
+
+benthic_spp_format <- benthic_spp %>% 
+  #rename some columns
+  rename(class = class_level
+         ,order = order_level
+         ,family = family_level
+         ,genus1 = genus
+         ,species1 = species
+         ) %>%
+  #look for cases of Unknown as unknown
+  #just one present in dataframe
+  #filter(if_any(class:species, ~ . == 'unknown')) %>% 
+  mutate(
+    #change one case of "unknown" to "Unknown"
+    across(c(class:species1), ~as.character(gsub("unknown", "Unknown", .)))
+    #change Mermithid to Unknown and then sp. A to Mermithid sp. A
+    ,genus = case_when(genus1 == "Mermithid" ~ "Unknown", TRUE ~ genus1)
+    ,species = case_when(organism_code == 1290 ~ "Mermithid sp. A", TRUE ~ species1)
+             ) %>% 
+  select(organism_code:family,genus:species, common_name)
 
 #Look at no catch samples ------------------------
 
@@ -375,14 +397,14 @@ vmonth <- benthic_cpue_stfz %>%
 #Determine how many taxa are IDed to species vs morphospecies--------------------------
 
 #focus on "species" column and filter by whether "sp." character string is present
-benthic_spp_morpho2 <- benthic_spp %>% 
+benthic_spp_morpho2 <- benthic_spp_format %>% 
   #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
-  filter(grepl(c('sp. |Sp. |Unknown|unknown'), Species))
+  filter(grepl(c('sp. |Sp. |Unknown|unknown'), species))
 #204 of 478 spp are morphospecies; 43% of all species
 
 #Taxa IDed to species
-benthic_spp_true <- benthic_spp %>% 
-  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',Species))
+benthic_spp_true <- benthic_spp_format %>% 
+  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',species))
 #273 of 478 are IDed to species; 57% of all species
 
 #add column to taxonomy data set that combines genus and specific epithet--------
@@ -400,14 +422,14 @@ tr <- data.frame(target = c("Unknown ","No catch No catch", "unknown sp. A"),
 replacements <- c(tr$replacement)
 names(replacements) <- c(tr$target)
 
-benthic_spp_names <- benthic_spp %>% 
+benthic_spp_names <- benthic_spp_format %>% 
   #concatonate genus and species columns and separate them with a space
   #also keep original two columns
-  unite("species_name1",Genus:Species,sep=" ",remove=F) %>%
+  unite("species_name1",genus:species,sep=" ",remove=F) %>%
   #drop "Unknown" from species_name strings
   #a few taxa need species names edited individually to make sense
   mutate('species_name' = str_replace_all(species_name1,pattern = replacements)) %>% 
-  select(OrganismCode:Family_level,Genus,Species,species_name,Common_name) 
+  select(organism_code:family,genus,species,species_name,common_name) 
 
 #make sure string changes worked
 #test <-benthic_spp_names %>% 
@@ -554,40 +576,36 @@ benthic_cpue_stfz_com <- benthic_cpue_stfz %>%
 
 #5%: filter the taxonomy dataset using organism codes from data set with only taxa that are in at least 5% of samples
 benthic_spp_names_5 <-benthic_spp_names %>% 
-  #edit the column name so it matches between the two data frames
-  rename(organism_code = OrganismCode) %>% 
   #filter to keep only taxa in at least 5% of samples using organism codes
   filter(organism_code %in% organisms_common5) 
 
 #5%: focus on "species" column and filter by whether "sp." character string is present
 benthic_spp_morpho_5 <- benthic_spp_names_5 %>% 
   #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
-  filter(grepl(c('sp. |Sp. |Unknown|unknown'), Species))
+  filter(grepl(c('sp. |Sp. |Unknown|unknown'), species))
 #15 of 65 spp are morphospecies; 23% of all species
 #all of these are IDed to genus except one which is class level
 
 #5%: Taxa IDed to species
 benthic_spp_true_5 <- benthic_spp_names_5 %>% 
-  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',Species))
+  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',species))
 #50 of 65 are IDed to species; 77% of all species
 
 #10%: filter the taxonomy dataset using organism codes from data set with only taxa that are in at least 10% of samples
 benthic_spp_names_10 <-benthic_spp_names %>% 
-  #edit the column name so it matches between the two data frames
-  rename(organism_code = OrganismCode) %>% 
   #filter to keep only taxa in at least 10% of samples using organism codes
   filter(organism_code %in% organisms_common10) 
   
 #10%: focus on "species" column and filter by whether "sp." character string is present
 benthic_spp_morpho_10 <- benthic_spp_names_10 %>% 
   #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
-  filter(grepl(c('sp. |Sp. |Unknown|unknown'), Species))
+  filter(grepl(c('sp. |Sp. |Unknown|unknown'), species))
 #6 of 42 spp are morphospecies; 14% of all species
 #all of these are IDed to genus though
 
 #10%: Taxa IDed to species
 benthic_spp_true_10 <- benthic_spp_names_10 %>% 
-  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',Species))
+  filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',species))
 #36 of 42 are IDed to species; 86% of all species
 
 #automate taxonomy updates-------------
@@ -607,55 +625,82 @@ benthic_spp_true_10 <- benthic_spp_names_10 %>%
 #Gnorimosphaeroma oregonensis to Gnorimosphaeroma oregonense
 #Pisidium casertanum to Euglesa casertana
 
-#start by working with just the non-rare taxa that are IDed to species
-#create list of binomial species names
+#create list of taxa IDed to species
 specieslist <- benthic_spp_true_5 %>% 
   pull(species_name)
 
+#create list of taxa not IDed to species
+#most are genus, one is class
+#across entire taxonomy file, some taxa only IDed to phylum
+#so wrote this code accordingly
+taxonlist <- benthic_spp_morpho_5 %>% 
+  mutate(taxon_lowest = case_when(genus!="Unknown" ~ genus
+                                  ,family!="Unknown" ~ family
+                                  ,order!="Unknown" ~ order
+                                  ,class!="Unknown" ~ class
+                                  ,TRUE ~ phylum
+                                  ))
+
+#make list of taxa for morphospecies
+txlist <- taxonlist %>% 
+  pull(taxon_lowest)
+
+#make list with all taxa in it (those IDed to species and those not)
+full_list <- c(specieslist,txlist)
+
 #use worms package to check accepted names and update higher taxonomy
-#github repo: https://github.com/iobis/worms
+#github repo:https://github.com/janhoo/worms/
+#documentation: https://www.rdocumentation.org/packages/worms/versions/0.2.2/topics/wormsbynames
 
 #version of package from CRAN only matched 25 of 50 species
 #wormsbyname failed to match many species I know are in database
 #Github version worked better; matched 49 of 50 species
-#the output of this function shows whether the name submitted is accepted
-#name and if not what the accepted name is 
-#as well as the ApiaID and higher taxonomy
-records_worms <- wormsbynames(specieslist)
+#ids = T means output will include search name
+#match = T taxon_names that could not retrieved will be retried with wormsbymatchnames
+#if not using match=T sometimes returns subspecies, varieties, etc instead of species
+#but it may also return a similar taxon for a taxon truly not in worms 
+#eg, finds Isocystis for Isocypris which is wrong
+records_worms <- wormsbynames(full_list, ids=T,match=T)
 #found 49 of 50 species; missing only Mooreobdella microstoma 
-#confirmed this one species isn't on WoRMS website so 
-#it isn't an issue with the R package
-#output doesn't show inputted species names
-#in some cases, it looks like scientific name differs from input name
-#eg, Ilyodrilus frantzi var. typica, Limnodrilus hoffmeisteri f. spiralis
-
-#cbind original list of species names with worms output
-list_worms <- cbind(specieslist,records_worms)
-#combined as expected
+#found 14 of 15 higher level taxa; missing Isocypris 
+#Turbellaria is not an accepted name
 
 #format the worms output
-worms_format <- list_worms %>%
+worms_format <- records_worms %>%
   #just keep the needed columns
-  select(species = specieslist
+  select(taxon = name
          ,status
          ,valid_name
+         ,rank
          ,kingdom:genus
   ) %>% 
-  arrange(status,species)
+  #add column indicating whether exact match between input and output names
+  mutate(match = case_when(taxon == valid_name ~ T, taxon != valid_name ~ FALSE)) %>% 
+  arrange(status,taxon)
+
+#take a closer look at non-matches
+worms_unmatch <- worms_format %>% 
+  filter(match==FALSE)
+#in all but one case, this is invalid name replaced by the valid one
+#exception is Isocypris, which was filled with info for Isocystis, which is wrong
 
 #create new name column that replaces original column if more recent name
 #if valid name didn't sometime include random subspecies, varieties, etc
 #I could have just used valid_name
 worms_current <- worms_format %>% 
-  mutate(species_name = case_when(status=="accepted" | is.na(status) ~ species
+  #remove incorrectly matched info for Isocypris
+  filter(taxon != "Isocypris") %>% 
+  add_row(taxon = "Isocypris") %>% 
+  mutate(
+    #new column with accepted names
+    taxon_name = case_when(status=="accepted" | is.na(status) ~ taxon
                                   ,TRUE ~ valid_name)) %>% 
-  select(species_name,kingdom:genus) %>% 
+  select(taxon_name,rank:genus) %>% 
+  arrange(rank) %>% 
   glimpse()
-#just missing higher taxonomy for Mooreobdella microstoma because no WoRMS match
-#this species is a freshwater leech which may explain why not in worms
-#but there are plenty of freshwater species in worms
-
-#next should check all higher level taxonomy between original file and WoRMS database
+#missing higher taxonomy for Mooreobdella microstoma because no WoRMS match
+#no valid name for Turbellaria so taxon_name is NA but all taxonomic info is present still
+#Melanoides tuberculata has temporary name in order with weird formatting including []
 
 #also round up lists of synonyms for each species
 
@@ -663,7 +708,7 @@ worms_current <- worms_format %>%
 #go next to ITIS
 check_itis <- worms_current %>% 
   filter(is.na(kingdom)) %>% 
-  pull(species_name)
+  pull(taxon_name)
 #Note: format of output will be different than worms package
 
 #use worrms package to get up to date species records
@@ -688,14 +733,14 @@ check_itis <- worms_current %>%
 #wm_records_taxamatch was much slower and didn't produce better matching
 
 #prints latin name corresponding to ID #
-wm_id2name(id = c(397131)) #single record version works
-wm_id2name_(id = c(397131,148669)) #multiple record version works
+#wm_id2name(id = c(397131)) #single record version works
+#wm_id2name_(id = c(397131,148669)) #multiple record version works
 
 #print ID# from name
 #get an error if spaces in name
-wm_name2id(name = "Lumbriculus variegatus") #Error 400
-wm_name2id(name = "Lumbriculus+variegatus") #works
-wm_name2id_(name = c("Lumbriculus+variegatus","Girardia+tigrina")) #surprisingly works
+#wm_name2id(name = "Lumbriculus variegatus") #Error 400
+#wm_name2id(name = "Lumbriculus+variegatus") #works
+#wm_name2id_(name = c("Lumbriculus+variegatus","Girardia+tigrina")) #surprisingly works
 
 #RITIS package
 #Github repo: https://github.com/ropensci/ritis
@@ -749,8 +794,6 @@ wm_name2id_(name = c("Lumbriculus+variegatus","Girardia+tigrina")) #surprisingly
 #this isn't the current accepted name on WoRMS (it's Euglesa casertana)
 #also doesn't provide any sort of ID #s for any of these records
 #so overall this function isn't very useful for my purposes
-
-
 
 #for taxa not found in WoRMS, next check ITIS
 #get_tsn() may not find every species; for those not matched, an NA is returned
@@ -861,14 +904,8 @@ lapply(tsn[1:16],itis_acceptname)
 #take species not found in worms, and get ITIS TSNs and higher taxonomy
 #can't be 100% sure these are the accepted species names
 #but it doesn't seem like ITIS keeps track of old names
-#if if you have an old name, it probably just won't get a hit on ITIS
+#if if you start with an old name, it probably won't be in ITIS (but it still could be)
 records_taxize_gaps <- classification(check_itis, db = 'itis')
-
-
-
-
-
-
 
 
 
