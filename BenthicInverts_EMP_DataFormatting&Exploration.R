@@ -14,6 +14,7 @@
 #all packages available on CRAN except deltamapr
 #see GitHub repository for deltamapr at https://github.com/InteragencyEcologicalProgram/deltamapr
 
+library(worms) #another worms R library to try
 library(data.table) #matches data by nearest date 
 #NOTE: data.table masks some useful tidyverse functions so load first
 library(tidyverse) #suite of data science tools
@@ -27,6 +28,10 @@ library(ggrepel) #no-noverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
 #library(waterYearType) #lists all water year types 1901 - 2017
 library(here)
+#library(ritis) #updating taxonomy from ITIS
+library(taxize) #updating taxonomy 
+library(worrms) #updating taxonomy using worms database
+library(ritis) #ITIS database
 
 # To do list -----------------------------
 
@@ -56,7 +61,7 @@ benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
 #replicate grabs have been averaged for each site visit
 #all non-occurrence (zero) data for a site visit has been removed
 #Nick: samples with no organisms at all are probably included as "No catch"
-benthic_invert_cpue <- read_csv(resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=df1caeb717202f06171601f793ca46bf"))) %>% 
+benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=df1caeb717202f06171601f793ca46bf") %>% 
   clean_names() %>% 
   glimpse()
 
@@ -76,7 +81,7 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
 #EMP water quality data
 benthic_wq <- 
   read_csv(
-    resolve(store("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.6&entityid=dfeaee030be901ae00b8c0449ea39e9c")),
+    "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.6&entityid=dfeaee030be901ae00b8c0449ea39e9c",
     col_types = cols_only(
       Station = "c",
       Date = col_date("%Y-%m-%d"),
@@ -425,6 +430,8 @@ spp_all <- unique(benthic_cpue$organism_code)
 #how many taxa remain if only keeping those that are present in: 
 # just drop a fixed proportion of species (eg, least abundant 25% of spp)
         #this approach keeps too many taxa: 183 remain of 243 spp (75% of spp)
+# comprise at least 1% of total abundances
+        #keeps too few taxa: 14 taxa remain out of 243 (6% of taxa remaining)
 # comprise at least 5% of total abundances
         #keeps too few taxa: 7 taxa remain out of 243 (2.9% of taxa remaining)
 # remove those below 5% of abundance of the most abundant spp
@@ -478,6 +485,11 @@ cpue_rarest25 <- cpue_indiv_prop %>%
 cpue_indiv_5plus <- cpue_indiv_prop %>% 
   filter(indiv_prop > 0.05)
 #only 7 taxa remain out of 243 (2.9% of taxa remaining)
+
+#drop all ssp that comprise less than 1% of all individuals
+cpue_indiv_1plus <- cpue_indiv_prop %>% 
+  filter(indiv_prop > 0.01)
+#only 14 taxa remain out of 243 (6% of taxa remaining)
 
 #drop all ssp with abundances less that 5% of that of most abundant spp
 cpue_prop_dom_5plus <- cpue_indiv_prop %>% 
@@ -544,7 +556,7 @@ benthic_cpue_stfz_com <- benthic_cpue_stfz %>%
 benthic_spp_names_5 <-benthic_spp_names %>% 
   #edit the column name so it matches between the two data frames
   rename(organism_code = OrganismCode) %>% 
-  #filter to keep only taxa in at least 10% of samples using organism codes
+  #filter to keep only taxa in at least 5% of samples using organism codes
   filter(organism_code %in% organisms_common5) 
 
 #5%: focus on "species" column and filter by whether "sp." character string is present
@@ -578,6 +590,420 @@ benthic_spp_true_10 <- benthic_spp_names_10 %>%
   filter(!grepl('sp. |Sp. |Unknown|unknown|No catch',Species))
 #36 of 42 are IDed to species; 86% of all species
 
+#automate taxonomy updates-------------
+#packages to try: worms, worrms, taxize, ritis
+
+#no good way to do this, especially not with a single package
+#could start by using worms package to check worms database for accepted names
+#not all species are in worms so won't work entirely
+#then with the most updated names possible from worms, run ITIS search
+#in theory all species should be in ITIS
+#a first pass get 43 of 50 species on ITIS and maybe updating names
+#will improve upon that
+
+#to do list
+#probably good to round up synonyms for literature searches of traits
+#update a few names
+#Gnorimosphaeroma oregonensis to Gnorimosphaeroma oregonense
+#Pisidium casertanum to Euglesa casertana
+
+#start by working with just the non-rare taxa that are IDed to species
+#create list of binomial species names
+specieslist <- benthic_spp_true_5 %>% 
+  pull(species_name)
+
+#use worms package to check accepted names and update higher taxonomy
+#github repo: https://github.com/iobis/worms
+
+#version of package from CRAN only matched 25 of 50 species
+#wormsbyname failed to match many species I know are in database
+#Github version worked better; matched 49 of 50 species
+#the output of this function shows whether the name submitted is accepted
+#name and if not what the accepted name is 
+#as well as the ApiaID and higher taxonomy
+records_worms <- wormsbynames(specieslist)
+#found 49 of 50 species; missing only Mooreobdella microstoma 
+#confirmed this one species isn't on WoRMS website so 
+#it isn't an issue with the R package
+#output doesn't show inputted species names
+#in some cases, it looks like scientific name differs from input name
+#eg, Ilyodrilus frantzi var. typica, Limnodrilus hoffmeisteri f. spiralis
+
+#cbind original list of species names with worms output
+list_worms <- cbind(specieslist,records_worms)
+#combined as expected
+
+#format the worms output
+worms_format <- list_worms %>%
+  #just keep the needed columns
+  select(species = specieslist
+         ,status
+         ,valid_name
+         ,kingdom:genus
+  ) %>% 
+  arrange(status,species)
+
+#create new name column that replaces original column if more recent name
+#if valid name didn't sometime include random subspecies, varieties, etc
+#I could have just used valid_name
+worms_current <- worms_format %>% 
+  mutate(species_name = case_when(status=="accepted" | is.na(status) ~ species
+                                  ,TRUE ~ valid_name)) %>% 
+  select(species_name,kingdom:genus) %>% 
+  glimpse()
+#just missing higher taxonomy for Mooreobdella microstoma because no WoRMS match
+#this species is a freshwater leech which may explain why not in worms
+#but there are plenty of freshwater species in worms
+
+#next should check all higher level taxonomy between original file and WoRMS database
+
+#also round up lists of synonyms for each species
+
+#also continue name check pipeline for species not in worms
+#go next to ITIS
+check_itis <- worms_current %>% 
+  filter(is.na(kingdom)) %>% 
+  pull(species_name)
+#Note: format of output will be different than worms package
+
+#use worrms package to get up to date species records
+#Github repo: https://github.com/ropensci/worrms
+#documentation: https://rdrr.io/cran/worrms/
+#SUMMARY: functions in this package aren't working very well
+#not producing many matches even in cases when I know it should
+#package doesn't seem very well maintained
+
+#function that locates records for individual species throws Error 400
+#https://github.com/ropensci/worrms/issues/29
+#if there are spaces in the character string (ie, between genus and species)
+#replacing space with '+' fixes this 
+#wm_records_name(name = c('Gammarus daiberi')) #Error: (400) Bad Request
+#wm_records_name(name = c('Gammarus+daiberi')) #works as expected
+
+#use sister function that works on multiple species names
+#sort of works but doesn't match as many species as worrms function
+#replacing space with '+' didn't help
+#records_worrms <- wm_records_names(name = specieslist)
+#records_worrms_fzy <- wm_records_taxamatch(name = specieslist)
+#wm_records_taxamatch was much slower and didn't produce better matching
+
+#prints latin name corresponding to ID #
+wm_id2name(id = c(397131)) #single record version works
+wm_id2name_(id = c(397131,148669)) #multiple record version works
+
+#print ID# from name
+#get an error if spaces in name
+wm_name2id(name = "Lumbriculus variegatus") #Error 400
+wm_name2id(name = "Lumbriculus+variegatus") #works
+wm_name2id_(name = c("Lumbriculus+variegatus","Girardia+tigrina")) #surprisingly works
+
+#RITIS package
+#Github repo: https://github.com/ropensci/ritis
+#documentation: only detailed documentation is for old version
+#https://www.rdocumentation.org/packages/ritis/versions/0.5.4
+#SUMMARY: not very helpful because most functions only seems to work on one record at a time
+
+
+#to query multiple scientific names, use terms()
+#search_scientific() only works on one species at a time
+
+#records_ritis <- terms(query=c(specieslist), "scientific")
+
+#a bit slow but seems to work fine; found most of the species
+#however, taxonomy not as up to date as WoRMS, unsurprisingly
+#probably best to get as much info from WoRMS as possible
+#then fill gaps with ITIS as needed
+
+#just search ITIS for taxa not found in WoRMS search above
+
+#records_ritis_gaps <- terms(query=c(check_itis), "scientific")
+
+#works but output not everything I want; missing higher level taxonomy
+#probably best approach is to now grab the TSNs and use function to get higher taxonomy
+#for larger data sets, might need to add a step that checks for valid/accepted name for TSN
+#also need to combine tibbles before we can create list of all TSNs
+
+#this function will pull full taxonomy but only works for a single TSN
+#hierarchy_full(tsn = 69450)
+
+#try using taxize package instead because it should be more powerful (ie, functions to work with species lists)
+
+
+#taxize package 
+#github repo: https://github.com/ropensci/taxize
+#documentation: https://docs.ropensci.org/taxize/articles/taxize.html
+#book: https://books.ropensci.org/taxize/
+
+#key to database numbers used below in gnr_resolve
+#https://resolver.globalnames.org/data_sources
+
+#look at one species; I know name in data set is not the accepted name on WoRMS
+
+#names_res_ex <- gnr_resolve("Pisidium casertanum"
+#                            #can specify database(s); 9 = WoRMS
+#                            #,data_source_ids =  9
+#) %>% 
+#  arrange(score)
+
+#shows results for a bunch of databases, including WoRMS, but output doesn't indicate that 
+#this isn't the current accepted name on WoRMS (it's Euglesa casertana)
+#also doesn't provide any sort of ID #s for any of these records
+#so overall this function isn't very useful for my purposes
+
+
+
+#for taxa not found in WoRMS, next check ITIS
+#get_tsn() may not find every species; for those not matched, an NA is returned
+#NAs will prevent itis_acceptname from working, so have to remove NAs between steps
+#try all 50 species in my list
+#accepted = F returns both accepted and unaccepted names
+tsn_all <- get_tsn(specieslist,accepted = F)
+#found 43 of 50 species but only prints the numbers without the names
+#remove species that didn't match (ie, NA results)
+
+#accepted = T returns only accepted names
+tsn_accept <- get_tsn(specieslist,accepted = T)
+#finds 42 of 50 species, so one name was an unaccepted name
+#"Sparganophilus eiseni" is unaccepted name; WoRMS already caught this one
+
+#create data frame with input species names, all TSNs, and accepted TSNs
+tsn_comp <- as.data.frame(cbind(specieslist,tsn_all, tsn_accept)) %>%
+  #add column that compares the two tsn columns
+  mutate(diff = case_when(tsn_all == tsn_accept ~ F, (is.na(tsn_all) & is.na(tsn_accept) ~ F), TRUE ~ T)) %>% 
+  glimpse()
+
+#generate list of species not found in ITIS
+itis_fail <- tsn_comp %>% 
+  filter(is.na(tsn_all) & is.na(tsn_accept)) %>% 
+  pull(specieslist)
+#need to figure out why these failed
+#may need to either fix spelling, update name manually, or try other DB
+
+#create list of TSNs that were found in ITIS but aren't for accepted names
+#probably best to only run itis_acceptname for taxa we know weren't accepted
+#running for all species would take a while and wouldn't be worth it
+tsn_unaccept <- tsn_comp %>% 
+  filter(diff == T) %>% 
+  pull(tsn_all) %>% 
+  glimpse()
+#one taxon and output is chr type
+
+#find accepted TSN for unaccepted TSN
+#this output will be lists
+#need to figure out how to extract "acceptedtsn" 
+# probably don't need "acceptedname" because classification() will grab it
+accepted_now <- lapply(as.character(tsn_unaccept),itis_acceptname)
+
+#looks for all species in list and returns output as lists by species
+#output includes nameUsage (eg, valid, invalid), scientificName, tsn
+#maybe this is all I need as starting point
+#figure out how to create three sets of species:
+#no ITIS match at all (tibble: 0 x 0)
+#ITIS match but not valid/accepted (nameUsage != valid | accepted)
+#ITIS valid/accepted (nameUsage = valid | accepted)
+#if way to do this easily, would be simplier than approach above
+#also should only keep first hit; subsequent hits seem to all be subspecies
+itis_test <- itis_terms(query=specieslist,"scientific")
+
+#try making the list into a tibble
+#itis_tibble <- as_tibble(itis_test)
+#! Tibble columns must have compatible sizes.
+#makes sense that this doesn't work I guess
+
+# filter to keep tibbles for species with nameUsage=invalid
+invalid <- keep(itis_test, ~ any(c("invalid","unaccepted") %in% .x$nameUsage)) 
+#kept the one case
+#gives a warning for each of the species that had no ITIS match, which is fine
+
+#create list with just species with valid/accepted names
+valid <- keep(itis_test, ~ any(c("valid","accepted") %in% .x$nameUsage)) 
+#kept the 42 species with valid names
+
+#try to filter out the species that had no match
+
+
+
+#get the taxonomic serial number for each species from ITIS
+
+#start with one species as example; I know this name is present in ITIS and isn't accepted name
+tsn2 <- get_tsn(c("Sparganophilus eiseni"),accepted = F) #works
+lapply(tsn2, itis_acceptname) 
+#this code is working but for many of my names their status is valid or invalid
+#rather than accepted or unaccepted
+#so functionally this code often isn't helpful
+
+
+
+
+
+lapply("Sparganophilus eiseni", itis_acceptname) 
+
+
+#in the documentation examples, it shows sticking the #s and names together
+lapply(tsn, itis_acceptname) 
+#this doesn't work (Error: Bad Request (HTTP 400))
+#maybe it's because there are some NAs
+
+#will this run with vs with NAs (ie, species not matched)?
+#no NA species
+lapply(tsn[1:15],itis_acceptname)
+#this works, results indicate that the TSNs I have are for the accepted name
+
+#contains an NA species
+lapply(tsn[1:16],itis_acceptname)
+#this doesn't work because the 16th number is NA (couldn't find species in database)
+#Error: Bad Request (HTTP 400)
+
+
+
+
+
+#take species not found in worms, and get ITIS TSNs and higher taxonomy
+#can't be 100% sure these are the accepted species names
+#but it doesn't seem like ITIS keeps track of old names
+#if if you have an old name, it probably just won't get a hit on ITIS
+records_taxize_gaps <- classification(check_itis, db = 'itis')
+
+
+
+
+
+
+
+
+
+
+
+#get the Worms ID
+#having this number will allow me to determine the current accepted name
+worms_id2 <- get_wormsid(specieslist,accepted = F,ask=F)
+#accepted = F returns both accepted and unaccepted names
+#ask=F eliminates interactive name selection; means could be multiple rows per species
+#tried specifying rows=1 but wasn't working
+#found 25 of 50, which seems wrong
+#some very common taxa that I know are in WORMS did not match
+#same number of taxa found by worms package (not sure if identical spp though)
+#output of this function not as good as that from worms package
+
+#try getting IDs from multiple databases at once to see where there are hits
+#get_ids("Corbicula fluminea",df="itis")
+#doesn't seem like this is doing what it's supposed to do
+
+#get the EOL ID
+#doesn't seem as useful because it is pulling from all the databases
+#id_eol_ex <- get_eolid("Gammarus daiberi")
+
+
+
+
+
+
+
+
+
+
+
+
+#resolve taxonomic names
+#WoRMS
+names_res_worms <- gnr_resolve(specieslist
+                           ) %>% 
+  arrange(score)
+#returned 54 rows instead of 50; must be multiple hits for some species
+#make sure all 50 species are present and look at cases of duplicate species names 
+
+#how many distinct species? should be 50
+names_res_count <- unique(names_res$submitted_name)
+#only 49 so missing one
+
+#which species is missing?
+names_res_miss <- benthic_spp_true_5 %>% 
+  filter(!species_name %in% names_res_count)
+#didn't find Mooreobdella microstoma
+
+#which species are duplicated?
+names_res_dup <- names_res %>% 
+  group_by(submitted_name) %>% 
+  #count number of rows for each species
+  summarize(records = n()) %>% 
+  #filter to just keep those with more than one row
+  filter(records > 1) %>% 
+  #make a list of species names that were duplicated
+  pull(submitted_name)
+
+#look closer at rows with duplicates
+names_res_dup_det <- names_res %>% 
+  filter(submitted_name %in% names_res_dup)
+#in one case, differences is authority name
+#all other are one record with subgenus and one without
+#could use the best_match_only to get one result per species
+
+#resolve taxonomic names
+#still using WoRMS but only keep best name to remove duplicates
+names_res_worms2 <- gnr_resolve(specieslist
+                         #3 = ITIS, 9 = WoRMS, 12 = Encyclopedia of Life, 181 = The Interim Register of Marine and Nonmarine Genera
+                         ,data_source_ids =  9 
+                         ,best_match_only = T
+)  %>% 
+  arrange(score)
+#found 49 species and all name matches look good
+#kept one record per species. seems to have picked the one without the subgenus included
+
+
+#resolve taxonomic names
+#try Interim Register of Marine and Nonmarine Genera (IRMNG)
+names_res_irmng <- gnr_resolve(specieslist
+                          #3 = ITIS, 9 = WoRMS, 12 = Encyclopedia of Life, 181 = The Interim Register of Marine and Nonmarine Genera
+                          ,data_source_ids =  181 
+                          ,best_match_only = T
+)    %>% 
+  arrange(score)
+#missing 1 species but a different one from WoRMS
+#only found the genera though, which I guess makes sense given the database mission 
+#might still be a good source for taxa without species level IDs
+
+#resolve taxonomic names
+#try Encyclopedia of Life
+names_res_eol <- gnr_resolve(specieslist
+                               #3 = ITIS, 9 = WoRMS, 12 = Encyclopedia of Life, 181 = The Interim Register of Marine and Nonmarine Genera
+                               ,data_source_ids =  12 
+                               ,best_match_only = T
+)   %>% 
+  arrange(score)
+#found all 50 species. look closer at species with a score less than 0.988, which I think indicates the names submitted and 
+#found don't perfectly match (ie, possible typos)
+
+#examine names with less than perfect name matches
+names_res_issues <- names_res_eol %>% 
+  filter(score< 0.988)
+#two species weren't found - just their genus
+#two species have slightly different spellings in the specific epithet
+
+#resolve taxonomic names
+#ITIS
+names_res_itis <- gnr_resolve(specieslist
+                             ,data_source_ids =  3 
+                             ,best_match_only = T
+)   %>% 
+  arrange(score)
+
+#pull higher level taxonomy info from ITIS
+hightax_itis <- classification(specieslist, db = 'ncbi')
+#36 of 50 species found which is pretty mediocre
+
+#pull higher level taxonomy info from NCBI
+hightax_itis <- classification(specieslist, db = 'itis')
+
+#need to figure out how to work with lists
+#probably a job for nest functions
+
+
+mynames <- c("Helianthus annuus ssp. jaegeri", "Helianthus annuus ssp. lenticularis", "Helianthus annuus ssp. texanus")
+(tsn <- get_tsn(mynames, accepted = FALSE))
+lapply(tsn, itis_acceptname) #this works, not sure how it knows what to do with itis_acceptname
+
+
+out <- get_nbnid_(specieslist[1:3])
 
 # Calculate annual mean CPUE------------------
 
