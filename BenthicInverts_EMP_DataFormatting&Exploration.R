@@ -656,9 +656,12 @@ full_list <- c(specieslist,txlist)
 records_worms <- wormsbynames(full_list, ids=T,match=T)
 
 #IMPORTANT: the classification provided is for invalid names provided not accepted names
+#need to rerun this using the valid names
 #found 49 of 50 species; missing only Mooreobdella microstoma 
 #found 14 of 15 higher level taxa; missing Isocypris 
 #Turbellaria is not an accepted name
+
+#rerun names using valid names
 
 #format the worms output
 worms_format <- records_worms %>%
@@ -688,14 +691,21 @@ worms_current <- worms_format %>%
   add_row(taxon = "Isocypris") %>% 
   mutate(
     #new column with accepted names
-    taxon_name = case_when(status=="accepted" | is.na(status) ~ taxon
-                                  ,TRUE ~ valid_name)) %>% 
+    taxon_name = case_when(status=="accepted" | is.na(status) | is.na(valid_name) ~ taxon
+                           ,TRUE ~ valid_name)) %>% 
   select(taxon_name,rank:genus) %>% 
   arrange(rank) %>% 
   glimpse()
 #missing higher taxonomy for Mooreobdella microstoma because no WoRMS match
-#no valid name for Turbellaria so taxon_name is NA but all taxonomic info is present still
-#Melanoides tuberculata has temporary name in order with weird formatting including []
+#NOTE: no valid name replacement for Turbellaria so filled in invalid name for taxon_name for now
+#Melanoides tuberculata has temporary name with weird formatting including [] for order 
+
+#redo classification using valid names
+valid_list <- worms_current %>% 
+   pull(taxon_name)
+
+records_worms_valid <- wormsbynames(valid_list, ids=T,match=T)
+#now clean this data frame up again and remove the mismatch for Isocypris
 
 
 #make list of taxa not matched by WoRMS
