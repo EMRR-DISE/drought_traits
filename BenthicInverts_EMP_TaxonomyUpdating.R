@@ -4,6 +4,8 @@
 #Automating taxonomy updating for non-rare taxa
 #ie, those in at least 5% of samples for three focal stations
 
+#taxonomy last updated 10/25/2022
+
 #Nick Rasmussen, nicholas.rasmussen@water.ca.gov
 
 # Load required packages -----------------
@@ -423,6 +425,16 @@ all_format <- worms_format %>%
   select(organism_code,taxon,source,status:genus) %>% 
   arrange(kingdom,phylum, class, order, genus) %>% 
   glimpse()
+
+#write a file containing the updated taxonomy
+#write_csv(all_format,"./BenthicInverts/benthic_inverts_taxa_common_5_updated_2022-10-25.csv")
+
+#summarize lowest rank for each taxon
+#ideally these would all be species for rounding up traits but they aren't
+taxon_summary <-all_format %>% 
+  group_by(rank) %>% 
+  summarize(count = n())
+#of 65 taxa, 50 are species, 12 are genera, 3 are higher
 
 #experiment with searching all species using taxize instead of starting with worms---------
 #made good progress but didn't complete this
