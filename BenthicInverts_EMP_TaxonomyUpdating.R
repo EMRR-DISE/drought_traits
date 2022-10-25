@@ -125,6 +125,7 @@ benthic_spp_5_true <- benthic_spp_names_5 %>%
   filter(!grepl('sp. |Sp. |Unknown|No catch',species))
 #50 of 65 are IDed to species; 77% of all species
 
+#NOTE: would need to read in a csv with list of taxa in at least 10% of sample for the code below to run
 #10%: filter the taxonomy dataset using organism codes from data set with only taxa that are in at least 10% of samples
 #benthic_spp_names_10 <-benthic_spp_names %>% 
   #filter to keep only taxa in at least 10% of samples using organism codes
@@ -147,7 +148,6 @@ benthic_spp_5_true <- benthic_spp_names_5 %>%
 #for taxa not found in WoRMS will then check ITIS 
 
 #to do list
-#wormsbyname() provides classification for outdated names, not accepted names; fix that
 #probably good to round up synonyms for literature searches of traits
 #could try applying this pipeline to the whole benthic invert taxonomic list
 
@@ -173,6 +173,20 @@ txlist <- taxonlist %>%
 
 #make list with all taxa in it (those IDed to species and those not)
 full_list <- c(specieslist,txlist)
+
+#create df for all 65 taxa that contains both the organism code and the name searched in database---------
+
+#for df with species level id, make new df with just organism_code and species_name
+sp_code <- benthic_spp_5_true %>% 
+  select(organism_code
+         ,name = species_name)
+
+#for df without species level id, make new df with just organism_code and taxon_lowest
+all_code <- taxonlist %>% 
+  select(organism_code
+         ,name = taxon_lowest) %>% 
+  #now add the df containing species level IDs
+  bind_rows(sp_code)
 
 #use worms package to check accepted names and update higher taxonomy
 #github repo:https://github.com/janhoo/worms/
@@ -205,17 +219,25 @@ worms_records_outcome <- worms_records %>%
     ,is.na(scientificname) ~ "missing"
     #input name found and replaced with accepted name
     ,name == scientificname & scientificname!=valid_name ~ "corrected"
-    #input name not found but a similar, and likely incorrect, name was found
-    ,name!=scientificname & !is.na(scientificname) ~ "wrong"
+    #input name not found but a similar, and possibly incorrect, name was found
+    ,name!=scientificname & !is.na(scientificname) ~ "questionable"
     #input name found but isn't the accepted name
     ,name == scientificname & status!="accepted" ~ "old"
   )
            ) %>% 
   arrange(outcome)
-#accepted = 56, corrected = 6, missing = 1, old = 1, wrong = 1
+#accepted = 56, corrected = 6, missing = 1, old = 1, questionable = 1
 #need to redo search for corrected species because classification is for old species
 #no need to redo search for accepted
 #no point in redoing search for missing, old, or wrong
+
+#create df that can match organism codes, input names, and AphiaIDs
+tax_key1 <- worms_records_outcome %>% 
+  select(name,valid_name) 
+#join by name
+tax_key <- left_join(tax_key1,all_code) %>% 
+  #now drop name because name in worms_records_corrected is the valid name rather than the input name
+  select(-name)
 
 #create subset with just the taxa that were found in WoRMS and the names correctly updated
 species_corrected <- worms_records_outcome %>% 
@@ -229,63 +251,47 @@ worms_records_corrected <- wormsbynames(species_corrected, ids=T,match=T) %>%
   #not sure if I'll need this column but adding it back in just in case
   add_column(outcome="corrected")
 
+#add organism codes to corrected species; will join by valid_name
+corrected_codes <- left_join(worms_records_corrected,tax_key)
+
+#add organism codes to main worms dataframe; will match by name
+worms_codes <- left_join(all_code,worms_records_outcome)
+
 #format the worms output
-worms_format <- worms_records_outcome %>%
+worms_format <- worms_codes %>%
   #drops outdated rows for corrected species
   filter(outcome!="corrected") %>% 
   #add rows with updated info for corrected species
-  bind_rows(worms_records_corrected) %>% 
+  bind_rows(corrected_codes) %>%   
   #remove incorrectly matched info for Isocypris
   #need to include is.na() part so I don't accidentally drop Mooreobdella microstoma
   filter(scientificname != "Isocystis" | is.na(scientificname)) %>% 
   add_row(name = "Isocypris") %>% 
   #just keep the needed columns
-  select(taxon = name
+  select(organism_code
+         ,taxon = name
          ,status
-         ,valid_name
          ,rank
          ,kingdom:genus
   ) %>% 
+  #add column indicating source
+  add_column(source = "worms") %>% 
   arrange(status)
 #everything now looks good with three exceptions
-#Turbellaria which is an old name with no current replacement
+#Turbellaria which is an old name with no current replacement; ask Betsy
 #two taxa not in WoRMS; will check ITIS next
-
+#Melanoides tuberculata has temporary name with weird formatting including [] for order 
 
 #take a closer look at non-matches
 worms_unmatch <- worms_format %>% 
-  filter(match==FALSE)
-#in all but one case, this is invalid name replaced by the valid one
-#exception is Isocypris, which was filled with info for Isocystis, which is wrong
-
-#create new name column that replaces original column if more recent name
-#if valid name didn't sometime include random subspecies, varieties, etc
-#I could have just used valid_name for everything
-worms_current <- worms_format %>% 
-    mutate(
-    #new column with accepted names
-    taxon_name = case_when(status=="accepted" | is.na(status) | is.na(valid_name) ~ taxon
-                           ,TRUE ~ valid_name)) %>% 
-  select(taxon_name,rank:genus) %>% 
-  arrange(rank) %>% 
-  glimpse()
-#missing higher taxonomy for Mooreobdella microstoma because no WoRMS match
-#NOTE: no valid name replacement for Turbellaria so filled in invalid name for taxon_name for now
-#Melanoides tuberculata has temporary name with weird formatting including [] for order 
-
-#redo classification using valid names
-valid_list <- worms_current %>% 
-  pull(taxon_name)
-
-worms_records_valid <- wormsbynames(valid_list, ids=T,match=T)
-#now clean this data frame up again and remove the mismatch for Isocypris
-
+  filter(is.na(status))
+#two taxa
 
 #make list of taxa not matched by WoRMS
 #will check these in ITIS
-check_itis <- worms_current %>% 
+check_itis <- worms_format %>% 
   filter(is.na(kingdom)) %>% 
-  pull(taxon_name)
+  pull(taxon)
 #Note: format of output will be different than worms package
 
 #automate taxonomy updates: check WoRMS using worrms package (poor results)--------------------
@@ -356,24 +362,28 @@ check_itis <- worms_current %>%
 #documentation: https://docs.ropensci.org/taxize/articles/taxize.html
 #book: https://books.ropensci.org/taxize/
 
+#determine if the names not found in WoRMS are considered accepted names in ITIS
+#accepted = T only returns results for accepted names
+#accepted = F returns both accepted and unaccepted names
+tsn_gaps <- get_tsn(check_itis,accepted = T)
+accept_gaps <- lapply(as.character(tsn_gaps),itis_acceptname)
+#for both taxa, acceptedname = NA  meaning the input name is the accepted name
+
 #search ITIS for taxa not in WoRMS
-#can't be 100% sure these are the accepted species names
-#but it doesn't seem like ITIS keeps track of old names
-#if if you start with an old name, it probably won't be in ITIS (but it still could be)
-records_taxize_gaps <- classification(check_itis, db = 'itis')
+taxize_records_gaps <- classification(check_itis, db = 'itis')
 
 #convert nested dataframe to one data frame and then combine with WoRMS data
 
 #create vector of column names from WoRMS df
 #will be used to filter columns from ITIS df
-taxheader = names(worms_current)
+taxheader = names(worms_format)
 
 #make tibbles for ITIS matches
-itis_tibble <- records_taxize_gaps %>% 
+itis_tibble <- taxize_records_gaps %>% 
   map(as_tibble)
 
-
-itis_format <- enframe(itis_tibble,name="taxon_name") %>% 
+#convert from nested dataframe to single dataframe
+itis_format <- enframe(itis_tibble,name="name") %>% 
   mutate(
     #make a new vector that provides name of rank of taxon searched for (eg, genus or species)
     #uses the last() function to grab the most specific rank 
@@ -384,18 +394,40 @@ itis_format <- enframe(itis_tibble,name="taxon_name") %>%
                    select(any_of(taxheader)) )
   ) %>% 
   #unnest the tibbles
-  unnest(cols = value) 
+  unnest(cols = value) %>% 
+  #add column indicating status = accepted; manually confirmed above these two are accepted names
+  #also add column indicating taxonomy source (ie, ITIS)
+  add_column(status = "accepted"
+             ,source = "itis")
 #need to capitalize rank names
 
-#replace missing taxa info with ITIS info
-names_current <- worms_current %>% 
-  #drop the WoRMS rows filled with NAs
-  anti_join(itis_format,by='taxon_name') %>% 
-  #add the rows from ITIS with info
-  bind_rows(itis_format) %>% 
-  #make all rank names consistently title case
-  mutate(rank = str_to_title(rank))
+#add organism codes to itis records; match by name
+itis_codes <- left_join(itis_format,all_code) %>% 
+  rename(taxon = name)
 
+#replace missing taxa info with ITIS info
+all_format <- worms_format %>% 
+  #drop the WoRMS rows filled with NAs
+  anti_join(itis_codes,by='taxon') %>% 
+  #add the rows from ITIS with info
+  bind_rows(itis_codes) %>% 
+  mutate(
+    #make all rank names consistently title case
+    rank = str_to_title(rank)
+    #drop note from online database about status of taxonomic name as unassigned
+    #only applied to a single order name (ie, for Melanoides tuberculata)
+    #NOTE: need fixed=T to turn off regex, which has specific use for []
+    ,across(c(kingdom:genus), ~as.character(gsub("[unassigned] ", "", .,fixed=T)))
+    ) %>% 
+  #reorder columns
+  select(organism_code,taxon,source,status:genus) %>% 
+  arrange(kingdom,phylum, class, order, genus) %>% 
+  glimpse()
+
+#experiment with searching all species using taxize instead of starting with worms---------
+#made good progress but didn't complete this
+#may be better in short term to stick with above approach
+#check WoRMS using worms and get rest from ITIS using taxize
 
 #look at one species; I know name in data set is not the accepted name on WoRMS
 
