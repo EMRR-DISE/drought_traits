@@ -111,7 +111,7 @@ wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=ed
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
 
-#Look at no catch samples ------------------------
+# Look at no catch samples ------------------------
 
 #look at all no catch samples in whole data set
 benthic_cpue_no_catch_all <- benthic_invert_cpue %>% 
@@ -295,6 +295,15 @@ benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg)
 unique(benthic_cpue_stf$station_code)
 #three stations as expected: "D4-L"   "D7-C"   "D28A-L"
 
+#how many samples after filtering?
+sample_num <- benthic_cpue_stf %>% 
+  distinct(sample_date,station_code) %>% 
+  count()
+
+#how many taxa after filtering?
+taxon_number <- benthic_cpue_stf %>% 
+  distinct(organism_code) %>% 
+  count()
 
 # Add zeros for absences back into abundance data set-------------------------
 
@@ -369,7 +378,7 @@ vmonth <- benthic_cpue_stfz %>%
 
 
 
-# Remove rare taxa -------------------
+# Try different approaches to removing rare taxa -------------------
 
 #what proportion of bay-delta wide taxa are represented
 #in the three stations I have kept
@@ -417,14 +426,14 @@ cpue_indiv_prop <- benthic_cpue_stfz %>%
   glimpse()
 
 #plot histogram of proportion of individuals each ssp comprises
-ggplot(cpue_indiv_prop, aes(x=indiv_prop))+
-  geom_histogram()
+#ggplot(cpue_indiv_prop, aes(x=indiv_prop))+
+#  geom_histogram()
 #vast majority of taxa comprise less than 1.25% of total individuals
 
 #plot histogram of proportion of individuals for each spp relative to
 #the most abundant spp
-ggplot(cpue_indiv_prop, aes(x=dom_prop))+
-  geom_histogram()
+#ggplot(cpue_indiv_prop, aes(x=dom_prop))+
+#  geom_histogram()
 #almost all species are rare compared to most abundant spp (<5% dominant spp abundance)
 
 #drop the 25% of species with lowest total individuals
@@ -453,7 +462,7 @@ total_samples <- benthic_cpue_stfz %>%
   #necessary because there's a row for each taxon within each sample
   distinct(sample_date, station_code) %>%  
   count()
-samp_denom <-as.numeric(total_samples[1,1]) #1399
+samp_denom <-as.numeric(total_samples[1,1]) #1426
 
 #calculate the proportion of samples in which each taxon is present
 cpue_sample_prop <- benthic_cpue_stfz %>%
@@ -467,9 +476,22 @@ cpue_sample_prop <- benthic_cpue_stfz %>%
   mutate(prop = n_samp/samp_denom) %>% 
   glimpse()
 
+
+# Rare taxa: different threshold for proportional presence in of samples----------------
+#try 1, 2, 5, 10% of samples to see how this affects proportion and type of species
+#as well as NMDS plotting results
+
 #plot histogram of proportion of samples containing species
 ggplot(cpue_sample_prop, aes(x=prop))+
   geom_histogram()
+
+#filter to just the species in more than 1% of samples
+cpue_1plus <- cpue_sample_prop %>% 
+  filter(prop>0.01)
+
+#filter to just the species in more than 2% of samples
+cpue_2plus <- cpue_sample_prop %>% 
+  filter(prop>0.02)
 
 #filter to just the species in more than 5% of samples
 cpue_5plus <- cpue_sample_prop %>% 
@@ -480,6 +502,18 @@ cpue_5plus <- cpue_sample_prop %>%
 cpue_10plus <- cpue_sample_prop %>% 
   filter(prop>0.10)
 #dropped from 243 to 42 taxa; 17.3% of taxa retained
+
+#make df of number of taxa retained by the four different filtering levels
+
+#first count number of taxa in samples
+taxon_num <- as.numeric(taxon_number)
+
+species_retained <- data.frame(
+  "filter" = c(1,2,5,10)
+  , "num_taxa" = c(as.numeric(count(cpue_1plus)),as.numeric(count(cpue_2plus)),as.numeric(count(cpue_5plus)),as.numeric(count(cpue_10plus)))
+  , "prop_taxa" = c(as.numeric(count(cpue_1plus))/taxon_num,as.numeric(count(cpue_2plus))/taxon_num,as.numeric(count(cpue_5plus))/taxon_num,as.numeric(count(cpue_10plus))/taxon_num)
+ ) %>% 
+  glimpse()
 
 #5%: create vector of organism codes to then filter main df
 organisms_common5 <- cpue_5plus %>% 
@@ -493,7 +527,7 @@ organisms_common10 <- cpue_10plus %>%
 #will update taxonomy for these retained taxa using another script
 common5 <- as.data.frame(organisms_common5) %>% 
   rename(organism_code = organisms_common5)
-write_csv(common5,"./BenthicInverts/benthic_inverts_taxa_common_5.csv")
+#write_csv(common5,"./BenthicInverts/benthic_inverts_taxa_common_5.csv")
 
 #combine proportion info with main data frame and then filter to those with more than 5%
 #or use a join function to just keep the taxa that are in more than 5% of samples
@@ -504,6 +538,107 @@ benthic_cpue_stfz_com <- benthic_cpue_stfz %>%
   #sort by date, station, organism code
   arrange(sample_date, station_code, organism_code) %>% 
   glimpse()
+
+# Rare taxa: compare the taxa retained by each of the different removal methods---------------------------
+#main question is whether the specific species retained by the different methods is generally similar
+
+#start with df with all organism codes
+#add the 75% of spp that are the most numerically abundant overall (cpue_rarest25, n = 188)
+#add those in more than 5% of samples (cpue_5plus, n=65)
+#add those that are at least 1% of total abundance (cpue_indiv_1plus, n=14)
+#add those with total abundances that are at least 5% of most abundant species total abundance (cpue_prop_dom_5plus, n=14)
+
+#make data frame with just the full list of organism codes for samples in three focal stations
+organism_code <- cpue_indiv_prop %>% 
+  pull(organism_code) 
+
+#subset and clean df with 75% of spp that are the most numerically abundant overall 
+common75 <- cpue_rarest25 %>% 
+  select(organism_code, rank_prop75 = rank_prop) %>% 
+  #add column with numbers for each column converted to ranks
+  mutate(rank_prop75r = rank(desc(rank_prop75))) %>% 
+  glimpse()
+
+
+#subset and clean df with those in more than 5% of samples (cpue_5plus, n=65)
+common_sample_5perc <- cpue_5plus %>% 
+  select(organism_code,prop_samp_5 = prop)%>% 
+  #add column with numbers for each column converted to ranks
+  mutate(prop_samp_5r = rank(desc(prop_samp_5))) %>% 
+  glimpse()
+
+#subset and clean df with those that are at least 1% of total abundance (cpue_indiv_1plus, n=14)
+common_totabund_1perc <- cpue_indiv_1plus %>% 
+  select(organism_code,indiv_prop_1perc = indiv_prop) %>% 
+  #add column with numbers for each column converted to ranks
+  mutate(indiv_prop_1percr = rank(desc(indiv_prop_1perc)))
+
+#subset and clean df with those with total abundances that are at least 5% of most abundant species total abundance (cpue_prop_dom_5plus, n=14)
+common_dom_5perc <- cpue_prop_dom_5plus %>% 
+  select(organism_code,dom_prop5 = dom_prop)%>% 
+  #add column with numbers for each column converted to ranks
+  mutate(dom_prop5r = rank(desc(dom_prop5)))
+
+#make list of organism codes in df
+codes_focal_stations <- as.data.frame(organism_code) 
+
+#put all data frames into list
+df_list <- list(codes_focal_stations,common75
+                ,common_sample_5perc,common_totabund_1perc
+                ,common_dom_5perc
+                )
+
+#merge all data frames in list by organism_code
+rare_compare <-df_list %>% 
+  reduce(full_join, by='organism_code')  %>% 
+  select(organism_code,rank_prop75r,prop_samp_5r,indiv_prop_1percr,dom_prop5r) %>% 
+  arrange(dom_prop5r)
+
+#quick summary
+#14 taxa are retained by all filtering methods
+#makes sense that three of the methods give the same results
+#they're just different ways of expressing most abundant taxa
+#ie, dom_prop5 (total sp #/total dom sp #),indiv_prop_1perc (total sp #/total #),rank_prop75 (total sp #)
+#prop_samp_5 is only really different approach (looks at proportion of samples containing a sp.)
+#even then, number of samples and number of individuals seems similar, but plot this to see
+
+#plot for each of the 250 taxa the number of individuals vs number of samples they are present in
+svi <- left_join(cpue_sample_prop,cpue_indiv_prop) %>% 
+  select(organism_code,n_samp,indiv_n)
+
+#plot raw data
+(svi_plot_rw <- ggplot(svi,aes(x = n_samp, y = indiv_n)) + 
+    geom_point()+
+    #add vertical line showing 1%, 2%, 5%, 10% of samples
+    geom_vline(xintercept=c(samp_denom*0.01,samp_denom*0.02,samp_denom*0.05,samp_denom*0.1))+ 
+    labs(x = "Number of samples", y = "Number of individuals")
+)
+
+#plot log transformed data
+(svi_plot_ln <- ggplot(svi,aes(x = log(n_samp), y = log(indiv_n))) + 
+  geom_point()+
+  #add vertical line showing 1%, 2%, 5%, 10% of samples
+  geom_vline(xintercept=c(log(samp_denom*0.01),log(samp_denom*0.02),log(samp_denom*0.05),log(samp_denom*0.1)))+
+  labs(x = "LN(Number of samples)", y = "LN(Number of individuals)")
+)
+#clearly shows a strong relationship between total abundance and presence in samples
+#so probably doesn't matter too much whether filtering based on total individuals or number of samples
+
+#plot increase in number of taxa retained when using different thresholds (1%, 2%, 5%, 10% of samples)
+(plot_taxa_retained <- ggplot(species_retained,aes(filter,num_taxa)) + 
+    geom_point()+
+    #label points
+    geom_text_repel(aes(label = num_taxa))+
+    labs(x = "% samples with taxon present", y = "# of taxa retained")
+)
+
+#plot increase in proportion of taxa retained when using different thresholds (1%, 2%, 5%, 10% of samples)
+(plot_taxa_retained <- ggplot(species_retained,aes(filter,prop_taxa)) + 
+    geom_point()+
+    #label points
+    geom_text_repel(aes(label = prop_taxa))+
+    labs(x = "% samples with taxon present", y = "proportion of taxa retained")
+)
 
 # Calculate annual mean CPUE------------------
 
