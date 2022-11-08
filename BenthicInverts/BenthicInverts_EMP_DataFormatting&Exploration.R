@@ -16,6 +16,7 @@
 
 library(data.table) #matches data by nearest date 
 #NOTE: data.table masks some useful tidyverse functions so load first
+library(ggpmisc) #add correlation results to plots; load before ggplot2
 library(tidyverse) #suite of data science tools
 library(contentid) #reduce time of reloading large data sets
 library(janitor) #used to quickly clean up column names
@@ -25,7 +26,6 @@ library(geosphere) #matching stations by distance
 library(leaflet) #make interactive maps
 library(ggrepel) #no-noverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
-#library(waterYearType) #lists all water year types 1901 - 2017
 library(here)
 
 # To do list -----------------------------
@@ -63,6 +63,10 @@ benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer
 #organism key list
 benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=d0f0dd3c1835fe5b669342f8c8e77024") %>% 
   clean_names()
+
+#organism key with column for latin name for taxa
+#see BenthicInverts_EMP_TaxonomyUpdating for how this was done
+benthic_spp_names <- read_csv("./BenthicInverts/BenthicInverts_Taxonomy_NameLabels.csv")
 
 #total annual site visits, 1975-2021
 benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=304bc4562046e0a6c35fbad3e2c85645") %>% 
@@ -103,13 +107,17 @@ wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=ed
   clean_names() %>% 
   glimpse()
 
-#Water year type from waterYearType package
-#the only function in package brings in water year type data frame
-#water_year <- water_year_indices
-#glimpse(water_year) #looks like column types are correct
+#sacramento valley water year types from drought synthesis
+#data originates from http://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST
+water_year <- read_csv("https://raw.githubusercontent.com/InteragencyEcologicalProgram/DroughtSynthesis/main/data/yearassignments.csv") %>% 
+  clean_names()
 
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
+
+# Format the water year type data frame ---------------------
+wyear <- water_year %>% 
+  select(year,yr_type,drought) 
 
 # Look at no catch samples ------------------------
 
@@ -378,7 +386,7 @@ vmonth <- benthic_cpue_stfz %>%
 
 
 
-# Try different approaches to removing rare taxa -------------------
+# Rare taxa: Try different approaches to removing them -------------------
 
 #what proportion of bay-delta wide taxa are represented
 #in the three stations I have kept
@@ -515,6 +523,30 @@ species_retained <- data.frame(
  ) %>% 
   glimpse()
 
+#plot increase in number of taxa retained when using different thresholds (1%, 2%, 5%, 10% of samples)
+(plot_taxa_retained <- ggplot(species_retained,aes(filter,num_taxa)) + 
+    geom_point()+
+    #label points
+    geom_text_repel(aes(label = num_taxa))+
+    labs(x = "% samples with taxon present", y = "# of taxa retained")
+)
+
+#plot increase in proportion of taxa retained when using different thresholds (1%, 2%, 5%, 10% of samples)
+(plot_taxa_retained <- ggplot(species_retained,aes(filter,prop_taxa)) + 
+    geom_point()+
+    #label points
+    geom_text_repel(aes(label = prop_taxa))+
+    labs(x = "% samples with taxon present", y = "proportion of taxa retained")
+)
+
+#1%: create vector of organism codes to then filter main df
+organisms_common1 <- cpue_1plus %>% 
+  pull(organism_code)
+
+#2%: create vector of organism codes to then filter main df
+organisms_common2 <- cpue_2plus %>% 
+  pull(organism_code)
+
 #5%: create vector of organism codes to then filter main df
 organisms_common5 <- cpue_5plus %>% 
   pull(organism_code)
@@ -529,10 +561,37 @@ common5 <- as.data.frame(organisms_common5) %>%
   rename(organism_code = organisms_common5)
 #write_csv(common5,"./BenthicInverts/benthic_inverts_taxa_common_5.csv")
 
-#combine proportion info with main data frame and then filter to those with more than 5%
+#1%: filter abundance data set 
+benthic_cpue1 <- benthic_cpue_stfz %>% 
+  filter(organism_code %in% organisms_common1) %>% 
+  #add year column back in
+  mutate(year=year(sample_date)) %>%
+  #sort by date, station, organism code
+  arrange(sample_date, station_code, organism_code) %>% 
+  glimpse()
+
+#2%: filter abundance data set 
+benthic_cpue2 <- benthic_cpue_stfz %>% 
+  filter(organism_code %in% organisms_common2) %>% 
+  #add year column back in
+  mutate(year=year(sample_date)) %>%
+  #sort by date, station, organism code
+  arrange(sample_date, station_code, organism_code) %>% 
+  glimpse()
+
+#5%: filter abundance data set 
 #or use a join function to just keep the taxa that are in more than 5% of samples
-benthic_cpue_stfz_com <- benthic_cpue_stfz %>% 
+benthic_cpue5 <- benthic_cpue_stfz %>% 
   filter(organism_code %in% organisms_common5) %>% 
+  #add year column back in
+  mutate(year=year(sample_date)) %>%
+  #sort by date, station, organism code
+  arrange(sample_date, station_code, organism_code) %>% 
+  glimpse()
+
+#10%: filter abundance data set 
+benthic_cpue10 <- benthic_cpue_stfz %>% 
+  filter(organism_code %in% organisms_common10) %>% 
   #add year column back in
   mutate(year=year(sample_date)) %>%
   #sort by date, station, organism code
@@ -558,7 +617,6 @@ common75 <- cpue_rarest25 %>%
   #add column with numbers for each column converted to ranks
   mutate(rank_prop75r = rank(desc(rank_prop75))) %>% 
   glimpse()
-
 
 #subset and clean df with those in more than 5% of samples (cpue_5plus, n=65)
 common_sample_5perc <- cpue_5plus %>% 
@@ -619,26 +677,17 @@ svi <- left_join(cpue_sample_prop,cpue_indiv_prop) %>%
   geom_point()+
   #add vertical line showing 1%, 2%, 5%, 10% of samples
   geom_vline(xintercept=c(log(samp_denom*0.01),log(samp_denom*0.02),log(samp_denom*0.05),log(samp_denom*0.1)))+
+  #add correlation line with standard error band
+  geom_smooth(method = 'lm', se=T)+
+    stat_poly_eq(formula = y ~ x,
+                 aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+                 parse = TRUE) +
   labs(x = "LN(Number of samples)", y = "LN(Number of individuals)")
 )
-#clearly shows a strong relationship between total abundance and presence in samples
+#clearly shows a strong relationship between total abundance and presence in samples (R^2 = 0.91)
 #so probably doesn't matter too much whether filtering based on total individuals or number of samples
-
-#plot increase in number of taxa retained when using different thresholds (1%, 2%, 5%, 10% of samples)
-(plot_taxa_retained <- ggplot(species_retained,aes(filter,num_taxa)) + 
-    geom_point()+
-    #label points
-    geom_text_repel(aes(label = num_taxa))+
-    labs(x = "% samples with taxon present", y = "# of taxa retained")
-)
-
-#plot increase in proportion of taxa retained when using different thresholds (1%, 2%, 5%, 10% of samples)
-(plot_taxa_retained <- ggplot(species_retained,aes(filter,prop_taxa)) + 
-    geom_point()+
-    #label points
-    geom_text_repel(aes(label = prop_taxa))+
-    labs(x = "% samples with taxon present", y = "proportion of taxa retained")
-)
+#but not clear where to make the cut off for rare taxa based on this info alone
+#should look at relationship between community structure and drought metrics to see if that provides clear answer
 
 # Calculate annual mean CPUE------------------
 
@@ -646,24 +695,52 @@ svi <- left_join(cpue_sample_prop,cpue_indiv_prop) %>%
 #consider changing this to water year instead of calendar year,
 #though sampling per year is probably based on calendar year
 
-#generate annual mean CPUE values for each taxon
-cpue_mean_annual <- benthic_cpue_stfz_com %>% 
+#1%: generate annual mean CPUE values for each taxon
+cpue_mean_annual1 <- benthic_cpue1 %>% 
   group_by(year,station_code,organism_code) %>% 
-  summarize(cpue_annual=mean(mean_cpue))
+  summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
+
+#2%: generate annual mean CPUE values for each taxon
+cpue_mean_annual2 <- benthic_cpue2 %>% 
+  group_by(year,station_code,organism_code) %>% 
+  summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
+
+#5%: generate annual mean CPUE values for each taxon
+cpue_mean_annual5 <- benthic_cpue5 %>% 
+  group_by(year,station_code,organism_code) %>% 
+  summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
+
+#10%: generate annual mean CPUE values for each taxon
+cpue_mean_annual10 <- benthic_cpue10 %>% 
+  group_by(year,station_code,organism_code) %>% 
+  summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
 
 #add species names for use as vector labels
 
-#first create subset of taxonomy data set (ie, organism code, species name)
+#first create taxonomy data set with just the needed columns (ie, organism code, species name)
 benthic_spp_names_short <- benthic_spp_names %>%
-  #rename column
-  rename(organism_code = OrganismCode) %>% 
   select(organism_code,species_name) %>% 
   #reformat column type 
   mutate(organism_code = as.character(organism_code)) %>% 
   glimpse()
 
-#add species names to main data set
-cpue_mean_annual_nm <- left_join(cpue_mean_annual,benthic_spp_names_short) %>% 
+#1%: add species names to main data set
+cpue_mean_annual_nm1 <- left_join(cpue_mean_annual1,benthic_spp_names_short) %>% 
+  #drop name codes and reorder column
+  select(year,station_code,species_name,cpue_annual) 
+
+#2%: add species names to main data set
+cpue_mean_annual_nm2 <- left_join(cpue_mean_annual2,benthic_spp_names_short) %>% 
+  #drop name codes and reorder column
+  select(year,station_code,species_name,cpue_annual) 
+
+#5%: add species names to main data set
+cpue_mean_annual_nm5 <- left_join(cpue_mean_annual5,benthic_spp_names_short) %>% 
+  #drop name codes and reorder column
+  select(year,station_code,species_name,cpue_annual)
+
+#10%: add species names to main data set
+cpue_mean_annual_nm10 <- left_join(cpue_mean_annual10,benthic_spp_names_short) %>% 
   #drop name codes and reorder column
   select(year,station_code,species_name,cpue_annual) 
   
@@ -672,17 +749,66 @@ cpue_mean_annual_nm <- left_join(cpue_mean_annual,benthic_spp_names_short) %>%
 
 # Format Table L (station-year x taxon) -----------
 # once this is done, it would be good to do some NMDS to see how communities compare
-# among stations and among water year types; maybe work with Leela on that
+# among stations and among water year types (not years); maybe work with Leela on that
 
-#make Table L which is taxon x sample matrix
-TableL <- cpue_mean_annual_nm %>%
-  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual)  
+#1%: make Table L which is taxon x sample matrix
+TableL_1 <- cpue_mean_annual_nm1 %>%
+  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
+  #add water year categories
+  left_join(wyear) %>% 
+  #move year type and drought category to front with rest of predictors
+  relocate(yr_type:drought,.after = year)
+
+#2%: make Table L which is taxon x sample matrix
+TableL_2 <- cpue_mean_annual_nm2 %>%
+  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
+  #add water year categories
+  left_join(wyear) %>% 
+  #move year type and drought category to front with rest of predictors
+  relocate(yr_type:drought,.after = year)
+
+#5%: make Table L which is taxon x sample matrix
+TableL_5 <- cpue_mean_annual_nm5 %>%
+  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual)%>% 
+  #add water year categories
+  left_join(wyear) %>% 
+  #move year type and drought category to front with rest of predictors
+  relocate(yr_type:drought,.after = year) 
+
+#10%: make Table L which is taxon x sample matrix
+TableL_10 <- cpue_mean_annual_nm10 %>%
+  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
+  #add water year categories
+  left_join(wyear) %>% 
+  #move year type and drought category to front with rest of predictors
+  relocate(yr_type:drought,.after = year)
 #probably just need to now combine station and year into a row name and format as matrix
 
 #separate label columns from cpue columns for NMDS analysis
-b_pred <- TableL[1:2]
-#b_dat <- TableL [3:67]
-b_dat <- TableL [3:length(TableL)]
+pred1 <- TableL_1 %>% 
+  select(station_code:drought)
+
+pred2 <- TableL_2 %>% 
+  select(station_code:drought)
+
+pred5 <- TableL_5 %>% 
+  select(station_code:drought)
+
+pred10 <- TableL_10 %>% 
+  select(station_code:drought)
+
+dat_1 <- TableL_1 %>% 
+  select(!(station_code:drought))
+
+dat_2 <- TableL_2 %>% 
+  select(!(station_code:drought))
+
+dat_5 <- TableL_5 %>% 
+  select(!(station_code:drought))
+
+dat_10 <- TableL_10 %>% 
+  select(!(station_code:drought))
+
 
 #write_csv(b_pred,"BenthicInverts/benthic_nmds_predictors5.csv")
 #write_csv(b_dat,"BenthicInverts/benthic_nmds_abundance_matrix5.csv")
