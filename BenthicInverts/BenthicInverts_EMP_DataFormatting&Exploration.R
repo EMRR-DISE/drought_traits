@@ -797,21 +797,29 @@ pred5 <- TableL_5 %>%
 pred10 <- TableL_10 %>% 
   select(station_code:drought)
 
-dat_1 <- TableL_1 %>% 
+dat1 <- TableL_1 %>% 
   select(!(station_code:drought))
 
-dat_2 <- TableL_2 %>% 
+dat2 <- TableL_2 %>% 
   select(!(station_code:drought))
 
-dat_5 <- TableL_5 %>% 
+dat5 <- TableL_5 %>% 
   select(!(station_code:drought))
 
-dat_10 <- TableL_10 %>% 
+dat10 <- TableL_10 %>% 
   select(!(station_code:drought))
 
+#export resulting matrices
+#write_csv(pred1,"BenthicInverts/benthic_nmds_predictors_1.csv")
+#write_csv(pred2,"BenthicInverts/benthic_nmds_predictors_2.csv")
+#write_csv(pred5,"BenthicInverts/benthic_nmds_predictors_5.csv")
+#write_csv(pred10,"BenthicInverts/benthic_nmds_predictors_10.csv")
 
-#write_csv(b_pred,"BenthicInverts/benthic_nmds_predictors5.csv")
-#write_csv(b_dat,"BenthicInverts/benthic_nmds_abundance_matrix5.csv")
+#write_csv(dat1,"BenthicInverts/benthic_nmds_abundance_1.csv")
+#write_csv(dat2,"BenthicInverts/benthic_nmds_abundance_2.csv")
+#write_csv(dat5,"BenthicInverts/benthic_nmds_abundance_5.csv")
+#write_csv(dat10,"BenthicInverts/benthic_nmds_abundance_10.csv")
+
 
 #make a big faceted plot showing time series of each taxon in each station
 ggplot(cpue_mean_annual_nm,aes(x=year, y=cpue_annual, group=station_code,color=station_code))+
