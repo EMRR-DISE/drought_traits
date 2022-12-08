@@ -4,8 +4,9 @@
 
 #Nick Rasmussen, nicholas.rasmussen@water.ca.gov
 
-#Freshwater Biological Traits Database 
-#https://www.epa.gov/risk/freshwater-biological-traits-database-traits#:~:text=The%20Freshwater%20Biological%20Traits%20Database,on%20river%20and%20stream%20ecosystems
+#To do list-------------------
+#look at database metadata and figure out which available traits match our traits
+#for matching taxa, pick traits most relevent based on things like geography
 
 # Load required packages -----------------
 library(tidyverse) #suite of data science tools
@@ -14,7 +15,8 @@ library(readxl) #read excel files
 
 #read in data-----------------
 
-#EPA traits database
+#Freshwater Biological Traits Database 
+#https://www.epa.gov/risk/freshwater-biological-traits-database-traits#:~:text=The%20Freshwater%20Biological%20Traits%20Database,on%20river%20and%20stream%20ecosystems
 epa_traits <- read_excel("./BenthicInverts/FreshwaterBioTraits_20100927.xlsx") %>% 
   #clean up column header formatting
   clean_names()
@@ -40,7 +42,8 @@ sp_traits <- left_join(emp,epa)
 
 sp_traits_match <- sp_traits %>% 
   filter(!is.na(tsn))
-#only 8 of 65 taxa matched
+#only 8 of 65 (12%) taxa matched
+#only 2 of these matches are species
 
 #try matching taxa with traits by genus column--------------
 
@@ -62,6 +65,14 @@ sp_traits_match2 <- sp_traits2 %>%
 #exact match, congener match, genus level match
 
 #note there may be additional matches if names of taxa differ between data sets (ie, synonyms)
+
+#look at traits for a few example taxa--------------------------
+
+#Physa traits
+physa <- epa_traits %>% 
+  filter(taxon=="Physa")
+
+
 
 
 
