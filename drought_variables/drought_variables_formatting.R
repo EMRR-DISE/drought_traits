@@ -25,6 +25,7 @@ library(DroughtData) #Dave's drought data package, which includes delta inflow
 #note that data are organized so years are Dec - Nov
 #which isn't standard water year or calendar year
 #years 1975-2021
+#need to add 1967-1974 and 2022
 hydro <- raw_hydro_1975_2021
 
 #drought variables from IEP drought synthesis
@@ -48,14 +49,14 @@ dperiod <- read_csv("./drought_variables/drought_periods_mahardja2021.csv")
 inflow <- hydro %>% 
   select(year = YearAdj,InflowTotal) %>% 
   group_by(year) %>% 
-  summarise(inflow_annual = sum(InflowTotal)) %>% 
+  summarise(inflow_annual_cfs = sum(InflowTotal)) %>% 
   glimpse()
 
 #format water year type data---------
 #this should be based on standard water year
 
 water_year <- iep_drought %>% 
-  select(year,wy = yr_type) %>%
+  select(year,water_year_sac = yr_type) %>%
   filter(year > 1966) %>% 
   arrange(year) %>% 
   glimpse()
@@ -69,4 +70,6 @@ drought_vars <- df_list %>%
   reduce(full_join)
 #maybe make a column that is water year type as ordinal category instead of factors
 
+#write file
+#write_csv(drought_vars,"./drought_variables/drought_variables.csv")
 

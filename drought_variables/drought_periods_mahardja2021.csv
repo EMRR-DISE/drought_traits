@@ -1,4 +1,4 @@
-year,year_type,period,drought_year,drought_year_trunc
+year,drought_period_type,drought_period_number,drought_year,drought_year_trunc
 1967,N,N1,0,0
 1968,N,N1,0,0
 1969,N,N1,0,0
