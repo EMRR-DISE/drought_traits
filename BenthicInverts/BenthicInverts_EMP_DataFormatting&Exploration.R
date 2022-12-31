@@ -40,6 +40,8 @@ library(here)
 
 #figure out why so many NAs for matches between invert cpue and wq means
 
+#look at number of grabs per visit after spatially and temporally filtering station data
+
 
 # Read in the data-----------------------
 
@@ -79,33 +81,33 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
   glimpse()
 
 #EMP water quality data
-benthic_wq <- 
-  read_csv(
-    "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.6&entityid=dfeaee030be901ae00b8c0449ea39e9c",
-    col_types = cols_only(
-      Station = "c",
-      Date = col_date("%Y-%m-%d"),
-      Time = "t",
-      Secchi = "d",
-      TurbiditySurface_FNU = "d", #some non-detects present
-      TurbiditySurface_NTU = "d", #some non-detects present
-      SpCndSurface = "d",
-      WTSurface = "d",
-      DOSurface = "d",
-    )
-  ) %>% 
-  clean_names() %>% 
-  glimpse()
+#benthic_wq <- 
+#  read_csv(
+#    "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.6&entityid=dfeaee030be901ae00b8c0449ea39e9c",
+#    col_types = cols_only(
+#      Station = "c",
+#      Date = col_date("%Y-%m-%d"),
+#      Time = "t",
+#      Secchi = "d",
+#      TurbiditySurface_FNU = "d", #some non-detects present
+#      TurbiditySurface_NTU = "d", #some non-detects present
+#      SpCndSurface = "d",
+#      WTSurface = "d",
+#      DOSurface = "d",
+#    )
+#  ) %>% 
+#  clean_names() %>% 
+#  glimpse()
 
-glimpse(benthic_wq)
+#glimpse(benthic_wq)
 # turbidity_surface has two ND values at MD10A - not sure if this matters; if it
   # does, we'll need to decide if we're okay with substituting 0 or some other
   # number for these
 
 #EMP water quality stations
-wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=827aa171ecae79731cc50ae0e590e5af") %>% 
-  clean_names() %>% 
-  glimpse()
+#wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=827aa171ecae79731cc50ae0e590e5af") %>% 
+#  clean_names() %>% 
+#  glimpse()
 
 #sacramento valley water year types from drought synthesis
 #data originates from http://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST
@@ -115,9 +117,29 @@ water_year <- read_csv("https://raw.githubusercontent.com/InteragencyEcologicalP
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
 
+#read in drought variable data
+drought_variables <- read_csv("./drought_variables/drought_variables.csv")
+
 # Format the water year type data frame ---------------------
 wyear <- water_year %>% 
   select(year,yr_type,drought) 
+
+#CPUE data set: add column that is year based on water year-----------
+#October 1 to Sept 30
+
+#convert date to non-standard year (ie, water year)
+#need to load and unload this package here because it overrides 
+#the as.Date function from the base package
+library(zoo) 
+
+benthic_invert_cpue <- benthic_invert_cpue %>% 
+  mutate(year_adjusted = as.integer(as.yearmon(sample_date) - 9/12 + 1)) %>% 
+  #move year_adjusted column next to date for quick comparison
+  #looks like it worked fine
+  relocate(year_adjusted,.after = sample_date)
+
+#unload package
+detach("package:zoo", unload = TRUE)
 
 # Look at no catch samples ------------------------
 
@@ -181,6 +203,39 @@ benthic_cpue_no_catch_all2 <- benthic_cpue %>%
 # Filter the stations based on time series completeness ------------
 #ie, stations that include mostly continuous sampling 1975-present
 
+range(benthic_cpue$sample_date) #"1975-05-19 UTC" "2021-12-16 UTC"
+
+#redo time series completeness filtering using the cpue dataset
+#look at calendar year and water year
+benthic_cpue_visits <-benthic_cpue %>% 
+  distinct(year,year_adjusted,sample_date,month,station_code) %>% 
+  select(year,year_adjusted,sample_date,month,station_code)
+
+benthic_visits_cyear <- benthic_cpue_visits %>% 
+  group_by(year,station_code) %>% 
+  summarize(visits = n(), .groups = 'drop') %>% 
+  mutate(station_code = as_factor(station_code)
+         ,visits = as.numeric(visits)) %>% 
+  glimpse()
+
+benthic_visits_wyear <- benthic_cpue_visits %>% 
+  group_by(year_adjusted,station_code) %>% 
+  summarize(visits = n(), .groups = 'drop') %>% 
+  mutate(station_code = as_factor(station_code)
+         ,visits = as.numeric(visits)) %>% 
+  glimpse()
+#30 more rows for this data frame than the calendar year df above
+#not sure why 
+
+#plot effort by station
+ggplot(benthic_visits_cyear,aes(x = year, y = visits))+
+  geom_point()+
+  geom_line()+
+  ylim(0,13)+
+  facet_grid(station_code~.)
+
+
+
 #count the number of years with visits by station
 #this is a bit oversimplified because visits per year also vary
 #but it's a good start
@@ -205,14 +260,17 @@ sta_visits_many
 
 #now take a closer look at effort for those mostly complete stations - 
 #just keep the three needed stations
-visits_many_eff <- benthic_visits %>% filter(station_code %in% sta_visits_many)
+visits_many_eff <- benthic_visits %>% filter(station_code %in% sta_visits_many) %>% 
+  glimpse
 
 #plot effort by station
 ggplot(visits_many_eff,aes(x = year, y = number_of_site_visits))+
   geom_point()+
   geom_line()+
+  ylim(0,13)+
   facet_grid(station_code~.)
 #after about 1980, sampling is pretty consistently high except for 2004-2005
+#filter out samples pre-1980
 
 #now filter the full abundance data set using number of years of visits as criterion
 #only keep samples from stations with at least 40 years of visits
@@ -297,7 +355,8 @@ stn_within_reg <- benthic_stn_g_26910 %>%
 #drops two rows as expected (ie, the two San Pablo Bay stations)
 
 #next filter the survey data set to stations within the shapefile bounds
-benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg)
+benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg) %>% 
+  glimpse()
 
 #check which stations are included
 unique(benthic_cpue_stf$station_code)
@@ -312,6 +371,16 @@ sample_num <- benthic_cpue_stf %>%
 taxon_number <- benthic_cpue_stf %>% 
   distinct(organism_code) %>% 
   count()
+
+#Intial formatting of remaining stations------------
+
+#remove any data from before 1980
+#for the three target stations, there are very few samples per year for this period
+#ie, 0-3 per year
+#benthic_cpue_stft <- benthic_cpue_stf %>% 
+#  filter()
+  
+
 
 # Add zeros for absences back into abundance data set-------------------------
 
