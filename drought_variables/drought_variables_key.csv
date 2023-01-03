@@ -1,0 +1,8 @@
+column,description
+year,water year (Oct 1 - Sept 30)
+drought_period_type,"D = drought; N = non-drought; drought is a period of two or more consecutive water years that are Below Normal, Dry, or Critically Dry (Mahardja et al 2021)"
+drought_period_number,drought_period_type with each drought and non-drought period sequentially numbered
+drought_year,"year of a drought (eg, 0 = non-drought year, 1 = first year of drought period, 2 = second year of drought period); range is 0-8"
+drought_year_trunc,"drought_year with all years beyond second year of drought combined into one category (ie, 3) because these are fairly uncommon in the series"
+water_year_sac,water year category based on Sacramento Valley https://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST
+inflow_annual_cfs,total annual Delta inflow (cubic ft per sec)
