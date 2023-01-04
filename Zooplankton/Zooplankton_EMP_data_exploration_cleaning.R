@@ -85,8 +85,7 @@ cpue_prop_dom_5plus <- cpue_indiv_prop %>%
 
 #need to calculate total number of samples
 total_samples <- zoops2 %>% 
-  #look at distinct combinations of 
-station and date
+  #look at distinct combinations of station and date
   #necessary because there's a row for each taxon within each sample
   distinct(Date, SampleID) %>%  
   count()
