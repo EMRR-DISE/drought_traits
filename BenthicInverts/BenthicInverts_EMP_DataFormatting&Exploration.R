@@ -30,13 +30,13 @@ library(here)
 
 # To do list -----------------------------
 
+#fix formatting of no catch samples
+
 #make sure there isn't overlap in taxa between zoop and benthic inverts
 #eg, I saw ostracods in benthic inverts data which are probably also in zoop
 
 #check functions in smonitor package for code that will automate process of checking for
 #data set updates on EDI
-
-#add water year type to abundance data (note that invert data categorized by calendar year)
 
 #figure out why so many NAs for matches between invert cpue and wq means
 
@@ -120,26 +120,11 @@ region_shape <- read_sf(here("spatial_files/region.shp"))
 #read in drought variable data
 drought_variables <- read_csv("./drought_variables/drought_variables.csv")
 
+
 # Format the water year type data frame ---------------------
 wyear <- water_year %>% 
   select(year,yr_type,drought) 
 
-#CPUE data set: add column that is year based on water year-----------
-#October 1 to Sept 30
-
-#convert date to non-standard year (ie, water year)
-#need to load and unload this package here because it overrides 
-#the as.Date function from the base package
-library(zoo) 
-
-benthic_invert_cpue <- benthic_invert_cpue %>% 
-  mutate(year_adjusted = as.integer(as.yearmon(sample_date) - 9/12 + 1)) %>% 
-  #move year_adjusted column next to date for quick comparison
-  #looks like it worked fine
-  relocate(year_adjusted,.after = sample_date)
-
-#unload package
-detach("package:zoo", unload = TRUE)
 
 # Look at no catch samples ------------------------
 
@@ -201,84 +186,85 @@ benthic_cpue_no_catch_all2 <- benthic_cpue %>%
   distinct(station_code,sample_date,organism_code,mean_cpue)
 
 # Filter the stations based on time series completeness ------------
-#ie, stations that include mostly continuous sampling 1975-present
+#ie, stations that include mostly continuous sampling 1975-2021
+#note: after exploring data set, decided to use 1981-2021
 
+#date range of data set
 range(benthic_cpue$sample_date) #"1975-05-19 UTC" "2021-12-16 UTC"
 
-#redo time series completeness filtering using the cpue dataset
-#look at calendar year and water year
+#create data set with just unique combos of station and year (ie, visits)
+#also add a column with adjusted year (Dec-Nov)
 benthic_cpue_visits <-benthic_cpue %>% 
+  #adjust year definition from Jan 1 - Dec 31 to Dec 1 - Nov 30
+  mutate(
+    month = month(sample_date),
+    year_adjusted = if_else(month > 11, year + 1, year)
+  ) %>% 
+  relocate(year_adjusted,.after = sample_date) %>% 
+  #filter to one row per station visit
   distinct(year,year_adjusted,sample_date,month,station_code) %>% 
   select(year,year_adjusted,sample_date,month,station_code)
 
+#count visits per station and year
 benthic_visits_cyear <- benthic_cpue_visits %>% 
   group_by(year,station_code) %>% 
   summarize(visits = n(), .groups = 'drop') %>% 
-  mutate(station_code = as_factor(station_code)
-         ,visits = as.numeric(visits)) %>% 
   glimpse()
 
-benthic_visits_wyear <- benthic_cpue_visits %>% 
-  group_by(year_adjusted,station_code) %>% 
+#unique(benthic_visits_cyear$station_code) #53 stations
+
+#create heat map of survey effort by station and calendar year
+(p_heat_cy <- ggplot(benthic_visits_cyear, aes(year, station_code)) +   
+  geom_tile(aes(fill = visits))
+)
+#after 1980, survey effort is pretty consistently high
+#exception is 2004-2005; might need to drop those years from analysis
+
+#expected number of samples per station for period 1981-2021
+#41 years x 12 samples 
+samp_all <- 41*12 #492 samples per station
+samp_enough <- samp_all-(samp_all*.1) #443
+
+#count visits per station across years 1981-2021
+#use adjusted year instead of calendar year
+benthic_visits_tot_ay <- benthic_cpue_visits %>% 
+  #drop early years of survey with low survey effort (pre-1981)
+  filter(year_adjusted>1980) %>% 
+  group_by(station_code) %>% 
   summarize(visits = n(), .groups = 'drop') %>% 
-  mutate(station_code = as_factor(station_code)
-         ,visits = as.numeric(visits)) %>% 
   glimpse()
-#30 more rows for this data frame than the calendar year df above
-#not sure why 
 
-#plot effort by station
-ggplot(benthic_visits_cyear,aes(x = year, y = visits))+
-  geom_point()+
-  geom_line()+
-  ylim(0,13)+
-  facet_grid(station_code~.)
-
-
-
-#count the number of years with visits by station
-#this is a bit oversimplified because visits per year also vary
-#but it's a good start
-visit_years <- benthic_visits %>%
-  #drop years with no visits
-  filter(number_of_site_visits != 0) %>%
-  #look at number of years with visits by station
-  count(station_code, name = "years")
-
-#plot histogram to see distribution of number of years with visits for sites
-ggplot(visit_years, aes(x=years))+
+#plot histogram to see distribution of number of visits per station
+ggplot(benthic_visits_tot_ay, aes(x=visits))+
   geom_histogram()
-#very few stations with 40+ years of data, as expected
+#only three stations with more than 350 visits
 
-#filter out any stations with less than 40 years of data
-sta_visits_many <- visit_years %>% 
-  filter(years >= 40) %>% 
+#filter out stations without enough survey effort
+sta_visits_many <- benthic_visits_tot_ay %>% 
+  filter(visits > samp_enough) %>%
   pull(station_code)
+#three stations: D28A-L D4-L   D7-C
 
-sta_visits_many
-#only three stations left: "D28A-L" "D4-L"   "D7-C" 
-
-#now take a closer look at effort for those mostly complete stations - 
-#just keep the three needed stations
-visits_many_eff <- benthic_visits %>% filter(station_code %in% sta_visits_many) %>% 
-  glimpse
-
-#plot effort by station
-ggplot(visits_many_eff,aes(x = year, y = number_of_site_visits))+
-  geom_point()+
-  geom_line()+
-  ylim(0,13)+
-  facet_grid(station_code~.)
-#after about 1980, sampling is pretty consistently high except for 2004-2005
-#filter out samples pre-1980
-
-#now filter the full abundance data set using number of years of visits as criterion
-#only keep samples from stations with at least 40 years of visits
-benthic_cpue_f <- benthic_cpue %>% filter(station_code %in% sta_visits_many)
+#now filter the full abundance data set to just keep well sampled stations
+benthic_cpue_f <- benthic_cpue %>% filter(station_code %in% sta_visits_many) %>% 
+  #adjust year definition from Jan 1 - Dec 31 to Dec 1 - Nov 30
+  mutate(
+    month = month(sample_date),
+    year_adjusted = if_else(month > 11, year + 1, year)
+  ) %>% 
+  relocate(year_adjusted,.after = sample_date) %>%
+  #drop early years of survey with low survey effort (pre-1981)
+  filter(year_adjusted>1980 & year_adjusted < 2022) %>% 
+  glimpse()
 
 #make sure the three stations, and only the three stations, are retained
 unique(benthic_cpue_f$station_code)
 #yes, "D4-L"   "D7-C"   "D28A-L"
+
+#also check the final date range
+range(benthic_cpue_f$sample_date)
+#1980-12-22 UTC" "2021-11-22 UTC"
+#looks good
 
 
 # Filter stations spatially -----------
