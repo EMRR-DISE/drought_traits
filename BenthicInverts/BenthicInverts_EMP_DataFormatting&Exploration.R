@@ -246,7 +246,7 @@ sta_visits_many <- benthic_visits_tot_ay %>%
 #three stations: D28A-L D4-L   D7-C
 
 #now filter the full abundance data set to just keep well sampled stations
-benthic_cpue_f <- benthic_cpue %>% filter(station_code %in% sta_visits_many) %>% 
+benthic_cpue_f1 <- benthic_cpue %>% filter(station_code %in% sta_visits_many) %>% 
   #adjust year definition from Jan 1 - Dec 31 to Dec 1 - Nov 30
   mutate(
     month = month(sample_date),
@@ -266,6 +266,35 @@ range(benthic_cpue_f$sample_date)
 #1980-12-22 UTC" "2021-11-22 UTC"
 #looks good
 
+#redo heat map with just our three remaining stations
+
+#create data set with just unique combos of station and adjusted year (ie, visits)
+benthic_cpue_visits2 <-benthic_cpue_f %>% 
+  #filter to one row per station visit
+  distinct(year_adjusted,month,station_code) %>% 
+  #count visits per station and year
+  group_by(year_adjusted,station_code) %>% 
+  summarize(visits = n(), .groups = 'drop') %>% 
+  glimpse()
+
+(p_heat_comp_ay <- ggplot(benthic_cpue_visits2, aes(year_adjusted, station_code)) +   
+    geom_tile(aes(fill = visits))
+)
+#sampling effort quite similar among stations but not exactly the same
+
+#are there any years in which one or more stations has fewer than 8 months of samples?
+#keep all years in which at least 8 months of sampling for all three stations
+years_remove <- benthic_cpue_visits2 %>% 
+  #convert from long to wide
+  pivot_wider(names_from = station_code,values_from = visits) %>% 
+  #show which years have at least one station with fewer than 8 months of sampling
+  filter(if_any(contains("-"),~ . < 8)) %>% 
+  pull(year_adjusted)
+#for these three stations, only 2004 and 2005 are short more than 4 samples
+
+#drop the two undersampled years (2004, 2005)
+benthic_cpue_f <- benthic_cpue_f1 %>% 
+  filter(year_adjusted!= 2004 & year_adjusted!=2005)
 
 # Filter stations spatially -----------
 #Only keep the stations that fall within our spatial region
@@ -357,16 +386,6 @@ sample_num <- benthic_cpue_stf %>%
 taxon_number <- benthic_cpue_stf %>% 
   distinct(organism_code) %>% 
   count()
-
-#Intial formatting of remaining stations------------
-
-#remove any data from before 1980
-#for the three target stations, there are very few samples per year for this period
-#ie, 0-3 per year
-#benthic_cpue_stft <- benthic_cpue_stf %>% 
-#  filter()
-  
-
 
 # Add zeros for absences back into abundance data set-------------------------
 
@@ -747,7 +766,6 @@ svi <- left_join(cpue_sample_prop,cpue_indiv_prop) %>%
 # Calculate annual mean CPUE------------------
 
 #could use a different summary statistic (eg, median)
-#consider changing this to water year instead of calendar year,
 #though sampling per year is probably based on calendar year
 
 #1%: generate annual mean CPUE values for each taxon
@@ -799,12 +817,7 @@ cpue_mean_annual_nm10 <- left_join(cpue_mean_annual10,benthic_spp_names_short) %
   #drop name codes and reorder column
   select(year,station_code,species_name,cpue_annual) 
   
-#keep in mind that number of samples per station varies among years
-#probably should drop years with, say, only one sample because hard to compare with other years
-
 # Format Table L (station-year x taxon) -----------
-# once this is done, it would be good to do some NMDS to see how communities compare
-# among stations and among water year types (not years); maybe work with Leela on that
 
 #1%: make Table L which is taxon x sample matrix
 TableL_1 <- cpue_mean_annual_nm1 %>%
