@@ -187,7 +187,7 @@ benthic_cpue_no_catch_all2 <- benthic_cpue %>%
 
 # Filter the stations based on time series completeness ------------
 #ie, stations that include mostly continuous sampling 1975-2021
-#note: after exploring data set, decided to use 1981-2021
+#note: after exploring data set, decided to use 1981-2021 (excluding 2004, 2005)
 
 #date range of data set
 range(benthic_cpue$sample_date) #"1975-05-19 UTC" "2021-12-16 UTC"
@@ -258,18 +258,18 @@ benthic_cpue_f1 <- benthic_cpue %>% filter(station_code %in% sta_visits_many) %>
   glimpse()
 
 #make sure the three stations, and only the three stations, are retained
-unique(benthic_cpue_f$station_code)
+unique(benthic_cpue_f1$station_code)
 #yes, "D4-L"   "D7-C"   "D28A-L"
 
 #also check the final date range
-range(benthic_cpue_f$sample_date)
+range(benthic_cpue_f1$sample_date)
 #1980-12-22 UTC" "2021-11-22 UTC"
 #looks good
 
 #redo heat map with just our three remaining stations
 
 #create data set with just unique combos of station and adjusted year (ie, visits)
-benthic_cpue_visits2 <-benthic_cpue_f %>% 
+benthic_cpue_visits2 <-benthic_cpue_f1 %>% 
   #filter to one row per station visit
   distinct(year_adjusted,month,station_code) %>% 
   #count visits per station and year
