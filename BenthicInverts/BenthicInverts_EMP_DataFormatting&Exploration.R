@@ -35,9 +35,6 @@ library(here)
 #make sure there isn't overlap in taxa between zoop and benthic inverts
 #eg, I saw ostracods in benthic inverts data which are probably also in zoop
 
-#check functions in smonitor package for code that will automate process of checking for
-#data set updates on EDI
-
 #figure out why so many NAs for matches between invert cpue and wq means
 
 #look at number of grabs per visit after spatially and temporally filtering station data
@@ -127,6 +124,9 @@ wyear <- water_year %>%
 
 
 # Look at no catch samples ------------------------
+#summary: four of five no catch rows are erroneous; true no catch at station D24-L on 2017-02-22
+#NOTE: checked with Betsy - she gave no catch rows a CPUE value just so they didn't get
+#filtered out; CPUE value is meaningless and should be zero
 
 #look at all no catch samples in whole data set
 benthic_cpue_no_catch_all <- benthic_invert_cpue %>% 
@@ -140,7 +140,6 @@ benthic_cpue_no_catch_all <- benthic_invert_cpue %>%
 #look closer at five samples with no catch
 #need to specify that the filter date is a date because in dataset it is a date-time
 #probably not the most efficient way to code this
-#asked Betsy about these samples with no catch entries
 no_catch_visits <- benthic_invert_cpue %>% 
   filter(
     #the first three samples include erroneous no catch entries
@@ -158,46 +157,45 @@ no_catch_visits <- benthic_invert_cpue %>%
 #write the csv file with the confusing no catch samples to send to Betsy
 #write_csv(no_catch_visits,"./BenthicInverts/benthic_inverts_no_catch_samples.csv")
 
-#filtered out the four unneeded no catch rows
-#NOTE: one of the five no catch samples was a true no catch D24-L on 2017-02-22 so not filtered out
-benthic_cpue <- benthic_invert_cpue %>% 
-  filter(
-    !(
-      (station_code == "D7-C" & sample_date == as.Date("2012-05-24") & organism_code == "0") |
-        (station_code == "P8-R" & sample_date == as.Date("2012-07-18") & organism_code == "0") |
-        (station_code == "C9-L" & sample_date == as.Date("2013-04-11") & organism_code == "0") |
-        (station_code == "D16-L" & sample_date == as.Date("2015-09-15") & organism_code == "0") 
-    )
-  ) 
-#this isn't actually what I want to do
-#I need to replace the no catch with a series of rows with all taxa showing cpue as zero
-#see Dave's code in the section for adding back in zeros for absences
-#%>% 
-  #change cpue for the one remaining no catch record from a meaningless non-zero number to zero
-  #mutate(mean_cpue2 = case_when(organism_code=="0" ~ 0,TRUE ~ mean_cpue))
-#count(benthic_invert_cpue)-count(benthic_cpue) 
-#looks like it removed the four rows as expected
+# Add zeros for absences back into abundance data set-------------------------
+#these zeros were excluded from EDI data set, presumably to reduce total number of rows
+#need to include zeros in the calculations of annual mean CPUE below
 
-#look at all no catch samples in whole data set again
-#should just be one sample and there is
-#need to change cpue to zero still
-benthic_cpue_no_catch_all2 <- benthic_cpue %>% 
-  filter(organism_code == "0") %>% 
-  distinct(station_code,sample_date,organism_code,mean_cpue)
+#start with CPUE dataset from EDI
+benthic_cpue <- benthic_invert_cpue %>% 
+  #simplify df to just the needed columns
+  select(station_code, sample_date, organism_code, mean_cpue) %>% 
+  # Convert organism_code to character since it represents discrete organisms
+  mutate(organism_code = as.character(organism_code)) %>% 
+  #adds missing combos of date, station, and organism and fills in CPUE with zero
+  complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0))  %>% 
+  #remove the now unneeded no catch rows
+  #four out of five were erroneous; and the one true one has now been replaced with cpue=0 for all taxa like we want
+  filter(organism_code!=0) %>% 
+  glimpse()
+
+#look at number of distinct combinations of date, station, organism, cpue
+#should be same number of rows as benthic_cpue
+benthic_cpue2 <- benthic_cpue %>% 
+  distinct(sample_date, station_code, organism_code, mean_cpue)
+count(benthic_cpue)-count(benthic_cpue2)
+#zero, as expected 
+
 
 # Filter the stations based on time series completeness ------------
 #ie, stations that include mostly continuous sampling 1975-2021
-#note: after exploring data set, decided to use 1981-2021 (excluding 2004, 2005)
+#summary: after exploring data set, decided to use 1981-2021 (excluding 2004, 2005)
 
 #date range of data set
 range(benthic_cpue$sample_date) #"1975-05-19 UTC" "2021-12-16 UTC"
 
-#create data set with just unique combos of station and year (ie, visits)
+#create data set with just unique combos of station, month, and year (ie, visits)
 #also add a column with adjusted year (Dec-Nov)
 benthic_cpue_visits <-benthic_cpue %>% 
   #adjust year definition from Jan 1 - Dec 31 to Dec 1 - Nov 30
   mutate(
     month = month(sample_date),
+    year = year(sample_date),
     year_adjusted = if_else(month > 11, year + 1, year)
   ) %>% 
   relocate(year_adjusted,.after = sample_date) %>% 
@@ -206,15 +204,15 @@ benthic_cpue_visits <-benthic_cpue %>%
   select(year,year_adjusted,sample_date,month,station_code)
 
 #count visits per station and year
-benthic_visits_cyear <- benthic_cpue_visits %>% 
+benthic_cpue_visits_cy <- benthic_cpue_visits %>% 
   group_by(year,station_code) %>% 
   summarize(visits = n(), .groups = 'drop') %>% 
   glimpse()
 
-#unique(benthic_visits_cyear$station_code) #53 stations
+#unique(benthic_cpue_visits_cyear$station_code) #53 stations
 
 #create heat map of survey effort by station and calendar year
-(p_heat_cy <- ggplot(benthic_visits_cyear, aes(year, station_code)) +   
+(p_heat_cy <- ggplot(benthic_cpue_visits_cy, aes(year, station_code)) +   
   geom_tile(aes(fill = visits))
 )
 #after 1980, survey effort is pretty consistently high
@@ -227,7 +225,7 @@ samp_enough <- samp_all-(samp_all*.1) #443
 
 #count visits per station across years 1981-2021
 #use adjusted year instead of calendar year
-benthic_visits_tot_ay <- benthic_cpue_visits %>% 
+benthic_cpue_visits_tot_ay <- benthic_cpue_visits %>% 
   #drop early years of survey with low survey effort (pre-1981)
   filter(year_adjusted>1980) %>% 
   group_by(station_code) %>% 
@@ -235,22 +233,26 @@ benthic_visits_tot_ay <- benthic_cpue_visits %>%
   glimpse()
 
 #plot histogram to see distribution of number of visits per station
-ggplot(benthic_visits_tot_ay, aes(x=visits))+
+ggplot(benthic_cpue_visits_tot_ay, aes(x=visits))+
   geom_histogram()
 #only three stations with more than 350 visits
 
 #filter out stations without enough survey effort
-sta_visits_many <- benthic_visits_tot_ay %>% 
+stn_visits_many <- benthic_cpue_visits_tot_ay %>% 
   filter(visits > samp_enough) %>%
   pull(station_code)
 #three stations: D28A-L D4-L   D7-C
 
-#now filter the full abundance data set to just keep well sampled stations
-benthic_cpue_f1 <- benthic_cpue %>% filter(station_code %in% sta_visits_many) %>% 
+#now filter the full abundance data set 
+#only keep the stations and years that are well sampled
+benthic_cpue_tm <- benthic_cpue %>% 
+  #only keep the three long term stations
+  filter(station_code %in% stn_visits_many) %>% 
   #adjust year definition from Jan 1 - Dec 31 to Dec 1 - Nov 30
   mutate(
-    month = month(sample_date),
-    year_adjusted = if_else(month > 11, year + 1, year)
+    month = month(sample_date)
+    ,year = year(sample_date)
+    ,year_adjusted = if_else(month > 11, year + 1, year)
   ) %>% 
   relocate(year_adjusted,.after = sample_date) %>%
   #drop early years of survey with low survey effort (pre-1981)
@@ -258,18 +260,18 @@ benthic_cpue_f1 <- benthic_cpue %>% filter(station_code %in% sta_visits_many) %>
   glimpse()
 
 #make sure the three stations, and only the three stations, are retained
-unique(benthic_cpue_f1$station_code)
+#unique(benthic_cpue_tm$station_code)
 #yes, "D4-L"   "D7-C"   "D28A-L"
 
 #also check the final date range
-range(benthic_cpue_f1$sample_date)
+#range(benthic_cpue_tm$sample_date)
 #1980-12-22 UTC" "2021-11-22 UTC"
 #looks good
 
 #redo heat map with just our three remaining stations
 
 #create data set with just unique combos of station and adjusted year (ie, visits)
-benthic_cpue_visits2 <-benthic_cpue_f1 %>% 
+benthic_cpue_visits2 <-benthic_cpue_tm %>% 
   #filter to one row per station visit
   distinct(year_adjusted,month,station_code) %>% 
   #count visits per station and year
@@ -277,6 +279,7 @@ benthic_cpue_visits2 <-benthic_cpue_f1 %>%
   summarize(visits = n(), .groups = 'drop') %>% 
   glimpse()
 
+#updated heat map
 (p_heat_comp_ay <- ggplot(benthic_cpue_visits2, aes(year_adjusted, station_code)) +   
     geom_tile(aes(fill = visits))
 )
@@ -293,8 +296,11 @@ years_remove <- benthic_cpue_visits2 %>%
 #for these three stations, only 2004 and 2005 are short more than 4 samples
 
 #drop the two undersampled years (2004, 2005)
-benthic_cpue_f <- benthic_cpue_f1 %>% 
-  filter(year_adjusted!= 2004 & year_adjusted!=2005)
+benthic_cpue_t <- benthic_cpue_tm %>% 
+  filter(year_adjusted!= 2004 & year_adjusted!=2005) %>% 
+  #reorder columns
+  relocate(month:year,.after = sample_date) %>% 
+  glimpse()
 
 # Filter stations spatially -----------
 #Only keep the stations that fall within our spatial region
@@ -386,78 +392,6 @@ sample_num <- benthic_cpue_stf %>%
 taxon_number <- benthic_cpue_stf %>% 
   distinct(organism_code) %>% 
   count()
-
-# Add zeros for absences back into abundance data set-------------------------
-
-#these zeros were excluded from EDI data set, presumably to reduce total number of rows
-#need to include zeros in the calculations of annual mean CPUE below
-#Note: need to confirm with Betsy that is is reasonable to assume that all taxa were searched for in all 
-#samples through time
-
-#start with data set already filtered spatially and temporally
-benthic_cpue_stfu <- benthic_cpue_stf %>% 
-  #simplify df to just the needed columns
-  select(station_code, sample_date, organism_code, mean_cpue) %>% 
-  # Convert organism_code to character since it represents discrete organisms
-  mutate(organism_code = as.character(organism_code)) %>% 
-  glimpse()
-
-# Pull out one record with organism_code = 0 (no catch) and add in all
-  # organism_codes along with mean_cpue = 0 to indicate no catch
-# NOTE: The mean_cpue for this one record without catch is 4.81 - this doesn't seem
-  # correct, may need to look into this
-#checked with Betsy - she gave no catch rows a CPUE value just so they didn't get
-#filtered out; for these rows, CPUE value is meaningless and should be zero
-benthic_cpue_no_catch <- benthic_cpue_stfu %>% 
-  filter(organism_code == "0") %>% 
-  complete(
-    sample_date,
-    station_code,
-    organism_code = unique(benthic_cpue_stfu$organism_code),
-    fill = list(mean_cpue = 0)
-  ) %>% 
-  # Don't include record for "no catch" in the end
-  filter(organism_code != "0")
-
-# Fill in zeros for absent organisms within each sample
-benthic_cpue_stfz <- benthic_cpue_stfu %>% 
-  # Pull out record with "no catch"
-  filter(organism_code != "0") %>% 
-  complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0))  %>% 
-  # Add back record with "no catch"
-  #for now, not adding this back in
-  #there's an issue with this no catch sample in the original data set
-  #even though it is no catch there are still CPUEs for other taxa
-  #as a result, adding this back in create duplicates
-  #once I hear back from Betsy on how to handle this, I'll fix it
-  #bind_rows(benthic_cpue_no_catch)
-  glimpse()
-
-#look at no catch sample
-no_catch_d7 <- benthic_cpue_stfz %>% 
-  filter(station_code == "D7-C" & sample_date =="2012-05-24" )
-#extra set of rows for D7-C from 5/24/12
-
-#look at number of distinct combinations of date, station, organism, cpue
-#should be same number of rows as benthic_cpue_stfz
-benthic_cpue_stfz2 <- benthic_cpue_stfz %>% 
-  distinct(sample_date, station_code, organism_code, mean_cpue)
-count(benthic_cpue_stfz)-count(benthic_cpue_stfz2)
-#zero, now that I commented out code above that adds back in rows of zero CPUE
-#for the supposed no catch sample (D7-C from 5/24/12) 
-
-#number of visits differs among years
-#which month(s) are most consistently sampled through time?
-vmonth <- benthic_cpue_stfz %>% 
-  mutate(month=month(sample_date)
-         ,year=year(sample_date)
-         ) %>% 
-  distinct(station_code, year, month) %>%  #1389 instead of 1399, not sure why the difference
-  group_by(station_code,month) %>% 
-  summarise(n=n()) %>% 
-  arrange(station_code,-n)
-#each month has 35-43 years of visits; October is most sampled month
-
 
 
 # Rare taxa: Try different approaches to removing them -------------------
