@@ -65,7 +65,8 @@ benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
 
 #organism key with column for latin name for taxa
 #see BenthicInverts_EMP_TaxonomyUpdating for how this was done
-benthic_spp_names <- read_csv("./BenthicInverts/BenthicInverts_Taxonomy_NameLabels.csv")
+benthic_spp_names <- read_csv("./BenthicInverts/BenthicInverts_Taxonomy_NameLabels.csv") %>% 
+  arrange(organism_code)
 
 #total annual site visits, 1975-2021
 benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=304bc4562046e0a6c35fbad3e2c85645") %>% 
@@ -122,6 +123,12 @@ drought_variables <- read_csv("./drought_variables/drought_variables.csv")
 wyear <- water_year %>% 
   select(year,yr_type,drought) 
 
+#Quick look at number of taxa in full data set------------
+
+taxon_number_all <- benthic_invert_cpue %>% 
+  distinct(organism_code) %>%
+  count()
+#410 taxa (including "no catch")
 
 # Look at no catch samples ------------------------
 #summary: four of five no catch rows are erroneous; true no catch at station D24-L on 2017-02-22
@@ -316,7 +323,7 @@ benthic_stn_coord <- benthic_stn %>%
     longitude
   )
 
-benthic_cpue_coord <- benthic_cpue %>% distinct(station_code, latitude, longitude)
+benthic_cpue_coord <- benthic_invert_cpue %>% distinct(station_code, latitude, longitude)
 
 setequal(benthic_cpue_coord, benthic_stn_coord)
 # FALSE - look for where records don't match
@@ -347,7 +354,7 @@ benthic_stn_g <- benthic_stn %>%
   ) %>%  
   #make a combined station status - sampling effort column; needed for color coding in map below
   mutate(
-    sample_effort = if_else(station_code %in% sta_visits_many, "LongPOR", "ShortPOR"),
+    sample_effort = if_else(station_code %in% stn_visits_many, "LongPOR", "ShortPOR"),
     status_effort = paste(status, sample_effort, sep = "_")
   ) %>% 
   glimpse()
@@ -376,7 +383,7 @@ stn_within_reg <- benthic_stn_g_26910 %>%
 #drops two rows as expected (ie, the two San Pablo Bay stations)
 
 #next filter the survey data set to stations within the shapefile bounds
-benthic_cpue_stf <- benthic_cpue_f %>% filter(station_code %in% stn_within_reg) %>% 
+benthic_cpue_stf <- benthic_cpue_t %>% filter(station_code %in% stn_within_reg) %>% 
   glimpse()
 
 #check which stations are included
@@ -387,44 +394,59 @@ unique(benthic_cpue_stf$station_code)
 sample_num <- benthic_cpue_stf %>% 
   distinct(sample_date,station_code) %>% 
   count()
+#1360 samples
 
-#how many taxa after filtering?
-taxon_number <- benthic_cpue_stf %>% 
-  distinct(organism_code) %>% 
-  count()
 
+
+# Remove taxa that are never present in remaining three stations-----------
+
+#get vector of taxa remaining in the three stations
+taxa_retain <- benthic_cpue_stf %>%
+  group_by(organism_code) %>% 
+  summarize(presence = sum(mean_cpue), .groups = 'drop') %>% 
+  arrange(presence) %>% 
+  filter(presence > 0) %>% 
+  pull(organism_code)
+#drops from 409 to 249 as expected
+  
+#filter the full data set to just keep these taxa
+#ie, remove rows for taxa that are completely absent from the stations
+benthic_cpue_stfr <- benthic_cpue_stf %>% 
+  filter(organism_code %in% taxa_retain)
 
 # Rare taxa: Try different approaches to removing them -------------------
 
 #what proportion of bay-delta wide taxa are represented
 #in the three stations I have kept
-spp_all <- unique(benthic_cpue$organism_code)
-#408 taxa in data set; 243 in those three stations
-#so 59.6% of Bay-Delta taxa captured by our stations
+
+#how many taxa after filtering?
+taxon_number_remain <- benthic_cpue_stfr %>% 
+  distinct(organism_code) %>%
+  count()
+#249 of original 409 taxa
+#so 60.9% of Bay-Delta taxa captured by our stations
 
 #try various approaches for excluding rare taxa
 #how many taxa remain if only keeping those that are present in: 
 # just drop a fixed proportion of species (eg, least abundant 25% of spp)
-        #this approach keeps too many taxa: 183 remain of 243 spp (75% of spp)
+        #this approach keeps too many taxa: 187 remain of 249 spp (75.1% of spp)
 # comprise at least 1% of total abundances
-        #keeps too few taxa: 14 taxa remain out of 243 (6% of taxa remaining)
+        #keeps too few taxa: 14 taxa remain out of 249 (5.6% of taxa remaining)
 # comprise at least 5% of total abundances
-        #keeps too few taxa: 7 taxa remain out of 243 (2.9% of taxa remaining)
+        #keeps too few taxa: 7 taxa remain out of 249 (2.8% of taxa remaining)
 # remove those below 5% of abundance of the most abundant spp
-        #keeps too few taxa: 14 spp remain out of 243 (5.8% of spp)
+        #keeps too few taxa: 15 spp remain out of 249 (6% of spp)
 # found in at least 5% of samples
-        #keeps quite a few: 65 of 243 taxa remaining; 26.7% taxa retained
+        #keeps quite a few: 64 of 249 taxa remaining; 25.7% taxa retained
 # found in at least 10% of samples
-        #keeps a manageable number: 42 of 243 taxa remaining; 17.3% of taxa retained
-#Note that sampling not equal across years, which potentially causes problems
-#with using the presence in x% of samples metrics
-#eg, lower sampling early in series could bias against taxa that were only common
-#in early years
+        #keeps a manageable number: 43 of 249 taxa remaining; 17.2% of taxa retained
+#Note that sampling not perfectly equal across years, which potentially causes problems
+#with using the presence in x% of samples metrics. I did drop all years with fewer than 8 samples for at least one station
 
 #should look at which taxa are retained across methods. are the most common ones the same?
 
 #calculate abundance metrics by taxon
-cpue_indiv_prop <- benthic_cpue_stfz %>%
+cpue_indiv_prop <- benthic_cpue_stfr %>%
   group_by(organism_code) %>% 
   #sum cpue across all samples by taxon
   summarise(indiv_n=sum(mean_cpue)) %>% 
@@ -455,33 +477,33 @@ cpue_indiv_prop <- benthic_cpue_stfz %>%
 #drop the 25% of species with lowest total individuals
 cpue_rarest25 <- cpue_indiv_prop %>% 
   filter(rank_prop > 0.25)
-#keeps 183 of 243 species (75.3% of taxa remaining)
+#keeps 187 of 249 species (75.1% of taxa remaining)
 
 #drop all ssp that comprise less than 5% of all individuals
 cpue_indiv_5plus <- cpue_indiv_prop %>% 
   filter(indiv_prop > 0.05)
-#only 7 taxa remain out of 243 (2.9% of taxa remaining)
+#only 7 taxa remain out of 249 (2.8% of taxa remaining)
 
 #drop all ssp that comprise less than 1% of all individuals
 cpue_indiv_1plus <- cpue_indiv_prop %>% 
   filter(indiv_prop > 0.01)
-#only 14 taxa remain out of 243 (6% of taxa remaining)
+#only 14 taxa remain out of 249 (5.6% of taxa remaining)
 
 #drop all ssp with abundances less that 5% of that of most abundant spp
 cpue_prop_dom_5plus <- cpue_indiv_prop %>% 
   filter(dom_prop > 0.05)
-#only 14 spp remain out of 243 (5.8% of spp)
+#only 15 spp remain out of 249 (6% of spp)
 
 #need to calculate total number of samples
-total_samples <- benthic_cpue_stfz %>% 
+total_samples <- benthic_cpue_stfr %>% 
   #look at distinct combinations of station and date
   #necessary because there's a row for each taxon within each sample
   distinct(sample_date, station_code) %>%  
-  count()
-samp_denom <-as.numeric(total_samples[1,1]) #1426
+  count() 
+samp_denom <-as.numeric(total_samples[1,1]) #1360
 
 #calculate the proportion of samples in which each taxon is present
-cpue_sample_prop <- benthic_cpue_stfz %>%
+cpue_sample_prop <- benthic_cpue_stfr %>%
   #drop rows where cpue is zero for sake of counting samples in which species are present
   filter(mean_cpue!=0) %>%   
   group_by(organism_code) %>% 
@@ -512,17 +534,17 @@ cpue_2plus <- cpue_sample_prop %>%
 #filter to just the species in more than 5% of samples
 cpue_5plus <- cpue_sample_prop %>% 
   filter(prop>0.05)
-#dropped from 243 to 65 taxa; 26.7% taxa retained
+#dropped from 249 to 64 taxa; 25.7% taxa retained
 
 #filter to just the species in more than 10% of samples
 cpue_10plus <- cpue_sample_prop %>% 
   filter(prop>0.10)
-#dropped from 243 to 42 taxa; 17.3% of taxa retained
+#dropped from 249 to 43 taxa; 17.2% of taxa retained
 
 #make df of number of taxa retained by the four different filtering levels
 
-#first count number of taxa in samples
-taxon_num <- as.numeric(taxon_number)
+#first count number of taxa in samples (249)
+taxon_num <- as.numeric(taxon_number_remain)
 
 species_retained <- data.frame(
   "filter" = c(1,2,5,10)
@@ -567,41 +589,33 @@ organisms_common10 <- cpue_10plus %>%
 #will update taxonomy for these retained taxa using another script
 common5 <- as.data.frame(organisms_common5) %>% 
   rename(organism_code = organisms_common5)
-#write_csv(common5,"./BenthicInverts/benthic_inverts_taxa_common_5.csv")
+#write_csv(common5,"./BenthicInverts/benthic_inverts_taxa_common_5_2023-01-25.csv")
 
 #1%: filter abundance data set 
-benthic_cpue1 <- benthic_cpue_stfz %>% 
+benthic_cpue1 <- benthic_cpue_stfr %>% 
   filter(organism_code %in% organisms_common1) %>% 
-  #add year column back in
-  mutate(year=year(sample_date)) %>%
   #sort by date, station, organism code
   arrange(sample_date, station_code, organism_code) %>% 
   glimpse()
 
 #2%: filter abundance data set 
-benthic_cpue2 <- benthic_cpue_stfz %>% 
+benthic_cpue2 <- benthic_cpue_stfr %>% 
   filter(organism_code %in% organisms_common2) %>% 
-  #add year column back in
-  mutate(year=year(sample_date)) %>%
   #sort by date, station, organism code
   arrange(sample_date, station_code, organism_code) %>% 
   glimpse()
 
 #5%: filter abundance data set 
 #or use a join function to just keep the taxa that are in more than 5% of samples
-benthic_cpue5 <- benthic_cpue_stfz %>% 
+benthic_cpue5 <- benthic_cpue_stfr %>% 
   filter(organism_code %in% organisms_common5) %>% 
-  #add year column back in
-  mutate(year=year(sample_date)) %>%
   #sort by date, station, organism code
   arrange(sample_date, station_code, organism_code) %>% 
   glimpse()
 
 #10%: filter abundance data set 
-benthic_cpue10 <- benthic_cpue_stfz %>% 
+benthic_cpue10 <- benthic_cpue_stfr %>% 
   filter(organism_code %in% organisms_common10) %>% 
-  #add year column back in
-  mutate(year=year(sample_date)) %>%
   #sort by date, station, organism code
   arrange(sample_date, station_code, organism_code) %>% 
   glimpse()
@@ -626,7 +640,7 @@ common75 <- cpue_rarest25 %>%
   mutate(rank_prop75r = rank(desc(rank_prop75))) %>% 
   glimpse()
 
-#subset and clean df with those in more than 5% of samples (cpue_5plus, n=65)
+#subset and clean df with those in more than 5% of samples (cpue_5plus, n=64)
 common_sample_5perc <- cpue_5plus %>% 
   select(organism_code,prop_samp_5 = prop)%>% 
   #add column with numbers for each column converted to ranks
@@ -668,7 +682,7 @@ rare_compare <-df_list %>%
 #prop_samp_5 is only really different approach (looks at proportion of samples containing a sp.)
 #even then, number of samples and number of individuals seems similar, but plot this to see
 
-#plot for each of the 250 taxa the number of individuals vs number of samples they are present in
+#plot for each of the 249 taxa the number of individuals vs number of samples they are present in
 svi <- left_join(cpue_sample_prop,cpue_indiv_prop) %>% 
   select(organism_code,n_samp,indiv_n)
 
@@ -697,10 +711,11 @@ svi <- left_join(cpue_sample_prop,cpue_indiv_prop) %>%
 #but not clear where to make the cut off for rare taxa based on this info alone
 #should look at relationship between community structure and drought metrics to see if that provides clear answer
 
-# Calculate annual mean CPUE------------------
+# Calculate Bay-Delta wide annual mean CPUE------------------
+#calculate mean for each station and year
+#then calculate mean for each year across all station
 
 #could use a different summary statistic (eg, median)
-#though sampling per year is probably based on calendar year
 
 #1%: generate annual mean CPUE values for each taxon
 cpue_mean_annual1 <- benthic_cpue1 %>% 
@@ -714,8 +729,13 @@ cpue_mean_annual2 <- benthic_cpue2 %>%
 
 #5%: generate annual mean CPUE values for each taxon
 cpue_mean_annual5 <- benthic_cpue5 %>% 
-  group_by(year,station_code,organism_code) %>% 
-  summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
+  #first calculate mean for each station and year
+  group_by(year_adjusted,station_code,organism_code) %>% 
+  summarize(cpue_stn_annual=mean(mean_cpue), .groups = 'drop') %>% 
+  #now calculate mean for each year (across all stations)
+  group_by(year_adjusted,organism_code) %>% 
+  summarize(cpue_annual=mean(cpue_stn_annual), .groups = 'drop') 
+  
 
 #10%: generate annual mean CPUE values for each taxon
 cpue_mean_annual10 <- benthic_cpue10 %>% 
@@ -744,7 +764,7 @@ cpue_mean_annual_nm2 <- left_join(cpue_mean_annual2,benthic_spp_names_short) %>%
 #5%: add species names to main data set
 cpue_mean_annual_nm5 <- left_join(cpue_mean_annual5,benthic_spp_names_short) %>% 
   #drop name codes and reorder column
-  select(year,station_code,species_name,cpue_annual)
+  select(year_adjusted,species_name,cpue_annual)
 
 #10%: add species names to main data set
 cpue_mean_annual_nm10 <- left_join(cpue_mean_annual10,benthic_spp_names_short) %>% 
@@ -771,11 +791,12 @@ TableL_2 <- cpue_mean_annual_nm2 %>%
 
 #5%: make Table L which is taxon x sample matrix
 TableL_5 <- cpue_mean_annual_nm5 %>%
-  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual)%>% 
+  pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) 
   #add water year categories
-  left_join(wyear) %>% 
+  #left_join(wyear) %>% 
   #move year type and drought category to front with rest of predictors
-  relocate(yr_type:drought,.after = year) 
+  #relocate(yr_type:drought,.after = year) 
+  
 
 #10%: make Table L which is taxon x sample matrix
 TableL_10 <- cpue_mean_annual_nm10 %>%
