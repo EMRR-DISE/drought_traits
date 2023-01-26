@@ -4,7 +4,7 @@
 #Automating taxonomy updating for non-rare taxa
 #ie, those in at least 5% of samples for three focal stations
 
-#taxonomy last updated 10/25/2022
+#taxonomy last updated 1/26/2023
 
 #Nick Rasmussen, nicholas.rasmussen@water.ca.gov
 
@@ -12,12 +12,13 @@
 #installed worms, worrms, ritis, and taxize from github
 #these versions seems to work better, particularly worms
 
-library(worms) #searches WoRMS online database; uses plyr so load before tidyverse
-library(tidyverse) #suite of data science tools
+#library(worms) 
+#searches WoRMS online database; uses plyr which conflicts with tidyverse; load only with functions
 library(janitor) #used to quickly clean up column names
 library(ritis) #searches ITIS online database
 library(taxize) #updating taxonomy using a suite of online databases
 library(worrms) #updating taxonomy using worms database
+library(tidyverse) #suite of data science tools
 #NOTE: ritis and worrms didn't work very well
 #I used worms for WoRMS and taxize for ITIS
 
@@ -29,7 +30,7 @@ benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
   clean_names()
 
 #read in list of organism codes for all taxa found in at least 5% of samples
-common5 <- read_csv("./BenthicInverts/benthic_inverts_taxa_common_5.csv") %>%
+common5 <- read_csv("./BenthicInverts/benthic_inverts_taxa_common_5_2023-01-25.csv") %>%
   #convert from data frame back to a vector of organism codes
   pull(organism_code)
 
@@ -70,13 +71,13 @@ benthic_spp_morpho <- benthic_spp_format %>%
   #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
   filter(grepl(c('sp. |Sp. |Unknown'), species)) %>% 
   arrange(phylum,class, order,family,genus,species)
-#204 of 478 spp are morphospecies; 43% of all species
+#203 of 478 spp are morphospecies; 43% of all species
 
 #Taxa IDed to species
 benthic_spp_true <- benthic_spp_format %>% 
   filter(!grepl('sp. |Sp. |Unknown|No catch',species))%>% 
   arrange(phylum,class, order,family,genus,species)
-#273 of 478 are IDed to species; 57% of all species
+#274 of 478 are IDed to species; 57% of all species
 
 
 #add column to taxonomy data set that combines genus and specific epithet--------
@@ -114,13 +115,14 @@ benthic_spp_names <- benthic_spp_format %>%
 benthic_spp_names_5 <-benthic_spp_names %>% 
   #filter to keep only taxa in at least 5% of samples using organism codes
   filter(organism_code %in% common5) 
+#64 taxa as expected
 
 #5%: focus on "species" column and filter by whether "sp." character string is present
 benthic_spp_5_morpho <- benthic_spp_names_5 %>% 
   #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
   filter(grepl(c('sp. |Sp. |Unknown'), species))
-#15 of 65 spp are morphospecies; 23% of all species
-#all of these are IDed to genus except one which is class level
+#14 of 64 spp are morphospecies; 22% of all species
+#all of these are IDed to genus except two (one class, one family)
 
 #5%: Taxa IDed to species
 benthic_spp_5_true <- benthic_spp_names_5 %>% 
@@ -203,12 +205,15 @@ all_code <- taxonlist %>%
 #but it may also return a similar taxon for a taxon truly not in worms 
 #eg, finds Isocystis for Isocypris which is wrong
 
-worms_records <- wormsbynames(full_list, ids=T,match=T)
+worms_records <- worms::wormsbynames(full_list, ids=T,match=T)
 
 #IMPORTANT: the classification provided is for invalid names provided not the valid names
 #need to rerun this using the valid names
 #found 49 of 50 species; missing only Mooreobdella microstoma, which I confirmed is not in WoRMS
 #found 14 of 15 higher level taxa; missing Isocypris, which I confirmed is not in WoRMS
+#Note that using fuzzy matching (ie match=T) provides genus and species which I want 
+#but it also provides an incorrect match for Isocypris (Isocystis)
+#if I don't use fuzzy matching, I get names that usually include subspecies, forms, etc which I don't want
 #Turbellaria was found but is not an accepted name; did not return an accepted name
 
 #examine how well the search worked across all input taxa
@@ -249,7 +254,7 @@ species_corrected <- worms_records_outcome %>%
 #six taxa as expected
 
 #rerun the WoRMS search on the corrected species
-worms_records_corrected <- wormsbynames(species_corrected, ids=T,match=T) %>% 
+worms_records_corrected <- worms::wormsbynames(species_corrected, ids=T,match=T) %>% 
   #not sure if I'll need this column but adding it back in just in case
   add_column(outcome="corrected")
 
@@ -427,14 +432,30 @@ all_format <- worms_format %>%
   glimpse()
 
 #write a file containing the updated taxonomy
-#write_csv(all_format,"./BenthicInverts/benthic_inverts_taxa_common_5_updated_2022-10-25.csv")
+#write_csv(all_format,"./BenthicInverts/benthic_inverts_taxa_common_5_updated_2023-01-26.csv")
 
 #summarize lowest rank for each taxon
 #ideally these would all be species for rounding up traits but they aren't
-taxon_summary <-all_format %>% 
+summary_taxon <-all_format %>% 
   group_by(rank) %>% 
   summarize(count = n())
-#of 65 taxa, 50 are species, 12 are genera, 3 are higher
+#of 64 taxa, 50 are species, 11 are genera, 3 are higher
+
+#explore diversity at higher taxonomic levels
+summary_phylum <-all_format %>% 
+  group_by(phylum) %>% 
+  summarize(count = n())
+#5 phyla, mostly annelids, molluscs, and arthropods
+
+summary_class <-all_format %>% 
+  group_by(class) %>% 
+  summarize(count = n())
+#12 classes, mostly Malacostraca (crustaceans) and Clitellata (worms)
+
+summary_order <-all_format %>% 
+  group_by(order) %>% 
+  summarize(count = n())
+#25 order (4 taxa have no order listed); mostly tubificids and amphipods
 
 #experiment with searching all species using taxize instead of starting with worms---------
 #made good progress but didn't complete this
