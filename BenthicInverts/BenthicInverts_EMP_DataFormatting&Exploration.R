@@ -438,6 +438,8 @@ taxon_number_remain <- benthic_cpue_stfr %>%
         #keeps too few taxa: 15 spp remain out of 249 (6% of spp)
 # found in at least 5% of samples
         #keeps quite a few: 64 of 249 taxa remaining; 25.7% taxa retained
+        #identical list of taxa as earlier version except dropped one taxon
+        #1210 Teratocephalus sp A (nematode)
 # found in at least 10% of samples
         #keeps a manageable number: 43 of 249 taxa remaining; 17.2% of taxa retained
 #Note that sampling not perfectly equal across years, which potentially causes problems
@@ -774,20 +776,20 @@ cpue_mean_annual_nm10 <- left_join(cpue_mean_annual10,benthic_spp_names_short) %
 # Format Table L (station-year x taxon) -----------
 
 #1%: make Table L which is taxon x sample matrix
-TableL_1 <- cpue_mean_annual_nm1 %>%
-  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
+#TableL_1 <- cpue_mean_annual_nm1 %>%
+#  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
   #add water year categories
-  left_join(wyear) %>% 
+#  left_join(wyear) %>% 
   #move year type and drought category to front with rest of predictors
-  relocate(yr_type:drought,.after = year)
+#  relocate(yr_type:drought,.after = year)
 
 #2%: make Table L which is taxon x sample matrix
-TableL_2 <- cpue_mean_annual_nm2 %>%
-  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
+#TableL_2 <- cpue_mean_annual_nm2 %>%
+#  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
   #add water year categories
-  left_join(wyear) %>% 
+#  left_join(wyear) %>% 
   #move year type and drought category to front with rest of predictors
-  relocate(yr_type:drought,.after = year)
+#  relocate(yr_type:drought,.after = year)
 
 #5%: make Table L which is taxon x sample matrix
 TableL_5 <- cpue_mean_annual_nm5 %>%
@@ -799,38 +801,39 @@ TableL_5 <- cpue_mean_annual_nm5 %>%
   
 
 #10%: make Table L which is taxon x sample matrix
-TableL_10 <- cpue_mean_annual_nm10 %>%
-  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
+#TableL_10 <- cpue_mean_annual_nm10 %>%
+#  pivot_wider(id_cols = c(station_code,year),names_from = species_name,values_from=cpue_annual) %>% 
   #add water year categories
-  left_join(wyear) %>% 
+#  left_join(wyear) %>% 
   #move year type and drought category to front with rest of predictors
-  relocate(yr_type:drought,.after = year)
+#  relocate(yr_type:drought,.after = year)
 #probably just need to now combine station and year into a row name and format as matrix
 
 #separate label columns from cpue columns for NMDS analysis
-pred1 <- TableL_1 %>% 
-  select(station_code:drought)
+#pred1 <- TableL_1 %>% 
+#  select(station_code:drought)
 
-pred2 <- TableL_2 %>% 
-  select(station_code:drought)
+#pred2 <- TableL_2 %>% 
+#  select(station_code:drought)
 
-pred5 <- TableL_5 %>% 
-  select(station_code:drought)
+#pred5 <- TableL_5 %>% 
+#  select(station_code:drought)
 
-pred10 <- TableL_10 %>% 
-  select(station_code:drought)
+#pred10 <- TableL_10 %>% 
+#  select(station_code:drought)
 
-dat1 <- TableL_1 %>% 
-  select(!(station_code:drought))
+#dat1 <- TableL_1 %>% 
+#  select(!(station_code:drought))
 
-dat2 <- TableL_2 %>% 
-  select(!(station_code:drought))
+#dat2 <- TableL_2 %>% 
+#  select(!(station_code:drought))
 
-dat5 <- TableL_5 %>% 
-  select(!(station_code:drought))
+#dat5 <- TableL_5 %>% 
+#  remove_rownames %>% 
+#  column_to_rownames(var="year_adjusted")
 
-dat10 <- TableL_10 %>% 
-  select(!(station_code:drought))
+#dat10 <- TableL_10 %>% 
+#  select(!(station_code:drought))
 
 #export resulting matrices
 #write_csv(pred1,"BenthicInverts/benthic_nmds_predictors_1.csv")
@@ -840,8 +843,15 @@ dat10 <- TableL_10 %>%
 
 #write_csv(dat1,"BenthicInverts/benthic_nmds_abundance_1.csv")
 #write_csv(dat2,"BenthicInverts/benthic_nmds_abundance_2.csv")
-#write_csv(dat5,"BenthicInverts/benthic_nmds_abundance_5.csv")
 #write_csv(dat10,"BenthicInverts/benthic_nmds_abundance_10.csv")
+
+#this is the abundance matrix we will use for analysis
+#year adjusted to Dec 1 - Nov 30
+#only kept the three long term stations
+#dropped low sampling years
+#only kept taxa present in at least 5% of samples
+#write_csv(TableL_5,"BenthicInverts/Benthic_TableL.csv")
+
 
 
 #make a big faceted plot showing time series of each taxon in each station
