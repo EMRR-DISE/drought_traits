@@ -30,8 +30,6 @@ library(here)
 
 # To do list -----------------------------
 
-#fix formatting of no catch samples
-
 #make sure there isn't overlap in taxa between zoop and benthic inverts
 #eg, I saw ostracods in benthic inverts data which are probably also in zoop
 
