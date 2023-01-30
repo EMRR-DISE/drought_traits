@@ -1,0 +1,76 @@
+sample_date,station_code,year,month,organism_code,mean_cpue,total_grabs,phylum,class_level,order_level,family_level,genus,species,common_name,location,latitude,longitude
+2012-05-24,D7-C,2012,May,0,4.81,4,No catch,No catch,No catch,No catch,No catch,No catch,No organisms in sample,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,1130,4.81,4,Nemertea,Enopla,Hoplonemertea,Tetrastemmatidae,Prostoma,graecense,"Nemertean, Ribbon Worm",Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,2550,168.27,4,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,hoffmeisteri,Tubificid Worm,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,2720,57.69,4,Annelida,Oligochaeta,Tubificida,Naididae,Tubificoides,heterochaetus,Tubificid Worm,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,3130,48.08,4,Annelida,Polychaeta,Spionida,Spionidae,Marenzelleria,neglecta,"Spionid, Polychaete Worm",Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,3330,4.81,4,Annelida,Polychaeta,Phyllodocida,Nereididae,Hediste,limnicola,Polychaete Worm,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,3390,4.81,4,Annelida,Polychaeta,Phyllodocida,Goniadidae,Glycinde,armigera,Polychaete Worm,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,3450,4.81,4,Annelida,Polychaeta,Sabellida,Sabellidae,Laonome,calida,Polychaete Worm,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,4230,134.62,4,Arthropoda,Crustacea,Cumacea,Leuconidae,Nippoleucon,hinumensis,Cumacean,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,4550,1504.81,4,Arthropoda,Crustacea,Amphipoda,Corophiidae,Sinocorophium,alienense,Amphipod,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,4610,33.65,4,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,spinicorne,Amphipod,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,4630,67.31,4,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,stimpsoni,Amphipod,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,4750,9.62,4,Arthropoda,Crustacea,Amphipoda,Gammaridae,Gammarus,daiberi,Amphipod,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,4892,4.81,4,Arthropoda,Crustacea,Decapoda,Crangonidae,Crangon,nigricauda,Blacktail Shrimp,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-05-24,D7-C,2012,May,6890,879.81,4,Mollusca,Bivalvia,Myoida,Corbulidae,Potamocorbula,amurensis,Brackish-water Corbula,Grizzly Bay at Dolphin near Suisun Slough (center),38.1171292,-122.0395539
+2012-07-18,P8-R,2012,July,0,4.81,4,No catch,No catch,No catch,No catch,No catch,No catch,No organisms in sample,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,1230,1278.85,4,Nematoda,Adenophorea,Dorylaimida,Dorylaimidae,Dorylaimus,sp. A,Spear Neamtodes,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,2410,9.62,4,Annelida,Oligochaeta,Tubificida,Naididae,Aulodrilus,limnobius,Tubificid Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,2450,28.85,4,Annelida,Oligochaeta,Tubificida,Naididae,Aulodrilus,japonicus,Tubificid Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,2470,153.85,4,Annelida,Oligochaeta,Tubificida,Naididae,Bothrioneurum,vejdovskyanum,Tubificid Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,2490,250,4,Annelida,Oligochaeta,Tubificida,Naididae,Branchiura,sowerbyi,Tubificid Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,2550,1038.46,4,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,hoffmeisteri,Tubificid Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,2730,322.12,4,Annelida,Oligochaeta,Tubificida,Naididae,Varichaetadrilus,angustipenis,Tubificid Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,3330,33.65,4,Annelida,Polychaeta,Phyllodocida,Nereididae,Hediste,limnicola,Polychaete Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,3430,576.92,4,Annelida,Polychaeta,Sabellida,Sabellidae,Manayunkia,speciosa,Polychaete Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,3450,57.69,4,Annelida,Polychaeta,Sabellida,Sabellidae,Laonome,calida,Polychaete Worm,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,4090,4.81,4,Arthropoda,Crustacea,Podocopida,Cytheridae,Cyprideis,sp. A,Ostracod,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,4610,9.62,4,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,spinicorne,Amphipod,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,4630,38.46,4,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,stimpsoni,Amphipod,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,5410,14.42,4,Arthropoda,Insecta,Diptera,Chironomidae,Procladius,sp. A,Midge,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,6630,62.5,4,Mollusca,Gastropoda,Mesogastropoda,Thiaridae,Melanoides,tuberculata,Red-rim Melania snail,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,6730,129.81,4,Mollusca,Bivalvia,Veneroida,Corbiculidae,Corbicula,fluminea,Asian Clam,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2012-07-18,P8-R,2012,July,6770,4.81,4,Mollusca,Bivalvia,Veneroida,Sphaeriidae,Pisidium,compressum,Ridgebeak Peaclam,San Joaquin River at Buckley Cove (right),37.9778522,-121.3799929
+2013-04-11,C9-L,2013,April,0,4.81,4,No catch,No catch,No catch,No catch,No catch,No catch,No organisms in sample,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,1230,19.23,4,Nematoda,Adenophorea,Dorylaimida,Dorylaimidae,Dorylaimus,sp. A,Spear Neamtodes,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2270,19.23,4,Annelida,Oligochaeta,Tubificida,Naididae,Slavina,appendiculata,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2410,134.62,4,Annelida,Oligochaeta,Tubificida,Naididae,Aulodrilus,limnobius,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2430,28.85,4,Annelida,Oligochaeta,Tubificida,Naididae,Aulodrilus,pigueti,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2450,312.5,4,Annelida,Oligochaeta,Tubificida,Naididae,Aulodrilus,japonicus,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2470,283.65,4,Annelida,Oligochaeta,Tubificida,Naididae,Bothrioneurum,vejdovskyanum,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2490,33.65,4,Annelida,Oligochaeta,Tubificida,Naididae,Branchiura,sowerbyi,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2510,1115.38,4,Annelida,Oligochaeta,Tubificida,Naididae,Ilyodrilus,frantzi,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2540,43.27,4,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,claparedianus,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2550,3250,4,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,hoffmeisteri,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2570,110.58,4,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,udekemianus,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2730,4100.96,4,Annelida,Oligochaeta,Tubificida,Naididae,Varichaetadrilus,angustipenis,Tubificid Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2810,52.88,4,Annelida,Oligochaeta,Tubificida,Sparganophilidae,Sparganophilus,eiseni,Earthworm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,2970,4.81,4,Annelida,Hirudinea,Arhynchobdellida,Erpobdellidae,Mooreobdella,microstoma,Leech,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,3330,19.23,4,Annelida,Polychaeta,Phyllodocida,Nereididae,Hediste,limnicola,Polychaete Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,3430,4043.27,4,Annelida,Polychaeta,Sabellida,Sabellidae,Manayunkia,speciosa,Polychaete Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,3450,274.04,4,Annelida,Polychaeta,Sabellida,Sabellidae,Laonome,calida,Polychaete Worm,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,4610,336.54,4,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,spinicorne,Amphipod,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,4630,894.23,4,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,stimpsoni,Amphipod,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,4750,370.19,4,Arthropoda,Crustacea,Amphipoda,Gammaridae,Gammarus,daiberi,Amphipod,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,4810,4.81,4,Arthropoda,Crustacea,Amphipoda,Hyalellidae,Hyalella,sp. A,Amphipod,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,5130,4.81,4,Arthropoda,Insecta,Odonata,Gomphidae,Stylurus,olivaceus,Olive Clubtail dragonfly,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,5410,19.23,4,Arthropoda,Insecta,Diptera,Chironomidae,Procladius,sp. A,Midge,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,5550,38.46,4,Arthropoda,Insecta,Diptera,Chironomidae,Cryptochironomus,sp. A,Midge,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,5575,38.46,4,Arthropoda,Insecta,Diptera,Chironomidae,Cryptotendipes,sp. A,non-biting midge,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,5670,38.46,4,Arthropoda,Insecta,Diptera,Chironomidae,Harnischia,curtilamellata,Midge,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,5790,38.46,4,Arthropoda,Insecta,Diptera,Chironomidae,Polypedilum,sp. A,Midge,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,6015,19.23,4,Arthropoda,Insecta,Diptera,Ceratopogonidae,Probezzia,sp. A,Biting Midge,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,6570,9.62,4,Mollusca,Gastropoda,Limnophila,Physidae,Physa,sp. A,Pouch Snail,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,6590,9.62,4,Mollusca,Gastropoda,Limnophila,Ancylidae,Ferrissia,californica,California Ancylid,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,6630,24.04,4,Mollusca,Gastropoda,Mesogastropoda,Thiaridae,Melanoides,tuberculata,Red-rim Melania snail,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,6730,72.12,4,Mollusca,Bivalvia,Veneroida,Corbiculidae,Corbicula,fluminea,Asian Clam,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2013-04-11,C9-L,2013,April,6770,4.81,4,Mollusca,Bivalvia,Veneroida,Sphaeriidae,Pisidium,compressum,Ridgebeak Peaclam,Old River upstream of Clifton Court Forebay Intake (left),37.8271721,-121.5522898
+2015-09-15,D16-L,2015,September,0,4.81,4,No catch,No catch,No catch,No catch,No catch,No catch,No organisms in sample,San Joaquin River at Bradford Island (left),38.093031,-121.6697445
+2015-09-15,D16-L,2015,September,2550,4.81,4,Annelida,Oligochaeta,Tubificida,Naididae,Limnodrilus,hoffmeisteri,Tubificid Worm,San Joaquin River at Bradford Island (left),38.093031,-121.6697445
+2015-09-15,D16-L,2015,September,2730,14.42,4,Annelida,Oligochaeta,Tubificida,Naididae,Varichaetadrilus,angustipenis,Tubificid Worm,San Joaquin River at Bradford Island (left),38.093031,-121.6697445
+2015-09-15,D16-L,2015,September,4230,4.81,4,Arthropoda,Crustacea,Cumacea,Leuconidae,Nippoleucon,hinumensis,Cumacean,San Joaquin River at Bradford Island (left),38.093031,-121.6697445
+2015-09-15,D16-L,2015,September,4610,9.62,4,Arthropoda,Crustacea,Amphipoda,Corophiidae,Americorophium,spinicorne,Amphipod,San Joaquin River at Bradford Island (left),38.093031,-121.6697445
+2015-09-15,D16-L,2015,September,4750,62.5,4,Arthropoda,Crustacea,Amphipoda,Gammaridae,Gammarus,daiberi,Amphipod,San Joaquin River at Bradford Island (left),38.093031,-121.6697445
+2015-09-15,D16-L,2015,September,6730,43.27,4,Mollusca,Bivalvia,Veneroida,Corbiculidae,Corbicula,fluminea,Asian Clam,San Joaquin River at Bradford Island (left),38.093031,-121.6697445
+2017-02-22,D24-L,2017,February,0,19.23,4,No catch,No catch,No catch,No catch,No catch,No catch,No organisms in sample,Sacramento River downstream of Rio Vista bridge (left),38.154719299999996,-121.6814495

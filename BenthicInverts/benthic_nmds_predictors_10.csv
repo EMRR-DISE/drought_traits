@@ -1,0 +1,136 @@
+station_code,year,yr_type,drought
+D4-L,1975,Wet,W
+D28A-L,1977,Critical,D
+D4-L,1977,Critical,D
+D7-C,1977,Critical,D
+D4-L,1978,Above Normal,N
+D7-C,1978,Above Normal,N
+D28A-L,1979,Below Normal,N
+D4-L,1979,Below Normal,N
+D7-C,1979,Below Normal,N
+D28A-L,1980,Above Normal,N
+D4-L,1980,Above Normal,N
+D7-C,1980,Above Normal,N
+D28A-L,1981,Dry,N
+D4-L,1981,Dry,N
+D7-C,1981,Dry,N
+D28A-L,1982,Wet,W
+D4-L,1982,Wet,W
+D7-C,1982,Wet,W
+D28A-L,1983,Wet,W
+D4-L,1983,Wet,W
+D7-C,1983,Wet,W
+D28A-L,1984,Wet,W
+D4-L,1984,Wet,W
+D7-C,1984,Wet,W
+D28A-L,1985,Dry,N
+D4-L,1985,Dry,N
+D7-C,1985,Dry,N
+D28A-L,1986,Wet,N
+D4-L,1986,Wet,N
+D7-C,1986,Wet,N
+D28A-L,1987,Dry,D
+D4-L,1987,Dry,D
+D7-C,1987,Dry,D
+D28A-L,1988,Critical,D
+D4-L,1988,Critical,D
+D7-C,1988,Critical,D
+D28A-L,1989,Dry,D
+D4-L,1989,Dry,D
+D7-C,1989,Dry,D
+D28A-L,1990,Critical,D
+D4-L,1990,Critical,D
+D7-C,1990,Critical,D
+D28A-L,1991,Critical,D
+D4-L,1991,Critical,D
+D7-C,1991,Critical,D
+D28A-L,1992,Critical,D
+D4-L,1992,Critical,D
+D7-C,1992,Critical,D
+D28A-L,1993,Above Normal,N
+D4-L,1993,Above Normal,N
+D7-C,1993,Above Normal,N
+D28A-L,1994,Critical,N
+D4-L,1994,Critical,N
+D7-C,1994,Critical,N
+D28A-L,1995,Wet,W
+D4-L,1995,Wet,W
+D7-C,1995,Wet,W
+D28A-L,1996,Wet,W
+D4-L,1996,Wet,W
+D7-C,1996,Wet,W
+D28A-L,1997,Wet,W
+D4-L,1997,Wet,W
+D7-C,1997,Wet,W
+D28A-L,1998,Wet,W
+D4-L,1998,Wet,W
+D7-C,1998,Wet,W
+D28A-L,1999,Wet,W
+D4-L,1999,Wet,W
+D7-C,1999,Wet,W
+D28A-L,2000,Above Normal,W
+D4-L,2000,Above Normal,W
+D7-C,2000,Above Normal,W
+D28A-L,2001,Dry,D
+D4-L,2001,Dry,D
+D7-C,2001,Dry,D
+D28A-L,2002,Dry,D
+D4-L,2002,Dry,D
+D7-C,2002,Dry,D
+D28A-L,2003,Above Normal,N
+D4-L,2003,Above Normal,N
+D7-C,2003,Above Normal,N
+D28A-L,2004,Below Normal,N
+D4-L,2004,Below Normal,N
+D7-C,2004,Below Normal,N
+D28A-L,2005,Above Normal,W
+D4-L,2005,Above Normal,W
+D7-C,2005,Above Normal,W
+D28A-L,2006,Wet,W
+D4-L,2006,Wet,W
+D7-C,2006,Wet,W
+D28A-L,2007,Dry,D
+D4-L,2007,Dry,D
+D7-C,2007,Dry,D
+D28A-L,2008,Critical,D
+D4-L,2008,Critical,D
+D7-C,2008,Critical,D
+D28A-L,2009,Dry,D
+D4-L,2009,Dry,D
+D7-C,2009,Dry,D
+D28A-L,2010,Below Normal,D
+D4-L,2010,Below Normal,D
+D7-C,2010,Below Normal,D
+D28A-L,2011,Wet,N
+D4-L,2011,Wet,N
+D7-C,2011,Wet,N
+D28A-L,2012,Below Normal,D
+D4-L,2012,Below Normal,D
+D7-C,2012,Below Normal,D
+D28A-L,2013,Dry,D
+D4-L,2013,Dry,D
+D7-C,2013,Dry,D
+D28A-L,2014,Critical,D
+D4-L,2014,Critical,D
+D7-C,2014,Critical,D
+D28A-L,2015,Critical,D
+D4-L,2015,Critical,D
+D7-C,2015,Critical,D
+D28A-L,2016,Below Normal,D
+D4-L,2016,Below Normal,D
+D7-C,2016,Below Normal,D
+D28A-L,2017,Wet,N
+D4-L,2017,Wet,N
+D7-C,2017,Wet,N
+D28A-L,2018,Below Normal,N
+D4-L,2018,Below Normal,N
+D7-C,2018,Below Normal,N
+D28A-L,2019,Wet,N
+D4-L,2019,Wet,N
+D7-C,2019,Wet,N
+D28A-L,2020,Dry,D
+D4-L,2020,Dry,D
+D7-C,2020,Dry,D
+D28A-L,2021,Critical,D
+D4-L,2021,Critical,D
+D7-C,2021,Critical,D
