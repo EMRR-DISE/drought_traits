@@ -242,5 +242,5 @@ TableL<-meso_macro_common %>% st_drop_geometry()%>%
   summarize(cpue_annual=mean(monthly_mean))%>%
   pivot_wider(names_from = Taxname, values_from = cpue_annual)#next calculate an annual mean for each taxon
 
-write_csv(TableL, "ZoopTableL.csv")
+write_csv(TableL, "~/IEP_drought_synthesis/Special Studies/drought_traits/Zooplankton/ZoopTableL.csv")
 
