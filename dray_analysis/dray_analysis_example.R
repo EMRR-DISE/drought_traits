@@ -21,7 +21,10 @@ env <- aravo$env
 #RQL----------
 
 #correspondence analysis of species table
-afcL.aravo <- dudi.coa(aravo$spe, scannf = FALSE)
+afcL.aravo <- dudi.coa(aravo$spe, scannf = T)
+summary(afcL.aravo)
+#total inertia: 4.214
+
 
 #principle components analysis of traits data
 #works because all traits are quantitative
