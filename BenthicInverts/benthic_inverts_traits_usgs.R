@@ -215,7 +215,7 @@ trait_temp_mx <- ttt_exp %>%
 #look closer at body size data
 trait_temp_mx_sp <- trait_temp_mx %>% 
   filter(lit_taxon_level=="species")
-#only 1 species level size estimates
+#only 1 species level estimates
 
 
 
