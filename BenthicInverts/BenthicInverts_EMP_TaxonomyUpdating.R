@@ -4,7 +4,7 @@
 #Automating taxonomy updating for non-rare taxa
 #ie, those in at least 5% of samples for three focal stations
 
-#taxonomy last updated 1/26/2023
+#taxonomy last updated 2/2/2023
 
 #Nick Rasmussen, nicholas.rasmussen@water.ca.gov
 
@@ -122,12 +122,12 @@ benthic_spp_5_morpho <- benthic_spp_names_5 %>%
   #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
   filter(grepl(c('sp. |Sp. |Unknown'), species))
 #14 of 64 spp are morphospecies; 22% of all species
-#all of these are IDed to genus except two (one class, one family)
+#all of these are IDed to genus except three (one subfamily, one class, one family)
 
 #5%: Taxa IDed to species
 benthic_spp_5_true <- benthic_spp_names_5 %>% 
   filter(!grepl('sp. |Sp. |Unknown|No catch',species))
-#50 of 65 are IDed to species; 77% of all species
+#50 of 64 are IDed to species; 78% of all species
 
 #NOTE: would need to read in a csv with list of taxa in at least 10% of sample for the code below to run
 #10%: filter the taxonomy dataset using organism codes from data set with only taxa that are in at least 10% of samples
@@ -178,7 +178,7 @@ txlist <- taxonlist %>%
 #make list with all taxa in it (those IDed to species and those not)
 full_list <- c(specieslist,txlist)
 
-#create df for all 65 taxa that contains both the organism code and the name searched in database---------
+#create df for all 64 taxa that contains both the organism code and the name searched in database---------
 
 #for df with species level id, make new df with just organism_code and species_name
 sp_code <- benthic_spp_5_true %>% 
@@ -227,7 +227,9 @@ worms_records_outcome <- worms_records %>%
     #input name found and replaced with accepted name
     ,name == scientificname & scientificname!=valid_name ~ "corrected"
     #input name not found but a similar, and possibly incorrect, name was found
-    ,name!=scientificname & !is.na(scientificname) ~ "questionable"
+    #NOTE: I later realized there is a match_type column that indicates whether match is "exact" or "near_2"
+    #,name!=scientificname & !is.na(scientificname) ~ "questionable"
+    ,match_type!="exact" ~ "questionable"
     #input name found but isn't the accepted name
     ,name == scientificname & status!="accepted" ~ "old"
   )
@@ -276,6 +278,7 @@ worms_format <- worms_codes %>%
   add_row(name = "Isocypris") %>% 
   #just keep the needed columns
   select(organism_code
+         ,aphia_id = AphiaID
          ,taxon = name
          ,status
          ,rank
@@ -427,12 +430,12 @@ all_format <- worms_format %>%
     ,across(c(kingdom:genus), ~as.character(gsub("[unassigned] ", "", .,fixed=T)))
     ) %>% 
   #reorder columns
-  select(organism_code,taxon,source,status:genus) %>% 
+  select(organism_code,aphia_id,taxon,source,status:genus) %>% 
   arrange(kingdom,phylum, class, order, genus) %>% 
   glimpse()
 
 #write a file containing the updated taxonomy
-#write_csv(all_format,"./BenthicInverts/benthic_inverts_taxa_common_5_updated_2023-01-26.csv")
+#write_csv(all_format,"./BenthicInverts/benthic_taxonomy_common5_2023-02-02.csv")
 
 #summarize lowest rank for each taxon
 #ideally these would all be species for rounding up traits but they aren't
