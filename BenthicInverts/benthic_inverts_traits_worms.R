@@ -6,11 +6,10 @@
 #steps
 #create named vector of all AphiaIDs
 #feed this into the wm_attr_data() function
-#
+#filter dataset to just desired trait
+#do a bunch of unnesting of this poorly structured dataset
 
 #filter to just size "measurementType"
-#then unnest dataframe (does this need to be done multiple times?)
-#for size could probably just go with largest value for each taxon instead of dealing with nested data
 
 # Load required packages -----------------
 library(worrms)
@@ -20,6 +19,13 @@ library(worrms)
 ex1 <- wm_attr_data(id = 1040874)
 ex2 <- wm_attr_data_(id = c(127160, 126436))
 
+#unnesting
+test <- ex1 %>% 
+  filter(measurementTypeID==15) %>% 
+  unnest(cols = children, names_repair = "universal") %>% 
+  unnest(cols = children) %>% 
+  unnest(cols = children, names_repair = "universal") %>% 
+  unnest(children)
 
   
   
