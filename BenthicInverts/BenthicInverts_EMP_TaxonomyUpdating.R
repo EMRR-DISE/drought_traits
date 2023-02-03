@@ -437,6 +437,45 @@ all_format <- worms_format %>%
 #write a file containing the updated taxonomy
 #write_csv(all_format,"./BenthicInverts/benthic_taxonomy_common5_2023-02-02.csv")
 
+#look for synonyms of target taxa----------------
+#use wm_synonyms_() from worrms
+
+#spot check some taxa
+sp1 <- all_format %>% 
+  filter(aphia_id==1037336)
+
+#create vector of aphia ids
+worms_aphia <- all_format %>% 
+  #drop the NAs (ie, taxa not on worms)
+  filter(!is.na(aphia_id)) %>% 
+  pull(aphia_id)
+
+#search for all synonyms for the 62 (of 64 total) taxa on WoRMS
+worms_syn <- wm_synonyms_(id=worms_aphia)
+#346 rows
+#18 warnings: 
+#17 indicate "no content", which means those taxa have no synonyms
+#one warning is that a function used by worrms is deprecated
+
+#clean up synonym data set
+worms_syn_format <- worms_syn %>% 
+  #just keep the needed columns
+  select(aphia_id = valid_AphiaID
+         ,valid_name
+         ,aphia_id_syn = AphiaID
+         ,syn_name = scientificname
+         ,status
+         ,rank
+         ,match_type
+         ,kingdom:genus
+         )
+
+#look closer at subspecies synonyms
+#can probably just filter these out because they're the correct genus and species
+worms_syn_subsp <- worms_syn_format %>% 
+  filter(rank=="Subspecies")
+
+# Look at summaries of different taxonomic levels -----------
 #summarize lowest rank for each taxon
 #ideally these would all be species for rounding up traits but they aren't
 summary_taxon <-all_format %>% 
