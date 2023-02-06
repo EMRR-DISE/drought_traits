@@ -1,0 +1,141 @@
+ReadMe Version History File
+=======================================
+
+VersionHistory_USRIIS.txt (this file) describes the Version (ver.) history for United States Register of Introduced and Invasive Species. 
+
+Database acronym: US-RIIS
+
+Accompanying file Names: 
+USRIISv2.xlsx
+USRIISv2csvVersion.zip, containing
+     USRIISv2_MasterList.csv
+     USRIISv2_AuthorityReferences.csv
+     USRIISv2_DataDictionary.csv
+FGDC_BDPmetadata_USRIISv2.xml
+DataManagementPlan_USRIISv2.rtf
+versionHistory_USRIIS.txt (this document)
+
+SUGGESTED CITATION:
+Simpson, Annie, Pam Fuller, Keven Faccenda, Neal Evenhuis, Janis Matsunaga, and Matt Bowser (2022) United States Register of Introduced and Invasive Species (ver. 2.0, 2022): U.S. Geological Survey data release, https://doi.org/10.5066/P9KFFTOD (all versions at https://doi.org/10.5066/P92DN8D8).
+
+The ScienceBase landing page for ver. 2.0 of the US-RIIS is:
+https://www.sciencebase.gov/catalog/item/62d59ae5d34e87fffb2dda99
+
+The ScienceBase landing page for all versions of the US-RIIS is:
+https://www.sciencebase.gov/catalog/item/615c6a81d34e7b0192422dc6
+
+The DOI for all versions of the US-RIIS is:
+https://doi.org/10.5066/P92DN8D8
+
+Ver. 2 of the US-RIIS is available in Microsoft Excel .xlsx and comma-delimited .csv formats. The data management plan (created with the DMP tool, https://www.dmptool.org) is called DataMgmtPlan_USRIISv2.docx. The FGDC compliant metadata file (edited in Metadata Wizard and mdEditor) is called FGDC_BDPmetadata_USRIISv2.xml. The Version History (this document, edited in Sublime Text) is called VersionHistory_USRIISv2.txt.
+
+Deprecated ver. 1.0 and its associated files, in addition to being accessible through https://doi.org/10.5066/P92DN8D8, are also downloadable from DOI https://doi.org/10.5066/P95XL09Q, individually or as a bundled .zip file. 
+NOTE: These files should only be used for comparative purposes with the newest version of the database.
+
+
+SUMMARY OF CHANGES:
+The US-RIIS decreased in size overall, due to the removal of synonyms, eradications, and errors (species not established or species actually native). The AK list grew by 2%, the HI shrank by 7%, and the L48 list shrank by 2%, although 309 new records were added to all lists. In updating the ver 2.0 list, 1,025 ver. 1.0 records were removed. There were 72 records removed as eradicated (53 from HI and 19 from L48). There were 45 failed introductions that were removed from the list (42 from HI and 3 from L48). The largest number of removed records, 413, were accidental introductions incorrectly assumed to be established (2 from AK, 194 from HI, and 217 from L48). There were 120 species removed because they were subsequently determined to be native to the locality (110 from HI and 10 from L48). There were 340 records removed because they were found to synonymous with existing records (3 from AK, 190 from HI, and 147 from L48). There were 34 records removed as misidentifications, 26 from HI and 8 from L48).
+There were 456 records added to the unofficial watchlist, of which 296 were removed from US-RIIS and 160 were obtained elsewhere, especially from the PestLens Newsletter. The watchlist and/or the deletions document are available upon request from us-riis@usgs.gov.
+
+
+WHAT'S NEW IN VER. 2.0?
+
+NEW FIELDS:
+establishmentMeans - Required. Controlled vocabulary, as per https://dwc.tdwg.org/em/, with values "introduced (alien, exotic, non-native, nonindigenous)" or "introduced: assisted colonization"
+isHybrid - Required. Controlled vocabulary, as per https://terms.tdwg.org/wiki/gna:isHybrid, with values "TRUE" or "FALSE"
+pathway - Optional. Controlled vocabulary as per https://www.cbd.int/doc/c/9d85/3bc5/d640f059d03acd717602cd76/sbstta-22-inf-09-en.pdf
+habitat - Optional. Controlled vocabulary as per https://www.iucnredlist.org/resources/habitat-classification-scheme
+taxonID - Required. As per https://dwc.tdwg.org/list/#dwc_taxonID
+WebLink - Required. Contains a URL or "not available online"
+
+NEWLY DEFINED FIELDS:
+degreeOfEstablishment - Required. Controlled vocabulary, as per https://dwc.tdwg.org/doe/, formerly called "Introduced or Invasive", but also redefined
+associatedTaxa - previously only for biocontrol species, now includes the name(s) of any known associated taxa, with a description of the kind of relationship, e.g., "biocontrol for:", "parasite of:", "preys on:"
+associatedReferences - previously containing URL only, now a combination of "Authority" and "Weblink" fields
+
+NEWLY NAMED FIELDS:
+degreeOfEstablishment - Required. Controlled vocabulary, as per https://dwc.tdwg.org/doe/, formerly called "Introduced or Invasive", but also redefined
+taxonRemarks - formerly called "Other Names"
+eventDate - formerly called "Acquisition Date"
+
+DETAILED FIELD DEFINITIONS:
+For detailed definitions of all 45 fields (on two sheets, with two fields duplicated on both sheets), see the DataDictionary sheet in the downloadable .xlsx version of the database (US-RIISv2.xlsx), or DataDictionary.csv within the .zip file of the text version of the database.
+
+
+______________________________________
+
+Comparison of ver. 1.0 (2021) and ver. 2.0 (2022)
+______________________________________
+
+2022 US-RIIS (ver. 2.0)
+14,700 records
+12,571 unique names
+ 5,829 references
+
+2021 US-RIIS (ver. 1.0)
+15,264 records
+12,981 unique names	
+ 5,981 references
+
+______________________________________
+
+                        2022 sublists   2021 sublists
+Alaska # records	   545              532
+# references	           336              323
+% in GBIF*	            95%              94%
+
+Hawaii # records**       5,628            6,075
+# references             1,540            1,809
+% in GBIF                   94%              90%
+
+Lower 48 # records**     8,527            8,657
+# references             4,715            4,694
+% in GBIF                   98%              87%
+
+______________________________________
+*   Global Biodiversity Information Facility (https://www.gbif.org/tools/species-lookup)
+**  It was determined in 2022 that within 2021 sublists there were many records not actually established, many synonymous records, some native species, and some misidentified species.
+______________________________________
+
+ADDITIONAL NOTES OF CLARIFICATION ON VER. 2.0:
+
+Establishment (best described in the degreeOfEstablishment field)
+We define 'established' as maintaining a breeding population in the location. Expert reviewers found scores of records where the cited authorities incorrectly asserted taxa are established.  These records were removed from the list and added to the unofficial informal watch list (which is available upon request from us-riis@usgs.gov). Where appropriate, we have also added the comment "Under eradication" to the occurrenceRemarks field of some records. There were also many records that are actually native and so removed.
+
+Taxonomy
+The taxonomy of many names has changed and continues to do so, and some names were disputed or misspelled. GBIF now provides the taxonomic backbone to the list, with ITIS as a secondary resource, and several other taxonomic authorities also cited. Where synonymies emerged or misspellings were encountered, records were edited and junior synonyms added to the taxonRemarks field, reducing the total number of records on the list. Redundant trinomials were excluded where there were no other related trinomials found in the locality. (For example, if only Poa annua and Poa annua annua are established in a region, one name, usually the trinomial, was removed as redundant.) 
+
+Corrections and Additions
+Please email any input you have to help improve the list to us at us-riis@usgs.gov. We welcome your input and are always seeking expert reviewers and coauthors for future updates. 
+
+-------------------------------------------
+
+DATASET MANAGER'S CONTACT INFORMATION:
+Annie Simpson
+us-riis@usgs.gov
++1 703-648-4281
+
+U.S. Geological Survey
+Science Analytics & Synthesis Program
+12201 Sunrise Valley Drive
+Mailstop 302
+Reston VA 20192
+USA
+
+-------------------------------------------
+
+SEE ALSO -- deprecated first version of this database: 
+
+Version 1.0 posted online November 30, 2021.
+
+Original file name: US-RIIS.xlsx 
+
+Accompanying files: .csv versions of MasterList, AuthorityReferences and DataDictionary (together in compressed file US-RIIScsvVersion.zip), DataManagementPlan_US-RIIS.pdf, and metadata file FGDC-BDPmetadata_US-RIIS.xml.
+All accompanying files are also downloadable as one file called UnitedStatesReg.zip.
+Ver. 1.0 of the US-RIIS is currently deprecated and should only be used for comparison with the current ver. 2.0.
+
+-------------------------------------------
+
+SEE ALSO -- Historically related data paper from 2018, which refers to a deprecated precursor of this database, a dataset with 3 versions:
+
+Simpson, Annie and Eyler, Meghan C., 2018, First comprehensive list of non-native species established in three major regions of the United States: U.S. Geological Survey Open-File Report 2018-1156, 15 p., https://doi.org/10.3133/ofr20181156.

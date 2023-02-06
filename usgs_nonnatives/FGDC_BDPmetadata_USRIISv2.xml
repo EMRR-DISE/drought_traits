@@ -1,0 +1,1017 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>Annie Simpson</origin>
+        <origin>Pam Fuller</origin>
+        <origin>Kevin Faccenda</origin>
+        <origin>Neal Evenhuis</origin>
+        <origin>Janis Matsunaga</origin>
+        <origin>Matt Bowser</origin>
+        <pubdate>20221104</pubdate>
+        <title>United States Register of Introduced and Invasive Species (US-RIIS) (ver. 2.0, November 2022)</title>
+        <geoform>.txt, .xlsx, .pdf, .csv</geoform>
+        <pubinfo>
+          <pubplace>Reston, Virginia, US</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <othercit>This version: https://doi.org/10.5066/P9KFFTOD 
+All versions: https://doi.org/10.5066/P92DN8D8</othercit>
+        <onlink>https://doi.org/10.5066/P9KFFTOD</onlink>
+        <onlink>https://doi.org/10.5066/P92DN8D8</onlink>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>Introduced (non-native) species that become established may eventually become invasive, so tracking all introduced species provides a baseline for effective modeling of species trends and interactions, geospatially and temporally. The United States Register of Introduced and Invasive Species (US-RIIS) (ver. 2.0, 2022, https://doi.org/10.5066/P9KFFTOD), as of 2022-10-23, is comprised of three lists, for the localities of Alaska (AK, with 545 records), Hawaii (HI, with 5,628 records), and the conterminous (or lower 48) United States (L48, with 8,527 records). Each includes introduced (non-native), established (reproducing) taxa that: are, or may become, invasive (harmful) in the locality; are not known to be harmful there; and/or have been used for biological control in the locality. To be included in the US-RIIS, a taxon must be non-native everywhere in the locality and established (reproducing) anywhere in the locality. Native pest species are not included. Each record has information on taxonomy, a vernacular name, establishment means (introduced unintentionally, or assisted colonization), degree of establishment (established, invasive, or widespread invasive), hybrid status, pathway of introduction (where available), habitat (where available), dates of introduction (where available), associated taxa (where applicable), native and introduced distributions (where available), and citations for the authoritative source(s) from which this information is drawn.</abstract>
+      <purpose>The purpose of the US-RIIS is to inform policy makers, land managers, the scientific community, and the public about which introduced (non-native) taxa are currently established (with reproducing populations) in Alaska, Hawaii, and/or the conterminous United States. Before becoming an invasive species that causes harm, a taxon must be both introduced and established. The US-RIIS catalogs all known introduced established species and provides a basis for prioritizing and managing invasive species in the United States. We anticipate this database and its associated unofficial watchlist (available upon request) will be used 1) to generate species lists for early detection and horizon scanning research, 2) to create introduced species lists for smaller areas within the U.S., and 3) to tag species occurrence records with an established, invasive, or widespread invasive status where the species record may not have been initially reported as introduced. This database contributes to the Global Register of Introduced and Invasive Species (https://griis.org). The US-RIIS is also made up of 3 checklist datasets periodically updated within the Global Biodiversity Information Facility (https://www.gbif.org).</purpose>
+      <supplinf>The dataset includes taxa from all seven Kingdoms: Animalia, Bacteria, Chromista, Fungi, Plantae, Protozoa, and Viruses. However, we recognize that Bacteria, Chromista, Fungi, Protozoa, and Viruses are underrepresented and are therefore incomplete within the US-RIIS.</supplinf>
+    </descript>
+    <timeperd>
+      <timeinfo>
+        <rngdates>
+          <begdate>04000101</begdate>
+          <enddate>20221011</enddate>
+        </rngdates>
+      </timeinfo>
+      <current>Estimated year of introduction of the taxon to the locality</current>
+    </timeperd>
+    <status>
+      <progress>Complete</progress>
+      <update>Annually</update>
+    </status>
+    <spdom>
+      <descgeog>Alaska, Hawaii, and the conterminous United States</descgeog>
+      <bounding>
+        <westbc>-169.1016</westbc>
+        <eastbc>-66.4453</eastbc>
+        <northbc>70.9165</northbc>
+        <southbc>17.8529</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>USGS Thesaurus</themekt>
+        <themekey>nonindigenous species</themekey>
+        <themekey>invasive species</themekey>
+      </theme>
+      <theme>
+        <themekt>SGS Biocomplexity Thesaurus; National Agricultural Library Thesaurus;</themekt>
+        <themekey>non-native species</themekey>
+        <themekey>introduced species</themekey>
+        <themekey>invasive species</themekey>
+        <themekey>inventory</themekey>
+        <themekey>species</themekey>
+        <themekey>biosurveillance</themekey>
+        <themekey>species checklist</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Metadata Identifier</themekt>
+        <themekey>USGS:62d59ae5d34e87fffb2dda99</themekey>
+      </theme>
+      <place>
+        <placekt>Geographic Names Information System (GNIS)</placekt>
+        <placekey>Alaska</placekey>
+        <placekey>Hawaii</placekey>
+        <placekey>Conterminous United States</placekey>
+      </place>
+    </keywords>
+    <taxonomy>
+      <keywtax>
+        <taxonkt>Global Biodiversity Information Facility (GBIF) Backbone Taxonomy https://doi.org/10.15468/39omei</taxonkt>
+        <taxonkey>Animalia</taxonkey>
+        <taxonkey>Bacteria</taxonkey>
+        <taxonkey>Chromista</taxonkey>
+        <taxonkey>Fungi</taxonkey>
+        <taxonkey>Plantae</taxonkey>
+        <taxonkey>Protozoa</taxonkey>
+        <taxonkey>Viruses</taxonkey>
+      </keywtax>
+      <taxoncl>
+        <taxonrn>Life</taxonrn>
+        <taxonrv>Life</taxonrv>
+        <taxoncl>
+          <taxonrn>Kingdom</taxonrn>
+          <taxonrv>Animalia</taxonrv>
+          <common>animals</common>
+          <common>taxonKey: 1</common>
+        </taxoncl>
+        <taxoncl>
+          <taxonrn>Kingdom</taxonrn>
+          <taxonrv>Bacteria</taxonrv>
+          <common>bacteria</common>
+          <common>taxonKey: 3</common>
+        </taxoncl>
+        <taxoncl>
+          <taxonrn>Kingdom</taxonrn>
+          <taxonrv>Chromista</taxonrv>
+          <common>chromists</common>
+          <common>taxonKey: 4</common>
+        </taxoncl>
+        <taxoncl>
+          <taxonrn>Kingdom</taxonrn>
+          <taxonrv>Fungi</taxonrv>
+          <common>fungi</common>
+          <common>taxonKey: 5</common>
+        </taxoncl>
+        <taxoncl>
+          <taxonrn>Kingdom</taxonrn>
+          <taxonrv>Plantae</taxonrv>
+          <common>plants</common>
+          <common>taxonKey: 6</common>
+        </taxoncl>
+        <taxoncl>
+          <taxonrn>Kingdom</taxonrn>
+          <taxonrv>Protozoa</taxonrv>
+          <common>protozoans</common>
+          <common>taxonKey: 7</common>
+        </taxoncl>
+        <taxoncl>
+          <taxonrn>Kingdom</taxonrn>
+          <taxonrv>Viruses</taxonrv>
+          <common>viruses</common>
+          <common>taxonKey: 8</common>
+        </taxoncl>
+      </taxoncl>
+    </taxonomy>
+    <accconst>unrestricted</accconst>
+    <useconst>This database, identified as "United States Register of Introduced and Invasive Species", has been approved for release by the U.S. Geological Survey (USGS). Although this database has been subjected to rigorous review and is substantially complete, the USGS reserves the right to revise the data pursuant to further analysis and review. Furthermore, the database is released on condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from its authorized or unauthorized use.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntperp>
+          <cntper>Annie Simpson</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntpos>biologist and information scientist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>USGS, 12201 Sunrise Valley Dr, Mailstop 302</address>
+          <city>Reston</city>
+          <state>Virginia</state>
+          <postal>20192</postal>
+          <country>United States of America</country>
+        </cntaddr>
+        <cntvoice>+1 703-648-4281</cntvoice>
+        <cntfax>703-648-4224</cntfax>
+        <cntemail>us-riis@usgs.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <datacred>Additional expert reviewers and contributors: Rachael Blake (data science), National Socio-Environmental Synthesis Center (SESYNC); M. Lourdes Chamorro (Curculionidae), USDA-ARS Entomology; Meghan C. Eyler (data reviewer), US Fish and Wildlife Service; Danielle Froelich (Hawaiian botany), SWCA Environmental Consultants; Thomas Henry (Heteroptera), USDA-ARS Entomology; Sam James (Annelida), Maharishi University; Nancy Khan (Hawaiian botany), Smithsonian Institution; Alex Konstantinov (Chrysomelidae), USDA-ARS Entomology; Andrew P. Landsman (Arachnida), National Park Service, C and O Canal National Historical Park; Christopher Lepczyk (Vertebrata), Auburn University; Sandy Liebhold (Coleoptera), USDA-FS; Steven Lingafelter (Cerambycidae), USDA-APHIS; Waltern Meshaka (Herpetology), State Museum of Pennsylvania; Gary L. Miller (Aphididae), USDA-ARS Entomology; Allen Norrbom (Tephritidae), USDA-ARS Entomology; Shyama Pagad (global invasive species), IUCN SSC Invasive Species Specialists' Group; John Reynolds (Annelida), Oligochaetology Laboratory; Alexander Salazar (Lycosidae), Miami University, Ohio; Elizabeth A. Sellers (data manager), USGS; Derek Sikes (Alaskan invertebrates), University of Alaska; Bruce A. Snyder (Annelida), Georgia College and State University; Alma Solis (Pyralid moths), USDS-ARS at the Smithsonian Institution; Rebecca Turner (data manager), Scion Inc., New Zealand; Darrell Ubick (Arachnida), Cal Academy; Warren Wagner (Hawaiian botany), Smithsonian Institution; Mark Wetzel (Annelida), Illinois Natural History Survey; and James D. Young (Lepidoptera), USDA-APHIS-PPQ-PHP. Our apologies to the many additional expert contributors who may have been omitted. We appreciate your assistance in the improvement of this dataset.</datacred>
+    <native>MacOS Big Sur version 11.6; Microsoft Excel for Mac Version 16.54</native>
+    <crossref>
+      <citeinfo>
+        <origin>Simpson, A.</origin>
+        <origin>Eyler, M.C.</origin>
+        <origin>Sikes, D.</origin>
+        <origin>Bowser, M.</origin>
+        <origin>Sellers, E.</origin>
+        <pubdate>20200915</pubdate>
+        <title>A comprehensive list of non-native species established in three major regions of the United States: Version 3.0</title>
+        <geoform>spreadsheet</geoform>
+        <pubinfo>
+          <pubplace>Reston, Virginia, US</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <othercit>Distributed by USGS' ScienceBase.</othercit>
+        <onlink>https://doi.org/10.5066/p9e5k160</onlink>
+      </citeinfo>
+    </crossref>
+    <crossref>
+      <citeinfo>
+        <origin>Simpson, A.</origin>
+        <origin>Eyler, M.C.</origin>
+        <pubdate>20181106</pubdate>
+        <title>First comprehensive list of non-native species established in three major regions of the United States</title>
+        <geoform>publication</geoform>
+        <serinfo>
+          <sername>USGS Open File Report</sername>
+          <issue>2018-1156</issue>
+        </serinfo>
+        <pubinfo>
+          <pubplace>Reston, Virginia, US</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <othercit>This publication is related to a precursor of the US-RIIS dataset.</othercit>
+        <onlink>https://doi.org/10.3133/ofr20181156</onlink>
+      </citeinfo>
+    </crossref>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>Values in the dataset are based on assertions made by the record's cited Authority. Tests to assess the accuracy of the values include searching for more than one Authority, checking for occurrences in GBIF for the taxon in the locality, and performing taxonomic validation. USGS scientific information in general is subject to a high degree of transparency about the data and methods used to facilitate the reproducibility of such information by other qualified scientists. These data were collected for publication, and their collection is documented to describe: the methods or techniques used to collect, process, and analyze them; the structure of the output; the description of their accuracy and precision; the standards used to describe their metadata; and the quality assurance processes. There were three kinds of entries that contributed to the creation of the U.S. Register of Introduced and Invasive Species, and each was subject to a different evaluation process: 1) Taxa occurring in the locality for a period of years, likely to have been noted by multiple authoritative sources. The record was generally assumed to be true when two or more unrelated authoritative sources listed the taxon as established in the locality. 2) Newly-occurring taxa to a locality. Multiple authoritative references were sought, but if not available, assertions by reputable sources (such as peer-reviewed literature, pest alerts, and government notices) were assumed to be true. 3) Outliers. Assertions made by an authoritative source for species unlikely to become established, those intercepted and removed, or those likely to be native, required multiple authoritative source assertions in order to be assumed true. All questionable outliers were assumed to be not yet established and were removed from the US-RIIS to an informal watch list, which is available from the authors upon request.</attraccr>
+    </attracc>
+    <logic>1) Taxa that are native to any area within a locality were not included on that locality's introduced species list. 2) Taxonomic disambiguation was carried out with a web service based on the Global Biodiversity Information Facility (https://www.gbif.org/tools/species-lookup) to remove synonyms, and where possible, misspellings. Unaccepted/invalid names were added to the Other Names field. 3) To remove duplicates and standardize delimited fields, sorting and filtering and flagging of duplicates was performed in Microsoft Excel. 4) Taxa not in GBIF or ITIS (the Integrated Taxonomic Information System, https://itis.gov, https://doi.org/10.5066/F7KH0KBK), misspellings, synonyms, and names not widely accepted were either moved to the taxonRemarks field or validated using resources such as the Atlas of Living Australia, 2022; World Register of Marine Species, 2022; Interim Register of Marine and Nonmarine Genera, 2022; International Committee on Taxonomy of Viruses, 2022; International Plant Names Index, 2022; Museum of Comparative Zoology at Harvard, 2022; National Center for Biotechnology Information, 2022; Index to Organism Names, 2022.</logic>
+    <complete>The dataset does not include introduced species for U.S. Territories (American Samoa, Guam, Northern Mariana Islands, Puerto Rico, U.S. Virgin Islands, or other outlying islands) unless they are also introduced and established in one or more of the three included localities. The dataset does not include introduced species that are not established (reproducing) in the locality. Intercepted and removed species are included in a separate informal watch list, which is available from the authors upon request. Native pest species are not included in the US-RIIS.</complete>
+    <lineage>
+      <method>
+        <methtype>The US Register of Introduced and Invasive Species was created through library and online research of more than 5,000 authoritative sources, which are all included at the record level of the dataset.</methtype>
+        <methdesc>The US Register of Introduced and Invasive Species was created through library and online research of more than 5,000 authoritative sources, which are all included at the record level of the dataset.</methdesc>
+      </method>
+      <srcinfo>
+        <srccite>
+          <citeinfo>
+            <origin>Annie Simpson</origin>
+            <origin>Meghan C. Eyler</origin>
+            <origin>Darryl Sykes</origin>
+            <origin>Matt Bowser</origin>
+            <origin>Elizabeth Sellers</origin>
+            <pubdate>20200915</pubdate>
+            <title>A comprehensive list of non-native species established in three major regions of the United States: Version 3.0</title>
+            <geoform>spreadsheet</geoform>
+            <pubinfo>
+              <pubplace>Reston, Virginia, US</pubplace>
+              <publish>U.S. Geological Survey</publish>
+            </pubinfo>
+            <othercit>https://www.sciencebase.gov/catalog/item/5b911a5ce4b0702d0e808588</othercit>
+            <onlink>https://doi.org/10.5066/P9E5K160</onlink>
+          </citeinfo>
+        </srccite>
+        <typesrc>All 3 deprecated versions of this related dataset are available at this DOI.</typesrc>
+        <srctime>
+          <timeinfo>
+            <rngdates>
+              <begdate>20120101</begdate>
+              <enddate>20200915</enddate>
+            </rngdates>
+          </timeinfo>
+          <srccurr>finite</srccurr>
+        </srctime>
+        <srccitea>NNSL_V3.0</srccitea>
+        <srccontr>This source is version 3.0 of the dataset, and previous versions are linked to this DOI.</srccontr>
+      </srcinfo>
+      <procstep>
+        <procdesc>The content of the dataset consists entirely of assertions (expert opinions) made by authoritative sources or references, which are an integral part of the dataset and included at the record level. In general, an original (rather than secondary) reference is preferred, but there are many perfectly valid secondary references. These types of authoritative sources are generally considered reliable:
+A website with a .gov designation 
+A website with a .edu or .org designation and clear contact information for that organization which indicates it is a professional and responsible source. 
+A website with a .com designation if the listed authority has contact information and is a known taxonomic or invasive species authority, or if it hosts a professional biological journal. For example: Florida Fish and Wildlife Conservation Commission (https://myfwc.com/) and Springer Publications (https://link.springer.com) 
+Professional peer reviewed journals. 
+Science books. 
+Government publications. 
+Professional society publications.</procdesc>
+        <procdate>20210930</procdate>
+      </procstep>
+    </lineage>
+  </dataqual>
+  <spdoinfo>
+    <indspref>GNIS placenames</indspref>
+    <direct>Point</direct>
+    <ptvctinf>
+      <sdtsterm>
+        <sdtstype>Label point</sdtstype>
+      </sdtsterm>
+    </ptvctinf>
+  </spdoinfo>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>USRIISv2_masterList.csv</enttypl>
+        <enttypd>Comma Separated Value (CSV) file containing the main data of ver. 2.0 of the database.
+These entities and attributes also describe the elements of the MasterList sheet of the excel database USRIISv2.xlsx</enttypd>
+        <enttypds>Producer defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>locality</attrlabl>
+        <attrdef>Abbreviation for the geographic area in question: Alaska, Hawaii, or remaining conterminous 48 states.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>AK</edomv>
+            <edomvd>the State of Alaska</edomvd>
+            <edomvds>Geographic Names Information System (GNIS)</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>HI</edomv>
+            <edomvd>the State of Hawaii</edomvd>
+            <edomvds>Geographic Names Information System (GNIS)</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>L48</edomv>
+            <edomvd>the conterminous 48 United States</edomvd>
+            <edomvds>Geographic Names Information System (GNIS)</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>scientificName</attrlabl>
+        <attrdef>The accepted binomial, trinomial, or quadrinomial Latin name as it appears in ITIS or GBIF or other name authority. All names are species rank or below. Does not include scientific name authorship.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>"Required on MasterList. From Darwin Core, but no name authorship is included. Note that hybrid names use the capital letter X (not the times symbol) and subspecies is abbreviated ssp. (not subsp.). An accepted or valid scientific name for the taxon, generally a binomial (genus and specific epithet). GBIF is the accepted authority for scientific names, followed by ITIS, but names included in this field that are not yet in ITIS or GBIF are also valid or accepted according to other taxonomic authorities consulted."</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>scientificNameAuthorship</attrlabl>
+        <attrdef>The authorship information for the scientificName formatted according to the conventions of the applicable nomenclatural code. Note this value is especially important where a scientific name is ambiguous.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>Optional on MasterList. Author(s) and sometimes year of the description of the scientificName. As provided by the Authority or by the taxonomic authority specified in taxonomicStatus.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>vernacularName</attrlabl>
+        <attrdef>"Common name, generally in English, for the taxon. Not uniquely assigned and may be misleading, i.e. ""Argid sawfly"" is a wasp, not a fly. The first letter of the first word and any proper names are capitalized."</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>examples: Abutilon; Tall bristlegrass; European pine shooter; Costa Rica night blooming cactus. In this dataset's predecessor (https://doi.org/10.5066/P9E5K160), this field was called "Common Name". Derived in one of many ways: provided by the Authority; suggested by expert reviewer; chosen from an internet search; a generic description of the taxonomic group (generally at the genus or family level).</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>taxonRank</attrlabl>
+        <attrdef>The relative level of the taxon within its taxonomic hierarchy.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>Species</edomv>
+            <edomvd>Binomial scientific name. Living organisms consisting of similar individuals capable of exchanging genes or interbreeding.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Subspecies</edomv>
+            <edomvd>Trinomial scientific name. A taxonomic category that ranks below species, usually a fairly permanent geographically isolated race.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Variety</edomv>
+            <edomvd>A taxonomic rank below that of species and subspecies, but above that of form.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Form</edomv>
+            <edomvd>"A secondary infraspecific taxon, below that of variety."</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Hybrid</edomv>
+            <edomvd>Offspring resulting from reproduction of organisms of different genera, species, or varieties.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>establishmentMeans</attrlabl>
+        <attrdef>"New term. Describes whether species was introduced by human activity, or if known, purposely introduced. Controlled vocabulary of two terms. In this dataset, other possible terms described in Darwin Core do not apply. Required on MasterList. Currently 2 terms in use. Previously, more than 11 terms have been used in this field's predescessor. Value is generally derived from the authority, but may also be designated during expert review, or be based on internet search."</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>introduced (alien, exotic, non-native, nonindigenous)</edomv>
+            <edomvd>Establishment of a taxon by human agency into an area that is not part of its natural range.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>"introduced: assisted colonization"</edomv>
+            <edomvd>Establishment of a taxon specifically with the intention of creating a self-sustaining wild population in an area that is not part of the taxon's natural range.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>degreeOfEstablishment</attrlabl>
+        <attrdef>"Required on MasterList. Formerly called ""Introduced or Invasive"". Describes the kind of presence in the locality for the species and the degree to which an organism survives, reproduces, and expands its range at the given place and time. Controlled vocabulary of three terms. In this dataset, other possible terms described in Darwin Core do not apply. Use of the term ""widespread invasive (category E)"" in the dataset is still under development and may be incompletely portrayed. Note that in this dataset the term ""invasive"" connotates harmful or likely to cause harm. Term abbreviations are as defined in Blackburn et al. 2011. https://doi.org/10.1016/j.tree.2011.03.023"</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>established (category C3)</edomv>
+            <edomvd>Individuals surviving outside of captivity or cultivation in a location. Reproduction occurring, and population self-sustaining.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>invasive (category D2)</edomv>
+            <edomvd>Self-sustaining population outside of captivity or cultivation, that causes or is likely to cause harm.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>widespread invasive (category E)</edomv>
+            <edomvd>invasive with individuals dispersing, surviving and reproducing at multiple sites across a spectrum of habitats and geographic range.</edomvd>
+            <edomvds>Darwin Core</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>isHybrid</attrlabl>
+        <attrdef>"Required on MasterList. New term. Flag indicating a hybrid organism. This does not have to be reflected in the name, but can be based on other studies like chromosome numbers. From https://terms.tdwg.org/wiki/gna:isHybrid. NOTE: due to the manual nature of deriving this field's value, it is prone to human error; e.g., some actual hybrid names may mistakenly carry the value ""FALSE""."</attrdef>
+        <attrdefs>Darwin Core Global Names Architecture</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>"TRUE"</edomv>
+            <edomvd>Affirmative.</edomvd>
+            <edomvds>Darwin Core GNA</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>"FALSE"</edomv>
+            <edomvd>Negative.</edomvd>
+            <edomvds>Darwin Core GNA</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>pathway</attrlabl>
+        <attrdef>New term. Provides information about the process by which an Organism came to be in a given place at a given time.</attrdef>
+        <attrdefs>Convention on Biological Diversity</attrdefs>
+        <attrdomv>
+          <udom>"Optional on MasterList. Controlled vocabulary as per https://www.cbd.int/doc/c/9d85/3bc5/d640f059d03acd717602cd76/sbstta-22-inf-09-en.pdf (CBD/SBSTTA/22/INF/9, 2018). Accepted terms: agriculture (including biofuel feedstocks) | angling/fishing equipment | aquaculture/mariculture | biological control | botanic garden/zoo/aquaria (excluding domestic aquaria) | conservation or wildlife management | container/bulk | contaminant nursery material | contaminant on animals (except parasites, organisms transported by host/vector) | contaminant on plants (except parasites, species transported by host/vector) | contaminated bait | corridor | corridor and dispersal | erosion control | escape from confinement | farmed animals (including animals left under limited control) | fishery in the wild | food contaminant (including of live food) | forestry (including reforestation) | fur farms | hitchhikers in or on airplane | hitchhikers on ship/boat (excluding ballast water and hull fouling) | horticulture | hunting | intentional | interconnected waterways/basins/seas | landscape improvement | live food and live bait | machinery/equipment | natural dispersal across borders of invasive alien organisms | organic packing material, in particular wood packaging | ornamental purpose other than horticulture | other escape from confinement | other intentional release | other means of transport | parasites on animals (including organisms transported by host and vector) | parasites on plants (including species transported by host and vector) | pathway concept scheme | people and their luggage/equipment (in particular tourism) | pet/aquarium/terrarium species (including live food for such species) | release in nature | released for use | research and ex-situ breeding (in facilities) | seed contaminant | ship/boat ballast water | ship/boat hull fouling | timber trade | transport-contaminant | transport-stowaway | transportation of habitat material (soil, vegetation, wood etc.) | tunnels and land bridges | unaided | unintentional | vehicles (car, train, etc.)  NOTE: Because the controlled vocabulary above is very detailed, using the appropriate umbrella term is also acceptable: Release in nature | Escape from confinement | Transport - contaminant | Transport - stowaway | Corridor | Unaided  NOTE: use of the term 'unaided' in this database implies that human-influenced changes such as desertification or deforestation enabled the species to move into areas beyond its natural range, and so is considered indirect assistance."</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>habitat</attrlabl>
+        <attrdef>New term. Semicolon-separated list of major habitat classification as defined by the International Union for the Conservation of Nature (IUCN) in which a species is known to exist.</attrdef>
+        <attrdefs>International Union for the Conservation of Nature (IUCN)</attrdefs>
+        <attrdomv>
+          <udom>"Optional on MasterList. Vocabulary taken from headings described here: https://www.iucnredlist.org/resources/habitat-classification-scheme (in the IUCN Habitats Classification Scheme (Version 3.1)). Controlled vocabulary: Forest; Savanna; Shrubland; Grassland; Wetlands (inland); Rocky Areas (e.g., inland cliffs, mountain peaks); Caves and Subterranean Habitats (non-aquatic); Desert; Marine Neritic; Marine Oceanic; Marine Deep Ocean Floor (Benthic and Demersal); Marine Intertidal; Marine Coastal/Supratidal; Artificial - Terrestrial; Artificial - Aquatic; Introduced Vegetation; Other; Unknown"</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Biocontrol</attrlabl>
+        <attrdef>Optional on MasterList. Indication of whether the taxon is used to control a pest species. (May be purposely introduced or accidental.)</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>Yes</edomv>
+            <edomvd>Affirmative.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>associatedTaxa</attrlabl>
+        <attrdef>The name(s) of associated taxa, with a description of the kind of relationship.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>"Optional on MasterList. Not a controlled vocabulary. Examples: biocontrol for: Arundo donax; biocontrol for: Insecta; biocontrol for: Culicidae; biocontrol for: Opuntia; infests: Maize; parasite of: earth worms; predator of: eggs of Lymantria dispar (larvae). Formerly called ""Target Species"" (and listed only biocontrol species names)."</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>eventRemarks</attrlabl>
+        <attrdef>"Optional on MasterList. Text descriptor of approximate date of introduction of the taxon to the locality. May include separate authority reference if cited Authority does not contain this information. Occasionally derived from date of publication of the Authority. Formerly called ""Approximate Introduction Date""."</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>Examples: 1954; 1951 (Reynolds (2018)); ~400; prior to 1780.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>IntroDateNumber</attrlabl>
+        <attrdef>Required only if Approximate Introduction Date has a value. Consists of a 3- (e.g., 400 for some pre-Polynesian introductions in Hawaii) or 4-digit year value that is either the exact or the approximate year of introduction of the taxon to the locality. To derive this value from the Approximate Introduction Date value (because this field is used in analyses), these rules are followed: Remove approximation symbol (~) to get exact year. When a date range is provided, choose the middle year, rounding up, e.g. 1990s = 1995, 18th century = 1750, 1968-1971 = 1970, 2000s = 2005. When before, prior, or lesser than symbols are used, subtract 5 years. When "late" or "early" are used, use the 1/5th mark, e.g., late 1800s = 1880, early 1960s = 1962.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>400</rdommin>
+            <rdommax>2020</rdommax>
+            <attrunit>year</attrunit>
+            <attrmres>1.0</attrmres>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>taxonRemarks</attrlabl>
+        <attrdef>Optional on MasterList. Other scientific name(s) provided by the Authority or widely in use; may be a misspelling; may be a widely preferred name. If more than one name is listed, names are separated by a semicolon and a space (; ).</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>Called providedSciName in predecessor database (Simpson et al., 2020, https://doi.org/10.5066/P9E5K160), but content has been greatly expanded here. May include misspelled names. Examples: Ceratina (Ceratina) arizonensis; Rana catesbeiana; Rattus ratus</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>kingdom</attrlabl>
+        <attrdef>Required on MasterList. Largest taxonomic grouping; we follow the seven kingdom classification system.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>Plantae</edomv>
+            <edomvd>plants</edomvd>
+            <edomvds>Global Biodiversity Information Facility</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Animalia</edomv>
+            <edomvd>animals</edomvd>
+            <edomvds>Global Biodiversity Information Facility</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Fungi</edomv>
+            <edomvd>fungal organisms</edomvd>
+            <edomvds>Global Biodiversity Information Facility</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Chromista</edomv>
+            <edomvd>chromists</edomvd>
+            <edomvds>Global Biodiversity Information Facility</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Viruses</edomv>
+            <edomvd>viruses</edomvd>
+            <edomvds>Global Biodiversity Information Facility</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Protozoa</edomv>
+            <edomvd>protozoans</edomvd>
+            <edomvds>Global Biodiversity Information Facility</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Bacteria</edomv>
+            <edomvd>microscopic unicellular organisms</edomvd>
+            <edomvds>Global Biodiversity Information Facility</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>phylum</attrlabl>
+        <attrdef>Required on MasterList. Next largest taxonomic grouping, below Kingdom.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>In database's predecessor (Simpson et al., 2020, https://doi.org/10.5066/P9E5K160), called Phylum/Division.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>class</attrlabl>
+        <attrdef>Required on MasterList. Next largest taxonomic grouping, below Phylum. Occasionally value is undefined.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>In database's predecessor (Simpson et al., 2020, https://doi.org/10.5066/P9E5K160), field name was Class.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>order</attrlabl>
+        <attrdef>Required on MasterList. Next largest taxonomic grouping, below Class. Occasionally value is undefined.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>In database's predecessor (Simpson et al., 2020, https://doi.org/10.5066/P9E5K160), field name was Order.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>family</attrlabl>
+        <attrdef>Required on MasterList. Next largest taxonomic grouping, below Order. Occasionally value is undefined.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>In database's predecessor (Simpson et al., 2020, https://doi.org/10.5066/P9E5K160), field name was Family.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>taxonomicStatus</attrlabl>
+        <attrdef>Required on MasterList. Description of the status of the scientificName, using a controlled vocabulary, indicating which authority recognizes the scientificName as valid or accepted. Occasionally a hybrid will have a value of "n/a".</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>Possible values: Accepted ALA; Accepted GBIF; Accepted GNI; Accepted ICTV; Accepted IndexFungorum; Accepted ION; Accepted IRMNG; Accepted ITIS; Accepted MCZ; Accepted NCBI; Accepted uBIO. Other authorities added as needed.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>ITIS_TSN</attrlabl>
+        <attrdef>Optional on MasterList. ITIS Taxonomic Serial Number for the scientific name, where applicable, uniquely assigned and persistent.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>Integer value treated as text.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>GBIF_taxonKey</attrlabl>
+        <attrdef>Optional on MasterList. GBIF taxon key, an identifying number for the taxon, uniquely assigned and persistent.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>Integer value treated as text.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>taxonID</attrlabl>
+        <attrdef>Required on MasterList. An identifier for the taxonomic name recognized by the organization in the taxonomicStatus field. May be a Universal Resource Name (URN), aUniversal Resource Locator (URL), or an identifier specific to the data set.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>"Occasionally a hybrid name is not recognized by any taxonomic authority. In that case its taxonomicStatus = ""n/a"" and it is provided with a unique taxonID value prefixed by ""disputed"""</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Authority</attrlabl>
+        <attrdef>Required on MasterList and AuthorityReferences. Authoritative reference making the assertion that the taxon is non-native to the entire locality in question and established (reproducing) somewhere within the locality. Follows the format of AuthorityName (DateOfPublication)</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>Format: Surname(s) (year of publication). This field appears on both MasterList and AuthorityReferences sheets.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>WebLink</attrlabl>
+        <attrdef>"Required on MasterList and AuthorityReferences. New name for field called associatedReferences in ver. 1.0 (Simpson et al., 2021, https://doi.org/10.5066/P95XL09Q), which is a field that is retained in version 2.0 of the database but newly defined as per Darwin Core. WebLink consists of URL for the cited Authority, or the phrase ""not available online"". Link may not be current. The full reference to the cited Authority appears only on the AuthorityReferences sheet. In this database's predecessor, this field was called websiteURL. Every effort is made to include a valid link to the resource. Users are encouraged to email US-RIIS@usgs.gov for assistance to find the Authority, if needed."</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>"Format: https://zookeys.pensoft.net/articles.php?id=3634; Not available online; https://doi.org/10.1007/s10530-010-9800-1"</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>associatedReferences</attrlabl>
+        <attrdef>Required on MasterList. New content for a field that previously only contained a URL. No longer appearing on AuthorityReferences sheet, because it is called Weblink there. A combination of the Authority and Weblink fields, or if reference is not available on line, an abbreviated citation.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>"In this database's predecessor (Simpson et al., 2020, https://doi.org/10.5066/P9E5K160), this field was called websiteURL and only contained URL or the value ""not available online""."</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>eventDate</attrlabl>
+        <attrdef>"Required on MasterList. Date of creation of the record (its inclusion in the dataset) in the format YYYY-MM-DD."</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>"Since the content of this field is not automatically generated, it is subject to human error. Previously called ""Acquisition Date"."</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>modified</attrlabl>
+        <attrdef>Required on MasterList. Date of last change to the record, in the format YYYY-MM-DD.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>"Since the content of this field is not automatically generated, it is subject to human error. Formerly called ""Last Update""."</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Update_Remarks</attrlabl>
+        <attrdef>"Optional on MasterList. Text field describing updates to the record, with newest modifications first and semicolons separating updates from different dates."</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>"Example: Changed reference; Added taxonRemarks, Deleted duplicate record"</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>occurrenceRemarks</attrlabl>
+        <attrdef>"Optional on MasterList. Comments about the taxon separated by semicolons, or information extracted from the text of the Authority, often about its native range and US distribution."</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>Examples: Under eradication; Purposely introduced; spreading quickly; taxonomy undergoing change</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>occurrenceID</attrlabl>
+        <attrdef>Required on MasterList. An identifier for the Organism instance (at the record level). Controlled vocabulary that is manually generated using an ordinal number that is not repeated, prefixed by the dataset's abbreviated name (USRIIS), the record's locality (AK, HI, or L48), and the record's kingdom.</attrdef>
+        <attrdefs>Darwin Core</attrdefs>
+        <attrdomv>
+          <udom>Example: USRIIS-L48-Plantae11393</udom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <detailed>
+      <enttyp>
+        <enttypl>USRIISv2_AuthorityReferences.csv</enttypl>
+        <enttypd>Comma Separated Value (CSV) file containing Authority References. These entities and attributes also describe the elements of the AuthorityReferences sheet of the excel database USRIISv2.xlsx</enttypd>
+        <enttypds>Producer defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>Authority</attrlabl>
+        <attrdef>Required on MasterList and AuthorityReferences. Authoritative reference making the assertion that the taxon is non-native to the entire locality in question and established (reproducing) somewhere within the locality. Follows the format of AuthorityName (DateOfPublication).</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>Format: Surname(s) (year of publication). This field appears on both MasterList and AuthorityReferences sheets.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>WebLink</attrlabl>
+        <attrdef>"Required on MasterList and AuthorityReferences. New name for field called associatedReferences in ver. 1.0 (Simpson et al., 2021, https://doi.org/10.5066/P95XL09Q), a field that is retained in database but newly defined as per Darwin Core. WebLink consists of URL for the cited Authority, or the phrase ""not available online"". Link may not be current. The full reference to the cited Authority appears only on the AuthorityReferences sheet. In this database's predecessor, this field was called websiteURL. Every effort is made to include a valid link to the resource. Users are encouraged to email US-RIIS@usgs.gov for assistance to find the Authority, if needed."</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>"Format: https://zookeys.pensoft.net/articles.php?id=3634; Not available online; https://doi.org/10.1007/s10530-010-9800-1"</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Source_Type</attrlabl>
+        <attrdef>Description of the kind of Authority. Not strictly a controlled vocabulary, but a limited number of terms are in use, based on those used by the Integrated Taxonomic Information System (https://itis.gov, https://doi.org/10.5066/F7KH0KBK) to describe supporting/source documentation.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>Article</edomv>
+            <edomvd>Generally, a peer reviewed publication appearing in a journal or book.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Book</edomv>
+            <edomvd>Full length manuscript with multiple chapters.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Pest Advisory Alert</edomv>
+            <edomvd>Web- or email-based communication from a government body warning of a newly established introduction.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Factsheet</edomv>
+            <edomvd>Web-based information document.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Database</edomv>
+            <edomvd>Complex list of resources and related documents that may be web based.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Handbook</edomv>
+            <edomvd>User's guide to a group of species.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Environmental Assessment</edomv>
+            <edomvd>Scientific summary of species' impact on an area.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Technical Report</edomv>
+            <edomvd>Scientific publication that is not periodical in nature.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Dissertation</edomv>
+            <edomvd>Thesis.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Ecological Risk Screening</edomv>
+            <edomvd>"Scientific study summarizing species' anticipated environmental impacts."</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Website</edomv>
+            <edomvd>Science-based material appearing on a web page.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Source</attrlabl>
+        <attrdef>Specific name of the source of the published authoritative reference.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS. Examples: Alaska Natural Heritage Program; Bishop Museum; U.S. Department of Agriculture (USDA) Natural Resources Conservation Service (NRCS)</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Version</attrlabl>
+        <attrdef>An indication of which version of a publication has been used, used to distinguish it from other similar publications.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS. Examples: Fourth edition; undefined; v.156, No. 2</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Reference_Author</attrlabl>
+        <attrdef>Author(s) and editor(s) of the publication.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS. Examples: Ray, Gary L.; Sherley, Greg (ed.); Washington Invasive Species Council</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Title</attrlabl>
+        <attrdef>The identifying name of a contribution within a printed reference, such as an article contained in a journal or a chapter in a book.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS. Examples: Algaebase; Fish: introduced species; The PLANTS Database</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Publication_Name</attrlabl>
+        <attrdef>The identifying name of an overall printed reference (such as a book or journal). Occasionally this will be a repeat of the content in the Title field.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Listed_Publication_Date</attrlabl>
+        <attrdef>The date printed on a journal or other printed reference, in the format YYYY-MM-YY.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS. If month and/or day are unknown, '01' is used.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Publisher</attrlabl>
+        <attrdef>Producer of the printed or digital reference.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS. Examples: Allen Press; Checklist; Zookeys</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Publication_Place</attrlabl>
+        <attrdef>City, (state, and country) of the publisher, with minimal abbreviations.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS. Examples: Sofia, Bulgaria; St. Paul, Minnesota; Washington, DC</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>ISBN</attrlabl>
+        <attrdef>International Standard Book Number. A unique numeric identifier for books.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Example: 978-3-16-148410-0</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>ISSN</attrlabl>
+        <attrdef>International Standard Serial Number. A unique numeric identifier for periodicals</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Eight-digit serial number.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Pages</attrlabl>
+        <attrdef>The total number of pages in the book; the page range for a journal article; or, the exact page of the relevant information.</attrdef>
+        <attrdefs>Integrated Taxonomic Information System</attrdefs>
+        <attrdomv>
+          <udom>Field's content type and syntax is defined by ITIS. Examples: 1-8; 105 p.; 2</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Publication_Remarks</attrlabl>
+        <attrdef>Any pertinent information about the citing publication (the Authority).</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>Example: Full book URL: http://manoa.hawaii.edu/hpicesu/book/1992_chap/</udom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <detailed>
+      <enttyp>
+        <enttypl>USRIIS_DataDictionary.csv</enttypl>
+        <enttypd>Comma Separated Value (CSV) file containing data dictionary. These entities and attributes also describe the elements on the DataDictionary sheet of the excel database USRIIS.xlsx</enttypd>
+        <enttypds>Producer Defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>Field Name or Abbreviation</attrlabl>
+        <attrdef>The column header used in MasterList and/or AuthorityReferences sheets or csv files and the abbreviations used in controlled vocabulary terms.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>If the field's contents follows the Darwin Core Metadata Standard, it is in camelCase. If the field is user defined, it is in Title Case. If it is an abbreviation, it appears in ALL CAPS.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Definition</attrlabl>
+        <attrdef>A description of the content of the field.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>If the field name is an acronym or abbreviation, its definition is the acronym or abbreviation spelled out.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Data Type</attrlabl>
+        <attrdef>The kind of data that appears in the field. Controlled vocabulary.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>text</edomv>
+            <edomvd>Characters without a numeric or date connotation.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>year</edomv>
+            <edomvd>Four-digit date for the annum, YYYY.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>integer</edomv>
+            <edomvd>A whole number, which is treated as text.</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>date</edomv>
+            <edomvd>Formatted as ISO 8601 YYYY-MM-DD. Example: 2021-10-31</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Examples or controlled vocabulary (CV)</attrlabl>
+        <attrdef>Provides examples of acceptable types of content or lists controlled vocabulary terms.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>The term "n/a" means not applicable.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Comment</attrlabl>
+        <attrdef>Describes where field is optional or required, if it is Darwin Core compatible, and the origins of the field.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>"Example: ""Optional on MasterList. New field, not in this dataset's predecessor."""</udom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <overview>
+      <eaover>This section describes the fields and field content of the three UTF-8 comma separated text (csv) version files of the database, which also correspond to each of the three sheets included the xlsx database workbook (USRIISv2.xlsx).</eaover>
+      <eadetcit>-- NEEDS UPDATING -- Simpson, A., Fuller, P., Faccenda, K., Evenhuis, N., Matsunaga, J., and Bowser, M., 2022, United States Register of Introduced and Invasive Species (US-RIIS) (ver. 2.0, 2022): U.S. Geological Survey data release, https://doi.org/10.5066/P9KFFTOD; All versions at https://doi.org/10.5066/P92DN8D8.</eadetcit>
+    </overview>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>U.S. Geological Survey - ScienceBase</cntorg>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>Denver Federal Center, Building 810, Mail Stop 302</address>
+          <city>Denver</city>
+          <state>CO</state>
+          <postal>80225</postal>
+          <country>United States of America</country>
+        </cntaddr>
+        <cntvoice>1-888-275-8747</cntvoice>
+        <cntemail>sciencebase@usgs.gov</cntemail>
+      </cntinfo>
+    </distrib>
+    <resdesc>The dataset is freely available on the web, with its latest version always made available at https://doi.org/10.5066/P92DN8D8</resdesc>
+    <distliab>GENERAL DISCLAIMER: Neither the U.S. Government, the Department of the Interior, nor the USGS, nor any of their employees, contractors, or subcontractors, make any warranty, express or implied, nor assume any legal liability or responsibility for the accuracy, completeness, or usefulness of any information, apparatus, product, or process disclosed, nor represent that its use would not infringe on privately owned rights. Hypertext links and other references to non-USGS products and services are provided for information only and do not constitute endorsement or warranty by the USGS, U.S. Department of the Interior, or U.S. Government, as to their suitability, content, usefulness, functioning, completeness, or accuracy. DISCLAIMER FOR APPROVED DATABASE: This database is identified as the United States Register of Introduced and Invasive Species for release by the U.S. Geological Survey (USGS). Although this database has been subjected to rigorous review and is substantially complete, the USGS reserves the right to revise the data pursuant to further analysis and review. Furthermore, the database is released on condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from its authorized or unauthorized use.</distliab>
+    <stdorder>
+      <digform>
+        <digtinfo>
+          <formname>Digital Data: XLSX, CSV, PDF, TXT, XML, ZIP</formname>
+          <formvern>none</formvern>
+          <formspec>Digital Data: XLSX, CSV, PDF, TXT, XML, ZIP</formspec>
+        </digtinfo>
+        <digtopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>https://doi.org/10.5066/P9KFFTOD</networkr>
+              </networka>
+            </computer>
+          </onlinopt>
+        </digtopt>
+      </digform>
+      <fees>There are no fees associated with this data.</fees>
+    </stdorder>
+    <techpreq>The provided content is made available in varying formats (.csv, .pdf, .txt, .xlsx, .xml, and .zip). The user must have software capable of opening and interpreting the files, such as a browser, pdf reader, text reader, and/or spreadsheet application.</techpreq>
+  </distinfo>
+  <metainfo>
+    <metd>20221104</metd>
+    <metc>
+      <cntinfo>
+        <cntperp>
+          <cntper>Annie Simpson</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntpos>biologist and information scientist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>USGS, 12201 Sunrise Valley Dr, Mailstop 302</address>
+          <city>Reston</city>
+          <state>Virginia</state>
+          <postal>20192</postal>
+          <country>United States of America</country>
+        </cntaddr>
+        <cntvoice>+1 703-648-4281</cntvoice>
+        <cntemail>us-riis@usgs.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Biological Data Profile of the Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001.1-1999</metstdv>
+  </metainfo>
+</metadata>
