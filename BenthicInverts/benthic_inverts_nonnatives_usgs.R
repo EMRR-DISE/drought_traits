@@ -22,6 +22,8 @@ target_tax <- read_csv("./BenthicInverts/benthic_taxonomy_common5_2023-02-02.csv
 #quick summary of results: Identified 9 of my target taxa as nonnnative
 #obvously, just because a target taxon doesn't match the USGS database
 #doesn't necessarily mean it is native
+#for example, a species native to the East Coast but not West Coast wouldn't 
+#be on USGS list (I think)
 
 #quick look at column names of two dfs
 glimpse(target_tax)
@@ -53,9 +55,6 @@ match_gn <-  inner_join(target_tax,nonnatives_gf,by=c("genus"="genus"))  %>%
   relocate(scientificName,.after=taxon)
 #probably mostly not useful results
 #BUT did pick up a different spelling for Melanoides tuberculata (ie,Melanoides tuberculatus)
-
-
-
 
 
 
