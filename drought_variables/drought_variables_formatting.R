@@ -62,19 +62,19 @@ dperiod <- read_csv("./drought_variables/drought_periods_mahardja2021.csv")
 #format delta inflow data----------
 #calculate annual totals
 #units are cubic feet per second
-#based on standard water year - years 1967 to 2021
+#based on adjusted water year (Dec - Nov) - years 1967 to 2021
 annual_inflow <- inflow %>% 
   mutate(
     # Dates are in two different formats
     Date = parse_date_time(Date, c("mdY", "Ymd")),
     Month = month(Date),
     Year = year(Date),
-    WY = if_else(Month > 9, Year + 1, Year)
+    WY_adj = if_else(Month > 11, Year + 1, Year)
   ) %>% 
-  filter(WY > 1966) %>% 
-  group_by(WY) %>% 
+  filter(WY_adj > 1966) %>% 
+  group_by(WY_adj) %>% 
   summarise(inflow_annual_cfs = sum(TOT)) %>% 
-  rename(year = WY)
+  rename(year = WY_adj)
 
 #format water year type data---------
 #this should be based on standard water year
@@ -95,5 +95,5 @@ drought_vars <- df_list %>%
 #maybe make a column that is water year type as ordinal category instead of factors
 
 #write file
-#write_csv(drought_vars,"./drought_variables/drought_variables.csv")
+write_csv(drought_vars,"./drought_variables/drought_variables.csv")
 
