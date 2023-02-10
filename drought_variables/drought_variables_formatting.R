@@ -59,6 +59,12 @@ iep_drought <- read_csv("https://raw.githubusercontent.com/InteragencyEcological
 #years 1967 to 2021
 dperiod <- read_csv("./drought_variables/drought_periods_mahardja2021.csv")
 
+# Annual averages of environmental variables from Rosie
+# These are most likely based on an adjusted calendar water year (Dec - Nov)
+# Years 1975-2021
+# At some point it would be good to get the processing code for this data
+load("drought_variables/DroughtNick.Rdata")
+
 #format delta inflow data----------
 #calculate annual totals
 #units are cubic feet per second
@@ -85,11 +91,22 @@ water_year <- iep_drought %>%
   arrange(year) %>% 
   glimpse()
 
-#join the three data sets by year------------
-#again, note that the year range still differs between data sets
-#and year is defined differently for inflow than the other variables (both standard water year)
 
-df_list <- list(dperiod, water_year, annual_inflow)
+# format environmental variables ------------------------------------------
+
+df_env <- Drought4Nick %>% 
+  # remove log-transformed values
+  filter(!str_detect(Metric, "^log")) %>% 
+  # pivot data wide based on Metric
+  select(year = Year, Metric, Value) %>% 
+  pivot_wider(names_from = Metric, values_from = Value)
+
+#join the four data sets by year------------
+#again, note that the year range still differs between data sets
+#and year is defined differently for inflow and the environmental variables than
+  #the other variables (both standard water year)
+
+df_list <- list(dperiod, water_year, annual_inflow, df_env)
 drought_vars <- df_list %>% 
   reduce(full_join)
 #maybe make a column that is water year type as ordinal category instead of factors
