@@ -1,0 +1,114 @@
+---
+title: "Explore Environmental Predictors"
+author: "Dave Bosworth"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document: 
+    code_folding: show
+    toc: true
+    toc_float:
+      collapsed: false
+editor_options: 
+  chunk_output_type: console
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = here::here("docs"),
+      envir = globalenv()
+    )
+    })
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+Explore the environmental predictor variables for the drought traits analysis. We know that we are going to include annual total inflow as one of the predictors, so we need to determine if we are going to include one or more additional predictor variables. The possibilities are nitrate + nitrite, ammonia, ortho-phosphate, salinity, Secchi depth, and water temperature. We'll first explore if any of these additional variables are strongly correlated with each other or with inflow. Next we'll run a Principal Component Analysis (PCA) on all possible environmental variables to be used for quantitative variable selection.
+
+# Global code and functions
+
+```{r load packages, message = FALSE, warning = FALSE}
+# Load packages
+library(tidyverse)
+library(ggforce)
+library(corrr)
+library(here)
+```
+
+Display current versions of R and packages used for this analysis:
+
+```{r print session info}
+devtools::session_info()
+```
+
+# Import and Prepare Data
+
+```{r import data, message = FALSE}
+df_env <- read_csv(here("drought_variables/drought_variables.csv"))
+```
+
+Prepare the data by only including inflow, the additional environmental predictor variables, and Year. Also, remove any rows with `NA` values. Note that we only have data for the additional environmental predictor variables from 1975-2021, and we're missing ortho-phosphate data for 2021 for some reason, which we should probably figure out at some point.
+
+```{r prepare data}
+df_env_c <- df_env %>% 
+  select(where(is.numeric) & !starts_with("drought")) %>% 
+  drop_na() %>% 
+  rename(
+    Inflow = inflow_annual_cfs,
+    OrthoPhos = Phos
+  )
+
+# View data frame
+print(df_env_c, n = 50)
+```
+
+# Correlations among variables
+
+## Pearson's Correlation Coefficients
+
+```{r calc and print corr coeff}
+df_env_corr <- df_env_c %>% 
+  select(-year) %>% 
+  correlate()
+
+fashion(df_env_corr, leading_zeros = TRUE)
+```
+
+## Plots
+
+### Scatterplots
+
+```{r corr scatterplot, fig.width = 8, fig.height = 8}
+df_env_c %>% 
+  select(-year) %>% 
+  ggplot(aes(x = .panel_x, y = .panel_y)) +
+  geom_point(size = 1) +
+  facet_matrix(
+    vars(everything()), 
+    layer.diag = FALSE
+  ) +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+### Correlation plots
+
+```{r corr coeff plot}
+df_env_corr %>% 
+  rplot(print_cor = TRUE) + 
+  ggtitle("Correlation Plot - Pearson's correlation coefficients") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+```{r corr network plot}
+df_env_corr %>% 
+  network_plot(min_cor = 0.5) +
+  labs(
+    title = "Network Plot - Pearson's correlation coefficients",
+    subtitle = "Only showing variables with coefficients >= 0.5"
+  )
+```
+
+Inflow has a negative correlation with all the additional environmental predictor variables, the strongest being salinity. For most of the variables besides salinity, there is a lot of variation at the lowest inflow values with decreasing variation as inflow increases. Salinity also has fairly strong positive correlations with most other environmental variables. As a result, we won't include salinity as an environmental predictor. Looking at associations among the remaining variables, nitrate has strong positive correlations with ammonia and water temperature, while ortho-phosphate has the weakest associations with all other variables.
+
