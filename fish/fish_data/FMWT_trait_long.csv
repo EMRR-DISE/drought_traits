@@ -1,0 +1,3565 @@
+year,area,species,index_area
+1967,12,American Shad,442
+1967,12,Chinook Salmon,0
+1967,12,Delta Smelt,2
+1967,12,Longfin Smelt,15218
+1967,12,Northern Anchovy,318
+1967,12,Pacific Herring,0
+1967,12,Splittail,15
+1967,12,Striped Bass age-0,4226
+1967,12,Striped Bass age-1,47
+1967,12,Striped Bass age-2,20
+1967,12,Threadfin Shad,144
+1967,13,American Shad,741
+1967,13,Chinook Salmon,2
+1967,13,Delta Smelt,132
+1967,13,Longfin Smelt,12266
+1967,13,Northern Anchovy,0
+1967,13,Pacific Herring,2
+1967,13,Splittail,11
+1967,13,Striped Bass age-0,8216
+1967,13,Striped Bass age-1,68
+1967,13,Striped Bass age-2,9
+1967,13,Threadfin Shad,120
+1967,14,American Shad,93
+1967,14,Chinook Salmon,2
+1967,14,Delta Smelt,69
+1967,14,Longfin Smelt,2691
+1967,14,Northern Anchovy,0
+1967,14,Pacific Herring,0
+1967,14,Splittail,23
+1967,14,Striped Bass age-0,4098
+1967,14,Striped Bass age-1,45
+1967,14,Striped Bass age-2,8
+1967,14,Threadfin Shad,258
+1967,15,American Shad,413
+1967,15,Chinook Salmon,12
+1967,15,Delta Smelt,117
+1967,15,Longfin Smelt,161
+1967,15,Northern Anchovy,0
+1967,15,Pacific Herring,0
+1967,15,Splittail,0
+1967,15,Striped Bass age-0,836
+1967,15,Striped Bass age-1,3
+1967,15,Striped Bass age-2,0
+1967,15,Threadfin Shad,532
+1967,16,American Shad,572
+1967,16,Chinook Salmon,1
+1967,16,Delta Smelt,12
+1967,16,Longfin Smelt,188
+1967,16,Northern Anchovy,0
+1967,16,Pacific Herring,0
+1967,16,Splittail,0
+1967,16,Striped Bass age-0,676
+1967,16,Striped Bass age-1,6
+1967,16,Striped Bass age-2,0
+1967,16,Threadfin Shad,817
+1967,17,American Shad,522
+1967,17,Chinook Salmon,2
+1967,17,Delta Smelt,8
+1967,17,Longfin Smelt,30
+1967,17,Northern Anchovy,0
+1967,17,Pacific Herring,0
+1967,17,Splittail,0
+1967,17,Striped Bass age-0,165
+1967,17,Striped Bass age-1,57
+1967,17,Striped Bass age-2,2
+1967,17,Threadfin Shad,11958
+1968,12,American Shad,58
+1968,12,Chinook Salmon,7
+1968,12,Delta Smelt,5
+1968,12,Longfin Smelt,360
+1968,12,Northern Anchovy,821
+1968,12,Pacific Herring,5
+1968,12,Splittail,0
+1968,12,Striped Bass age-0,150
+1968,12,Striped Bass age-1,58
+1968,12,Striped Bass age-2,23
+1968,12,Threadfin Shad,19
+1968,13,American Shad,215
+1968,13,Chinook Salmon,5
+1968,13,Delta Smelt,162
+1968,13,Longfin Smelt,2173
+1968,13,Northern Anchovy,510
+1968,13,Pacific Herring,0
+1968,13,Splittail,3
+1968,13,Striped Bass age-0,1288
+1968,13,Striped Bass age-1,75
+1968,13,Striped Bass age-2,26
+1968,13,Threadfin Shad,53
+1968,14,American Shad,66
+1968,14,Chinook Salmon,0
+1968,14,Delta Smelt,11
+1968,14,Longfin Smelt,550
+1968,14,Northern Anchovy,163
+1968,14,Pacific Herring,0
+1968,14,Splittail,16
+1968,14,Striped Bass age-0,363
+1968,14,Striped Bass age-1,17
+1968,14,Striped Bass age-2,4
+1968,14,Threadfin Shad,223
+1968,15,American Shad,113
+1968,15,Chinook Salmon,1
+1968,15,Delta Smelt,373
+1968,15,Longfin Smelt,55
+1968,15,Northern Anchovy,0
+1968,15,Pacific Herring,0
+1968,15,Splittail,0
+1968,15,Striped Bass age-0,976
+1968,15,Striped Bass age-1,73
+1968,15,Striped Bass age-2,1
+1968,15,Threadfin Shad,388
+1968,16,American Shad,112
+1968,16,Chinook Salmon,5
+1968,16,Delta Smelt,72
+1968,16,Longfin Smelt,42
+1968,16,Northern Anchovy,0
+1968,16,Pacific Herring,0
+1968,16,Splittail,1
+1968,16,Striped Bass age-0,634
+1968,16,Striped Bass age-1,47
+1968,16,Striped Bass age-2,0
+1968,16,Threadfin Shad,323
+1968,17,American Shad,140
+1968,17,Chinook Salmon,17
+1968,17,Delta Smelt,43
+1968,17,Longfin Smelt,30
+1968,17,Northern Anchovy,0
+1968,17,Pacific Herring,0
+1968,17,Splittail,0
+1968,17,Striped Bass age-0,52
+1968,17,Striped Bass age-1,90
+1968,17,Striped Bass age-2,7
+1968,17,Threadfin Shad,4892
+1969,12,American Shad,312
+1969,12,Chinook Salmon,4
+1969,12,Delta Smelt,38
+1969,12,Longfin Smelt,14301
+1969,12,Northern Anchovy,108
+1969,12,Pacific Herring,0
+1969,12,Splittail,14
+1969,12,Striped Bass age-0,1239
+1969,12,Striped Bass age-1,124
+1969,12,Striped Bass age-2,5
+1969,12,Threadfin Shad,47
+1969,13,American Shad,386
+1969,13,Chinook Salmon,2
+1969,13,Delta Smelt,104
+1969,13,Longfin Smelt,4765
+1969,13,Northern Anchovy,0
+1969,13,Pacific Herring,0
+1969,13,Splittail,4
+1969,13,Striped Bass age-0,2232
+1969,13,Striped Bass age-1,25
+1969,13,Striped Bass age-2,5
+1969,13,Threadfin Shad,89
+1969,14,American Shad,44
+1969,14,Chinook Salmon,0
+1969,14,Delta Smelt,41
+1969,14,Longfin Smelt,1560
+1969,14,Northern Anchovy,0
+1969,14,Pacific Herring,0
+1969,14,Splittail,2
+1969,14,Striped Bass age-0,1592
+1969,14,Striped Bass age-1,23
+1969,14,Striped Bass age-2,1
+1969,14,Threadfin Shad,79
+1969,15,American Shad,80
+1969,15,Chinook Salmon,36
+1969,15,Delta Smelt,52
+1969,15,Longfin Smelt,68
+1969,15,Northern Anchovy,0
+1969,15,Pacific Herring,0
+1969,15,Splittail,0
+1969,15,Striped Bass age-0,314
+1969,15,Striped Bass age-1,7
+1969,15,Striped Bass age-2,0
+1969,15,Threadfin Shad,134
+1969,16,American Shad,636
+1969,16,Chinook Salmon,2
+1969,16,Delta Smelt,12
+1969,16,Longfin Smelt,85
+1969,16,Northern Anchovy,0
+1969,16,Pacific Herring,0
+1969,16,Splittail,0
+1969,16,Striped Bass age-0,363
+1969,16,Striped Bass age-1,3
+1969,16,Striped Bass age-2,0
+1969,16,Threadfin Shad,126
+1969,17,American Shad,365
+1969,17,Chinook Salmon,11
+1969,17,Delta Smelt,13
+1969,17,Longfin Smelt,7
+1969,17,Northern Anchovy,0
+1969,17,Pacific Herring,0
+1969,17,Splittail,0
+1969,17,Striped Bass age-0,451
+1969,17,Striped Bass age-1,37
+1969,17,Striped Bass age-2,7
+1969,17,Threadfin Shad,8229
+1970,12,American Shad,120
+1970,12,Chinook Salmon,8
+1970,12,Delta Smelt,227
+1970,12,Longfin Smelt,1263
+1970,12,Northern Anchovy,316
+1970,12,Pacific Herring,0
+1970,12,Splittail,0
+1970,12,Striped Bass age-0,1386
+1970,12,Striped Bass age-1,39
+1970,12,Striped Bass age-2,3
+1970,12,Threadfin Shad,67
+1970,13,American Shad,111
+1970,13,Chinook Salmon,23
+1970,13,Delta Smelt,759
+1970,13,Longfin Smelt,538
+1970,13,Northern Anchovy,0
+1970,13,Pacific Herring,0
+1970,13,Splittail,2
+1970,13,Striped Bass age-0,748
+1970,13,Striped Bass age-1,43
+1970,13,Striped Bass age-2,5
+1970,13,Threadfin Shad,162
+1970,14,American Shad,11
+1970,14,Chinook Salmon,1
+1970,14,Delta Smelt,272
+1970,14,Longfin Smelt,134
+1970,14,Northern Anchovy,0
+1970,14,Pacific Herring,0
+1970,14,Splittail,0
+1970,14,Striped Bass age-0,1762
+1970,14,Striped Bass age-1,42
+1970,14,Striped Bass age-2,5
+1970,14,Threadfin Shad,178
+1970,15,American Shad,62
+1970,15,Chinook Salmon,31
+1970,15,Delta Smelt,131
+1970,15,Longfin Smelt,6
+1970,15,Northern Anchovy,0
+1970,15,Pacific Herring,0
+1970,15,Splittail,0
+1970,15,Striped Bass age-0,539
+1970,15,Striped Bass age-1,2
+1970,15,Striped Bass age-2,0
+1970,15,Threadfin Shad,75
+1970,16,American Shad,218
+1970,16,Chinook Salmon,26
+1970,16,Delta Smelt,106
+1970,16,Longfin Smelt,16
+1970,16,Northern Anchovy,0
+1970,16,Pacific Herring,0
+1970,16,Splittail,2
+1970,16,Striped Bass age-0,764
+1970,16,Striped Bass age-1,38
+1970,16,Striped Bass age-2,0
+1970,16,Threadfin Shad,346
+1970,17,American Shad,125
+1970,17,Chinook Salmon,20
+1970,17,Delta Smelt,32
+1970,17,Longfin Smelt,0
+1970,17,Northern Anchovy,0
+1970,17,Pacific Herring,0
+1970,17,Splittail,0
+1970,17,Striped Bass age-0,90
+1970,17,Striped Bass age-1,38
+1970,17,Striped Bass age-2,2
+1970,17,Threadfin Shad,3128
+1971,12,American Shad,126
+1971,12,Chinook Salmon,3
+1971,12,Delta Smelt,62
+1971,12,Longfin Smelt,4729
+1971,12,Northern Anchovy,636
+1971,12,Pacific Herring,0
+1971,12,Splittail,3
+1971,12,Striped Bass age-0,2537
+1971,12,Striped Bass age-1,34
+1971,12,Striped Bass age-2,17
+1971,12,Threadfin Shad,3
+1971,13,American Shad,157
+1971,13,Chinook Salmon,20
+1971,13,Delta Smelt,535
+1971,13,Longfin Smelt,5684
+1971,13,Northern Anchovy,0
+1971,13,Pacific Herring,2
+1971,13,Splittail,0
+1971,13,Striped Bass age-0,2761
+1971,13,Striped Bass age-1,38
+1971,13,Striped Bass age-2,5
+1971,13,Threadfin Shad,65
+1971,14,American Shad,9
+1971,14,Chinook Salmon,1
+1971,14,Delta Smelt,101
+1971,14,Longfin Smelt,920
+1971,14,Northern Anchovy,0
+1971,14,Pacific Herring,0
+1971,14,Splittail,4
+1971,14,Striped Bass age-0,1594
+1971,14,Striped Bass age-1,21
+1971,14,Striped Bass age-2,4
+1971,14,Threadfin Shad,42
+1971,15,American Shad,113
+1971,15,Chinook Salmon,8
+1971,15,Delta Smelt,355
+1971,15,Longfin Smelt,77
+1971,15,Northern Anchovy,0
+1971,15,Pacific Herring,0
+1971,15,Splittail,0
+1971,15,Striped Bass age-0,230
+1971,15,Striped Bass age-1,13
+1971,15,Striped Bass age-2,0
+1971,15,Threadfin Shad,112
+1971,16,American Shad,188
+1971,16,Chinook Salmon,10
+1971,16,Delta Smelt,176
+1971,16,Longfin Smelt,18
+1971,16,Northern Anchovy,0
+1971,16,Pacific Herring,0
+1971,16,Splittail,0
+1971,16,Striped Bass age-0,530
+1971,16,Striped Bass age-1,0
+1971,16,Striped Bass age-2,0
+1971,16,Threadfin Shad,358
+1971,17,American Shad,242
+1971,17,Chinook Salmon,16
+1971,17,Delta Smelt,36
+1971,17,Longfin Smelt,12
+1971,17,Northern Anchovy,0
+1971,17,Pacific Herring,0
+1971,17,Splittail,4
+1971,17,Striped Bass age-0,101
+1971,17,Striped Bass age-1,9
+1971,17,Striped Bass age-2,2
+1971,17,Threadfin Shad,6036
+1972,12,American Shad,45
+1972,12,Chinook Salmon,3
+1972,12,Delta Smelt,36
+1972,12,Longfin Smelt,288
+1972,12,Northern Anchovy,753
+1972,12,Pacific Herring,0
+1972,12,Splittail,0
+1972,12,Striped Bass age-0,1711
+1972,12,Striped Bass age-1,36
+1972,12,Striped Bass age-2,8
+1972,12,Threadfin Shad,8
+1972,13,American Shad,44
+1972,13,Chinook Salmon,11
+1972,13,Delta Smelt,827
+1972,13,Longfin Smelt,243
+1972,13,Northern Anchovy,81
+1972,13,Pacific Herring,0
+1972,13,Splittail,0
+1972,13,Striped Bass age-0,2471
+1972,13,Striped Bass age-1,38
+1972,13,Striped Bass age-2,4
+1972,13,Threadfin Shad,212
+1972,14,American Shad,18
+1972,14,Chinook Salmon,0
+1972,14,Delta Smelt,122
+1972,14,Longfin Smelt,50
+1972,14,Northern Anchovy,116
+1972,14,Pacific Herring,0
+1972,14,Splittail,12
+1972,14,Striped Bass age-0,720
+1972,14,Striped Bass age-1,24
+1972,14,Striped Bass age-2,5
+1972,14,Threadfin Shad,141
+1972,15,American Shad,48
+1972,15,Chinook Salmon,4
+1972,15,Delta Smelt,128
+1972,15,Longfin Smelt,16
+1972,15,Northern Anchovy,0
+1972,15,Pacific Herring,2
+1972,15,Splittail,0
+1972,15,Striped Bass age-0,268
+1972,15,Striped Bass age-1,10
+1972,15,Striped Bass age-2,2
+1972,15,Threadfin Shad,126
+1972,16,American Shad,22
+1972,16,Chinook Salmon,8
+1972,16,Delta Smelt,114
+1972,16,Longfin Smelt,6
+1972,16,Northern Anchovy,0
+1972,16,Pacific Herring,8
+1972,16,Splittail,0
+1972,16,Striped Bass age-0,626
+1972,16,Striped Bass age-1,6
+1972,16,Striped Bass age-2,2
+1972,16,Threadfin Shad,268
+1972,17,American Shad,59
+1972,17,Chinook Salmon,9
+1972,17,Delta Smelt,36
+1972,17,Longfin Smelt,0
+1972,17,Northern Anchovy,0
+1972,17,Pacific Herring,0
+1972,17,Splittail,0
+1972,17,Striped Bass age-0,46
+1972,17,Striped Bass age-1,17
+1972,17,Striped Bass age-2,0
+1972,17,Threadfin Shad,4336
+1973,12,American Shad,182
+1973,12,Chinook Salmon,11
+1973,12,Delta Smelt,116
+1973,12,Longfin Smelt,1851
+1973,12,Northern Anchovy,639
+1973,12,Pacific Herring,20
+1973,12,Splittail,0
+1973,12,Striped Bass age-0,667
+1973,12,Striped Bass age-1,56
+1973,12,Striped Bass age-2,9
+1973,12,Threadfin Shad,19
+1973,13,American Shad,230
+1973,13,Chinook Salmon,13
+1973,13,Delta Smelt,428
+1973,13,Longfin Smelt,2285
+1973,13,Northern Anchovy,45
+1973,13,Pacific Herring,0
+1973,13,Splittail,1
+1973,13,Striped Bass age-0,701
+1973,13,Striped Bass age-1,58
+1973,13,Striped Bass age-2,20
+1973,13,Threadfin Shad,27
+1973,14,American Shad,53
+1973,14,Chinook Salmon,1
+1973,14,Delta Smelt,319
+1973,14,Longfin Smelt,355
+1973,14,Northern Anchovy,11
+1973,14,Pacific Herring,1
+1973,14,Splittail,1
+1973,14,Striped Bass age-0,742
+1973,14,Striped Bass age-1,46
+1973,14,Striped Bass age-2,6
+1973,14,Threadfin Shad,62
+1973,15,American Shad,54
+1973,15,Chinook Salmon,18
+1973,15,Delta Smelt,66
+1973,15,Longfin Smelt,17
+1973,15,Northern Anchovy,0
+1973,15,Pacific Herring,0
+1973,15,Splittail,2
+1973,15,Striped Bass age-0,354
+1973,15,Striped Bass age-1,16
+1973,15,Striped Bass age-2,4
+1973,15,Threadfin Shad,19
+1973,16,American Shad,172
+1973,16,Chinook Salmon,2
+1973,16,Delta Smelt,91
+1973,16,Longfin Smelt,7
+1973,16,Northern Anchovy,0
+1973,16,Pacific Herring,0
+1973,16,Splittail,0
+1973,16,Striped Bass age-0,167
+1973,16,Striped Bass age-1,12
+1973,16,Striped Bass age-2,0
+1973,16,Threadfin Shad,69
+1973,17,American Shad,52
+1973,17,Chinook Salmon,0
+1973,17,Delta Smelt,0
+1973,17,Longfin Smelt,0
+1973,17,Northern Anchovy,0
+1973,17,Pacific Herring,0
+1973,17,Splittail,0
+1973,17,Striped Bass age-0,30
+1973,17,Striped Bass age-1,10
+1973,17,Striped Bass age-2,0
+1973,17,Threadfin Shad,1008
+1975,12,American Shad,325
+1975,12,Chinook Salmon,0
+1975,12,Delta Smelt,224
+1975,12,Longfin Smelt,1214
+1975,12,Northern Anchovy,92
+1975,12,Pacific Herring,3
+1975,12,Splittail,0
+1975,12,Striped Bass age-0,1967
+1975,12,Striped Bass age-1,130
+1975,12,Striped Bass age-2,11
+1975,12,Threadfin Shad,15
+1975,13,American Shad,322
+1975,13,Chinook Salmon,7
+1975,13,Delta Smelt,264
+1975,13,Longfin Smelt,881
+1975,13,Northern Anchovy,1
+1975,13,Pacific Herring,0
+1975,13,Splittail,0
+1975,13,Striped Bass age-0,742
+1975,13,Striped Bass age-1,57
+1975,13,Striped Bass age-2,6
+1975,13,Threadfin Shad,8
+1975,14,American Shad,87
+1975,14,Chinook Salmon,0
+1975,14,Delta Smelt,114
+1975,14,Longfin Smelt,226
+1975,14,Northern Anchovy,0
+1975,14,Pacific Herring,0
+1975,14,Splittail,4
+1975,14,Striped Bass age-0,954
+1975,14,Striped Bass age-1,54
+1975,14,Striped Bass age-2,5
+1975,14,Threadfin Shad,18
+1975,15,American Shad,153
+1975,15,Chinook Salmon,5
+1975,15,Delta Smelt,29
+1975,15,Longfin Smelt,52
+1975,15,Northern Anchovy,0
+1975,15,Pacific Herring,0
+1975,15,Splittail,0
+1975,15,Striped Bass age-0,140
+1975,15,Striped Bass age-1,6
+1975,15,Striped Bass age-2,0
+1975,15,Threadfin Shad,26
+1975,16,American Shad,403
+1975,16,Chinook Salmon,3
+1975,16,Delta Smelt,59
+1975,16,Longfin Smelt,10
+1975,16,Northern Anchovy,0
+1975,16,Pacific Herring,0
+1975,16,Splittail,0
+1975,16,Striped Bass age-0,259
+1975,16,Striped Bass age-1,12
+1975,16,Striped Bass age-2,0
+1975,16,Threadfin Shad,314
+1975,17,American Shad,149
+1975,17,Chinook Salmon,0
+1975,17,Delta Smelt,2
+1975,17,Longfin Smelt,0
+1975,17,Northern Anchovy,0
+1975,17,Pacific Herring,0
+1975,17,Splittail,0
+1975,17,Striped Bass age-0,27
+1975,17,Striped Bass age-1,4
+1975,17,Striped Bass age-2,0
+1975,17,Threadfin Shad,267
+1976,12,American Shad,29
+1976,12,Chinook Salmon,3
+1976,12,Delta Smelt,1
+1976,12,Longfin Smelt,3
+1976,12,Northern Anchovy,71
+1976,12,Pacific Herring,6
+1976,12,Splittail,0
+1976,12,Striped Bass age-0,27
+1976,12,Striped Bass age-1,13
+1976,12,Striped Bass age-2,0
+1976,12,Threadfin Shad,0
+1976,13,American Shad,45
+1976,13,Chinook Salmon,3
+1976,13,Delta Smelt,18
+1976,13,Longfin Smelt,25
+1976,13,Northern Anchovy,24
+1976,13,Pacific Herring,4
+1976,13,Splittail,0
+1976,13,Striped Bass age-0,78
+1976,13,Striped Bass age-1,23
+1976,13,Striped Bass age-2,1
+1976,13,Threadfin Shad,3
+1976,14,American Shad,7
+1976,14,Chinook Salmon,0
+1976,14,Delta Smelt,8
+1976,14,Longfin Smelt,4
+1976,14,Northern Anchovy,12
+1976,14,Pacific Herring,0
+1976,14,Splittail,1
+1976,14,Striped Bass age-0,41
+1976,14,Striped Bass age-1,5
+1976,14,Striped Bass age-2,1
+1976,14,Threadfin Shad,1
+1976,15,American Shad,24
+1976,15,Chinook Salmon,2
+1976,15,Delta Smelt,72
+1976,15,Longfin Smelt,58
+1976,15,Northern Anchovy,0
+1976,15,Pacific Herring,0
+1976,15,Splittail,0
+1976,15,Striped Bass age-0,108
+1976,15,Striped Bass age-1,46
+1976,15,Striped Bass age-2,8
+1976,15,Threadfin Shad,40
+1976,16,American Shad,18
+1976,16,Chinook Salmon,4
+1976,16,Delta Smelt,59
+1976,16,Longfin Smelt,1
+1976,16,Northern Anchovy,0
+1976,16,Pacific Herring,0
+1976,16,Splittail,0
+1976,16,Striped Bass age-0,36
+1976,16,Striped Bass age-1,9
+1976,16,Striped Bass age-2,1
+1976,16,Threadfin Shad,89
+1976,17,American Shad,40
+1976,17,Chinook Salmon,7
+1976,17,Delta Smelt,0
+1976,17,Longfin Smelt,0
+1976,17,Northern Anchovy,0
+1976,17,Pacific Herring,0
+1976,17,Splittail,0
+1976,17,Striped Bass age-0,27
+1976,17,Striped Bass age-1,2
+1976,17,Striped Bass age-2,0
+1976,17,Threadfin Shad,607
+1977,12,American Shad,54
+1977,12,Chinook Salmon,0
+1977,12,Delta Smelt,0
+1977,12,Longfin Smelt,5
+1977,12,Northern Anchovy,1333
+1977,12,Pacific Herring,3
+1977,12,Splittail,0
+1977,12,Striped Bass age-0,13
+1977,12,Striped Bass age-1,4
+1977,12,Striped Bass age-2,0
+1977,12,Threadfin Shad,17
+1977,13,American Shad,152
+1977,13,Chinook Salmon,1
+1977,13,Delta Smelt,54
+1977,13,Longfin Smelt,13
+1977,13,Northern Anchovy,1862
+1977,13,Pacific Herring,2
+1977,13,Splittail,0
+1977,13,Striped Bass age-0,52
+1977,13,Striped Bass age-1,50
+1977,13,Striped Bass age-2,8
+1977,13,Threadfin Shad,142
+1977,14,American Shad,15
+1977,14,Chinook Salmon,1
+1977,14,Delta Smelt,2
+1977,14,Longfin Smelt,4
+1977,14,Northern Anchovy,55
+1977,14,Pacific Herring,0
+1977,14,Splittail,0
+1977,14,Striped Bass age-0,51
+1977,14,Striped Bass age-1,5
+1977,14,Striped Bass age-2,1
+1977,14,Threadfin Shad,36
+1977,15,American Shad,47
+1977,15,Chinook Salmon,0
+1977,15,Delta Smelt,329
+1977,15,Longfin Smelt,160
+1977,15,Northern Anchovy,77
+1977,15,Pacific Herring,0
+1977,15,Splittail,0
+1977,15,Striped Bass age-0,598
+1977,15,Striped Bass age-1,127
+1977,15,Striped Bass age-2,4
+1977,15,Threadfin Shad,211
+1977,16,American Shad,65
+1977,16,Chinook Salmon,0
+1977,16,Delta Smelt,73
+1977,16,Longfin Smelt,14
+1977,16,Northern Anchovy,23
+1977,16,Pacific Herring,0
+1977,16,Splittail,0
+1977,16,Striped Bass age-0,81
+1977,16,Striped Bass age-1,9
+1977,16,Striped Bass age-2,0
+1977,16,Threadfin Shad,526
+1977,17,American Shad,118
+1977,17,Chinook Salmon,0
+1977,17,Delta Smelt,9
+1977,17,Longfin Smelt,7
+1977,17,Northern Anchovy,0
+1977,17,Pacific Herring,0
+1977,17,Splittail,0
+1977,17,Striped Bass age-0,65
+1977,17,Striped Bass age-1,36
+1977,17,Striped Bass age-2,0
+1977,17,Threadfin Shad,7888
+1978,12,American Shad,130
+1978,12,Chinook Salmon,0
+1978,12,Delta Smelt,46
+1978,12,Longfin Smelt,1193
+1978,12,Northern Anchovy,937
+1978,12,Pacific Herring,0
+1978,12,Splittail,4
+1978,12,Striped Bass age-0,294
+1978,12,Striped Bass age-1,75
+1978,12,Striped Bass age-2,10
+1978,12,Threadfin Shad,0
+1978,13,American Shad,239
+1978,13,Chinook Salmon,12
+1978,13,Delta Smelt,171
+1978,13,Longfin Smelt,2758
+1978,13,Northern Anchovy,100
+1978,13,Pacific Herring,1
+1978,13,Splittail,8
+1978,13,Striped Bass age-0,710
+1978,13,Striped Bass age-1,62
+1978,13,Striped Bass age-2,6
+1978,13,Threadfin Shad,4
+1978,14,American Shad,85
+1978,14,Chinook Salmon,0
+1978,14,Delta Smelt,47
+1978,14,Longfin Smelt,355
+1978,14,Northern Anchovy,108
+1978,14,Pacific Herring,0
+1978,14,Splittail,14
+1978,14,Striped Bass age-0,481
+1978,14,Striped Bass age-1,21
+1978,14,Striped Bass age-2,4
+1978,14,Threadfin Shad,9
+1978,15,American Shad,153
+1978,15,Chinook Salmon,20
+1978,15,Delta Smelt,18
+1978,15,Longfin Smelt,233
+1978,15,Northern Anchovy,0
+1978,15,Pacific Herring,0
+1978,15,Splittail,2
+1978,15,Striped Bass age-0,524
+1978,15,Striped Bass age-1,11
+1978,15,Striped Bass age-2,2
+1978,15,Threadfin Shad,85
+1978,16,American Shad,173
+1978,16,Chinook Salmon,4
+1978,16,Delta Smelt,6
+1978,16,Longfin Smelt,59
+1978,16,Northern Anchovy,0
+1978,16,Pacific Herring,0
+1978,16,Splittail,1
+1978,16,Striped Bass age-0,219
+1978,16,Striped Bass age-1,5
+1978,16,Striped Bass age-2,0
+1978,16,Threadfin Shad,29
+1978,17,American Shad,959
+1978,17,Chinook Salmon,0
+1978,17,Delta Smelt,0
+1978,17,Longfin Smelt,7
+1978,17,Northern Anchovy,0
+1978,17,Pacific Herring,0
+1978,17,Splittail,0
+1978,17,Striped Bass age-0,69
+1978,17,Striped Bass age-1,15
+1978,17,Striped Bass age-2,2
+1978,17,Threadfin Shad,1922
+1980,12,American Shad,303
+1980,12,Chinook Salmon,3
+1980,12,Delta Smelt,12
+1980,12,Longfin Smelt,4887
+1980,12,Northern Anchovy,3739
+1980,12,Pacific Herring,311
+1980,12,Splittail,3
+1980,12,Striped Bass age-0,102
+1980,12,Striped Bass age-1,75
+1980,12,Striped Bass age-2,14
+1980,12,Threadfin Shad,5
+1980,13,American Shad,352
+1980,13,Chinook Salmon,7
+1980,13,Delta Smelt,649
+1980,13,Longfin Smelt,7455
+1980,13,Northern Anchovy,138
+1980,13,Pacific Herring,20
+1980,13,Splittail,6
+1980,13,Striped Bass age-0,244
+1980,13,Striped Bass age-1,136
+1980,13,Striped Bass age-2,19
+1980,13,Threadfin Shad,13
+1980,14,American Shad,114
+1980,14,Chinook Salmon,0
+1980,14,Delta Smelt,125
+1980,14,Longfin Smelt,2419
+1980,14,Northern Anchovy,83
+1980,14,Pacific Herring,1
+1980,14,Splittail,4
+1980,14,Striped Bass age-0,114
+1980,14,Striped Bass age-1,26
+1980,14,Striped Bass age-2,4
+1980,14,Threadfin Shad,21
+1980,15,American Shad,1233
+1980,15,Chinook Salmon,7
+1980,15,Delta Smelt,574
+1980,15,Longfin Smelt,1483
+1980,15,Northern Anchovy,0
+1980,15,Pacific Herring,0
+1980,15,Splittail,0
+1980,15,Striped Bass age-0,453
+1980,15,Striped Bass age-1,44
+1980,15,Striped Bass age-2,3
+1980,15,Threadfin Shad,12
+1980,16,American Shad,348
+1980,16,Chinook Salmon,5
+1980,16,Delta Smelt,234
+1980,16,Longfin Smelt,553
+1980,16,Northern Anchovy,0
+1980,16,Pacific Herring,0
+1980,16,Splittail,2
+1980,16,Striped Bass age-0,392
+1980,16,Striped Bass age-1,14
+1980,16,Striped Bass age-2,2
+1980,16,Threadfin Shad,125
+1980,17,American Shad,1022
+1980,17,Chinook Salmon,5
+1980,17,Delta Smelt,60
+1980,17,Longfin Smelt,0
+1980,17,Northern Anchovy,0
+1980,17,Pacific Herring,0
+1980,17,Splittail,0
+1980,17,Striped Bass age-0,122
+1980,17,Striped Bass age-1,2
+1980,17,Striped Bass age-2,0
+1980,17,Threadfin Shad,6948
+1981,12,American Shad,106
+1981,12,Chinook Salmon,6
+1981,12,Delta Smelt,63
+1981,12,Longfin Smelt,750
+1981,12,Northern Anchovy,2815
+1981,12,Pacific Herring,1
+1981,12,Splittail,1
+1981,12,Striped Bass age-0,944
+1981,12,Striped Bass age-1,88
+1981,12,Striped Bass age-2,10
+1981,12,Threadfin Shad,4
+1981,13,American Shad,243
+1981,13,Chinook Salmon,26
+1981,13,Delta Smelt,161
+1981,13,Longfin Smelt,523
+1981,13,Northern Anchovy,1177
+1981,13,Pacific Herring,1
+1981,13,Splittail,4
+1981,13,Striped Bass age-0,702
+1981,13,Striped Bass age-1,93
+1981,13,Striped Bass age-2,8
+1981,13,Threadfin Shad,4
+1981,14,American Shad,95
+1981,14,Chinook Salmon,1
+1981,14,Delta Smelt,78
+1981,14,Longfin Smelt,102
+1981,14,Northern Anchovy,348
+1981,14,Pacific Herring,0
+1981,14,Splittail,13
+1981,14,Striped Bass age-0,225
+1981,14,Striped Bass age-1,23
+1981,14,Striped Bass age-2,8
+1981,14,Threadfin Shad,9
+1981,15,American Shad,123
+1981,15,Chinook Salmon,28
+1981,15,Delta Smelt,39
+1981,15,Longfin Smelt,354
+1981,15,Northern Anchovy,3
+1981,15,Pacific Herring,0
+1981,15,Splittail,0
+1981,15,Striped Bass age-0,599
+1981,15,Striped Bass age-1,39
+1981,15,Striped Bass age-2,5
+1981,15,Threadfin Shad,56
+1981,16,American Shad,114
+1981,16,Chinook Salmon,25
+1981,16,Delta Smelt,31
+1981,16,Longfin Smelt,16
+1981,16,Northern Anchovy,0
+1981,16,Pacific Herring,0
+1981,16,Splittail,0
+1981,16,Striped Bass age-0,250
+1981,16,Striped Bass age-1,9
+1981,16,Striped Bass age-2,2
+1981,16,Threadfin Shad,90
+1981,17,American Shad,312
+1981,17,Chinook Salmon,5
+1981,17,Delta Smelt,0
+1981,17,Longfin Smelt,5
+1981,17,Northern Anchovy,0
+1981,17,Pacific Herring,0
+1981,17,Splittail,0
+1981,17,Striped Bass age-0,184
+1981,17,Striped Bass age-1,23
+1981,17,Striped Bass age-2,0
+1981,17,Threadfin Shad,6412
+1982,12,American Shad,195
+1982,12,Chinook Salmon,4
+1982,12,Delta Smelt,38
+1982,12,Longfin Smelt,21802
+1982,12,Northern Anchovy,46
+1982,12,Pacific Herring,24
+1982,12,Splittail,15
+1982,12,Striped Bass age-0,743
+1982,12,Striped Bass age-1,77
+1982,12,Striped Bass age-2,25
+1982,12,Threadfin Shad,0
+1982,13,American Shad,620
+1982,13,Chinook Salmon,1
+1982,13,Delta Smelt,88
+1982,13,Longfin Smelt,11309
+1982,13,Northern Anchovy,0
+1982,13,Pacific Herring,0
+1982,13,Splittail,6
+1982,13,Striped Bass age-0,1063
+1982,13,Striped Bass age-1,42
+1982,13,Striped Bass age-2,8
+1982,13,Threadfin Shad,16
+1982,14,American Shad,120
+1982,14,Chinook Salmon,1
+1982,14,Delta Smelt,141
+1982,14,Longfin Smelt,3076
+1982,14,Northern Anchovy,0
+1982,14,Pacific Herring,0
+1982,14,Splittail,11
+1982,14,Striped Bass age-0,606
+1982,14,Striped Bass age-1,40
+1982,14,Striped Bass age-2,7
+1982,14,Threadfin Shad,11
+1982,15,American Shad,168
+1982,15,Chinook Salmon,8
+1982,15,Delta Smelt,24
+1982,15,Longfin Smelt,154
+1982,15,Northern Anchovy,0
+1982,15,Pacific Herring,0
+1982,15,Splittail,0
+1982,15,Striped Bass age-0,239
+1982,15,Striped Bass age-1,2
+1982,15,Striped Bass age-2,0
+1982,15,Threadfin Shad,42
+1982,16,American Shad,748
+1982,16,Chinook Salmon,1
+1982,16,Delta Smelt,28
+1982,16,Longfin Smelt,26
+1982,16,Northern Anchovy,0
+1982,16,Pacific Herring,0
+1982,16,Splittail,1
+1982,16,Striped Bass age-0,251
+1982,16,Striped Bass age-1,3
+1982,16,Striped Bass age-2,1
+1982,16,Threadfin Shad,144
+1982,17,American Shad,1212
+1982,17,Chinook Salmon,0
+1982,17,Delta Smelt,0
+1982,17,Longfin Smelt,7
+1982,17,Northern Anchovy,0
+1982,17,Pacific Herring,0
+1982,17,Splittail,0
+1982,17,Striped Bass age-0,38
+1982,17,Striped Bass age-1,2
+1982,17,Striped Bass age-2,0
+1982,17,Threadfin Shad,1875
+1983,12,American Shad,76
+1983,12,Chinook Salmon,3
+1983,12,Delta Smelt,6
+1983,12,Longfin Smelt,3654
+1983,12,Northern Anchovy,4
+1983,12,Pacific Herring,8
+1983,12,Splittail,13
+1983,12,Striped Bass age-0,2360
+1983,12,Striped Bass age-1,6
+1983,12,Striped Bass age-2,13
+1983,12,Threadfin Shad,25
+1983,13,American Shad,484
+1983,13,Chinook Salmon,3
+1983,13,Delta Smelt,45
+1983,13,Longfin Smelt,619
+1983,13,Northern Anchovy,0
+1983,13,Pacific Herring,0
+1983,13,Splittail,7
+1983,13,Striped Bass age-0,729
+1983,13,Striped Bass age-1,4
+1983,13,Striped Bass age-2,2
+1983,13,Threadfin Shad,472
+1983,14,American Shad,369
+1983,14,Chinook Salmon,1
+1983,14,Delta Smelt,57
+1983,14,Longfin Smelt,274
+1983,14,Northern Anchovy,0
+1983,14,Pacific Herring,0
+1983,14,Splittail,16
+1983,14,Striped Bass age-0,1007
+1983,14,Striped Bass age-1,12
+1983,14,Striped Bass age-2,4
+1983,14,Threadfin Shad,302
+1983,15,American Shad,140
+1983,15,Chinook Salmon,14
+1983,15,Delta Smelt,1
+1983,15,Longfin Smelt,20
+1983,15,Northern Anchovy,0
+1983,15,Pacific Herring,0
+1983,15,Splittail,0
+1983,15,Striped Bass age-0,132
+1983,15,Striped Bass age-1,0
+1983,15,Striped Bass age-2,0
+1983,15,Threadfin Shad,40
+1983,16,American Shad,250
+1983,16,Chinook Salmon,0
+1983,16,Delta Smelt,0
+1983,16,Longfin Smelt,0
+1983,16,Northern Anchovy,0
+1983,16,Pacific Herring,0
+1983,16,Splittail,1
+1983,16,Striped Bass age-0,73
+1983,16,Striped Bass age-1,2
+1983,16,Striped Bass age-2,0
+1983,16,Threadfin Shad,262
+1983,17,American Shad,243
+1983,17,Chinook Salmon,2
+1983,17,Delta Smelt,0
+1983,17,Longfin Smelt,0
+1983,17,Northern Anchovy,0
+1983,17,Pacific Herring,0
+1983,17,Splittail,0
+1983,17,Striped Bass age-0,27
+1983,17,Striped Bass age-1,0
+1983,17,Striped Bass age-2,0
+1983,17,Threadfin Shad,730
+1984,12,American Shad,71
+1984,12,Chinook Salmon,0
+1984,12,Delta Smelt,11
+1984,12,Longfin Smelt,2044
+1984,12,Northern Anchovy,924
+1984,12,Pacific Herring,0
+1984,12,Splittail,1
+1984,12,Striped Bass age-0,1117
+1984,12,Striped Bass age-1,71
+1984,12,Striped Bass age-2,7
+1984,12,Threadfin Shad,1
+1984,13,American Shad,237
+1984,13,Chinook Salmon,3
+1984,13,Delta Smelt,108
+1984,13,Longfin Smelt,1682
+1984,13,Northern Anchovy,45
+1984,13,Pacific Herring,0
+1984,13,Splittail,12
+1984,13,Striped Bass age-0,1093
+1984,13,Striped Bass age-1,40
+1984,13,Striped Bass age-2,1
+1984,13,Threadfin Shad,50
+1984,14,American Shad,57
+1984,14,Chinook Salmon,0
+1984,14,Delta Smelt,13
+1984,14,Longfin Smelt,254
+1984,14,Northern Anchovy,133
+1984,14,Pacific Herring,0
+1984,14,Splittail,3
+1984,14,Striped Bass age-0,317
+1984,14,Striped Bass age-1,9
+1984,14,Striped Bass age-2,1
+1984,14,Threadfin Shad,25
+1984,15,American Shad,31
+1984,15,Chinook Salmon,1
+1984,15,Delta Smelt,33
+1984,15,Longfin Smelt,329
+1984,15,Northern Anchovy,0
+1984,15,Pacific Herring,0
+1984,15,Splittail,0
+1984,15,Striped Bass age-0,411
+1984,15,Striped Bass age-1,3
+1984,15,Striped Bass age-2,0
+1984,15,Threadfin Shad,77
+1984,16,American Shad,54
+1984,16,Chinook Salmon,3
+1984,16,Delta Smelt,16
+1984,16,Longfin Smelt,116
+1984,16,Northern Anchovy,0
+1984,16,Pacific Herring,0
+1984,16,Splittail,0
+1984,16,Striped Bass age-0,172
+1984,16,Striped Bass age-1,4
+1984,16,Striped Bass age-2,0
+1984,16,Threadfin Shad,96
+1984,17,American Shad,60
+1984,17,Chinook Salmon,0
+1984,17,Delta Smelt,0
+1984,17,Longfin Smelt,0
+1984,17,Northern Anchovy,0
+1984,17,Pacific Herring,0
+1984,17,Splittail,0
+1984,17,Striped Bass age-0,58
+1984,17,Striped Bass age-1,2
+1984,17,Striped Bass age-2,0
+1984,17,Threadfin Shad,362
+1985,12,American Shad,209
+1985,12,Chinook Salmon,3
+1985,12,Delta Smelt,0
+1985,12,Longfin Smelt,108
+1985,12,Northern Anchovy,1324
+1985,12,Pacific Herring,10
+1985,12,Splittail,0
+1985,12,Striped Bass age-0,224
+1985,12,Striped Bass age-1,38
+1985,12,Striped Bass age-2,14
+1985,12,Threadfin Shad,6
+1985,13,American Shad,387
+1985,13,Chinook Salmon,7
+1985,13,Delta Smelt,22
+1985,13,Longfin Smelt,313
+1985,13,Northern Anchovy,2103
+1985,13,Pacific Herring,5
+1985,13,Splittail,4
+1985,13,Striped Bass age-0,556
+1985,13,Striped Bass age-1,43
+1985,13,Striped Bass age-2,12
+1985,13,Threadfin Shad,28
+1985,14,American Shad,161
+1985,14,Chinook Salmon,1
+1985,14,Delta Smelt,0
+1985,14,Longfin Smelt,35
+1985,14,Northern Anchovy,487
+1985,14,Pacific Herring,1
+1985,14,Splittail,5
+1985,14,Striped Bass age-0,496
+1985,14,Striped Bass age-1,19
+1985,14,Striped Bass age-2,7
+1985,14,Threadfin Shad,14
+1985,15,American Shad,166
+1985,15,Chinook Salmon,8
+1985,15,Delta Smelt,76
+1985,15,Longfin Smelt,366
+1985,15,Northern Anchovy,82
+1985,15,Pacific Herring,0
+1985,15,Splittail,2
+1985,15,Striped Bass age-0,279
+1985,15,Striped Bass age-1,49
+1985,15,Striped Bass age-2,6
+1985,15,Threadfin Shad,174
+1985,16,American Shad,202
+1985,16,Chinook Salmon,4
+1985,16,Delta Smelt,11
+1985,16,Longfin Smelt,24
+1985,16,Northern Anchovy,0
+1985,16,Pacific Herring,0
+1985,16,Splittail,3
+1985,16,Striped Bass age-0,162
+1985,16,Striped Bass age-1,17
+1985,16,Striped Bass age-2,2
+1985,16,Threadfin Shad,108
+1985,17,American Shad,49
+1985,17,Chinook Salmon,2
+1985,17,Delta Smelt,0
+1985,17,Longfin Smelt,0
+1985,17,Northern Anchovy,0
+1985,17,Pacific Herring,0
+1985,17,Splittail,0
+1985,17,Striped Bass age-0,8
+1985,17,Striped Bass age-1,0
+1985,17,Striped Bass age-2,0
+1985,17,Threadfin Shad,470
+1986,12,American Shad,124
+1986,12,Chinook Salmon,3
+1986,12,Delta Smelt,8
+1986,12,Longfin Smelt,1724
+1986,12,Northern Anchovy,757
+1986,12,Pacific Herring,1
+1986,12,Splittail,12
+1986,12,Striped Bass age-0,750
+1986,12,Striped Bass age-1,35
+1986,12,Striped Bass age-2,20
+1986,12,Threadfin Shad,4
+1986,13,American Shad,191
+1986,13,Chinook Salmon,11
+1986,13,Delta Smelt,87
+1986,13,Longfin Smelt,1621
+1986,13,Northern Anchovy,142
+1986,13,Pacific Herring,0
+1986,13,Splittail,18
+1986,13,Striped Bass age-0,231
+1986,13,Striped Bass age-1,20
+1986,13,Striped Bass age-2,4
+1986,13,Threadfin Shad,19
+1986,14,American Shad,84
+1986,14,Chinook Salmon,4
+1986,14,Delta Smelt,16
+1986,14,Longfin Smelt,656
+1986,14,Northern Anchovy,34
+1986,14,Pacific Herring,0
+1986,14,Splittail,11
+1986,14,Striped Bass age-0,192
+1986,14,Striped Bass age-1,7
+1986,14,Striped Bass age-2,6
+1986,14,Threadfin Shad,16
+1986,15,American Shad,167
+1986,15,Chinook Salmon,10
+1986,15,Delta Smelt,93
+1986,15,Longfin Smelt,571
+1986,15,Northern Anchovy,0
+1986,15,Pacific Herring,0
+1986,15,Splittail,9
+1986,15,Striped Bass age-0,1362
+1986,15,Striped Bass age-1,5
+1986,15,Striped Bass age-2,2
+1986,15,Threadfin Shad,17
+1986,16,American Shad,400
+1986,16,Chinook Salmon,5
+1986,16,Delta Smelt,9
+1986,16,Longfin Smelt,106
+1986,16,Northern Anchovy,0
+1986,16,Pacific Herring,0
+1986,16,Splittail,1
+1986,16,Striped Bass age-0,696
+1986,16,Striped Bass age-1,8
+1986,16,Striped Bass age-2,4
+1986,16,Threadfin Shad,50
+1986,17,American Shad,306
+1986,17,Chinook Salmon,6
+1986,17,Delta Smelt,0
+1986,17,Longfin Smelt,2
+1986,17,Northern Anchovy,0
+1986,17,Pacific Herring,0
+1986,17,Splittail,2
+1986,17,Striped Bass age-0,110
+1986,17,Striped Bass age-1,12
+1986,17,Striped Bass age-2,2
+1986,17,Threadfin Shad,2566
+1987,12,American Shad,56
+1987,12,Chinook Salmon,8
+1987,12,Delta Smelt,1
+1987,12,Longfin Smelt,154
+1987,12,Northern Anchovy,146
+1987,12,Pacific Herring,4
+1987,12,Splittail,0
+1987,12,Striped Bass age-0,102
+1987,12,Striped Bass age-1,15
+1987,12,Striped Bass age-2,10
+1987,12,Threadfin Shad,8
+1987,13,American Shad,121
+1987,13,Chinook Salmon,11
+1987,13,Delta Smelt,3
+1987,13,Longfin Smelt,184
+1987,13,Northern Anchovy,189
+1987,13,Pacific Herring,1
+1987,13,Splittail,6
+1987,13,Striped Bass age-0,67
+1987,13,Striped Bass age-1,15
+1987,13,Striped Bass age-2,16
+1987,13,Threadfin Shad,3
+1987,14,American Shad,34
+1987,14,Chinook Salmon,1
+1987,14,Delta Smelt,4
+1987,14,Longfin Smelt,9
+1987,14,Northern Anchovy,34
+1987,14,Pacific Herring,0
+1987,14,Splittail,7
+1987,14,Striped Bass age-0,77
+1987,14,Striped Bass age-1,11
+1987,14,Striped Bass age-2,1
+1987,14,Threadfin Shad,6
+1987,15,American Shad,227
+1987,15,Chinook Salmon,7
+1987,15,Delta Smelt,256
+1987,15,Longfin Smelt,444
+1987,15,Northern Anchovy,8
+1987,15,Pacific Herring,0
+1987,15,Splittail,7
+1987,15,Striped Bass age-0,617
+1987,15,Striped Bass age-1,37
+1987,15,Striped Bass age-2,4
+1987,15,Threadfin Shad,101
+1987,16,American Shad,136
+1987,16,Chinook Salmon,3
+1987,16,Delta Smelt,16
+1987,16,Longfin Smelt,18
+1987,16,Northern Anchovy,7
+1987,16,Pacific Herring,0
+1987,16,Splittail,6
+1987,16,Striped Bass age-0,97
+1987,16,Striped Bass age-1,6
+1987,16,Striped Bass age-2,1
+1987,16,Threadfin Shad,91
+1987,17,American Shad,84
+1987,17,Chinook Salmon,0
+1987,17,Delta Smelt,0
+1987,17,Longfin Smelt,10
+1987,17,Northern Anchovy,0
+1987,17,Pacific Herring,0
+1987,17,Splittail,2
+1987,17,Striped Bass age-0,44
+1987,17,Striped Bass age-1,6
+1987,17,Striped Bass age-2,2
+1987,17,Threadfin Shad,3190
+1988,12,American Shad,63
+1988,12,Chinook Salmon,1
+1988,12,Delta Smelt,6
+1988,12,Longfin Smelt,127
+1988,12,Northern Anchovy,15
+1988,12,Pacific Herring,4
+1988,12,Splittail,0
+1988,12,Striped Bass age-0,97
+1988,12,Striped Bass age-1,15
+1988,12,Striped Bass age-2,4
+1988,12,Threadfin Shad,6
+1988,13,American Shad,111
+1988,13,Chinook Salmon,0
+1988,13,Delta Smelt,14
+1988,13,Longfin Smelt,90
+1988,13,Northern Anchovy,4
+1988,13,Pacific Herring,1
+1988,13,Splittail,2
+1988,13,Striped Bass age-0,55
+1988,13,Striped Bass age-1,13
+1988,13,Striped Bass age-2,10
+1988,13,Threadfin Shad,7
+1988,14,American Shad,23
+1988,14,Chinook Salmon,1
+1988,14,Delta Smelt,0
+1988,14,Longfin Smelt,7
+1988,14,Northern Anchovy,3
+1988,14,Pacific Herring,0
+1988,14,Splittail,2
+1988,14,Striped Bass age-0,35
+1988,14,Striped Bass age-1,11
+1988,14,Striped Bass age-2,3
+1988,14,Threadfin Shad,29
+1988,15,American Shad,254
+1988,15,Chinook Salmon,0
+1988,15,Delta Smelt,152
+1988,15,Longfin Smelt,248
+1988,15,Northern Anchovy,0
+1988,15,Pacific Herring,0
+1988,15,Splittail,2
+1988,15,Striped Bass age-0,156
+1988,15,Striped Bass age-1,19
+1988,15,Striped Bass age-2,0
+1988,15,Threadfin Shad,38
+1988,16,American Shad,584
+1988,16,Chinook Salmon,0
+1988,16,Delta Smelt,6
+1988,16,Longfin Smelt,26
+1988,16,Northern Anchovy,0
+1988,16,Pacific Herring,0
+1988,16,Splittail,2
+1988,16,Striped Bass age-0,44
+1988,16,Striped Bass age-1,1
+1988,16,Striped Bass age-2,2
+1988,16,Threadfin Shad,74
+1988,17,American Shad,256
+1988,17,Chinook Salmon,0
+1988,17,Delta Smelt,0
+1988,17,Longfin Smelt,0
+1988,17,Northern Anchovy,0
+1988,17,Pacific Herring,0
+1988,17,Splittail,0
+1988,17,Striped Bass age-0,22
+1988,17,Striped Bass age-1,28
+1988,17,Striped Bass age-2,0
+1988,17,Threadfin Shad,2214
+1989,12,American Shad,57
+1989,12,Chinook Salmon,1
+1989,12,Delta Smelt,11
+1989,12,Longfin Smelt,67
+1989,12,Northern Anchovy,39
+1989,12,Pacific Herring,0
+1989,12,Splittail,0
+1989,12,Striped Bass age-0,55
+1989,12,Striped Bass age-1,21
+1989,12,Striped Bass age-2,1
+1989,12,Threadfin Shad,7
+1989,13,American Shad,151
+1989,13,Chinook Salmon,2
+1989,13,Delta Smelt,145
+1989,13,Longfin Smelt,34
+1989,13,Northern Anchovy,1
+1989,13,Pacific Herring,0
+1989,13,Splittail,0
+1989,13,Striped Bass age-0,19
+1989,13,Striped Bass age-1,19
+1989,13,Striped Bass age-2,1
+1989,13,Threadfin Shad,5
+1989,14,American Shad,69
+1989,14,Chinook Salmon,1
+1989,14,Delta Smelt,4
+1989,14,Longfin Smelt,1
+1989,14,Northern Anchovy,18
+1989,14,Pacific Herring,1
+1989,14,Splittail,3
+1989,14,Striped Bass age-0,13
+1989,14,Striped Bass age-1,11
+1989,14,Striped Bass age-2,5
+1989,14,Threadfin Shad,26
+1989,15,American Shad,216
+1989,15,Chinook Salmon,0
+1989,15,Delta Smelt,169
+1989,15,Longfin Smelt,251
+1989,15,Northern Anchovy,0
+1989,15,Pacific Herring,0
+1989,15,Splittail,1
+1989,15,Striped Bass age-0,226
+1989,15,Striped Bass age-1,6
+1989,15,Striped Bass age-2,1
+1989,15,Threadfin Shad,10
+1989,16,American Shad,677
+1989,16,Chinook Salmon,2
+1989,16,Delta Smelt,37
+1989,16,Longfin Smelt,11
+1989,16,Northern Anchovy,0
+1989,16,Pacific Herring,0
+1989,16,Splittail,0
+1989,16,Striped Bass age-0,59
+1989,16,Striped Bass age-1,5
+1989,16,Striped Bass age-2,0
+1989,16,Threadfin Shad,16
+1989,17,American Shad,174
+1989,17,Chinook Salmon,0
+1989,17,Delta Smelt,0
+1989,17,Longfin Smelt,0
+1989,17,Northern Anchovy,0
+1989,17,Pacific Herring,0
+1989,17,Splittail,0
+1989,17,Striped Bass age-0,38
+1989,17,Striped Bass age-1,4
+1989,17,Striped Bass age-2,2
+1989,17,Threadfin Shad,6682
+1990,12,American Shad,211
+1990,12,Chinook Salmon,0
+1990,12,Delta Smelt,0
+1990,12,Longfin Smelt,18
+1990,12,Northern Anchovy,53
+1990,12,Pacific Herring,0
+1990,12,Splittail,0
+1990,12,Striped Bass age-0,316
+1990,12,Striped Bass age-1,57
+1990,12,Striped Bass age-2,3
+1990,12,Threadfin Shad,36
+1990,13,American Shad,291
+1990,13,Chinook Salmon,2
+1990,13,Delta Smelt,52
+1990,13,Longfin Smelt,26
+1990,13,Northern Anchovy,3
+1990,13,Pacific Herring,0
+1990,13,Splittail,3
+1990,13,Striped Bass age-0,140
+1990,13,Striped Bass age-1,16
+1990,13,Striped Bass age-2,3
+1990,13,Threadfin Shad,30
+1990,14,American Shad,49
+1990,14,Chinook Salmon,1
+1990,14,Delta Smelt,2
+1990,14,Longfin Smelt,6
+1990,14,Northern Anchovy,10
+1990,14,Pacific Herring,0
+1990,14,Splittail,2
+1990,14,Striped Bass age-0,39
+1990,14,Striped Bass age-1,12
+1990,14,Striped Bass age-2,4
+1990,14,Threadfin Shad,184
+1990,15,American Shad,390
+1990,15,Chinook Salmon,0
+1990,15,Delta Smelt,302
+1990,15,Longfin Smelt,110
+1990,15,Northern Anchovy,1
+1990,15,Pacific Herring,0
+1990,15,Splittail,2
+1990,15,Striped Bass age-0,328
+1990,15,Striped Bass age-1,25
+1990,15,Striped Bass age-2,6
+1990,15,Threadfin Shad,216
+1990,16,American Shad,1030
+1990,16,Chinook Salmon,0
+1990,16,Delta Smelt,7
+1990,16,Longfin Smelt,8
+1990,16,Northern Anchovy,0
+1990,16,Pacific Herring,0
+1990,16,Splittail,1
+1990,16,Striped Bass age-0,151
+1990,16,Striped Bass age-1,3
+1990,16,Striped Bass age-2,2
+1990,16,Threadfin Shad,145
+1990,17,American Shad,1208
+1990,17,Chinook Salmon,0
+1990,17,Delta Smelt,0
+1990,17,Longfin Smelt,0
+1990,17,Northern Anchovy,0
+1990,17,Pacific Herring,0
+1990,17,Splittail,0
+1990,17,Striped Bass age-0,40
+1990,17,Striped Bass age-1,18
+1990,17,Striped Bass age-2,4
+1990,17,Threadfin Shad,5116
+1991,12,American Shad,157
+1991,12,Chinook Salmon,1
+1991,12,Delta Smelt,1
+1991,12,Longfin Smelt,24
+1991,12,Northern Anchovy,256
+1991,12,Pacific Herring,0
+1991,12,Splittail,0
+1991,12,Striped Bass age-0,139
+1991,12,Striped Bass age-1,18
+1991,12,Striped Bass age-2,3
+1991,12,Threadfin Shad,10
+1991,13,American Shad,138
+1991,13,Chinook Salmon,0
+1991,13,Delta Smelt,49
+1991,13,Longfin Smelt,23
+1991,13,Northern Anchovy,108
+1991,13,Pacific Herring,0
+1991,13,Splittail,6
+1991,13,Striped Bass age-0,101
+1991,13,Striped Bass age-1,16
+1991,13,Striped Bass age-2,8
+1991,13,Threadfin Shad,23
+1991,14,American Shad,57
+1991,14,Chinook Salmon,0
+1991,14,Delta Smelt,4
+1991,14,Longfin Smelt,6
+1991,14,Northern Anchovy,20
+1991,14,Pacific Herring,1
+1991,14,Splittail,4
+1991,14,Striped Bass age-0,23
+1991,14,Striped Bass age-1,10
+1991,14,Striped Bass age-2,5
+1991,14,Threadfin Shad,19
+1991,15,American Shad,282
+1991,15,Chinook Salmon,0
+1991,15,Delta Smelt,505
+1991,15,Longfin Smelt,37
+1991,15,Northern Anchovy,0
+1991,15,Pacific Herring,0
+1991,15,Splittail,1
+1991,15,Striped Bass age-0,224
+1991,15,Striped Bass age-1,38
+1991,15,Striped Bass age-2,6
+1991,15,Threadfin Shad,82
+1991,16,American Shad,919
+1991,16,Chinook Salmon,0
+1991,16,Delta Smelt,130
+1991,16,Longfin Smelt,5
+1991,16,Northern Anchovy,0
+1991,16,Pacific Herring,0
+1991,16,Splittail,3
+1991,16,Striped Bass age-0,120
+1991,16,Striped Bass age-1,5
+1991,16,Striped Bass age-2,0
+1991,16,Threadfin Shad,104
+1991,17,American Shad,409
+1991,17,Chinook Salmon,17
+1991,17,Delta Smelt,0
+1991,17,Longfin Smelt,0
+1991,17,Northern Anchovy,0
+1991,17,Pacific Herring,0
+1991,17,Splittail,0
+1991,17,Striped Bass age-0,54
+1991,17,Striped Bass age-1,3
+1991,17,Striped Bass age-2,2
+1991,17,Threadfin Shad,2712
+1992,12,American Shad,63
+1992,12,Chinook Salmon,0
+1992,12,Delta Smelt,0
+1992,12,Longfin Smelt,17
+1992,12,Northern Anchovy,232
+1992,12,Pacific Herring,0
+1992,12,Splittail,0
+1992,12,Striped Bass age-0,290
+1992,12,Striped Bass age-1,31
+1992,12,Striped Bass age-2,3
+1992,12,Threadfin Shad,21
+1992,13,American Shad,87
+1992,13,Chinook Salmon,0
+1992,13,Delta Smelt,2
+1992,13,Longfin Smelt,12
+1992,13,Northern Anchovy,236
+1992,13,Pacific Herring,0
+1992,13,Splittail,0
+1992,13,Striped Bass age-0,249
+1992,13,Striped Bass age-1,16
+1992,13,Striped Bass age-2,3
+1992,13,Threadfin Shad,157
+1992,14,American Shad,46
+1992,14,Chinook Salmon,0
+1992,14,Delta Smelt,5
+1992,14,Longfin Smelt,1
+1992,14,Northern Anchovy,105
+1992,14,Pacific Herring,0
+1992,14,Splittail,0
+1992,14,Striped Bass age-0,52
+1992,14,Striped Bass age-1,12
+1992,14,Striped Bass age-2,2
+1992,14,Threadfin Shad,34
+1992,15,American Shad,186
+1992,15,Chinook Salmon,4
+1992,15,Delta Smelt,143
+1992,15,Longfin Smelt,19
+1992,15,Northern Anchovy,5
+1992,15,Pacific Herring,0
+1992,15,Splittail,4
+1992,15,Striped Bass age-0,328
+1992,15,Striped Bass age-1,29
+1992,15,Striped Bass age-2,2
+1992,15,Threadfin Shad,595
+1992,16,American Shad,947
+1992,16,Chinook Salmon,0
+1992,16,Delta Smelt,5
+1992,16,Longfin Smelt,0
+1992,16,Northern Anchovy,4
+1992,16,Pacific Herring,0
+1992,16,Splittail,0
+1992,16,Striped Bass age-0,105
+1992,16,Striped Bass age-1,3
+1992,16,Striped Bass age-2,1
+1992,16,Threadfin Shad,208
+1992,17,American Shad,309
+1992,17,Chinook Salmon,0
+1992,17,Delta Smelt,0
+1992,17,Longfin Smelt,0
+1992,17,Northern Anchovy,0
+1992,17,Pacific Herring,0
+1992,17,Splittail,0
+1992,17,Striped Bass age-0,50
+1992,17,Striped Bass age-1,36
+1992,17,Striped Bass age-2,15
+1992,17,Threadfin Shad,1726
+1993,12,American Shad,622
+1993,12,Chinook Salmon,3
+1993,12,Delta Smelt,42
+1993,12,Longfin Smelt,249
+1993,12,Northern Anchovy,335
+1993,12,Pacific Herring,3
+1993,12,Splittail,4
+1993,12,Striped Bass age-0,314
+1993,12,Striped Bass age-1,49
+1993,12,Striped Bass age-2,8
+1993,12,Threadfin Shad,28
+1993,13,American Shad,420
+1993,13,Chinook Salmon,2
+1993,13,Delta Smelt,421
+1993,13,Longfin Smelt,150
+1993,13,Northern Anchovy,71
+1993,13,Pacific Herring,0
+1993,13,Splittail,2
+1993,13,Striped Bass age-0,184
+1993,13,Striped Bass age-1,29
+1993,13,Striped Bass age-2,8
+1993,13,Threadfin Shad,114
+1993,14,American Shad,145
+1993,14,Chinook Salmon,1
+1993,14,Delta Smelt,43
+1993,14,Longfin Smelt,34
+1993,14,Northern Anchovy,12
+1993,14,Pacific Herring,0
+1993,14,Splittail,1
+1993,14,Striped Bass age-0,74
+1993,14,Striped Bass age-1,9
+1993,14,Striped Bass age-2,1
+1993,14,Threadfin Shad,43
+1993,15,American Shad,815
+1993,15,Chinook Salmon,6
+1993,15,Delta Smelt,523
+1993,15,Longfin Smelt,186
+1993,15,Northern Anchovy,0
+1993,15,Pacific Herring,0
+1993,15,Splittail,4
+1993,15,Striped Bass age-0,337
+1993,15,Striped Bass age-1,2
+1993,15,Striped Bass age-2,1
+1993,15,Threadfin Shad,949
+1993,16,American Shad,1366
+1993,16,Chinook Salmon,0
+1993,16,Delta Smelt,44
+1993,16,Longfin Smelt,7
+1993,16,Northern Anchovy,0
+1993,16,Pacific Herring,0
+1993,16,Splittail,0
+1993,16,Striped Bass age-0,203
+1993,16,Striped Bass age-1,3
+1993,16,Striped Bass age-2,1
+1993,16,Threadfin Shad,790
+1993,17,American Shad,1128
+1993,17,Chinook Salmon,2
+1993,17,Delta Smelt,0
+1993,17,Longfin Smelt,0
+1993,17,Northern Anchovy,0
+1993,17,Pacific Herring,0
+1993,17,Splittail,0
+1993,17,Striped Bass age-0,115
+1993,17,Striped Bass age-1,2
+1993,17,Striped Bass age-2,5
+1993,17,Threadfin Shad,4683
+1994,12,American Shad,111
+1994,12,Chinook Salmon,0
+1994,12,Delta Smelt,4
+1994,12,Longfin Smelt,99
+1994,12,Northern Anchovy,207
+1994,12,Pacific Herring,0
+1994,12,Splittail,0
+1994,12,Striped Bass age-0,336
+1994,12,Striped Bass age-1,3
+1994,12,Striped Bass age-2,1
+1994,12,Threadfin Shad,77
+1994,13,American Shad,198
+1994,13,Chinook Salmon,0
+1994,13,Delta Smelt,20
+1994,13,Longfin Smelt,44
+1994,13,Northern Anchovy,47
+1994,13,Pacific Herring,0
+1994,13,Splittail,0
+1994,13,Striped Bass age-0,97
+1994,13,Striped Bass age-1,4
+1994,13,Striped Bass age-2,10
+1994,13,Threadfin Shad,85
+1994,14,American Shad,36
+1994,14,Chinook Salmon,0
+1994,14,Delta Smelt,5
+1994,14,Longfin Smelt,15
+1994,14,Northern Anchovy,6
+1994,14,Pacific Herring,0
+1994,14,Splittail,1
+1994,14,Striped Bass age-0,33
+1994,14,Striped Bass age-1,1
+1994,14,Striped Bass age-2,5
+1994,14,Threadfin Shad,44
+1994,15,American Shad,175
+1994,15,Chinook Salmon,0
+1994,15,Delta Smelt,70
+1994,15,Longfin Smelt,30
+1994,15,Northern Anchovy,0
+1994,15,Pacific Herring,0
+1994,15,Splittail,2
+1994,15,Striped Bass age-0,286
+1994,15,Striped Bass age-1,1
+1994,15,Striped Bass age-2,4
+1994,15,Threadfin Shad,290
+1994,16,American Shad,239
+1994,16,Chinook Salmon,4
+1994,16,Delta Smelt,2
+1994,16,Longfin Smelt,2
+1994,16,Northern Anchovy,0
+1994,16,Pacific Herring,0
+1994,16,Splittail,0
+1994,16,Striped Bass age-0,70
+1994,16,Striped Bass age-1,1
+1994,16,Striped Bass age-2,0
+1994,16,Threadfin Shad,167
+1994,17,American Shad,129
+1994,17,Chinook Salmon,0
+1994,17,Delta Smelt,0
+1994,17,Longfin Smelt,0
+1994,17,Northern Anchovy,0
+1994,17,Pacific Herring,0
+1994,17,Splittail,0
+1994,17,Striped Bass age-0,92
+1994,17,Striped Bass age-1,0
+1994,17,Striped Bass age-2,0
+1994,17,Threadfin Shad,1152
+1995,12,American Shad,206
+1995,12,Chinook Salmon,1
+1995,12,Delta Smelt,94
+1995,12,Longfin Smelt,892
+1995,12,Northern Anchovy,6
+1995,12,Pacific Herring,11
+1995,12,Splittail,18
+1995,12,Striped Bass age-0,70
+1995,12,Striped Bass age-1,34
+1995,12,Striped Bass age-2,0
+1995,12,Threadfin Shad,13
+1995,13,American Shad,375
+1995,13,Chinook Salmon,2
+1995,13,Delta Smelt,630
+1995,13,Longfin Smelt,1048
+1995,13,Northern Anchovy,0
+1995,13,Pacific Herring,0
+1995,13,Splittail,21
+1995,13,Striped Bass age-0,112
+1995,13,Striped Bass age-1,37
+1995,13,Striped Bass age-2,1
+1995,13,Threadfin Shad,176
+1995,14,American Shad,90
+1995,14,Chinook Salmon,1
+1995,14,Delta Smelt,72
+1995,14,Longfin Smelt,301
+1995,14,Northern Anchovy,0
+1995,14,Pacific Herring,0
+1995,14,Splittail,15
+1995,14,Striped Bass age-0,47
+1995,14,Striped Bass age-1,9
+1995,14,Striped Bass age-2,0
+1995,14,Threadfin Shad,52
+1995,15,American Shad,1439
+1995,15,Chinook Salmon,0
+1995,15,Delta Smelt,80
+1995,15,Longfin Smelt,282
+1995,15,Northern Anchovy,0
+1995,15,Pacific Herring,0
+1995,15,Splittail,1
+1995,15,Striped Bass age-0,85
+1995,15,Striped Bass age-1,8
+1995,15,Striped Bass age-2,0
+1995,15,Threadfin Shad,152
+1995,16,American Shad,3017
+1995,16,Chinook Salmon,2
+1995,16,Delta Smelt,2
+1995,16,Longfin Smelt,33
+1995,16,Northern Anchovy,0
+1995,16,Pacific Herring,0
+1995,16,Splittail,0
+1995,16,Striped Bass age-0,24
+1995,16,Striped Bass age-1,3
+1995,16,Striped Bass age-2,1
+1995,16,Threadfin Shad,452
+1995,17,American Shad,563
+1995,17,Chinook Salmon,0
+1995,17,Delta Smelt,0
+1995,17,Longfin Smelt,0
+1995,17,Northern Anchovy,0
+1995,17,Pacific Herring,0
+1995,17,Splittail,0
+1995,17,Striped Bass age-0,34
+1995,17,Striped Bass age-1,6
+1995,17,Striped Bass age-2,0
+1995,17,Threadfin Shad,2458
+1996,12,American Shad,288
+1996,12,Chinook Salmon,0
+1996,12,Delta Smelt,1
+1996,12,Longfin Smelt,176
+1996,12,Northern Anchovy,176
+1996,12,Pacific Herring,4
+1996,12,Splittail,3
+1996,12,Striped Bass age-0,99
+1996,12,Striped Bass age-1,13
+1996,12,Striped Bass age-2,11
+1996,12,Threadfin Shad,31
+1996,13,American Shad,221
+1996,13,Chinook Salmon,1
+1996,13,Delta Smelt,50
+1996,13,Longfin Smelt,71
+1996,13,Northern Anchovy,0
+1996,13,Pacific Herring,2
+1996,13,Splittail,2
+1996,13,Striped Bass age-0,55
+1996,13,Striped Bass age-1,5
+1996,13,Striped Bass age-2,8
+1996,13,Threadfin Shad,35
+1996,14,American Shad,134
+1996,14,Chinook Salmon,1
+1996,14,Delta Smelt,41
+1996,14,Longfin Smelt,20
+1996,14,Northern Anchovy,0
+1996,14,Pacific Herring,0
+1996,14,Splittail,9
+1996,14,Striped Bass age-0,31
+1996,14,Striped Bass age-1,2
+1996,14,Striped Bass age-2,1
+1996,14,Threadfin Shad,31
+1996,15,American Shad,1027
+1996,15,Chinook Salmon,0
+1996,15,Delta Smelt,24
+1996,15,Longfin Smelt,24
+1996,15,Northern Anchovy,0
+1996,15,Pacific Herring,0
+1996,15,Splittail,4
+1996,15,Striped Bass age-0,50
+1996,15,Striped Bass age-1,2
+1996,15,Striped Bass age-2,1
+1996,15,Threadfin Shad,280
+1996,16,American Shad,963
+1996,16,Chinook Salmon,1
+1996,16,Delta Smelt,3
+1996,16,Longfin Smelt,1
+1996,16,Northern Anchovy,0
+1996,16,Pacific Herring,0
+1996,16,Splittail,0
+1996,16,Striped Bass age-0,30
+1996,16,Striped Bass age-1,1
+1996,16,Striped Bass age-2,0
+1996,16,Threadfin Shad,152
+1996,17,American Shad,162
+1996,17,Chinook Salmon,2
+1996,17,Delta Smelt,0
+1996,17,Longfin Smelt,0
+1996,17,Northern Anchovy,0
+1996,17,Pacific Herring,0
+1996,17,Splittail,0
+1996,17,Striped Bass age-0,3
+1996,17,Striped Bass age-1,0
+1996,17,Striped Bass age-2,2
+1996,17,Threadfin Shad,4122
+1997,12,American Shad,129
+1997,12,Chinook Salmon,0
+1997,12,Delta Smelt,6
+1997,12,Longfin Smelt,74
+1997,12,Northern Anchovy,105
+1997,12,Pacific Herring,3
+1997,12,Splittail,0
+1997,12,Striped Bass age-0,45
+1997,12,Striped Bass age-1,32
+1997,12,Striped Bass age-2,1
+1997,12,Threadfin Shad,36
+1997,13,American Shad,359
+1997,13,Chinook Salmon,4
+1997,13,Delta Smelt,67
+1997,13,Longfin Smelt,52
+1997,13,Northern Anchovy,34
+1997,13,Pacific Herring,1
+1997,13,Splittail,1
+1997,13,Striped Bass age-0,42
+1997,13,Striped Bass age-1,11
+1997,13,Striped Bass age-2,1
+1997,13,Threadfin Shad,131
+1997,14,American Shad,134
+1997,14,Chinook Salmon,1
+1997,14,Delta Smelt,56
+1997,14,Longfin Smelt,12
+1997,14,Northern Anchovy,7
+1997,14,Pacific Herring,0
+1997,14,Splittail,0
+1997,14,Striped Bass age-0,11
+1997,14,Striped Bass age-1,9
+1997,14,Striped Bass age-2,0
+1997,14,Threadfin Shad,103
+1997,15,American Shad,402
+1997,15,Chinook Salmon,2
+1997,15,Delta Smelt,162
+1997,15,Longfin Smelt,146
+1997,15,Northern Anchovy,0
+1997,15,Pacific Herring,0
+1997,15,Splittail,0
+1997,15,Striped Bass age-0,131
+1997,15,Striped Bass age-1,6
+1997,15,Striped Bass age-2,0
+1997,15,Threadfin Shad,767
+1997,16,American Shad,651
+1997,16,Chinook Salmon,1
+1997,16,Delta Smelt,3
+1997,16,Longfin Smelt,2
+1997,16,Northern Anchovy,0
+1997,16,Pacific Herring,0
+1997,16,Splittail,0
+1997,16,Striped Bass age-0,236
+1997,16,Striped Bass age-1,9
+1997,16,Striped Bass age-2,0
+1997,16,Threadfin Shad,1681
+1997,17,American Shad,246
+1997,17,Chinook Salmon,2
+1997,17,Delta Smelt,0
+1997,17,Longfin Smelt,0
+1997,17,Northern Anchovy,0
+1997,17,Pacific Herring,0
+1997,17,Splittail,0
+1997,17,Striped Bass age-0,55
+1997,17,Striped Bass age-1,3
+1997,17,Striped Bass age-2,0
+1997,17,Threadfin Shad,12168
+1998,12,American Shad,151
+1998,12,Chinook Salmon,0
+1998,12,Delta Smelt,206
+1998,12,Longfin Smelt,2976
+1998,12,Northern Anchovy,22
+1998,12,Pacific Herring,0
+1998,12,Splittail,66
+1998,12,Striped Bass age-0,708
+1998,12,Striped Bass age-1,130
+1998,12,Striped Bass age-2,8
+1998,12,Threadfin Shad,111
+1998,13,American Shad,396
+1998,13,Chinook Salmon,1
+1998,13,Delta Smelt,122
+1998,13,Longfin Smelt,1731
+1998,13,Northern Anchovy,2
+1998,13,Pacific Herring,0
+1998,13,Splittail,25
+1998,13,Striped Bass age-0,173
+1998,13,Striped Bass age-1,276
+1998,13,Striped Bass age-2,3
+1998,13,Threadfin Shad,180
+1998,14,American Shad,65
+1998,14,Chinook Salmon,2
+1998,14,Delta Smelt,52
+1998,14,Longfin Smelt,131
+1998,14,Northern Anchovy,0
+1998,14,Pacific Herring,0
+1998,14,Splittail,79
+1998,14,Striped Bass age-0,109
+1998,14,Striped Bass age-1,31
+1998,14,Striped Bass age-2,4
+1998,14,Threadfin Shad,451
+1998,15,American Shad,611
+1998,15,Chinook Salmon,6
+1998,15,Delta Smelt,6
+1998,15,Longfin Smelt,138
+1998,15,Northern Anchovy,0
+1998,15,Pacific Herring,0
+1998,15,Splittail,2
+1998,15,Striped Bass age-0,52
+1998,15,Striped Bass age-1,1
+1998,15,Striped Bass age-2,1
+1998,15,Threadfin Shad,196
+1998,16,American Shad,1147
+1998,16,Chinook Salmon,0
+1998,16,Delta Smelt,1
+1998,16,Longfin Smelt,2
+1998,16,Northern Anchovy,0
+1998,16,Pacific Herring,0
+1998,16,Splittail,0
+1998,16,Striped Bass age-0,33
+1998,16,Striped Bass age-1,5
+1998,16,Striped Bass age-2,0
+1998,16,Threadfin Shad,1291
+1998,17,American Shad,1056
+1998,17,Chinook Salmon,0
+1998,17,Delta Smelt,0
+1998,17,Longfin Smelt,0
+1998,17,Northern Anchovy,0
+1998,17,Pacific Herring,0
+1998,17,Splittail,0
+1998,17,Striped Bass age-0,9
+1998,17,Striped Bass age-1,6
+1998,17,Striped Bass age-2,0
+1998,17,Threadfin Shad,3370
+1999,12,American Shad,27
+1999,12,Chinook Salmon,4
+1999,12,Delta Smelt,22
+1999,12,Longfin Smelt,1099
+1999,12,Northern Anchovy,34
+1999,12,Pacific Herring,1
+1999,12,Splittail,8
+1999,12,Striped Bass age-0,186
+1999,12,Striped Bass age-1,56
+1999,12,Striped Bass age-2,18
+1999,12,Threadfin Shad,4
+1999,13,American Shad,24
+1999,13,Chinook Salmon,16
+1999,13,Delta Smelt,146
+1999,13,Longfin Smelt,1188
+1999,13,Northern Anchovy,22
+1999,13,Pacific Herring,2
+1999,13,Splittail,11
+1999,13,Striped Bass age-0,97
+1999,13,Striped Bass age-1,23
+1999,13,Striped Bass age-2,11
+1999,13,Threadfin Shad,42
+1999,14,American Shad,29
+1999,14,Chinook Salmon,2
+1999,14,Delta Smelt,167
+1999,14,Longfin Smelt,72
+1999,14,Northern Anchovy,4
+1999,14,Pacific Herring,1
+1999,14,Splittail,19
+1999,14,Striped Bass age-0,75
+1999,14,Striped Bass age-1,10
+1999,14,Striped Bass age-2,0
+1999,14,Threadfin Shad,26
+1999,15,American Shad,170
+1999,15,Chinook Salmon,10
+1999,15,Delta Smelt,401
+1999,15,Longfin Smelt,29
+1999,15,Northern Anchovy,0
+1999,15,Pacific Herring,0
+1999,15,Splittail,1
+1999,15,Striped Bass age-0,43
+1999,15,Striped Bass age-1,7
+1999,15,Striped Bass age-2,0
+1999,15,Threadfin Shad,245
+1999,16,American Shad,287
+1999,16,Chinook Salmon,13
+1999,16,Delta Smelt,118
+1999,16,Longfin Smelt,7
+1999,16,Northern Anchovy,0
+1999,16,Pacific Herring,1
+1999,16,Splittail,0
+1999,16,Striped Bass age-0,40
+1999,16,Striped Bass age-1,0
+1999,16,Striped Bass age-2,0
+1999,16,Threadfin Shad,691
+1999,17,American Shad,114
+1999,17,Chinook Salmon,0
+1999,17,Delta Smelt,0
+1999,17,Longfin Smelt,0
+1999,17,Northern Anchovy,0
+1999,17,Pacific Herring,0
+1999,17,Splittail,0
+1999,17,Striped Bass age-0,49
+1999,17,Striped Bass age-1,0
+1999,17,Striped Bass age-2,0
+1999,17,Threadfin Shad,6438
+2000,12,American Shad,20
+2000,12,Chinook Salmon,0
+2000,12,Delta Smelt,6
+2000,12,Longfin Smelt,1168
+2000,12,Northern Anchovy,53
+2000,12,Pacific Herring,0
+2000,12,Splittail,0
+2000,12,Striped Bass age-0,52
+2000,12,Striped Bass age-1,13
+2000,12,Striped Bass age-2,8
+2000,12,Threadfin Shad,7
+2000,13,American Shad,51
+2000,13,Chinook Salmon,2
+2000,13,Delta Smelt,431
+2000,13,Longfin Smelt,771
+2000,13,Northern Anchovy,0
+2000,13,Pacific Herring,0
+2000,13,Splittail,5
+2000,13,Striped Bass age-0,21
+2000,13,Striped Bass age-1,3
+2000,13,Striped Bass age-2,1
+2000,13,Threadfin Shad,36
+2000,14,American Shad,27
+2000,14,Chinook Salmon,1
+2000,14,Delta Smelt,48
+2000,14,Longfin Smelt,61
+2000,14,Northern Anchovy,3
+2000,14,Pacific Herring,1
+2000,14,Splittail,2
+2000,14,Striped Bass age-0,44
+2000,14,Striped Bass age-1,6
+2000,14,Striped Bass age-2,3
+2000,14,Threadfin Shad,29
+2000,15,American Shad,293
+2000,15,Chinook Salmon,2
+2000,15,Delta Smelt,221
+2000,15,Longfin Smelt,354
+2000,15,Northern Anchovy,0
+2000,15,Pacific Herring,0
+2000,15,Splittail,1
+2000,15,Striped Bass age-0,94
+2000,15,Striped Bass age-1,5
+2000,15,Striped Bass age-2,1
+2000,15,Threadfin Shad,30
+2000,16,American Shad,76
+2000,16,Chinook Salmon,0
+2000,16,Delta Smelt,49
+2000,16,Longfin Smelt,29
+2000,16,Northern Anchovy,0
+2000,16,Pacific Herring,0
+2000,16,Splittail,0
+2000,16,Striped Bass age-0,35
+2000,16,Striped Bass age-1,2
+2000,16,Striped Bass age-2,2
+2000,16,Threadfin Shad,19
+2000,17,American Shad,86
+2000,17,Chinook Salmon,2
+2000,17,Delta Smelt,0
+2000,17,Longfin Smelt,0
+2000,17,Northern Anchovy,0
+2000,17,Pacific Herring,0
+2000,17,Splittail,0
+2000,17,Striped Bass age-0,106
+2000,17,Striped Bass age-1,3
+2000,17,Striped Bass age-2,0
+2000,17,Threadfin Shad,12706
+2001,12,American Shad,11
+2001,12,Chinook Salmon,1
+2001,12,Delta Smelt,4
+2001,12,Longfin Smelt,112
+2001,12,Northern Anchovy,49
+2001,12,Pacific Herring,36
+2001,12,Splittail,3
+2001,12,Striped Bass age-0,146
+2001,12,Striped Bass age-1,36
+2001,12,Striped Bass age-2,1
+2001,12,Threadfin Shad,14
+2001,13,American Shad,42
+2001,13,Chinook Salmon,4
+2001,13,Delta Smelt,31
+2001,13,Longfin Smelt,14
+2001,13,Northern Anchovy,33
+2001,13,Pacific Herring,14
+2001,13,Splittail,1
+2001,13,Striped Bass age-0,53
+2001,13,Striped Bass age-1,5
+2001,13,Striped Bass age-2,0
+2001,13,Threadfin Shad,16
+2001,14,American Shad,27
+2001,14,Chinook Salmon,1
+2001,14,Delta Smelt,24
+2001,14,Longfin Smelt,5
+2001,14,Northern Anchovy,36
+2001,14,Pacific Herring,0
+2001,14,Splittail,10
+2001,14,Striped Bass age-0,68
+2001,14,Striped Bass age-1,4
+2001,14,Striped Bass age-2,0
+2001,14,Threadfin Shad,19
+2001,15,American Shad,160
+2001,15,Chinook Salmon,6
+2001,15,Delta Smelt,529
+2001,15,Longfin Smelt,36
+2001,15,Northern Anchovy,0
+2001,15,Pacific Herring,2
+2001,15,Splittail,5
+2001,15,Striped Bass age-0,155
+2001,15,Striped Bass age-1,10
+2001,15,Striped Bass age-2,4
+2001,15,Threadfin Shad,571
+2001,16,American Shad,244
+2001,16,Chinook Salmon,5
+2001,16,Delta Smelt,15
+2001,16,Longfin Smelt,1
+2001,16,Northern Anchovy,0
+2001,16,Pacific Herring,1
+2001,16,Splittail,1
+2001,16,Striped Bass age-0,97
+2001,16,Striped Bass age-1,9
+2001,16,Striped Bass age-2,1
+2001,16,Threadfin Shad,1707
+2001,17,American Shad,172
+2001,17,Chinook Salmon,2
+2001,17,Delta Smelt,0
+2001,17,Longfin Smelt,3
+2001,17,Northern Anchovy,0
+2001,17,Pacific Herring,0
+2001,17,Splittail,0
+2001,17,Striped Bass age-0,43
+2001,17,Striped Bass age-1,12
+2001,17,Striped Bass age-2,3
+2001,17,Threadfin Shad,11983
+2002,12,American Shad,122
+2002,12,Chinook Salmon,0
+2002,12,Delta Smelt,0
+2002,12,Longfin Smelt,85
+2002,12,Northern Anchovy,53
+2002,12,Pacific Herring,34
+2002,12,Splittail,0
+2002,12,Striped Bass age-0,6
+2002,12,Striped Bass age-1,10
+2002,12,Striped Bass age-2,0
+2002,12,Threadfin Shad,6
+2002,13,American Shad,201
+2002,13,Chinook Salmon,1
+2002,13,Delta Smelt,70
+2002,13,Longfin Smelt,178
+2002,13,Northern Anchovy,6
+2002,13,Pacific Herring,20
+2002,13,Splittail,0
+2002,13,Striped Bass age-0,15
+2002,13,Striped Bass age-1,13
+2002,13,Striped Bass age-2,1
+2002,13,Threadfin Shad,102
+2002,14,American Shad,45
+2002,14,Chinook Salmon,0
+2002,14,Delta Smelt,11
+2002,14,Longfin Smelt,91
+2002,14,Northern Anchovy,4
+2002,14,Pacific Herring,5
+2002,14,Splittail,0
+2002,14,Striped Bass age-0,16
+2002,14,Striped Bass age-1,6
+2002,14,Striped Bass age-2,1
+2002,14,Threadfin Shad,1
+2002,15,American Shad,803
+2002,15,Chinook Salmon,2
+2002,15,Delta Smelt,53
+2002,15,Longfin Smelt,110
+2002,15,Northern Anchovy,0
+2002,15,Pacific Herring,2
+2002,15,Splittail,0
+2002,15,Striped Bass age-0,6
+2002,15,Striped Bass age-1,17
+2002,15,Striped Bass age-2,0
+2002,15,Threadfin Shad,152
+2002,16,American Shad,196
+2002,16,Chinook Salmon,1
+2002,16,Delta Smelt,6
+2002,16,Longfin Smelt,10
+2002,16,Northern Anchovy,0
+2002,16,Pacific Herring,1
+2002,16,Splittail,1
+2002,16,Striped Bass age-0,16
+2002,16,Striped Bass age-1,7
+2002,16,Striped Bass age-2,0
+2002,16,Threadfin Shad,317
+2002,17,American Shad,46
+2002,17,Chinook Salmon,2
+2002,17,Delta Smelt,0
+2002,17,Longfin Smelt,0
+2002,17,Northern Anchovy,0
+2002,17,Pacific Herring,0
+2002,17,Splittail,0
+2002,17,Striped Bass age-0,12
+2002,17,Striped Bass age-1,5
+2002,17,Striped Bass age-2,2
+2002,17,Threadfin Shad,1118
+2003,12,American Shad,591
+2003,12,Chinook Salmon,0
+2003,12,Delta Smelt,0
+2003,12,Longfin Smelt,134
+2003,12,Northern Anchovy,62
+2003,12,Pacific Herring,14
+2003,12,Splittail,2
+2003,12,Striped Bass age-0,9
+2003,12,Striped Bass age-1,9
+2003,12,Striped Bass age-2,2
+2003,12,Threadfin Shad,20
+2003,13,American Shad,847
+2003,13,Chinook Salmon,0
+2003,13,Delta Smelt,23
+2003,13,Longfin Smelt,133
+2003,13,Northern Anchovy,19
+2003,13,Pacific Herring,10
+2003,13,Splittail,0
+2003,13,Striped Bass age-0,22
+2003,13,Striped Bass age-1,8
+2003,13,Striped Bass age-2,3
+2003,13,Threadfin Shad,4
+2003,14,American Shad,357
+2003,14,Chinook Salmon,1
+2003,14,Delta Smelt,6
+2003,14,Longfin Smelt,17
+2003,14,Northern Anchovy,1
+2003,14,Pacific Herring,2
+2003,14,Splittail,8
+2003,14,Striped Bass age-0,11
+2003,14,Striped Bass age-1,2
+2003,14,Striped Bass age-2,0
+2003,14,Threadfin Shad,84
+2003,15,American Shad,2204
+2003,15,Chinook Salmon,0
+2003,15,Delta Smelt,169
+2003,15,Longfin Smelt,47
+2003,15,Northern Anchovy,0
+2003,15,Pacific Herring,0
+2003,15,Splittail,0
+2003,15,Striped Bass age-0,13
+2003,15,Striped Bass age-1,11
+2003,15,Striped Bass age-2,2
+2003,15,Threadfin Shad,78
+2003,16,American Shad,2057
+2003,16,Chinook Salmon,0
+2003,16,Delta Smelt,12
+2003,16,Longfin Smelt,5
+2003,16,Northern Anchovy,0
+2003,16,Pacific Herring,0
+2003,16,Splittail,0
+2003,16,Striped Bass age-0,6
+2003,16,Striped Bass age-1,3
+2003,16,Striped Bass age-2,1
+2003,16,Threadfin Shad,204
+2003,17,American Shad,382
+2003,17,Chinook Salmon,0
+2003,17,Delta Smelt,0
+2003,17,Longfin Smelt,0
+2003,17,Northern Anchovy,0
+2003,17,Pacific Herring,0
+2003,17,Splittail,0
+2003,17,Striped Bass age-0,8
+2003,17,Striped Bass age-1,3
+2003,17,Striped Bass age-2,0
+2003,17,Threadfin Shad,1225
+2004,12,American Shad,29
+2004,12,Chinook Salmon,0
+2004,12,Delta Smelt,0
+2004,12,Longfin Smelt,57
+2004,12,Northern Anchovy,139
+2004,12,Pacific Herring,3
+2004,12,Splittail,3
+2004,12,Striped Bass age-0,4
+2004,12,Striped Bass age-1,6
+2004,12,Striped Bass age-2,0
+2004,12,Threadfin Shad,3
+2004,13,American Shad,59
+2004,13,Chinook Salmon,1
+2004,13,Delta Smelt,12
+2004,13,Longfin Smelt,33
+2004,13,Northern Anchovy,3
+2004,13,Pacific Herring,5
+2004,13,Splittail,0
+2004,13,Striped Bass age-0,13
+2004,13,Striped Bass age-1,12
+2004,13,Striped Bass age-2,0
+2004,13,Threadfin Shad,12
+2004,14,American Shad,23
+2004,14,Chinook Salmon,0
+2004,14,Delta Smelt,4
+2004,14,Longfin Smelt,20
+2004,14,Northern Anchovy,0
+2004,14,Pacific Herring,0
+2004,14,Splittail,1
+2004,14,Striped Bass age-0,7
+2004,14,Striped Bass age-1,4
+2004,14,Striped Bass age-2,1
+2004,14,Threadfin Shad,7
+2004,15,American Shad,390
+2004,15,Chinook Salmon,10
+2004,15,Delta Smelt,58
+2004,15,Longfin Smelt,7
+2004,15,Northern Anchovy,0
+2004,15,Pacific Herring,0
+2004,15,Splittail,0
+2004,15,Striped Bass age-0,16
+2004,15,Striped Bass age-1,11
+2004,15,Striped Bass age-2,0
+2004,15,Threadfin Shad,106
+2004,16,American Shad,340
+2004,16,Chinook Salmon,4
+2004,16,Delta Smelt,0
+2004,16,Longfin Smelt,1
+2004,16,Northern Anchovy,0
+2004,16,Pacific Herring,1
+2004,16,Splittail,0
+2004,16,Striped Bass age-0,5
+2004,16,Striped Bass age-1,5
+2004,16,Striped Bass age-2,0
+2004,16,Threadfin Shad,457
+2004,17,American Shad,42
+2004,17,Chinook Salmon,5
+2004,17,Delta Smelt,0
+2004,17,Longfin Smelt,0
+2004,17,Northern Anchovy,0
+2004,17,Pacific Herring,0
+2004,17,Splittail,0
+2004,17,Striped Bass age-0,0
+2004,17,Striped Bass age-1,3
+2004,17,Striped Bass age-2,0
+2004,17,Threadfin Shad,648
+2005,12,American Shad,70
+2005,12,Chinook Salmon,0
+2005,12,Delta Smelt,0
+2005,12,Longfin Smelt,20
+2005,12,Northern Anchovy,7
+2005,12,Pacific Herring,6
+2005,12,Splittail,0
+2005,12,Striped Bass age-0,17
+2005,12,Striped Bass age-1,0
+2005,12,Striped Bass age-2,0
+2005,12,Threadfin Shad,13
+2005,13,American Shad,185
+2005,13,Chinook Salmon,0
+2005,13,Delta Smelt,8
+2005,13,Longfin Smelt,15
+2005,13,Northern Anchovy,1
+2005,13,Pacific Herring,11
+2005,13,Splittail,0
+2005,13,Striped Bass age-0,25
+2005,13,Striped Bass age-1,2
+2005,13,Striped Bass age-2,0
+2005,13,Threadfin Shad,38
+2005,14,American Shad,44
+2005,14,Chinook Salmon,0
+2005,14,Delta Smelt,3
+2005,14,Longfin Smelt,2
+2005,14,Northern Anchovy,1
+2005,14,Pacific Herring,0
+2005,14,Splittail,0
+2005,14,Striped Bass age-0,24
+2005,14,Striped Bass age-1,1
+2005,14,Striped Bass age-2,1
+2005,14,Threadfin Shad,88
+2005,15,American Shad,409
+2005,15,Chinook Salmon,1
+2005,15,Delta Smelt,12
+2005,15,Longfin Smelt,16
+2005,15,Northern Anchovy,0
+2005,15,Pacific Herring,0
+2005,15,Splittail,0
+2005,15,Striped Bass age-0,11
+2005,15,Striped Bass age-1,1
+2005,15,Striped Bass age-2,4
+2005,15,Threadfin Shad,64
+2005,16,American Shad,140
+2005,16,Chinook Salmon,1
+2005,16,Delta Smelt,3
+2005,16,Longfin Smelt,0
+2005,16,Northern Anchovy,0
+2005,16,Pacific Herring,0
+2005,16,Splittail,0
+2005,16,Striped Bass age-0,2
+2005,16,Striped Bass age-1,0
+2005,16,Striped Bass age-2,0
+2005,16,Threadfin Shad,55
+2005,17,American Shad,52
+2005,17,Chinook Salmon,0
+2005,17,Delta Smelt,0
+2005,17,Longfin Smelt,0
+2005,17,Northern Anchovy,0
+2005,17,Pacific Herring,0
+2005,17,Splittail,0
+2005,17,Striped Bass age-0,2
+2005,17,Striped Bass age-1,2
+2005,17,Striped Bass age-2,0
+2005,17,Threadfin Shad,2471
+2006,12,American Shad,74
+2006,12,Chinook Salmon,0
+2006,12,Delta Smelt,1
+2006,12,Longfin Smelt,97
+2006,12,Northern Anchovy,8
+2006,12,Pacific Herring,7
+2006,12,Splittail,0
+2006,12,Striped Bass age-0,27
+2006,12,Striped Bass age-1,8
+2006,12,Striped Bass age-2,0
+2006,12,Threadfin Shad,13
+2006,13,American Shad,156
+2006,13,Chinook Salmon,0
+2006,13,Delta Smelt,15
+2006,13,Longfin Smelt,122
+2006,13,Northern Anchovy,0
+2006,13,Pacific Herring,4
+2006,13,Splittail,0
+2006,13,Striped Bass age-0,74
+2006,13,Striped Bass age-1,7
+2006,13,Striped Bass age-2,2
+2006,13,Threadfin Shad,206
+2006,14,American Shad,47
+2006,14,Chinook Salmon,0
+2006,14,Delta Smelt,5
+2006,14,Longfin Smelt,14
+2006,14,Northern Anchovy,0
+2006,14,Pacific Herring,0
+2006,14,Splittail,4
+2006,14,Striped Bass age-0,89
+2006,14,Striped Bass age-1,2
+2006,14,Striped Bass age-2,1
+2006,14,Threadfin Shad,86
+2006,15,American Shad,1175
+2006,15,Chinook Salmon,0
+2006,15,Delta Smelt,13
+2006,15,Longfin Smelt,31
+2006,15,Northern Anchovy,0
+2006,15,Pacific Herring,0
+2006,15,Splittail,0
+2006,15,Striped Bass age-0,23
+2006,15,Striped Bass age-1,0
+2006,15,Striped Bass age-2,0
+2006,15,Threadfin Shad,826
+2006,16,American Shad,284
+2006,16,Chinook Salmon,0
+2006,16,Delta Smelt,7
+2006,16,Longfin Smelt,0
+2006,16,Northern Anchovy,0
+2006,16,Pacific Herring,0
+2006,16,Splittail,0
+2006,16,Striped Bass age-0,2
+2006,16,Striped Bass age-1,0
+2006,16,Striped Bass age-2,0
+2006,16,Threadfin Shad,179
+2006,17,American Shad,29
+2006,17,Chinook Salmon,0
+2006,17,Delta Smelt,0
+2006,17,Longfin Smelt,0
+2006,17,Northern Anchovy,0
+2006,17,Pacific Herring,0
+2006,17,Splittail,0
+2006,17,Striped Bass age-0,3
+2006,17,Striped Bass age-1,0
+2006,17,Striped Bass age-2,0
+2006,17,Threadfin Shad,838
+2007,12,American Shad,67
+2007,12,Chinook Salmon,0
+2007,12,Delta Smelt,4
+2007,12,Longfin Smelt,1
+2007,12,Northern Anchovy,83
+2007,12,Pacific Herring,6
+2007,12,Splittail,0
+2007,12,Striped Bass age-0,22
+2007,12,Striped Bass age-1,1
+2007,12,Striped Bass age-2,0
+2007,12,Threadfin Shad,3
+2007,13,American Shad,55
+2007,13,Chinook Salmon,0
+2007,13,Delta Smelt,2
+2007,13,Longfin Smelt,2
+2007,13,Northern Anchovy,3
+2007,13,Pacific Herring,5
+2007,13,Splittail,0
+2007,13,Striped Bass age-0,25
+2007,13,Striped Bass age-1,3
+2007,13,Striped Bass age-2,0
+2007,13,Threadfin Shad,26
+2007,14,American Shad,24
+2007,14,Chinook Salmon,0
+2007,14,Delta Smelt,8
+2007,14,Longfin Smelt,1
+2007,14,Northern Anchovy,1
+2007,14,Pacific Herring,0
+2007,14,Splittail,1
+2007,14,Striped Bass age-0,20
+2007,14,Striped Bass age-1,3
+2007,14,Striped Bass age-2,0
+2007,14,Threadfin Shad,16
+2007,15,American Shad,376
+2007,15,Chinook Salmon,0
+2007,15,Delta Smelt,12
+2007,15,Longfin Smelt,5
+2007,15,Northern Anchovy,0
+2007,15,Pacific Herring,0
+2007,15,Splittail,0
+2007,15,Striped Bass age-0,14
+2007,15,Striped Bass age-1,0
+2007,15,Striped Bass age-2,0
+2007,15,Threadfin Shad,127
+2007,16,American Shad,12
+2007,16,Chinook Salmon,0
+2007,16,Delta Smelt,0
+2007,16,Longfin Smelt,0
+2007,16,Northern Anchovy,0
+2007,16,Pacific Herring,0
+2007,16,Splittail,0
+2007,16,Striped Bass age-0,0
+2007,16,Striped Bass age-1,0
+2007,16,Striped Bass age-2,0
+2007,16,Threadfin Shad,55
+2007,17,American Shad,6
+2007,17,Chinook Salmon,0
+2007,17,Delta Smelt,0
+2007,17,Longfin Smelt,0
+2007,17,Northern Anchovy,0
+2007,17,Pacific Herring,0
+2007,17,Splittail,0
+2007,17,Striped Bass age-0,0
+2007,17,Striped Bass age-1,0
+2007,17,Striped Bass age-2,0
+2007,17,Threadfin Shad,2938
+2008,12,American Shad,46
+2008,12,Chinook Salmon,1
+2008,12,Delta Smelt,0
+2008,12,Longfin Smelt,21
+2008,12,Northern Anchovy,46
+2008,12,Pacific Herring,38
+2008,12,Splittail,0
+2008,12,Striped Bass age-0,38
+2008,12,Striped Bass age-1,3
+2008,12,Striped Bass age-2,0
+2008,12,Threadfin Shad,6
+2008,13,American Shad,76
+2008,13,Chinook Salmon,0
+2008,13,Delta Smelt,1
+2008,13,Longfin Smelt,46
+2008,13,Northern Anchovy,35
+2008,13,Pacific Herring,47
+2008,13,Splittail,0
+2008,13,Striped Bass age-0,32
+2008,13,Striped Bass age-1,0
+2008,13,Striped Bass age-2,1
+2008,13,Threadfin Shad,13
+2008,14,American Shad,20
+2008,14,Chinook Salmon,0
+2008,14,Delta Smelt,1
+2008,14,Longfin Smelt,3
+2008,14,Northern Anchovy,4
+2008,14,Pacific Herring,1
+2008,14,Splittail,0
+2008,14,Striped Bass age-0,39
+2008,14,Striped Bass age-1,1
+2008,14,Striped Bass age-2,1
+2008,14,Threadfin Shad,11
+2008,15,American Shad,23
+2008,15,Chinook Salmon,0
+2008,15,Delta Smelt,20
+2008,15,Longfin Smelt,17
+2008,15,Northern Anchovy,1
+2008,15,Pacific Herring,2
+2008,15,Splittail,0
+2008,15,Striped Bass age-0,30
+2008,15,Striped Bass age-1,0
+2008,15,Striped Bass age-2,1
+2008,15,Threadfin Shad,68
+2008,16,American Shad,20
+2008,16,Chinook Salmon,0
+2008,16,Delta Smelt,0
+2008,16,Longfin Smelt,0
+2008,16,Northern Anchovy,0
+2008,16,Pacific Herring,0
+2008,16,Splittail,0
+2008,16,Striped Bass age-0,21
+2008,16,Striped Bass age-1,0
+2008,16,Striped Bass age-2,0
+2008,16,Threadfin Shad,24
+2008,17,American Shad,5
+2008,17,Chinook Salmon,0
+2008,17,Delta Smelt,0
+2008,17,Longfin Smelt,0
+2008,17,Northern Anchovy,0
+2008,17,Pacific Herring,0
+2008,17,Splittail,0
+2008,17,Striped Bass age-0,3
+2008,17,Striped Bass age-1,3
+2008,17,Striped Bass age-2,0
+2008,17,Threadfin Shad,320
+2009,12,American Shad,81
+2009,12,Chinook Salmon,1
+2009,12,Delta Smelt,0
+2009,12,Longfin Smelt,18
+2009,12,Northern Anchovy,36
+2009,12,Pacific Herring,6
+2009,12,Splittail,0
+2009,12,Striped Bass age-0,18
+2009,12,Striped Bass age-1,3
+2009,12,Striped Bass age-2,0
+2009,12,Threadfin Shad,1
+2009,13,American Shad,142
+2009,13,Chinook Salmon,0
+2009,13,Delta Smelt,11
+2009,13,Longfin Smelt,16
+2009,13,Northern Anchovy,33
+2009,13,Pacific Herring,0
+2009,13,Splittail,0
+2009,13,Striped Bass age-0,15
+2009,13,Striped Bass age-1,3
+2009,13,Striped Bass age-2,1
+2009,13,Threadfin Shad,1
+2009,14,American Shad,43
+2009,14,Chinook Salmon,0
+2009,14,Delta Smelt,2
+2009,14,Longfin Smelt,4
+2009,14,Northern Anchovy,6
+2009,14,Pacific Herring,0
+2009,14,Splittail,1
+2009,14,Striped Bass age-0,9
+2009,14,Striped Bass age-1,0
+2009,14,Striped Bass age-2,0
+2009,14,Threadfin Shad,2
+2009,15,American Shad,114
+2009,15,Chinook Salmon,0
+2009,15,Delta Smelt,6
+2009,15,Longfin Smelt,10
+2009,15,Northern Anchovy,0
+2009,15,Pacific Herring,0
+2009,15,Splittail,0
+2009,15,Striped Bass age-0,17
+2009,15,Striped Bass age-1,0
+2009,15,Striped Bass age-2,1
+2009,15,Threadfin Shad,26
+2009,16,American Shad,16
+2009,16,Chinook Salmon,0
+2009,16,Delta Smelt,0
+2009,16,Longfin Smelt,4
+2009,16,Northern Anchovy,0
+2009,16,Pacific Herring,0
+2009,16,Splittail,0
+2009,16,Striped Bass age-0,2
+2009,16,Striped Bass age-1,1
+2009,16,Striped Bass age-2,0
+2009,16,Threadfin Shad,8
+2009,17,American Shad,15
+2009,17,Chinook Salmon,0
+2009,17,Delta Smelt,0
+2009,17,Longfin Smelt,0
+2009,17,Northern Anchovy,0
+2009,17,Pacific Herring,0
+2009,17,Splittail,0
+2009,17,Striped Bass age-0,0
+2009,17,Striped Bass age-1,0
+2009,17,Striped Bass age-2,0
+2009,17,Threadfin Shad,2
+2010,12,American Shad,41
+2010,12,Chinook Salmon,0
+2010,12,Delta Smelt,0
+2010,12,Longfin Smelt,32
+2010,12,Northern Anchovy,512
+2010,12,Pacific Herring,34
+2010,12,Splittail,0
+2010,12,Striped Bass age-0,6
+2010,12,Striped Bass age-1,0
+2010,12,Striped Bass age-2,1
+2010,12,Threadfin Shad,0
+2010,13,American Shad,107
+2010,13,Chinook Salmon,0
+2010,13,Delta Smelt,12
+2010,13,Longfin Smelt,18
+2010,13,Northern Anchovy,73
+2010,13,Pacific Herring,41
+2010,13,Splittail,0
+2010,13,Striped Bass age-0,8
+2010,13,Striped Bass age-1,2
+2010,13,Striped Bass age-2,0
+2010,13,Threadfin Shad,13
+2010,14,American Shad,42
+2010,14,Chinook Salmon,0
+2010,14,Delta Smelt,4
+2010,14,Longfin Smelt,6
+2010,14,Northern Anchovy,16
+2010,14,Pacific Herring,0
+2010,14,Splittail,0
+2010,14,Striped Bass age-0,6
+2010,14,Striped Bass age-1,0
+2010,14,Striped Bass age-2,1
+2010,14,Threadfin Shad,6
+2010,15,American Shad,110
+2010,15,Chinook Salmon,0
+2010,15,Delta Smelt,13
+2010,15,Longfin Smelt,1
+2010,15,Northern Anchovy,0
+2010,15,Pacific Herring,0
+2010,15,Splittail,0
+2010,15,Striped Bass age-0,4
+2010,15,Striped Bass age-1,0
+2010,15,Striped Bass age-2,0
+2010,15,Threadfin Shad,26
+2010,16,American Shad,7
+2010,16,Chinook Salmon,0
+2010,16,Delta Smelt,0
+2010,16,Longfin Smelt,0
+2010,16,Northern Anchovy,0
+2010,16,Pacific Herring,0
+2010,16,Splittail,0
+2010,16,Striped Bass age-0,1
+2010,16,Striped Bass age-1,0
+2010,16,Striped Bass age-2,0
+2010,16,Threadfin Shad,41
+2010,17,American Shad,0
+2010,17,Chinook Salmon,0
+2010,17,Delta Smelt,0
+2010,17,Longfin Smelt,0
+2010,17,Northern Anchovy,0
+2010,17,Pacific Herring,0
+2010,17,Splittail,0
+2010,17,Striped Bass age-0,5
+2010,17,Striped Bass age-1,2
+2010,17,Striped Bass age-2,0
+2010,17,Threadfin Shad,11
+2011,12,American Shad,195
+2011,12,Chinook Salmon,0
+2011,12,Delta Smelt,17
+2011,12,Longfin Smelt,64
+2011,12,Northern Anchovy,11
+2011,12,Pacific Herring,0
+2011,12,Splittail,3
+2011,12,Striped Bass age-0,56
+2011,12,Striped Bass age-1,1
+2011,12,Striped Bass age-2,0
+2011,12,Threadfin Shad,4
+2011,13,American Shad,159
+2011,13,Chinook Salmon,1
+2011,13,Delta Smelt,103
+2011,13,Longfin Smelt,158
+2011,13,Northern Anchovy,1
+2011,13,Pacific Herring,1
+2011,13,Splittail,1
+2011,13,Striped Bass age-0,61
+2011,13,Striped Bass age-1,2
+2011,13,Striped Bass age-2,0
+2011,13,Threadfin Shad,43
+2011,14,American Shad,62
+2011,14,Chinook Salmon,0
+2011,14,Delta Smelt,18
+2011,14,Longfin Smelt,15
+2011,14,Northern Anchovy,0
+2011,14,Pacific Herring,0
+2011,14,Splittail,2
+2011,14,Striped Bass age-0,61
+2011,14,Striped Bass age-1,0
+2011,14,Striped Bass age-2,0
+2011,14,Threadfin Shad,13
+2011,15,American Shad,136
+2011,15,Chinook Salmon,0
+2011,15,Delta Smelt,187
+2011,15,Longfin Smelt,58
+2011,15,Northern Anchovy,0
+2011,15,Pacific Herring,0
+2011,15,Splittail,0
+2011,15,Striped Bass age-0,28
+2011,15,Striped Bass age-1,0
+2011,15,Striped Bass age-2,0
+2011,15,Threadfin Shad,38
+2011,16,American Shad,41
+2011,16,Chinook Salmon,0
+2011,16,Delta Smelt,5
+2011,16,Longfin Smelt,7
+2011,16,Northern Anchovy,0
+2011,16,Pacific Herring,0
+2011,16,Splittail,0
+2011,16,Striped Bass age-0,12
+2011,16,Striped Bass age-1,0
+2011,16,Striped Bass age-2,0
+2011,16,Threadfin Shad,30
+2011,17,American Shad,20
+2011,17,Chinook Salmon,0
+2011,17,Delta Smelt,0
+2011,17,Longfin Smelt,0
+2011,17,Northern Anchovy,0
+2011,17,Pacific Herring,0
+2011,17,Splittail,0
+2011,17,Striped Bass age-0,0
+2011,17,Striped Bass age-1,2
+2011,17,Striped Bass age-2,0
+2011,17,Threadfin Shad,65
+2012,12,American Shad,25
+2012,12,Chinook Salmon,0
+2012,12,Delta Smelt,0
+2012,12,Longfin Smelt,14
+2012,12,Northern Anchovy,27
+2012,12,Pacific Herring,11
+2012,12,Splittail,0
+2012,12,Striped Bass age-0,52
+2012,12,Striped Bass age-1,1
+2012,12,Striped Bass age-2,0
+2012,12,Threadfin Shad,0
+2012,13,American Shad,83
+2012,13,Chinook Salmon,6
+2012,13,Delta Smelt,15
+2012,13,Longfin Smelt,7
+2012,13,Northern Anchovy,14
+2012,13,Pacific Herring,4
+2012,13,Splittail,0
+2012,13,Striped Bass age-0,24
+2012,13,Striped Bass age-1,0
+2012,13,Striped Bass age-2,2
+2012,13,Threadfin Shad,1
+2012,14,American Shad,23
+2012,14,Chinook Salmon,1
+2012,14,Delta Smelt,1
+2012,14,Longfin Smelt,1
+2012,14,Northern Anchovy,26
+2012,14,Pacific Herring,1
+2012,14,Splittail,0
+2012,14,Striped Bass age-0,4
+2012,14,Striped Bass age-1,0
+2012,14,Striped Bass age-2,0
+2012,14,Threadfin Shad,1
+2012,15,American Shad,128
+2012,15,Chinook Salmon,6
+2012,15,Delta Smelt,26
+2012,15,Longfin Smelt,7
+2012,15,Northern Anchovy,0
+2012,15,Pacific Herring,0
+2012,15,Splittail,1
+2012,15,Striped Bass age-0,10
+2012,15,Striped Bass age-1,1
+2012,15,Striped Bass age-2,2
+2012,15,Threadfin Shad,16
+2012,16,American Shad,22
+2012,16,Chinook Salmon,1
+2012,16,Delta Smelt,0
+2012,16,Longfin Smelt,0
+2012,16,Northern Anchovy,0
+2012,16,Pacific Herring,0
+2012,16,Splittail,0
+2012,16,Striped Bass age-0,8
+2012,16,Striped Bass age-1,0
+2012,16,Striped Bass age-2,0
+2012,16,Threadfin Shad,7
+2012,17,American Shad,3
+2012,17,Chinook Salmon,0
+2012,17,Delta Smelt,0
+2012,17,Longfin Smelt,0
+2012,17,Northern Anchovy,0
+2012,17,Pacific Herring,0
+2012,17,Splittail,0
+2012,17,Striped Bass age-0,0
+2012,17,Striped Bass age-1,0
+2012,17,Striped Bass age-2,2
+2012,17,Threadfin Shad,8
+2013,12,American Shad,14
+2013,12,Chinook Salmon,0
+2013,12,Delta Smelt,0
+2013,12,Longfin Smelt,17
+2013,12,Northern Anchovy,13
+2013,12,Pacific Herring,3
+2013,12,Splittail,0
+2013,12,Striped Bass age-0,4
+2013,12,Striped Bass age-1,1
+2013,12,Striped Bass age-2,1
+2013,12,Threadfin Shad,0
+2013,13,American Shad,88
+2013,13,Chinook Salmon,1
+2013,13,Delta Smelt,8
+2013,13,Longfin Smelt,24
+2013,13,Northern Anchovy,30
+2013,13,Pacific Herring,1
+2013,13,Splittail,0
+2013,13,Striped Bass age-0,21
+2013,13,Striped Bass age-1,3
+2013,13,Striped Bass age-2,0
+2013,13,Threadfin Shad,16
+2013,14,American Shad,14
+2013,14,Chinook Salmon,1
+2013,14,Delta Smelt,1
+2013,14,Longfin Smelt,1
+2013,14,Northern Anchovy,1
+2013,14,Pacific Herring,1
+2013,14,Splittail,1
+2013,14,Striped Bass age-0,1
+2013,14,Striped Bass age-1,1
+2013,14,Striped Bass age-2,0
+2013,14,Threadfin Shad,6
+2013,15,American Shad,77
+2013,15,Chinook Salmon,0
+2013,15,Delta Smelt,8
+2013,15,Longfin Smelt,17
+2013,15,Northern Anchovy,0
+2013,15,Pacific Herring,0
+2013,15,Splittail,0
+2013,15,Striped Bass age-0,22
+2013,15,Striped Bass age-1,1
+2013,15,Striped Bass age-2,2
+2013,15,Threadfin Shad,88
+2013,16,American Shad,19
+2013,16,Chinook Salmon,0
+2013,16,Delta Smelt,1
+2013,16,Longfin Smelt,0
+2013,16,Northern Anchovy,0
+2013,16,Pacific Herring,0
+2013,16,Splittail,0
+2013,16,Striped Bass age-0,10
+2013,16,Striped Bass age-1,1
+2013,16,Striped Bass age-2,0
+2013,16,Threadfin Shad,112
+2013,17,American Shad,12
+2013,17,Chinook Salmon,0
+2013,17,Delta Smelt,0
+2013,17,Longfin Smelt,0
+2013,17,Northern Anchovy,0
+2013,17,Pacific Herring,0
+2013,17,Splittail,0
+2013,17,Striped Bass age-0,0
+2013,17,Striped Bass age-1,0
+2013,17,Striped Bass age-2,0
+2013,17,Threadfin Shad,3
+2014,12,American Shad,64
+2014,12,Chinook Salmon,0
+2014,12,Delta Smelt,0
+2014,12,Longfin Smelt,1
+2014,12,Northern Anchovy,50
+2014,12,Pacific Herring,1
+2014,12,Splittail,0
+2014,12,Striped Bass age-0,6
+2014,12,Striped Bass age-1,8
+2014,12,Striped Bass age-2,3
+2014,12,Threadfin Shad,3
+2014,13,American Shad,28
+2014,13,Chinook Salmon,1
+2014,13,Delta Smelt,1
+2014,13,Longfin Smelt,3
+2014,13,Northern Anchovy,19
+2014,13,Pacific Herring,1
+2014,13,Splittail,0
+2014,13,Striped Bass age-0,3
+2014,13,Striped Bass age-1,2
+2014,13,Striped Bass age-2,0
+2014,13,Threadfin Shad,10
+2014,14,American Shad,47
+2014,14,Chinook Salmon,1
+2014,14,Delta Smelt,1
+2014,14,Longfin Smelt,1
+2014,14,Northern Anchovy,11
+2014,14,Pacific Herring,1
+2014,14,Splittail,1
+2014,14,Striped Bass age-0,3
+2014,14,Striped Bass age-1,1
+2014,14,Striped Bass age-2,1
+2014,14,Threadfin Shad,1
+2014,15,American Shad,71
+2014,15,Chinook Salmon,64
+2014,15,Delta Smelt,7
+2014,15,Longfin Smelt,2
+2014,15,Northern Anchovy,0
+2014,15,Pacific Herring,0
+2014,15,Splittail,0
+2014,15,Striped Bass age-0,31
+2014,15,Striped Bass age-1,6
+2014,15,Striped Bass age-2,2
+2014,15,Threadfin Shad,179
+2014,16,American Shad,12
+2014,16,Chinook Salmon,0
+2014,16,Delta Smelt,0
+2014,16,Longfin Smelt,0
+2014,16,Northern Anchovy,0
+2014,16,Pacific Herring,0
+2014,16,Splittail,0
+2014,16,Striped Bass age-0,3
+2014,16,Striped Bass age-1,0
+2014,16,Striped Bass age-2,0
+2014,16,Threadfin Shad,54
+2014,17,American Shad,12
+2014,17,Chinook Salmon,2
+2014,17,Delta Smelt,0
+2014,17,Longfin Smelt,0
+2014,17,Northern Anchovy,0
+2014,17,Pacific Herring,0
+2014,17,Splittail,0
+2014,17,Striped Bass age-0,6
+2014,17,Striped Bass age-1,2
+2014,17,Striped Bass age-2,5
+2014,17,Threadfin Shad,26
+2015,12,American Shad,6
+2015,12,Chinook Salmon,0
+2015,12,Delta Smelt,0
+2015,12,Longfin Smelt,0
+2015,12,Northern Anchovy,456
+2015,12,Pacific Herring,4
+2015,12,Splittail,0
+2015,12,Striped Bass age-0,10
+2015,12,Striped Bass age-1,3
+2015,12,Striped Bass age-2,3
+2015,12,Threadfin Shad,13
+2015,13,American Shad,13
+2015,13,Chinook Salmon,0
+2015,13,Delta Smelt,0
+2015,13,Longfin Smelt,1
+2015,13,Northern Anchovy,139
+2015,13,Pacific Herring,0
+2015,13,Splittail,0
+2015,13,Striped Bass age-0,11
+2015,13,Striped Bass age-1,0
+2015,13,Striped Bass age-2,0
+2015,13,Threadfin Shad,32
+2015,14,American Shad,5
+2015,14,Chinook Salmon,1
+2015,14,Delta Smelt,1
+2015,14,Longfin Smelt,1
+2015,14,Northern Anchovy,87
+2015,14,Pacific Herring,0
+2015,14,Splittail,0
+2015,14,Striped Bass age-0,6
+2015,14,Striped Bass age-1,1
+2015,14,Striped Bass age-2,0
+2015,14,Threadfin Shad,4
+2015,15,American Shad,23
+2015,15,Chinook Salmon,0
+2015,15,Delta Smelt,6
+2015,15,Longfin Smelt,0
+2015,15,Northern Anchovy,0
+2015,15,Pacific Herring,0
+2015,15,Splittail,0
+2015,15,Striped Bass age-0,8
+2015,15,Striped Bass age-1,2
+2015,15,Striped Bass age-2,2
+2015,15,Threadfin Shad,641
+2015,16,American Shad,9
+2015,16,Chinook Salmon,0
+2015,16,Delta Smelt,0
+2015,16,Longfin Smelt,0
+2015,16,Northern Anchovy,0
+2015,16,Pacific Herring,0
+2015,16,Splittail,0
+2015,16,Striped Bass age-0,3
+2015,16,Striped Bass age-1,0
+2015,16,Striped Bass age-2,0
+2015,16,Threadfin Shad,61
+2015,17,American Shad,0
+2015,17,Chinook Salmon,0
+2015,17,Delta Smelt,0
+2015,17,Longfin Smelt,0
+2015,17,Northern Anchovy,0
+2015,17,Pacific Herring,0
+2015,17,Splittail,0
+2015,17,Striped Bass age-0,2
+2015,17,Striped Bass age-1,0
+2015,17,Striped Bass age-2,0
+2015,17,Threadfin Shad,28
+2016,12,American Shad,10
+2016,12,Chinook Salmon,0
+2016,12,Delta Smelt,0
+2016,12,Longfin Smelt,0
+2016,12,Northern Anchovy,239
+2016,12,Pacific Herring,0
+2016,12,Splittail,0
+2016,12,Striped Bass age-0,21
+2016,12,Striped Bass age-1,4
+2016,12,Striped Bass age-2,1
+2016,12,Threadfin Shad,3
+2016,13,American Shad,75
+2016,13,Chinook Salmon,1
+2016,13,Delta Smelt,0
+2016,13,Longfin Smelt,2
+2016,13,Northern Anchovy,79
+2016,13,Pacific Herring,0
+2016,13,Splittail,0
+2016,13,Striped Bass age-0,29
+2016,13,Striped Bass age-1,1
+2016,13,Striped Bass age-2,2
+2016,13,Threadfin Shad,39
+2016,14,American Shad,14
+2016,14,Chinook Salmon,0
+2016,14,Delta Smelt,0
+2016,14,Longfin Smelt,0
+2016,14,Northern Anchovy,56
+2016,14,Pacific Herring,0
+2016,14,Splittail,0
+2016,14,Striped Bass age-0,10
+2016,14,Striped Bass age-1,1
+2016,14,Striped Bass age-2,0
+2016,14,Threadfin Shad,76
+2016,15,American Shad,132
+2016,15,Chinook Salmon,1
+2016,15,Delta Smelt,8
+2016,15,Longfin Smelt,0
+2016,15,Northern Anchovy,7
+2016,15,Pacific Herring,0
+2016,15,Splittail,0
+2016,15,Striped Bass age-0,13
+2016,15,Striped Bass age-1,0
+2016,15,Striped Bass age-2,0
+2016,15,Threadfin Shad,240
+2016,16,American Shad,34
+2016,16,Chinook Salmon,0
+2016,16,Delta Smelt,0
+2016,16,Longfin Smelt,0
+2016,16,Northern Anchovy,0
+2016,16,Pacific Herring,0
+2016,16,Splittail,0
+2016,16,Striped Bass age-0,18
+2016,16,Striped Bass age-1,0
+2016,16,Striped Bass age-2,0
+2016,16,Threadfin Shad,152
+2016,17,American Shad,2
+2016,17,Chinook Salmon,0
+2016,17,Delta Smelt,0
+2016,17,Longfin Smelt,0
+2016,17,Northern Anchovy,0
+2016,17,Pacific Herring,0
+2016,17,Splittail,0
+2016,17,Striped Bass age-0,2
+2016,17,Striped Bass age-1,0
+2016,17,Striped Bass age-2,0
+2016,17,Threadfin Shad,5
+2017,12,American Shad,272
+2017,12,Chinook Salmon,1
+2017,12,Delta Smelt,0
+2017,12,Longfin Smelt,18
+2017,12,Northern Anchovy,80
+2017,12,Pacific Herring,0
+2017,12,Splittail,0
+2017,12,Striped Bass age-0,88
+2017,12,Striped Bass age-1,7
+2017,12,Striped Bass age-2,0
+2017,12,Threadfin Shad,22
+2017,13,American Shad,1002
+2017,13,Chinook Salmon,0
+2017,13,Delta Smelt,1
+2017,13,Longfin Smelt,6
+2017,13,Northern Anchovy,40
+2017,13,Pacific Herring,0
+2017,13,Splittail,0
+2017,13,Striped Bass age-0,133
+2017,13,Striped Bass age-1,2
+2017,13,Striped Bass age-2,0
+2017,13,Threadfin Shad,54
+2017,14,American Shad,218
+2017,14,Chinook Salmon,0
+2017,14,Delta Smelt,0
+2017,14,Longfin Smelt,11
+2017,14,Northern Anchovy,9
+2017,14,Pacific Herring,0
+2017,14,Splittail,1
+2017,14,Striped Bass age-0,80
+2017,14,Striped Bass age-1,1
+2017,14,Striped Bass age-2,1
+2017,14,Threadfin Shad,49
+2017,15,American Shad,534
+2017,15,Chinook Salmon,0
+2017,15,Delta Smelt,1
+2017,15,Longfin Smelt,2
+2017,15,Northern Anchovy,0
+2017,15,Pacific Herring,0
+2017,15,Splittail,0
+2017,15,Striped Bass age-0,47
+2017,15,Striped Bass age-1,0
+2017,15,Striped Bass age-2,0
+2017,15,Threadfin Shad,89
+2017,16,American Shad,177
+2017,16,Chinook Salmon,0
+2017,16,Delta Smelt,0
+2017,16,Longfin Smelt,5
+2017,16,Northern Anchovy,0
+2017,16,Pacific Herring,0
+2017,16,Splittail,0
+2017,16,Striped Bass age-0,23
+2017,16,Striped Bass age-1,0
+2017,16,Striped Bass age-2,0
+2017,16,Threadfin Shad,47
+2017,17,American Shad,12
+2017,17,Chinook Salmon,0
+2017,17,Delta Smelt,0
+2017,17,Longfin Smelt,0
+2017,17,Northern Anchovy,0
+2017,17,Pacific Herring,0
+2017,17,Splittail,0
+2017,17,Striped Bass age-0,2
+2017,17,Striped Bass age-1,3
+2017,17,Striped Bass age-2,0
+2017,17,Threadfin Shad,0
+2018,12,American Shad,102
+2018,12,Chinook Salmon,0
+2018,12,Delta Smelt,0
+2018,12,Longfin Smelt,8
+2018,12,Northern Anchovy,335
+2018,12,Pacific Herring,0
+2018,12,Splittail,0
+2018,12,Striped Bass age-0,10
+2018,12,Striped Bass age-1,7
+2018,12,Striped Bass age-2,1
+2018,12,Threadfin Shad,7
+2018,13,American Shad,187
+2018,13,Chinook Salmon,0
+2018,13,Delta Smelt,0
+2018,13,Longfin Smelt,7
+2018,13,Northern Anchovy,136
+2018,13,Pacific Herring,3
+2018,13,Splittail,0
+2018,13,Striped Bass age-0,5
+2018,13,Striped Bass age-1,3
+2018,13,Striped Bass age-2,0
+2018,13,Threadfin Shad,4
+2018,14,American Shad,31
+2018,14,Chinook Salmon,0
+2018,14,Delta Smelt,0
+2018,14,Longfin Smelt,2
+2018,14,Northern Anchovy,29
+2018,14,Pacific Herring,0
+2018,14,Splittail,0
+2018,14,Striped Bass age-0,2
+2018,14,Striped Bass age-1,1
+2018,14,Striped Bass age-2,1
+2018,14,Threadfin Shad,4
+2018,15,American Shad,181
+2018,15,Chinook Salmon,1
+2018,15,Delta Smelt,0
+2018,15,Longfin Smelt,4
+2018,15,Northern Anchovy,1
+2018,15,Pacific Herring,0
+2018,15,Splittail,0
+2018,15,Striped Bass age-0,10
+2018,15,Striped Bass age-1,1
+2018,15,Striped Bass age-2,1
+2018,15,Threadfin Shad,68
+2018,16,American Shad,103
+2018,16,Chinook Salmon,0
+2018,16,Delta Smelt,0
+2018,16,Longfin Smelt,0
+2018,16,Northern Anchovy,2
+2018,16,Pacific Herring,0
+2018,16,Splittail,0
+2018,16,Striped Bass age-0,2
+2018,16,Striped Bass age-1,0
+2018,16,Striped Bass age-2,0
+2018,16,Threadfin Shad,49
+2018,17,American Shad,32
+2018,17,Chinook Salmon,0
+2018,17,Delta Smelt,0
+2018,17,Longfin Smelt,0
+2018,17,Northern Anchovy,0
+2018,17,Pacific Herring,0
+2018,17,Splittail,0
+2018,17,Striped Bass age-0,2
+2018,17,Striped Bass age-1,2
+2018,17,Striped Bass age-2,0
+2018,17,Threadfin Shad,40
+2019,12,American Shad,259
+2019,12,Chinook Salmon,0
+2019,12,Delta Smelt,0
+2019,12,Longfin Smelt,3
+2019,12,Northern Anchovy,134
+2019,12,Pacific Herring,6
+2019,12,Splittail,0
+2019,12,Striped Bass age-0,52
+2019,12,Striped Bass age-1,1
+2019,12,Striped Bass age-2,0
+2019,12,Threadfin Shad,1
+2019,13,American Shad,468
+2019,13,Chinook Salmon,1
+2019,13,Delta Smelt,0
+2019,13,Longfin Smelt,13
+2019,13,Northern Anchovy,2
+2019,13,Pacific Herring,0
+2019,13,Splittail,0
+2019,13,Striped Bass age-0,69
+2019,13,Striped Bass age-1,3
+2019,13,Striped Bass age-2,0
+2019,13,Threadfin Shad,34
+2019,14,American Shad,157
+2019,14,Chinook Salmon,0
+2019,14,Delta Smelt,0
+2019,14,Longfin Smelt,1
+2019,14,Northern Anchovy,0
+2019,14,Pacific Herring,0
+2019,14,Splittail,0
+2019,14,Striped Bass age-0,37
+2019,14,Striped Bass age-1,1
+2019,14,Striped Bass age-2,0
+2019,14,Threadfin Shad,19
+2019,15,American Shad,323
+2019,15,Chinook Salmon,0
+2019,15,Delta Smelt,0
+2019,15,Longfin Smelt,5
+2019,15,Northern Anchovy,0
+2019,15,Pacific Herring,0
+2019,15,Splittail,0
+2019,15,Striped Bass age-0,18
+2019,15,Striped Bass age-1,1
+2019,15,Striped Bass age-2,0
+2019,15,Threadfin Shad,227
+2019,16,American Shad,154
+2019,16,Chinook Salmon,0
+2019,16,Delta Smelt,0
+2019,16,Longfin Smelt,1
+2019,16,Northern Anchovy,0
+2019,16,Pacific Herring,0
+2019,16,Splittail,0
+2019,16,Striped Bass age-0,10
+2019,16,Striped Bass age-1,0
+2019,16,Striped Bass age-2,0
+2019,16,Threadfin Shad,16
+2019,17,American Shad,42
+2019,17,Chinook Salmon,0
+2019,17,Delta Smelt,0
+2019,17,Longfin Smelt,0
+2019,17,Northern Anchovy,0
+2019,17,Pacific Herring,0
+2019,17,Splittail,0
+2019,17,Striped Bass age-0,8
+2019,17,Striped Bass age-1,2
+2019,17,Striped Bass age-2,0
+2019,17,Threadfin Shad,17
+2020,12,American Shad,132
+2020,12,Chinook Salmon,0
+2020,12,Delta Smelt,0
+2020,12,Longfin Smelt,6
+2020,12,Northern Anchovy,55
+2020,12,Pacific Herring,1
+2020,12,Splittail,0
+2020,12,Striped Bass age-0,1
+2020,12,Striped Bass age-1,4
+2020,12,Striped Bass age-2,6
+2020,12,Threadfin Shad,7
+2020,13,American Shad,277
+2020,13,Chinook Salmon,0
+2020,13,Delta Smelt,0
+2020,13,Longfin Smelt,1
+2020,13,Northern Anchovy,31
+2020,13,Pacific Herring,1
+2020,13,Splittail,0
+2020,13,Striped Bass age-0,11
+2020,13,Striped Bass age-1,6
+2020,13,Striped Bass age-2,1
+2020,13,Threadfin Shad,24
+2020,14,American Shad,98
+2020,14,Chinook Salmon,0
+2020,14,Delta Smelt,0
+2020,14,Longfin Smelt,0
+2020,14,Northern Anchovy,26
+2020,14,Pacific Herring,0
+2020,14,Splittail,0
+2020,14,Striped Bass age-0,6
+2020,14,Striped Bass age-1,6
+2020,14,Striped Bass age-2,1
+2020,14,Threadfin Shad,11
+2020,15,American Shad,324
+2020,15,Chinook Salmon,0
+2020,15,Delta Smelt,0
+2020,15,Longfin Smelt,1
+2020,15,Northern Anchovy,0
+2020,15,Pacific Herring,0
+2020,15,Splittail,0
+2020,15,Striped Bass age-0,20
+2020,15,Striped Bass age-1,5
+2020,15,Striped Bass age-2,0
+2020,15,Threadfin Shad,559
+2020,16,American Shad,35
+2020,16,Chinook Salmon,0
+2020,16,Delta Smelt,0
+2020,16,Longfin Smelt,0
+2020,16,Northern Anchovy,0
+2020,16,Pacific Herring,0
+2020,16,Splittail,0
+2020,16,Striped Bass age-0,1
+2020,16,Striped Bass age-1,0
+2020,16,Striped Bass age-2,0
+2020,16,Threadfin Shad,27
+2020,17,American Shad,6
+2020,17,Chinook Salmon,0
+2020,17,Delta Smelt,0
+2020,17,Longfin Smelt,0
+2020,17,Northern Anchovy,0
+2020,17,Pacific Herring,0
+2020,17,Splittail,0
+2020,17,Striped Bass age-0,9
+2020,17,Striped Bass age-1,0
+2020,17,Striped Bass age-2,0
+2020,17,Threadfin Shad,0
+2021,12,American Shad,28
+2021,12,Chinook Salmon,0
+2021,12,Delta Smelt,0
+2021,12,Longfin Smelt,7
+2021,12,Northern Anchovy,623
+2021,12,Pacific Herring,1
+2021,12,Splittail,0
+2021,12,Striped Bass age-0,0
+2021,12,Striped Bass age-1,3
+2021,12,Striped Bass age-2,0
+2021,12,Threadfin Shad,0
+2021,13,American Shad,37
+2021,13,Chinook Salmon,0
+2021,13,Delta Smelt,0
+2021,13,Longfin Smelt,19
+2021,13,Northern Anchovy,141
+2021,13,Pacific Herring,0
+2021,13,Splittail,0
+2021,13,Striped Bass age-0,6
+2021,13,Striped Bass age-1,1
+2021,13,Striped Bass age-2,1
+2021,13,Threadfin Shad,21
+2021,14,American Shad,11
+2021,14,Chinook Salmon,0
+2021,14,Delta Smelt,0
+2021,14,Longfin Smelt,9
+2021,14,Northern Anchovy,39
+2021,14,Pacific Herring,0
+2021,14,Splittail,0
+2021,14,Striped Bass age-0,4
+2021,14,Striped Bass age-1,4
+2021,14,Striped Bass age-2,0
+2021,14,Threadfin Shad,3
+2021,15,American Shad,70
+2021,15,Chinook Salmon,1
+2021,15,Delta Smelt,0
+2021,15,Longfin Smelt,5
+2021,15,Northern Anchovy,2
+2021,15,Pacific Herring,0
+2021,15,Splittail,0
+2021,15,Striped Bass age-0,25
+2021,15,Striped Bass age-1,2
+2021,15,Striped Bass age-2,0
+2021,15,Threadfin Shad,90
+2021,16,American Shad,51
+2021,16,Chinook Salmon,0
+2021,16,Delta Smelt,0
+2021,16,Longfin Smelt,1
+2021,16,Northern Anchovy,0
+2021,16,Pacific Herring,0
+2021,16,Splittail,0
+2021,16,Striped Bass age-0,19
+2021,16,Striped Bass age-1,0
+2021,16,Striped Bass age-2,0
+2021,16,Threadfin Shad,106
+2021,17,American Shad,5
+2021,17,Chinook Salmon,0
+2021,17,Delta Smelt,0
+2021,17,Longfin Smelt,0
+2021,17,Northern Anchovy,0
+2021,17,Pacific Herring,0
+2021,17,Splittail,0
+2021,17,Striped Bass age-0,2
+2021,17,Striped Bass age-1,0
+2021,17,Striped Bass age-2,2
+2021,17,Threadfin Shad,0
+2022,12,American Shad,83
+2022,12,Chinook Salmon,0
+2022,12,Delta Smelt,0
+2022,12,Longfin Smelt,28
+2022,12,Northern Anchovy,196
+2022,12,Pacific Herring,0
+2022,12,Splittail,0
+2022,12,Striped Bass age-0,11
+2022,12,Striped Bass age-1,4
+2022,12,Striped Bass age-2,1
+2022,12,Threadfin Shad,0
+2022,13,American Shad,108
+2022,13,Chinook Salmon,1
+2022,13,Delta Smelt,0
+2022,13,Longfin Smelt,32
+2022,13,Northern Anchovy,72
+2022,13,Pacific Herring,2
+2022,13,Splittail,0
+2022,13,Striped Bass age-0,14
+2022,13,Striped Bass age-1,2
+2022,13,Striped Bass age-2,0
+2022,13,Threadfin Shad,13
+2022,14,American Shad,30
+2022,14,Chinook Salmon,0
+2022,14,Delta Smelt,0
+2022,14,Longfin Smelt,10
+2022,14,Northern Anchovy,90
+2022,14,Pacific Herring,0
+2022,14,Splittail,0
+2022,14,Striped Bass age-0,5
+2022,14,Striped Bass age-1,0
+2022,14,Striped Bass age-2,0
+2022,14,Threadfin Shad,6
+2022,15,American Shad,54
+2022,15,Chinook Salmon,0
+2022,15,Delta Smelt,0
+2022,15,Longfin Smelt,5
+2022,15,Northern Anchovy,23
+2022,15,Pacific Herring,0
+2022,15,Splittail,0
+2022,15,Striped Bass age-0,11
+2022,15,Striped Bass age-1,4
+2022,15,Striped Bass age-2,0
+2022,15,Threadfin Shad,83
+2022,16,American Shad,23
+2022,16,Chinook Salmon,0
+2022,16,Delta Smelt,0
+2022,16,Longfin Smelt,2
+2022,16,Northern Anchovy,5
+2022,16,Pacific Herring,0
+2022,16,Splittail,0
+2022,16,Striped Bass age-0,2
+2022,16,Striped Bass age-1,1
+2022,16,Striped Bass age-2,0
+2022,16,Threadfin Shad,118
+2022,17,American Shad,6
+2022,17,Chinook Salmon,0
+2022,17,Delta Smelt,0
+2022,17,Longfin Smelt,0
+2022,17,Northern Anchovy,0
+2022,17,Pacific Herring,0
+2022,17,Splittail,0
+2022,17,Striped Bass age-0,18
+2022,17,Striped Bass age-1,2
+2022,17,Striped Bass age-2,3
+2022,17,Threadfin Shad,18
