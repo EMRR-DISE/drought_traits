@@ -184,7 +184,33 @@ w_bsize_ft_miss <- anti_join(target_tax_truc,w_bsize_ft)  %>%
 #for genus level taxa, search all species level taxa within genus for traits
 #try worrms function wm_children() for genera
 #example
-#wm_children_(name = c('Gammarus'))
+w_tax_gen1 <- wm_children_(name = c('Candona'))
+w_tax_gen1_id <- w_tax_gen1 %>%
+  pull(AphiaID)
+w_traits_gen1 <- wm_attr_data_(id = w_tax_gen1_id) 
+#no content :( 
+w_tax_gen2 <- wm_children_(name = c('Hyalella'))
+w_tax_gen2_id <- w_tax_gen2 %>%
+  pull(AphiaID)
+w_traits_gen2 <- wm_attr_data_(id = w_tax_gen2_id) 
+#no content :(
+w_tax_gen3 <- wm_children_(name = c('Physa'))
+w_tax_gen3_id <- w_tax_gen3 %>%
+  pull(AphiaID)
+#no content :(
+w_tax_gen4 <- wm_children_(name = c('Sinelobus'))
+w_tax_gen4_id <- w_tax_gen4 %>%
+  pull(AphiaID)
+w_traits_gen4 <- wm_attr_w_traits_gen3 <- wm_attr_data_(id = w_tax_gen3_id)
+data_(id = w_tax_gen4_id)
+#no content :( 
+w_tax_gen5 <- wm_children_(name = c('Uromunna'))
+w_tax_gen5_id <- w_tax_gen5 %>%
+  pull(AphiaID)
+w_traits_gen5 <- wm_attr_data_(id = w_tax_gen5_id)
+#no content :( 
+#No data for Cryptochironomus, Isocypris, Fluminicola, Procladius
+#partial data for Cyprideis, Dorylaimus
 
 #for species level taxa with no match in search, we could look for data for congeners to see what is available
 #but might be better to just search literature and other databases before resorting to this 
