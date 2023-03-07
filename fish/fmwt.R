@@ -23,24 +23,36 @@ library(janitor)
 library(readr)
 
 # load fmwt indices ----
-fmwt_annual_long <- read_csv("fish traits/fish_data/FMWT_index_long.csv") %>% 
+fmwt_annual_long <- read_csv("fish/fish_data/FMWT_trait_long.csv") %>% 
+  group_by(year, species) %>% 
+  summarise(index = sum(index_area)) %>% # index totals by year & spp
   clean_names() # annual indices
-fmwt_by_area_long <- read_csv("fish traits/fish_data/FMWT_trait_long.csv") %>% 
+
+fmwt_by_area_long <- read_csv("fish/fish_data/FMWT_trait_long.csv") %>% 
+  group_by(year, area, species) %>% 
+  summarise(index = sum(index_area)) %>% # index totals by year, area & spp
   clean_names() # annual indices by area
 
 ## collapse striper data -----
 # sums age-0, -1, -2 striped bass indices into a total for "striped bass" 
 
 ### annual totals, no area subtotals -----
+temp1 <- # annual totals w all spp except striped bass
+  read_csv("fish/fish_data/FMWT_trait_long.csv") %>% 
+  filter(species != "Striped Bass age-0" & 
+           species != "Striped Bass age-1" & 
+           species != "Striped Bass age-2") %>% 
+  group_by(year, species) %>% 
+  summarise(index = sum(index_area))
+  
 temp <- 
-  fmwt_annual_long %>% 
+  read_csv("fish/fish_data/FMWT_trait_long.csv") %>% 
   group_by(year) %>% 
-  filter(species == "Striped Bass age-0" | species == "Striped Bass age-1" | species == "Striped Bass age-2") %>% 
-  summarise(species = "Striped Bass", index = sum(index)) %>% 
-  bind_rows(fmwt_annual_long %>% 
-              filter(species != "Striped Bass age-0" & 
-                       species != "Striped Bass age-1" & 
-                       species != "Striped Bass age-2")) %>% 
+  filter(species == "Striped Bass age-0" | 
+           species == "Striped Bass age-1" | 
+           species == "Striped Bass age-2") %>% 
+  summarise(species = "Striped Bass", index = sum(index_area)) %>% 
+  bind_rows(temp1) %>% 
   arrange(year, species)
 
 fmwt1 <- # differs from FMWT_index_wide.csv in having collapsed the striper data...
@@ -50,37 +62,40 @@ fmwt1 <- # differs from FMWT_index_wide.csv in having collapsed the striper data
   add_row(year = c(1974, 1979)) %>% # insert missing years albeit w/o data
   arrange(year)
 
-write_csv(fmwt1, "fish traits/fish_data/fmwt1.csv")
+write_csv(fmwt1, "fish/fish_data/fmwt1.csv")
 
-rm(temp)
+rm(temp, temp1)
 
 ### area subtotals ----
+temp1 <- # annual-area totals w all spp except striped bass
+  read_csv("fish/fish_data/FMWT_trait_long.csv") %>% 
+  filter(species != "Striped Bass age-0" & 
+           species != "Striped Bass age-1" & 
+           species != "Striped Bass age-2") %>% 
+  group_by(year, area, species) %>% 
+  summarise(index = sum(index_area))
+
 temp <- 
-  fmwt_by_area_long %>% 
+  read_csv("fish/fish_data/FMWT_trait_long.csv") %>% 
   group_by(year, area) %>% 
-  filter(species == "Striped Bass age-0" | species == "Striped Bass age-1" | species == "Striped Bass age-2") %>% 
-  summarise(species = "Striped Bass", index_area = sum(index_area)) %>% 
-  bind_rows(fmwt_by_area_long %>% 
-              filter(species != "Striped Bass age-0" & 
-                       species != "Striped Bass age-1" & 
-                       species != "Striped Bass age-2")) %>% 
+  filter(species == "Striped Bass age-0" | 
+           species == "Striped Bass age-1" | 
+           species == "Striped Bass age-2") %>% 
+  summarise(species = "Striped Bass", index = sum(index_area)) %>% 
+  bind_rows(temp1) %>% 
   arrange(year, area, species) %>% 
-  ungroup() %>% 
-  add_row(year = 1974, area = c(12:17)) %>% 
-  add_row(year = 1979, area = c(12:17)) %>% 
-  arrange(year)
+  ungroup()
 
-fmwt2 <- # differs from FMWT_index_wide.csv in having collapsed the striper data...
+fmwt2 <- # collapsed the striper data, retain area data
   temp %>% 
-  pivot_wider(names_from = species, values_from = index_area) %>% 
+  pivot_wider(names_from = species, values_from = index) %>% 
   clean_names() %>% 
-  select(-na)
+  add_row(year = c(1974, 1979)) %>% # insert missing years albeit w/o data
+  arrange(year, area)
 
-write_csv(fmwt2, "fish traits/fish_data/fmwt2.csv")
+write_csv(fmwt2, "fish/fish_data/fmwt2.csv")
 
-rm(temp, # temp object
-   fmwt_annual_long, fmwt_by_area_long, # temp call on saved data
-   FMWT_trait_long, FMWT_trait_wide) # raw data
+rm(temp, temp1)
   
 # load raw fmwt data ----
 # these data are wide
