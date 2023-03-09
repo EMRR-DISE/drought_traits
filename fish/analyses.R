@@ -20,47 +20,98 @@ pal_yrtype2 <- c("CR" = "#FDE333", "DY" = "#53CC67", "BN" = "#009B95","AN" = "#0
 show_col(pal_yrtype2)
 
 # if necessary -----
-fmwt1 <- read_csv("fish_data/fmwt1.csv") # derived from fmwt.R, collapsed striper data
-index_stations <- read_csv("fish_data/index_stations.csv") # from fmwt.R
-spp_occ <- read_csv("fish_data/spp_occ.csv")
-year_types <- read_excel("fish_data/yeartypes.xlsx") %>% select(-...1)
+fmwt1 <- read_csv("fish/fish_data/fmwt1.csv") # derived from fmwt.R, collapsed striper data
+index_stations <- read_csv("fish/fish_data/index_stations.csv") # from fmwt.R
+spp_occ <- read_csv("fish/fish_data/spp_occ.csv")
+year_types <- read_excel("fish/fish_data/yeartypes.xlsx")
 
-# NMDS ----
-
+# ordination ----
 library(vegan)
 
-data <- rename(fmwt1,
-               c(Am.Shad = american_shad,
-                 Chinook = chinook_salmon,
-                 Delta.Smelt = delta_smelt,
-                 Longfin = longfin_smelt,
-                 Anchovy = northern_anchovy,
-                 Herring = pacific_herring,
-                 Splittail = splittail,
-                 Striped.Bass = striped_bass,
-                 Threadfin = threadfin_shad)) %>% 
+# remove years with no data and 'year' column from data set
+data <- fmwt1 %>% 
+  filter(year != "1974" & year != "1979") %>% # remove years 1974 & 1979, no fmwt data
+  rename(c(Am.Shad = american_shad,
+           Chinook = chinook_salmon,
+           D.Smelt = delta_smelt,
+           Longfin = longfin_smelt,
+           Anchovy = northern_anchovy,
+           Herring = pacific_herring,
+           Splittail = splittail,
+           Str.Bass = striped_bass,
+           Threadfin = threadfin_shad)) %>%
   left_join(year_types, keep = FALSE) %>% 
-  select(-c(drought, shortterm, sprNDOI, yr_type)) %>% 
-  filter(year >= 1970) %>% 
-  filter(year != 1974 & year != 1979)  # remove years 1974 & 1979, no fmwt data
+  select(-c(year, drought, shortterm, sprNDOI, yr_type))
 
-nmds <- metaMDS(data[,2:10], # spp data only
+## correspondence analysis ----
+(CA <- cca(data[,1:9]))
+ordiplot(CA)
+
+## detrended correspondence analysis ----
+(DCA <- decorana(data[,1:9]))
+(DCA2 <- decorana(log1p(data[,1:9]))) # causes years to cluster tightly relative to spp; not informative
+ordiplot(DCA)
+# length of first axis, transformed or not, is <3 SD, so data should be analyzed by linear (PCA, RDA), not unimodal, ordination methods. See https://www.davidzeleny.net/anadat-r/doku.php/en:ordination#linear_or_unimodal_ordination_method for details
+# Zeleny recommends transforming spp composition data using the Hellinger standardization
+
+### plot with ggplot ----
+data.scores <- as_tibble(scores(DCA, "sites"))
+data.scores$year <- fmwt1[-c(8,13),]$year # add year but remove 1974 and 1979 (no data)
+data.scores$yr_type <- data$yr_type2 # add year type
+
+spp.scores <- as_tibble(scores(DCA, "species")) # use vegan scores function to extract spp scores, convert to df
+spp.scores$species <- c("Am.Shad", "Chinook", "D.Smelt", "Longfin", "Anchovy",
+                        "Herring", "Splittail", "Str.Bass", "Threadfin")
+head(spp.scores)  #look at the data
+
+# simple DCA plot of the years 1967-2021
+ggplot() +
+  geom_point(data = data.scores, 
+             aes(x = DCA1, y = DCA2),
+             size = 3) +
+  theme_bw()
+
+# color the points by year type
+ggplot() +
+  geom_point(data = data.scores, 
+             aes(x = DCA1, y = DCA2,
+                 color = data$yr_type2),
+             size = 3) +
+  scale_color_manual(values = pal_yrtype2) +
+  theme_bw()
+
+# add species
+ggplot() +
+  geom_point(data = data.scores, 
+             aes(x = DCA1, y = DCA2,
+                 color = data$yr_type2),
+             size = 3) +
+  geom_text(data = spp.scores, 
+            aes(x = DCA1, y = DCA2, label = species), 
+            alpha = 0.8) +
+  xlim(-1.5, 1.5) +
+  scale_color_manual(values = pal_yrtype2) +
+  theme_bw()
+
+## NMDS ----
+nmds <- metaMDS(data[,1:9], # spp data only
                 noshare = T, 
                 autotransform = FALSE, 
                 trymax = 500)
 plot(nmds, type = "t")
 
-## plot with ggplot ----
-data.scores <- as.tibble(scores(nmds, "sites"))
-data.scores$year <- data$year
-data.scores$yr_type <- data$yr_type2
+### plot with ggplot ----
+data.scores <- as_tibble(scores(nmds, "sites"))
+data.scores$year <- fmwt1[-c(8,13),]$year # add year but remove 1974 and 1979 (no data)
+data.scores$yr_type <- data$yr_type2 # add year type
 
-spp.scores <- as.tibble(scores(nmds, "species")) # use vegan scores function to extract spp scores, convert to df
-spp.scores$species <- c("Am.Shad", "Chinook", "Delta.Smelt", "Longfin", "Anchovy",
-                        "Herring", "Splittail", "Striped.Bass", "Threadfin")
+
+spp.scores <- as_tibble(scores(nmds, "species")) # use vegan scores function to extract spp scores, convert to df
+spp.scores$species <- c("Am.Shad", "Chinook", "D.Smelt", "Longfin", "Anchovy",
+                        "Herring", "Splittail", "Str.Bass", "Threadfin")
 head(spp.scores)  #look at the data
 
-# simple nmds plot of the years 1970-2021
+# simple nmds plot of the years 1967-2021
 ggplot() +
   geom_point(data = data.scores, 
              aes(x = NMDS1, y = NMDS2),
@@ -78,15 +129,18 @@ ggplot() +
 
 # add species
 ggplot() +
-  geom_text(data = spp.scores, 
-            aes(x = NMDS1, y = NMDS2, label = species), 
-            alpha = 0.8) +
   geom_point(data = data.scores, 
              aes(x = NMDS1, y = NMDS2,
                  color = yr_type),
              size = 3) +
+  geom_text(data = spp.scores, 
+            aes(x = NMDS1, y = NMDS2, label = species), 
+            alpha = 0.8) +
+  # expand x-axis to accomodate longfin
+  xlim(-2, 2) +
   scale_color_manual(values = pal_yrtype2) +
   theme_bw()
+
 
 ####
 # SCRATCH ####
