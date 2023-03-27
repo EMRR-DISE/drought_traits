@@ -82,6 +82,7 @@ match_gn <- target %>%
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #125 genus level matches so quite a bit better than species level matches
+#but some are likely duplicates from species level matches
 
 #remove duplicates already present in the species level df
 match_gn_remain <- match_gn %>% 
@@ -174,11 +175,10 @@ ttt_famc <- ttt_exp %>%
 #14 family matches
 
 #extract selected traits for target taxa-----------
-#start with body size
-#next look at the following: salin_fresh, salin_brackish, salin_salt
-#thermal_pref, min_temp_reported, max_temp_reported,
-# thermal_comments, turbidity
-#note: max_themal_temp was dropped earlier because all NA
+#start with body size related columns
+#max_body_size is categorical
+#measured_length is probably most relevant size metric
+#importantly this is maximum size of immatures though not sure how this applies to worms, clams, etc
 
 trait_size <- ttt_exp %>%
   select(organism_code:study_longitude
@@ -187,7 +187,29 @@ trait_size <- ttt_exp %>%
   #filter any row with NA for all traits
   #filter(if_any(c(max_body_size:body_shape_case), complete.cases))
   filter(!is.na(measured_length)) %>% 
-  arrange(organism_code)
+  #add column indicating the database
+  add_column(database = "USGS") %>% 
+  #format columns for export
+  select(organism_code:target_family
+         ,lit_taxon_level
+         ,lit_taxon_name
+         ,lit_genus
+         ,lit_family
+         ,database
+         ,trait_record_id
+         ,citation = study_citation
+         ,population_state = study_location_state
+         ,population_description = study_location_region
+         ,study_latitude
+         ,study_longitude
+         ,body_size_max = measured_length
+         ) %>% 
+  #convert wide to long
+  pivot_longer(cols= body_size_max,names_to = "trait_group",values_to = "trait_value") %>% 
+  #add column for trait units
+  mutate(trait_unit = case_when(trait_group == "body_size_max" ~ "mm")) %>% 
+  arrange(lit_taxon_level,organism_code) %>% 
+  glimpse()
 #98 observations total, including genus and family level size estimates
 
 #look closer at body size data
@@ -201,6 +223,15 @@ trait_size_sp_u <- trait_size_sp %>%
   distinct(target_taxon_name)
 #only four species
 
+#write file containing the trait data for our target taxa
+#write_csv(trait_size,"./BenthicInverts/usgs_trait_database/usgs_size.csv")
+
+
+#Temperature traits--------------
+#next look at the following: salin_fresh, salin_brackish, salin_salt
+#thermal_pref, min_temp_reported, max_temp_reported,
+# thermal_comments, turbidity
+#note: max_themal_temp was dropped earlier because all NA
 
 trait_temp_mx <- ttt_exp %>%
   select(organism_code:study_longitude
@@ -220,9 +251,7 @@ trait_temp_mx_sp <- trait_temp_mx %>%
 
 
 
-#write file containing the trait data for our target taxa-----
 
-#write_csv()
 
 
 
