@@ -1,0 +1,65 @@
+organism_code,aphia_id,taxon,source,status,rank,kingdom,phylum,class,order,family,genus
+2810,992855,Sparganophilus tamesis,worms,accepted,Species,Animalia,Annelida,Clitellata,Crassiclitellata,Sparganophilidae,Sparganophilus
+2970,NA,Mooreobdella microstoma,itis,accepted,Species,Animalia,Annelida,Clitellata,Hirudinida,Erpobdellidae,Mooreobdella
+2840,1040874,Altmanella freidris,worms,accepted,Species,Animalia,Annelida,Clitellata,Lumbriculida,Lumbriculidae,Altmanella
+2850,177538,Lumbriculus variegatus,worms,accepted,Species,Animalia,Annelida,Clitellata,Lumbriculida,Lumbriculidae,Lumbriculus
+2450,1037336,Aulodrilus japonicus,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2410,1040644,Aulodrilus limnobius,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2430,1040647,Aulodrilus pigueti,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2470,1040573,Bothrioneurum vejdovskyanum,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Bothrioneurum
+2490,182695,Branchiura sowerbyi,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Branchiura
+2090,1040507,Dero trifida,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Dero
+2650,1040959,Embolocephalus nikolskyi,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Embolocephalus
+2510,1040676,Ilyodrilus frantzi,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Ilyodrilus
+2530,992890,Ilyodrilus templetoni,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Ilyodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2570,157593,Limnodrilus udekemianus,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2610,1040661,Psammoryctides californianus,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Psammoryctides
+2630,1037349,Quistadrilus multisetosus,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Quistadrilus
+2270,157597,Slavina appendiculata,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Slavina
+2720,137577,Tubificoides heterochaetus,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Tubificoides
+2730,1041002,Varichaetadrilus angustipenis,worms,accepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Varichaetadrilus
+3370,234850,Alitta succinea,worms,accepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Alitta
+3330,333585,Hediste limnicola,worms,accepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Hediste
+3450,608090,Laonome calida,worms,accepted,Species,Animalia,Annelida,Polychaeta,Sabellida,Sabellidae,Laonome
+3430,155021,Manayunkia speciosa,worms,accepted,Species,Animalia,Annelida,Polychaeta,Sabellida,Fabriciidae,Manayunkia
+3050,131114,Boccardiella ligerica,worms,accepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Boccardiella
+3130,181523,Marenzelleria neglecta,worms,accepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Marenzelleria
+3090,131167,Pseudopolydora kempi,worms,accepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Pseudopolydora
+3110,131191,Streblospio benedicti,worms,accepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Streblospio
+3170,129884,Heteromastus filiformis,worms,accepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Heteromastus
+5550,181574,Cryptochironomus,worms,accepted,Genus,Animalia,Arthropoda,Hexapoda,Diptera,Chironomidae,Cryptochironomus
+5410,156905,Procladius,worms,accepted,Genus,Animalia,Arthropoda,Hexapoda,Diptera,Chironomidae,Procladius
+4610,431330,Americorophium spinicorne,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium
+4630,431331,Americorophium stimpsoni,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium
+4510,158020,Ampelisca abdita,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Ampeliscidae,Ampelisca
+4750,158091,Gammarus daiberi,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Gammaridae,Gammarus
+4670,238740,Grandidierella japonica,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Aoridae,Grandidierella
+4810,158104,Hyalella,worms,accepted,Genus,Animalia,Arthropoda,Malacostraca,Amphipoda,Hyalellidae,Hyalella
+4550,431367,Sinocorophium alienense,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Sinocorophium
+4230,182361,Nippoleucon hinumensis,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Cumacea,Leuconidae,Nippoleucon
+4950,107414,Rhithropanopeus harrisii,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Decapoda,Panopeidae,Rhithropanopeus
+4350,260458,Gnorimosphaeroma insulare,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Gnorimosphaeroma
+4370,1264222,Gnorimosphaeroma oregonense,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Gnorimosphaeroma
+4310,257397,Synidotea laticauda,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Idoteidae,Synidotea
+4410,118375,Uromunna,worms,accepted,Genus,Animalia,Arthropoda,Malacostraca,Isopoda,Munnidae,Uromunna
+4270,247737,Sinelobus stanfordi,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Sinelobus
+4050,415154,Candona,worms,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Candonidae,Candona
+4090,127595,Cyprideis,worms,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Cytherideidae,Cyprideis
+4030,NA,Isocypris,itis,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Cyprididae,Isocypris
+4150,421139,Amphibalanus improvisus,worms,accepted,Species,Animalia,Arthropoda,Thecostraca,Balanomorpha,Balanidae,Amphibalanus
+6810,397131,Macoma petalum,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Macoma
+6890,397175,Potamocorbula amurensis,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Potamocorbula
+6750,885716,Euglesa casertana,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Euglesa
+6770,1299015,Euglesa compressa,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Euglesa
+6730,181580,Corbicula fluminea,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6630,225694,Melanoides tuberculata,worms,accepted,Species,Animalia,Mollusca,Gastropoda,Caenogastropoda,Thiaridae,Melanoides
+6490,717164,Fluminicola,worms,accepted,Genus,Animalia,Mollusca,Gastropoda,Littorinimorpha,Lithoglyphidae,Fluminicola
+6530,751827,Gyraulus circumstriatus,worms,accepted,Species,Animalia,Mollusca,Gastropoda,NA,Planorbidae,Gyraulus
+6570,181551,Physa,worms,accepted,Genus,Animalia,Mollusca,Gastropoda,NA,Physidae,Physa
+1230,582922,Dorylaimus,worms,accepted,Genus,Animalia,Nematoda,Enoplea,Dorylaimida,Dorylaimidae,Dorylaimus
+1270,1591089,Actinolaiminae,worms,accepted,Subfamily,Animalia,Nematoda,Enoplea,Dorylaimida,Actinolaimidae,NA
+1290,391379,Mermithidae,worms,accepted,Family,Animalia,Nematoda,Enoplea,Mermithida,Mermithidae,NA
+1130,689413,Prostoma graecense,worms,accepted,Species,Animalia,Nemertea,Hoplonemertea,Monostilifera,Prostomatidae,Prostoma
+1090,794,Turbellaria,worms,unaccepted,Class,Animalia,Platyhelminthes,Turbellaria,NA,NA,NA
+1010,482186,Girardia tigrina,worms,accepted,Species,Animalia,Platyhelminthes,NA,Tricladida,Dugesiidae,Girardia
