@@ -211,7 +211,7 @@ organism_code,phylum,class,order,family,genus,species,species_name,common_name
 4335,Arthropoda,Crustacea,Isopoda,Asellidae,Caecidotea,racovitzai,Caecidotea racovitzai,Isopod
 4400,Arthropoda,Crustacea,Isopoda,Cirolanidae,Excirolana,linguifrons,Excirolana linguifrons,Isopod
 4309,Arthropoda,Crustacea,Isopoda,Idoteidae,Idotea,sp. A,Idotea sp. A,Isopod
-4310,Arthropoda,Crustacea,Isopoda,Idoteidae,Synidotea,laevidorsalis,Synidotea laevidorsalis,Isopod
+4310,Arthropoda,Crustacea,Isopoda,Idoteidae,Synidotea,laticauda,Synidotea laticauda,Isopod
 4410,Arthropoda,Crustacea,Isopoda,Munnidae,Uromunna,sp. A,Uromunna sp. A,Isopod
 4409,Arthropoda,Crustacea,Isopoda,Munnidae,Uromunna,ubiquita,Uromunna ubiquita,"Isopod, Pill bug"
 4350,Arthropoda,Crustacea,Isopoda,Sphaeromatidae,Gnorimosphaeroma,insulare,Gnorimosphaeroma insulare,"Isopod, Pill bug"
@@ -231,7 +231,7 @@ organism_code,phylum,class,order,family,genus,species,species_name,common_name
 4030,Arthropoda,Crustacea,Podocopida,Cyprididae,Isocypris,sp. A,Isocypris sp. A,Ostracod
 4090,Arthropoda,Crustacea,Podocopida,Cytheridae,Cyprideis,sp. A,Cyprideis sp. A,Ostracod
 4070,Arthropoda,Crustacea,Podocopida,Sarsiellidae,Eusarsiella,zostericola,Eusarsiella zostericola,Ostracod
-4270,Arthropoda,Crustacea,Tanaidacea,Tanaidae,Sinelobus,sp. A,Sinelobus sp. A,Tanaidacean
+4270,Arthropoda,Crustacea,Tanaidacea,Tanaidae,Sinelobus,stanfordi,Sinelobus stanfordi,Tanaidacean
 4150,Arthropoda,Crustacea,Thoracica,Balanidae,Balanus,improvisus,Balanus improvisus,Bay Barnacle
 5160,Arthropoda,Insecta,Belostomatidae,Belostomatidae,Belostoma,flumineum,Belostoma flumineum,Giant water bug
 5315,Arthropoda,Insecta,Coleoptera,Elmidae,Dubiraphia,giulianii,Dubiraphia giulianii,Riffle Beetle
@@ -255,12 +255,12 @@ organism_code,phylum,class,order,family,genus,species,species_name,common_name
 5470,Arthropoda,Insecta,Diptera,Chironomidae,Cladotanytarsus,sp. A,Cladotanytarsus sp. A,Midge
 5455,Arthropoda,Insecta,Diptera,Chironomidae,Conchapelopia,sp. A,Conchapelopia sp. A,Midge
 5880,Arthropoda,Insecta,Diptera,Chironomidae,Corynoneura,sp. A,Corynoneura sp. A,Midge
+5914,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,Sp. E,Cricotopus Sp. E,Midge
 5890,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,bicinctus,Cricotopus bicinctus,Midge
 5910,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,sp. A,Cricotopus sp. A,Midge
 5911,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,sp. B,Cricotopus sp. B,Midge
 5912,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,sp. C,Cricotopus sp. C,Midge
 5913,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,sp. D,Cricotopus sp. D,Midge
-5914,Arthropoda,Insecta,Diptera,Chironomidae,Cricotopus,Sp. E,Cricotopus Sp. E,Midge
 5550,Arthropoda,Insecta,Diptera,Chironomidae,Cryptochironomus,sp. A,Cryptochironomus sp. A,Midge
 5570,Arthropoda,Insecta,Diptera,Chironomidae,Cryptochironomus,sp. B,Cryptochironomus sp. B,Midge
 5571,Arthropoda,Insecta,Diptera,Chironomidae,Cryptochironomus,sp. C,Cryptochironomus sp. C,Midge
@@ -329,8 +329,8 @@ organism_code,phylum,class,order,family,genus,species,species_name,common_name
 5520,Arthropoda,Insecta,Diptera,Chironomidae,Tanytarsus,sp. A,Tanytarsus sp. A,Midge
 5525,Arthropoda,Insecta,Diptera,Chironomidae,Tanytarsus,sp. B,Tanytarsus sp. B,Midge
 5997,Arthropoda,Insecta,Diptera,Chironomidae,Thienemanniella,sp. A,Thienemanniella sp. A,Midge
-5527,Arthropoda,Insecta,Diptera,Chironomidae,unid Tanytarsini pupa,sp. A,unid Tanytarsini pupa sp. A,Midge
 5860,Arthropoda,Insecta,Diptera,Chironomidae,Xenochironomus,xenolabis,Xenochironomus xenolabis,Midge
+5527,Arthropoda,Insecta,Diptera,Chironomidae,unid Tanytarsini pupa,sp. A,unid Tanytarsini pupa sp. A,Midge
 6026,Arthropoda,Insecta,Diptera,Dolichopodidae,Dolichopus,sp. A,Dolichopus sp. A,Fly
 6023,Arthropoda,Insecta,Diptera,Empididae,Neoplasta,sp. A,Neoplasta sp. A,Dance Fly
 6030,Arthropoda,Insecta,Diptera,Ephydridae,Lemnaphila,sp. A,Lemnaphila sp. A,Duckweed miner fly
