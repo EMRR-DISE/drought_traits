@@ -1,0 +1,353 @@
+organism_code,aphia_id,taxon,source,aphia_id_syn,synonym,status,rank,kingdom,phylum,class,order,family,genus
+2970,NA,Mooreobdella microstoma,itis,NA,Dina microstoma,unaccepted,Species,Animalia,Annelida,Clitellata,Hirudinida,Erpobdellidae,Dina
+2810,992855,Sparganophilus tamesis,worms,1071668,Helodrilus elongatus,unaccepted,Species,Animalia,Annelida,Clitellata,Crassiclitellata,Lumbricidae,Helodrilus
+2810,992855,Sparganophilus tamesis,worms,1071208,Pelodrilus cuenoti,unaccepted,Species,Animalia,Annelida,Clitellata,Haplotaxida,Haplotaxidae,Pelodrilus
+2810,992855,Sparganophilus tamesis,worms,1072194,Sparganophilus benhami,junior subjective synonym,Species,Animalia,Annelida,Clitellata,Crassiclitellata,Sparganophilidae,Sparganophilus
+2810,992855,Sparganophilus tamesis,worms,1072196,Sparganophilus benhami carneus,junior subjective synonym,Subspecies,Animalia,Annelida,Clitellata,Crassiclitellata,Sparganophilidae,Sparganophilus
+2810,992855,Sparganophilus tamesis,worms,1072195,Sparganophilus benhami guatemalensis,junior subjective synonym,Subspecies,Animalia,Annelida,Clitellata,Crassiclitellata,Sparganophilidae,Sparganophilus
+2810,992855,Sparganophilus tamesis,worms,992857,Sparganophilus eiseni,unaccepted,Species,Animalia,Annelida,Clitellata,Crassiclitellata,Sparganophilidae,Sparganophilus
+2810,992855,Sparganophilus tamesis,worms,992876,Sparganophilus elongatus,unaccepted,Species,Animalia,Annelida,Clitellata,Crassiclitellata,Sparganophilidae,Sparganophilus
+2810,992855,Sparganophilus tamesis,worms,992879,Sparganophilus langi,unaccepted,Species,Animalia,Annelida,Clitellata,Crassiclitellata,Sparganophilidae,Sparganophilus
+2810,992855,Sparganophilus tamesis,worms,1512813,Sparganophilus tamensis,unaccepted,Species,Animalia,Annelida,Clitellata,Crassiclitellata,Sparganophilidae,Sparganophilus
+2840,1040874,Altmanella freidris,worms,1042003,Kincaidiana freidris,unaccepted,Species,Animalia,Annelida,Clitellata,Lumbriculida,Lumbriculidae,Kincaidiana
+2850,177538,Lumbriculus variegatus,worms,1041113,Lumbriculus kareliensis,unaccepted,Species,Animalia,Annelida,Clitellata,Lumbriculida,Lumbriculidae,Lumbriculus
+2850,177538,Lumbriculus variegatus,worms,1041265,Lumbriculus limosus,unaccepted,Species,Animalia,Annelida,Clitellata,Lumbriculida,Lumbriculidae,Lumbriculus
+2850,177538,Lumbriculus variegatus,worms,1074101,Lumbriculus variegatus typica,unaccepted,Subspecies,Animalia,Annelida,Clitellata,Lumbriculida,Lumbriculidae,Lumbriculus
+2850,177538,Lumbriculus variegatus,worms,177523,Lumbricus variegatus,unaccepted,Species,Animalia,Annelida,Clitellata,Crassiclitellata,Lumbricidae,Lumbricus
+2850,177538,Lumbriculus variegatus,worms,1070916,Nais variegata,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Nais
+2850,177538,Lumbriculus variegatus,worms,177520,Saenuris variegata,unaccepted,Species,Animalia,Annelida,Clitellata,Lumbriculida,Lumbriculidae,Saenuris
+2410,1040644,Aulodrilus limnobius,worms,1579350,Aulodrilus tenuis,junior subjective synonym,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2410,1040644,Aulodrilus limnobius,worms,1588219,Homochaeta setosa,superseded combination,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Homochaeta
+2410,1040644,Aulodrilus limnobius,worms,1070039,Paranais setosa,junior subjective synonym,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Paranais
+2410,1040644,Aulodrilus limnobius,worms,1068392,Paranais tenuis,superseded combination,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Paranais
+2430,1040647,Aulodrilus pigueti,worms,1041365,Aulodrilus kashi,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2430,1040647,Aulodrilus pigueti,worms,1041367,Aulodrilus prothecatus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2430,1040647,Aulodrilus pigueti,worms,1041364,Aulodrilus remex,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2430,1040647,Aulodrilus pigueti,worms,1041366,Aulodrilus stephensoni,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2430,1040647,Aulodrilus pigueti,worms,1041368,Aulodrilus tchadensis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulodrilus
+2430,1040647,Aulodrilus pigueti,worms,1071763,Aulophorus pigueti,incorrect original spelling,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Aulophorus
+2470,1040573,Bothrioneurum vejdovskyanum,worms,1071181,Bothrioneuron vejdovskyanum,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Bothrioneuron
+2490,182695,Branchiura sowerbyi,worms,1071113,Kawamuria japonica,junior subjective synonym,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Kawamuria
+2090,1040507,Dero trifida,worms,1559513,Dero (Dero) trifida,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Dero
+2650,1040959,Embolocephalus nikolskyi,worms,1069235,Embolocephalus alaskensis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Embolocephalus
+2650,1040959,Embolocephalus nikolskyi,worms,1069236,Embolocephalus confusus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Embolocephalus
+2650,1040959,Embolocephalus nikolskyi,worms,1557861,Orientodrilus nikolskyi,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Orientodrilus
+2650,1040959,Embolocephalus nikolskyi,worms,1042082,Peloscolex nikolskyi,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Peloscolex
+2650,1040959,Embolocephalus nikolskyi,worms,1041370,Peloscolex oregonensis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Peloscolex
+2650,1040959,Embolocephalus nikolskyi,worms,1041837,Spirosperma nikolskyi,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Spirosperma
+2510,1040676,Ilyodrilus frantzi,worms,1074103,Ilyodrilus frantzi capillatus,unaccepted,Subspecies,Animalia,Annelida,Clitellata,Tubificida,Naididae,Ilyodrilus
+2510,1040676,Ilyodrilus frantzi,worms,1074102,Ilyodrilus frantzi typica,unaccepted,Subspecies,Animalia,Annelida,Clitellata,Tubificida,Naididae,Ilyodrilus
+2510,1040676,Ilyodrilus frantzi,worms,1556603,Ilyodrilus frantzi var. capillatus,unavailable name,Variety,Animalia,Annelida,Clitellata,Tubificida,Naididae,Ilyodrilus
+2510,1040676,Ilyodrilus frantzi,worms,1556602,Ilyodrilus frantzi var. typica,unavailable name,Variety,Animalia,Annelida,Clitellata,Tubificida,Naididae,Ilyodrilus
+2530,992890,Ilyodrilus templetoni,worms,1041911,Ilyodrilus lastockini,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Ilyodrilus
+2530,992890,Ilyodrilus templetoni,worms,1041377,Tubifex lastockini,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Tubifex
+2530,992890,Ilyodrilus templetoni,worms,992899,Tubifex templetoni,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Tubifex
+2530,992890,Ilyodrilus templetoni,worms,1041550,Tubifex templetoni f. walshi,unaccepted,Forma,Animalia,Annelida,Clitellata,Tubificida,Naididae,Tubifex
+2550,137556,Limnodrilus hoffmeisteri,worms,1037364,Camptodrilus corallinus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Camptodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1041923,Clitellio californicus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Clitellio
+2550,137556,Limnodrilus hoffmeisteri,worms,1041378,Clitellio corallinus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Clitellio
+2550,137556,Limnodrilus hoffmeisteri,worms,1041924,Clitellio hoffmeisteri,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Clitellio
+2550,137556,Limnodrilus hoffmeisteri,worms,1041925,Clitellio spiralis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Clitellio
+2550,137556,Limnodrilus hoffmeisteri,worms,1038938,Limnodrilus aurostriatus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1041926,Limnodrilus californicus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1041927,Limnodrilus corallinus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1041556,Limnodrilus hoffmeisteri divergens,unaccepted,Subspecies,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1038939,Limnodrilus lucasi,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1038937,Limnodrilus parvus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1041555,Limnodrilus parvus var. biannulatus,unaccepted,Variety,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1038838,Limnodrilus socialis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2550,137556,Limnodrilus hoffmeisteri,worms,1041379,Tubifex hoffmeisteri,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Tubifex
+2570,157593,Limnodrilus udekemianus,worms,994221,Isochaeta virulenta,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Isochaeta
+2570,157593,Limnodrilus udekemianus,worms,1039006,Limnodrilus inversus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2570,157593,Limnodrilus udekemianus,worms,1039000,Limnodrilus ornatus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2570,157593,Limnodrilus udekemianus,worms,1039001,Limnodrilus steigerwaldi,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2570,157593,Limnodrilus udekemianus,worms,1039002,Limnodrilus steigerwaldii,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2570,157593,Limnodrilus udekemianus,worms,1039078,Limnodrilus udekemianus var. wordsworthianus,unaccepted,Variety,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2570,157593,Limnodrilus udekemianus,worms,1038951,Limnodrilus variesetosus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2570,157593,Limnodrilus udekemianus,worms,1039003,Limnodrilus willeyi,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2570,157593,Limnodrilus udekemianus,worms,1039005,Limnodrilus wordsworthianus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2630,1037349,Quistadrilus multisetosus,worms,1037353,Embolocephalus multisetosus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Embolocephalus
+2630,1037349,Quistadrilus multisetosus,worms,1041388,Hemitubifex pustulatus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Hemitubifex
+2630,1037349,Quistadrilus multisetosus,worms,1041128,Peloscolex moszynskii,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Peloscolex
+2630,1037349,Quistadrilus multisetosus,worms,1041451,Peloscolex multisetosus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Peloscolex
+2630,1037349,Quistadrilus multisetosus,worms,1041563,Peloscolex multisetosus longidentus,unaccepted,Subspecies,Animalia,Annelida,Clitellata,Tubificida,Naididae,Peloscolex
+2630,1037349,Quistadrilus multisetosus,worms,1555455,Peloscolex multisetosus typica,unaccepted,Subspecies,Animalia,Annelida,Clitellata,Tubificida,Naididae,Peloscolex
+2630,1037349,Quistadrilus multisetosus,worms,1041908,Tubifex multisetosus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Tubifex
+2270,157597,Slavina appendiculata,worms,176087,Nais appendiculata,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Nais
+2270,157597,Slavina appendiculata,worms,1041333,Nais escherosa,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Nais
+2270,157597,Slavina appendiculata,worms,1041332,Nais gracilis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Nais
+2270,157597,Slavina appendiculata,worms,1041327,Nais lurida,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Nais
+2270,157597,Slavina appendiculata,worms,1472895,Slavina gracilis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Slavina
+2270,157597,Slavina appendiculata,worms,1041328,Slavina lurida,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Slavina
+2270,157597,Slavina appendiculata,worms,1041329,Slavina montana,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Slavina
+2270,157597,Slavina appendiculata,worms,1041330,Slavina punjabensis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Slavina
+2270,157597,Slavina appendiculata,worms,1041331,Slavina truncata,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Slavina
+2720,137577,Tubificoides heterochaetus,worms,176476,Limnodrilus heterochaetus,superseded combination,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+2720,137577,Tubificoides heterochaetus,worms,176477,Peloscolex heterochaetus,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Peloscolex
+2730,1041002,Varichaetadrilus angustipenis,worms,1042124,Limnodrilus angustipenis,unaccepted,Species,Animalia,Annelida,Clitellata,Tubificida,Naididae,Limnodrilus
+3370,234850,Alitta succinea,worms,1327431,Neanthes saltoni,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Neanthes
+3370,234850,Alitta succinea,worms,130391,Neanthes succinea,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Neanthes
+3370,234850,Alitta succinea,worms,339338,Nereis (Neanthes) australis,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3370,234850,Alitta succinea,worms,339248,Nereis (Neanthes) perrieri,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3370,234850,Alitta succinea,worms,339345,Nereis (Neanthes) saltoni,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3370,234850,Alitta succinea,worms,155187,Nereis (Neanthes) succinea,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3370,234850,Alitta succinea,worms,339263,Nereis belawanensis,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3370,234850,Alitta succinea,worms,339294,Nereis glandulosa,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3370,234850,Alitta succinea,worms,339377,Nereis limbata,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3370,234850,Alitta succinea,worms,339323,Nereis reibischi,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3370,234850,Alitta succinea,worms,339379,Nereis succinea,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3330,333585,Hediste limnicola,worms,329459,Neanthes lighti,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Neanthes
+3330,333585,Hediste limnicola,worms,339306,Nereis limnicola,unaccepted,Species,Animalia,Annelida,Polychaeta,Phyllodocida,Nereididae,Nereis
+3430,155021,Manayunkia speciosa,worms,338852,Manayunkia eriensis,unaccepted,Species,Animalia,Annelida,Polychaeta,Sabellida,Fabriciidae,Manayunkia
+3050,131114,Boccardiella ligerica,worms,155466,Boccardia ligerica,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Boccardia
+3050,131114,Boccardiella ligerica,worms,131112,Boccardia redeki,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Boccardia
+3050,131114,Boccardiella ligerica,worms,1320456,Polydora (Boccardia) ligerica,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Polydora
+3050,131114,Boccardiella ligerica,worms,1320462,Polydora (Boccardia) redeki,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Polydora
+3050,131114,Boccardiella ligerica,worms,155378,Polydora (Boccardiella) ligerica,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Polydora
+3050,131114,Boccardiella ligerica,worms,155540,Polydora redeki,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Polydora
+3050,131114,Boccardiella ligerica,worms,338525,Polydora uncatiformis,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Polydora
+3090,131167,Pseudopolydora kempi,worms,338473,Neopygospio laminifera,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Neopygospio
+3090,131167,Pseudopolydora kempi,worms,338510,Polydora (Carazzia) kempi,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Polydora
+3090,131167,Pseudopolydora kempi,worms,209862,Polydora kempi,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Polydora
+3110,131191,Streblospio benedicti,worms,338187,Streblospio lutincola,unaccepted,Species,Animalia,Annelida,Polychaeta,Spionida,Spionidae,Streblospio
+3170,129884,Heteromastus filiformis,worms,336379,Ancistria capillaris,unaccepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Ancistria
+3170,129884,Heteromastus filiformis,worms,336380,Ancistria minima,unaccepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Ancistria
+3170,129884,Heteromastus filiformis,worms,336383,Areniella filiformis,unaccepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Areniella
+3170,129884,Heteromastus filiformis,worms,336388,Capitella costana,unaccepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Capitella
+3170,129884,Heteromastus filiformis,worms,155183,Capitella filiformis,unaccepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Capitella
+3170,129884,Heteromastus filiformis,worms,336390,Capitella fimbriata,unaccepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Capitella
+3170,129884,Heteromastus filiformis,worms,336406,Notomastus filiformis,unaccepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Notomastus
+3170,129884,Heteromastus filiformis,worms,336408,Notomastus laevis,unaccepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Notomastus
+4610,431330,Americorophium spinicorne,worms,504222,Corophium spinicorne,superseded combination,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Corophium
+4630,431331,Americorophium stimpsoni,worms,1289050,Corophium stimpsoni,superseded combination,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Corophium
+4550,431367,Sinocorophium alienense,worms,394881,Corophium alienense,superseded combination,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Corophium
+4950,107414,Rhithropanopeus harrisii,worms,454298,Panopeus wurdemannii,junior subjective synonym,Species,Animalia,Arthropoda,Malacostraca,Decapoda,Panopeidae,Panopeus
+4950,107414,Rhithropanopeus harrisii,worms,454615,Pilumnus Harrisii,superseded combination,Species,Animalia,Arthropoda,Malacostraca,Decapoda,Pilumnidae,Pilumnus
+4950,107414,Rhithropanopeus harrisii,worms,148466,Pilumnus tridentatus,junior subjective synonym,Species,Animalia,Arthropoda,Malacostraca,Decapoda,Pilumnidae,Pilumnus
+4350,260458,Gnorimosphaeroma insulare,worms,295413,Exosphaeroma insulare,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Exosphaeroma
+4370,1264222,Gnorimosphaeroma oregonense,worms,260464,Gnorimosphaeroma oregonensis,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Gnorimosphaeroma
+4370,1264222,Gnorimosphaeroma oregonense,worms,295414,Sphaeroma oregonensis,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Sphaeroma
+4370,1264222,Gnorimosphaeroma oregonense,worms,1264220,Spheroma oregonensis,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Spheroma
+4410,118375,Uromunna,worms,249699,Munna (Metamunna),unaccepted,Subgenus,Animalia,Arthropoda,Malacostraca,Isopoda,Munnidae,Munna
+4410,118375,Uromunna,worms,744030,Munnoides,unaccepted,Genus,Animalia,Arthropoda,Malacostraca,Isopoda,Munnidae,Munnoides
+4270,247737,Sinelobus stanfordi,worms,819940,Tanais estuarius,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Tanais
+4270,247737,Sinelobus stanfordi,worms,819935,Tanais fluviatilis,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Tanais
+4270,247737,Sinelobus stanfordi,worms,819939,Tanais herminiae,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Tanais
+4270,247737,Sinelobus stanfordi,worms,819937,Tanais philetaerus,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Tanais
+4270,247737,Sinelobus stanfordi,worms,819936,Tanais stanfordi,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Tanais
+4270,247737,Sinelobus stanfordi,worms,819938,Tanais sylviae,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Tanais
+4150,421139,Amphibalanus improvisus,worms,106218,Balanus improvisus,unaccepted,Species,Animalia,Arthropoda,Thecostraca,Balanomorpha,Balanidae,Balanus
+4150,421139,Amphibalanus improvisus,worms,425710,Balanus ovularis,unaccepted,Species,Animalia,Arthropoda,Thecostraca,Balanomorpha,Balanidae,Balanus
+6810,397131,Macoma petalum,worms,880026,Limecola petalum,superseded combination,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Limecola
+6810,397131,Macoma petalum,worms,880030,Macoma subrosea,unaccepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Macoma
+6810,397131,Macoma petalum,worms,714918,Macoma takahokoensis,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Macoma
+6810,397131,Macoma petalum,worms,880028,Psammobia fusca,unaccepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Psammobiidae,Psammobia
+6810,397131,Macoma petalum,worms,750317,Sanguinolaria californiana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Psammobiidae,Sanguinolaria
+6810,397131,Macoma petalum,worms,880029,Tellina californica,unaccepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Tellina
+6810,397131,Macoma petalum,worms,749148,Tellina californica,unaccepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Tellina
+6810,397131,Macoma petalum,worms,880027,Tellina petalum,superseded combination,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Tellina
+6810,397131,Macoma petalum,worms,750530,Tellina rotunda,unaccepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Tellina
+6810,397131,Macoma petalum,worms,750531,Tellina rotundata,unaccepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Tellina
+6890,397175,Potamocorbula amurensis,worms,746289,Aloidis amurensis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Aloidis
+6890,397175,Potamocorbula amurensis,worms,538896,Corbula amplexa,unaccepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Corbula
+6890,397175,Potamocorbula amurensis,worms,397047,Corbula amurensis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Corbula
+6890,397175,Potamocorbula amurensis,worms,538897,Corbula frequens,unaccepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Corbula
+6890,397175,Potamocorbula amurensis,worms,538898,Corbula pustulosa,unaccepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Corbula
+6890,397175,Potamocorbula amurensis,worms,538899,Corbula sematensis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Corbula
+6890,397175,Potamocorbula amurensis,worms,538900,Corbula vladivostokensis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Corbula
+6890,397175,Potamocorbula amurensis,worms,546528,Potamocorbula amurensis takatuayamaensis,unaccepted,Subspecies,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Potamocorbula
+6750,885716,Euglesa casertana,worms,861415,Cardium casertanum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Cardiidae,Cardium
+6750,885716,Euglesa casertana,worms,857636,Cyclas (Pisidium) abditum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Cyclas
+6750,885716,Euglesa casertana,worms,857637,Cyclas minor,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Cyclas
+6750,885716,Euglesa casertana,worms,885724,Euglesa crimeana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Euglesa
+6750,885716,Euglesa casertana,worms,1435274,Galileja casertana,superseded combination,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Galileja
+6750,885716,Euglesa casertana,worms,853213,Pisidium (Euglesa) casertanum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1553039,Pisidium (Rivulina) casertanum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861691,Pisidium abditum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861722,Pisidium abditum huachucanum,unaccepted,Subspecies,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861733,Pisidium abditum var. lacteum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857673,Pisidium albidum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857675,Pisidium alleni,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861448,Pisidium amplum,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861453,Pisidium anceps,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857649,Pisidium arcticum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857659,Pisidium ashmuni,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857664,Pisidium atlanticum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861454,Pisidium berryi,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861455,Pisidium capax,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,181555,Pisidium casertanum,superseded combination,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857635,Pisidium cinereum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861456,Pisidium cinetum,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857676,Pisidium columbianum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857660,Pisidium complanatum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861457,Pisidium concinnulum,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857661,Pisidium cuneiforme,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857662,Pisidium danielsi,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861458,Pisidium devium,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857674,Pisidium dispar,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1338561,Pisidium edouardi,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1338669,Pisidium eduardi,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861426,Pisidium egregium,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861427,Pisidium eyerdami,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857679,Pisidium fabale,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861428,Pisidium fidalgoense,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1471488,Pisidium fossarinum,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1471485,Pisidium fossarinum,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1558828,Pisidium fossarinum var. areolatum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1558830,Pisidium fossarinum var. curtum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1558827,Pisidium fossarinum var. flavescens,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1471489,Pisidium fossarinum var. kampmanni,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,1558829,Pisidium fossarinum var. modestum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857665,Pisidium fragillimum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857666,Pisidium friersoni,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857677,Pisidium furcatum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861731,Pisidium furcatum var. rhombicum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857650,Pisidium glaciale,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857681,Pisidium griseolum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,857680,Pisidium hannai,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6750,885716,Euglesa casertana,worms,861452,Pisidium harfordianum,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861419,Cyclas altilis,nomen nudum,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Cyclas
+6770,1299015,Euglesa compressa,worms,864787,Pisidium (Cyclocalyx) compressum,alternate representation,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,857687,Pisidium altile,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,857692,Pisidium coloradense,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,857189,Pisidium compressum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861750,Pisidium compressum mutatum,unaccepted,Subspecies,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861740,Pisidium compressum var. arrosum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861741,Pisidium compressum var. confertum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861742,Pisidium compressum var. contrarium,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861743,Pisidium compressum var. coosaense,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,864856,Pisidium compressum var. curvatum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861748,Pisidium compressum var. illinoisense,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861744,Pisidium compressum var. laevigatum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,864855,Pisidium compressum var. limnicolum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861745,Pisidium compressum var. opacum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861749,Pisidium compressum var. pellucidum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861746,Pisidium compressum var. rostratum,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,861747,Pisidium compressum var. smithii,unaccepted,Variety,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,1501620,Pisidium curvatum,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,857690,Pisidium fraudulentum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6770,1299015,Euglesa compressa,worms,857688,Pisidium peraltum,unaccepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Pisidium
+6730,181580,Corbicula fluminea,worms,1356448,Corbicula (Corbicula) fluminea,alternate representation,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358226,Corbicula adunca,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1472190,Corbicula andersoniana,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358246,Corbicula aquilina,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358233,Corbicula astronomica,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358280,Corbicula aurea,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358230,Corbicula bezuariana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358241,Corbicula bicolor,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358270,Corbicula bilineata,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358263,Corbicula cheniana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1356457,Corbicula clenchii,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1356446,Corbicula colombeliana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358254,Corbicula concinna,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358251,Corbicula conica,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358235,Corbicula cordieriana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1639913,Corbicula crebricostis,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358287,Corbicula delavayana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358245,Corbicula diminuta,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358276,Corbicula ferruginea,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358284,Corbicula fluitans,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358232,Corbicula foukiensis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1356996,Corbicula fulgida,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358228,Corbicula gentiliana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358256,Corbicula gravis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358271,Corbicula grilloana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358265,Corbicula gryphaea,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358269,Corbicula ignobilis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358257,Corbicula indigotina,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1559023,Corbicula inflata,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358255,Corbicula ingloriosa,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1356984,Corbicula insularis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358283,Corbicula iodina,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358277,Corbicula iridina,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1356447,Corbicula lapicida,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358243,Corbicula leleciana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358262,Corbicula montana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1289181,Corbicula natalensis,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358217,Corbicula obtruncata,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1559019,Corbicula ovata,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1520657,Corbicula pexata,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1521754,Corbicula pfeifferiana,junior subjective synonym,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358267,Corbicula polychromatica,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358252,Corbicula porcellanea,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358268,Corbicula portentosa,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358279,Corbicula praeterita,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1349933,Corbicula producta,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358259,Corbicula rathousiana,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358260,Corbicula scholastica,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1358273,Corbicula sphaerica,unaccepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6730,181580,Corbicula fluminea,worms,1356456,Corbicula squalida,junior homonym,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
+6630,225694,Melanoides tuberculata,worms,1586186,Malanoides tuberculata,misspelling,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Malanoides
+6630,225694,Melanoides tuberculata,worms,1338899,Melania (Melanoides) tuberculata,alternate representation,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1430702,Melania (Stenomelania) rustica,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1472179,Melania (Striatella) tuberculata,alternate representation,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1484261,Melania (Striatella) tuberculata var. flavida,junior subjective synonym,Variety,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1484628,Melania (Striatella) tuberculata var. luteomarginata,junior subjective synonym,Variety,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1546563,Melania (Striatella) woodwardi,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1245232,Melania baldwini,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1554734,Melania beryllina,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1249246,Melania cancellata,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1308558,Melania commersoni,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1554710,Melania distinguenda,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1393522,Melania dominula,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568908,Melania exusta,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1063568,Melania flammigera,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1558027,Melania floricoma,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1393524,Melania flyensis,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1474304,Melania gracilina,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1338902,Melania inhambanica,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568915,Melania javanica,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1443131,Melania judaica,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1501292,Melania layardi,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1460302,Melania lentiginosa var. nymphula,junior subjective synonym,Variety,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568916,Melania malayana,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1245248,Melania mauriciae,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1465315,Melania moesta,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568919,Melania nicobarica,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1063559,Melania ornata,junior homonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1393521,Melania pellicens,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568909,Melania punctulata,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1484259,Melania pyramis,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1063047,Melania rivularis,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,214678,Melania rodericensis,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568906,Melania rothiana,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568911,Melania rubropunctata,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568918,Melania scalariformis,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1393514,Melania singularis,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1063061,Melania suturalis,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1426504,Melania tamsii,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1245250,Melania terebra,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1451294,Melania tigrina,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1558021,Melania timorensis,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1418585,Melania trunculata,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1060095,Melania tuberculata,superseded combination,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1555104,Melania tuberculata var. angularis,junior subjective synonym,Variety,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1554924,Melania tuberculata var. malayana,junior subjective synonym,Variety,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1555103,Melania tuberculata var. seminuda,junior subjective synonym,Variety,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1061445,Melania tuberculata var. victoriae,junior homonym,Variety,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1115357,Melania turriculus,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6630,225694,Melanoides tuberculata,worms,1568905,Melania virgula,junior subjective synonym,Species,Animalia,Mollusca,Gastropoda,[unassigned] Caenogastropoda,Thiaridae,Melania
+6490,717164,Fluminicola,worms,1353111,Fluminicola (Fluminicola),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,Littorinimorpha,Lithoglyphidae,Fluminicola
+6490,717164,Fluminicola,worms,1547895,Fluminicola (Heathilla),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,Littorinimorpha,Lithoglyphidae,Fluminicola
+6490,717164,Fluminicola,worms,886961,Heathilla,unaccepted,Genus,Animalia,Mollusca,Gastropoda,Littorinimorpha,Lithoglyphidae,Heathilla
+6530,751827,Gyraulus circumstriatus,worms,1364851,Planorbis (Gyraulus) circumstriatus,unaccepted,Species,Animalia,Mollusca,Gastropoda,NA,Planorbidae,Planorbis
+6530,751827,Gyraulus circumstriatus,worms,1367135,Planorbis parvus var. urbanensis,junior subjective synonym,Variety,Animalia,Mollusca,Gastropoda,NA,Planorbidae,Planorbis
+6570,181551,Physa,worms,1253636,Laurentiphysa,unaccepted,Genus,Animalia,Mollusca,Gastropoda,NA,Physidae,Laurentiphysa
+6570,181551,Physa,worms,1353153,Limnea (Physa),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,NA,Lymnaeidae,Limnea
+6570,181551,Physa,worms,1353105,Physa (Diastropha),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,NA,Physidae,Physa
+6570,181551,Physa,worms,564576,Physa (Gyrina),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,NA,Physidae,Physa
+6570,181551,Physa,worms,1253635,Physa (Laurentiphysa),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,NA,Physidae,Physa
+6570,181551,Physa,worms,1253711,Physa (Mediterraneophysa),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,NA,Physidae,Physa
+6570,181551,Physa,worms,1353152,Physa (Physa),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,NA,Physidae,Physa
+6570,181551,Physa,worms,1253829,Physa (Ussuriphysa),unaccepted,Subgenus,Animalia,Mollusca,Gastropoda,NA,Physidae,Physa
+6570,181551,Physa,worms,1367736,Rivicola,unaccepted,Genus,Animalia,Mollusca,Gastropoda,NA,Physidae,Rivicola
+1230,582922,Dorylaimus,worms,1599124,Dorylaimus (Dorylaimus),junior objective synonym,Subgenus,Animalia,Nematoda,Enoplea,Dorylaimida,Dorylaimidae,Dorylaimus
+1130,689413,Prostoma graecense,worms,1307467,Monopora lacustris,unaccepted,Species,Animalia,Nemertea,Hoplonemertea,Monostilifera,NA,Monopora
+1130,689413,Prostoma graecense,worms,863350,Prostoma jenningsi,unaccepted,Species,Animalia,Nemertea,Hoplonemertea,Monostilifera,Prostomatidae,Prostoma
+1130,689413,Prostoma graecense,worms,1415956,Stichostemma graecense,unaccepted,Species,Animalia,Nemertea,Hoplonemertea,Monostilifera,Prostomatidae,Stichostemma
+1130,689413,Prostoma graecense,worms,689412,Tetrastemma graecensis,unaccepted,Species,Animalia,Nemertea,Hoplonemertea,Monostilifera,Tetrastemmatidae,Tetrastemma
+1130,689413,Prostoma graecense,worms,1307468,Tetrastemma lacustre,unaccepted,Species,Animalia,Nemertea,Hoplonemertea,Monostilifera,Tetrastemmatidae,Tetrastemma
+1010,482186,Girardia tigrina,worms,482073,Dugesia jimi,unaccepted,Species,Animalia,Platyhelminthes,NA,Tricladida,Dugesiidae,Dugesia
+1010,482186,Girardia tigrina,worms,234094,Dugesia tigrina,unaccepted,Species,Animalia,Platyhelminthes,NA,Tricladida,Dugesiidae,Dugesia
+1010,482186,Girardia tigrina,worms,482152,Euplanaria tigrina,unaccepted,Species,Animalia,Platyhelminthes,NA,Tricladida,Dugesiidae,Euplanaria
+1010,482186,Girardia tigrina,worms,486104,Girardia jimi,unaccepted,Species,Animalia,Platyhelminthes,NA,Tricladida,Dugesiidae,Girardia

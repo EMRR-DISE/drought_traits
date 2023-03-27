@@ -442,7 +442,7 @@ all_format <- worms_format %>%
 #write a file containing the updated taxonomy
 #write_csv(all_format,"./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
 
-#look for synonyms of target taxa----------------
+#look for synonyms of target taxa on worms----------------
 #use wm_synonyms_() from worrms
 #note there are two taxa not in worms so this obviously won't generate synonyms for them
 
@@ -458,24 +458,76 @@ worms_syn <- wm_synonyms_(id=worms_aphia)
 #18 warnings: 
 #17 indicate "no content", which means those taxa have no synonyms
 #one warning is that a function used by worrms is deprecated
+#note: all matches are exact matches because we used the aphid IDs (not names)
+
+#create version of target taxa data set with just organism code and aphia ID
+worms_aphia_code <- all_format %>% 
+  select(organism_code,aphia_id)
 
 #clean up synonym data set
 worms_syn_format <- worms_syn %>% 
   #just keep the needed columns
   select(aphia_id = valid_AphiaID
-         ,valid_name
+         ,taxon = valid_name
          ,aphia_id_syn = AphiaID
-         ,syn_name = scientificname
+         ,synonym = scientificname
          ,status
          ,rank
-         ,match_type
          ,kingdom:genus
+         ) %>% 
+  #add organism code
+  left_join(worms_aphia_code) %>% 
+  #move organism code to front of df
+  relocate(organism_code,.before = aphia_id) %>% 
+  #add source column
+  add_column(source = "worms",.after = "taxon")
+
+
+#look for synonyms of target taxa on ITIS-----------------
+#just need two that aren't in worms
+
+#search for synonyms based on species names
+#this will create a list for each taxon
+syn_itis <- synonyms(check_itis,db="itis")
+test <- as.uid(syn_itis)
+#one synonym for M. microstoma and none for Isocypris
+
+#make tibbles from lists
+itis_tibble_syn <- syn_itis %>% 
+  map(as_tibble)
+
+#convert from nested dataframe to single dataframe
+itis_format_syn <- enframe(itis_tibble_syn,name="name") %>% 
+  #unnest the tibbles
+  unnest(cols = value) 
+
+#make vector of synonym TSNs
+itis_tsn_syn <- itis_format_syn %>% 
+  pull(syn_tsn)
+
+#get full taxonomy for synonyms using TSNs
+taxize_records_gaps_syn <- classification(itis_tsn_syn, db = 'itis')
+#doesn't provide full taxonomy for synonyms like worms does
+#I guess just use taxonomy for accepted name and replace the genus
+
+#pull row from accepted taxonomy df
+#find and replace the genus 
+#then add this modified row to the worms synonyms file
+itis_syn <- all_format %>% 
+  filter(organism_code==2970) %>% 
+  add_column(
+    aphia_id_syn = NA
+    ,synonym = "Dina microstoma") %>% 
+  relocate(c(aphia_id_syn,synonym),.after=source) %>% 
+  mutate(status = case_when(organism_code==2970~"unaccepted")
+         ,genus = case_when(organism_code==2970~"Dina")
          )
 
-#look closer at subspecies synonyms
-#can probably just filter these out because they're the correct genus and species
-worms_syn_subsp <- worms_syn_format %>% 
-  filter(rank=="Subspecies")
+#add ITIS synonym to worms synonyms
+synonyms_all <- bind_rows(itis_syn,worms_syn_format)
+
+#write synonyms file
+#write_csv(synonyms_all,"BenthicInverts/benthic_common5_synonyms_2023-03-27.csv")
 
 # Look at summaries of different taxonomic levels -----------
 #summarize lowest rank for each taxon
