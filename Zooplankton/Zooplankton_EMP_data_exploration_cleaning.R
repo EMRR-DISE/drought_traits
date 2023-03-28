@@ -232,6 +232,15 @@ organisms_common <- cpue_5plus %>%
 #filter dataset to just those taxa
 meso_macro_common<-meso_macro_complete3%>%filter(Taxname%in%organisms_common)
 
+#compare benthic and zoop taxa to ensure no more overlap
+benthic<-read_csv("~/IEP_drought_synthesis/Special Studies/drought_traits/BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
+benthic_taxa<-unique(benthic$taxon)
+
+benthic_zoop<-benthic%>%filter(taxon%in%meso_macro_common$Taxname)
+
+#only Gammarus daiberi is shared between the two datasets- remove
+meso_macro_common2<-meso_macro_common%>%filter(Taxname!="Gammarus daiberi")
+
 ######### summarize data ########################################################################################################################
 
 #calculate annual mean abundance values for each taxon and station- one master Table L, need to subset by micro, meso, macro for further analyis
