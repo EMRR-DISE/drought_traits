@@ -102,8 +102,8 @@ meso_macro$NewStation <- gsub("^0+", "", meso_macro$NewStation)
 stations_zoop<-metadata%>%filter(taxon=="zooplankton")
 stations_complete<-unique(stations_zoop$station[which(stations_zoop$complete =="y"|stations_zoop$years_missing_n<4&stations_zoop$sampling_frequency=="Usually once a month, more in some years")])
 
-#subset dataset to stations with complete sample coverage and remove data from after 2020- since most 2021 data unavailable
-meso_macro_complete<-meso_macro%>%filter(NewStation%in%stations_complete)%>%filter(Year<2021)
+#subset dataset to stations with complete sample coverage and remove data from after 2020- since most 2021 data unavailable and drop station 42, which was missing from the metadata file but is only sampled up until 1993
+meso_macro_complete<-meso_macro%>%filter(NewStation%in%stations_complete)%>%filter(Year<2021)%>%filter(NewStation!=42)
 
 #examine data coverage for these stations- by year, sampling looks pretty evenly distributed
 zoops_summary_complete<-meso_macro_complete%>%group_by(Latitude, Longitude, Year, NewStation)%>%summarize(N_dates=length(unique(Date)), N_samples=length(unique(SampleID)))
@@ -167,12 +167,12 @@ ggplot(cpue_indiv_prop, aes(x=dom_prop))+
 #drop the 25% of species with lowest total individuals
 cpue_rarest25 <- cpue_indiv_prop %>% 
   filter(rank_prop > 0.25)
-#keeps 29 of 38 species 
+#keeps 21 of 38 species 
 
 #drop all ssp that comprise less than 5% of all individuals
 cpue_indiv_5plus <- cpue_indiv_prop %>% 
   filter(indiv_prop > 0.05)
-#only 7 taxa remain out of 38 
+#only 6 taxa remain out of 38 
 
 #drop all ssp with abundances less that 5% of that of most abundant spp
 cpue_prop_dom_5plus <- cpue_indiv_prop %>% 
@@ -253,3 +253,6 @@ TableL<-meso_macro_common2 %>% st_drop_geometry()%>%
 
 write_csv(TableL, "~/IEP_drought_synthesis/Special Studies/drought_traits/Zooplankton/ZoopTableL.csv")
 
+######### metadata ################################################################################################################################
+#get station names to update metadata file
+stations_used<-unique(meso_macro_common2$NewStation)
