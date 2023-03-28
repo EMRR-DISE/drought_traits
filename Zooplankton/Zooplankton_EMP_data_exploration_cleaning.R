@@ -244,7 +244,7 @@ meso_macro_common2<-meso_macro_common%>%filter(Taxname!="Gammarus daiberi")
 ######### summarize data ########################################################################################################################
 
 #calculate annual mean abundance values for each taxon and station- one master Table L, need to subset by micro, meso, macro for further analyis
-TableL<-meso_macro_common %>% st_drop_geometry()%>%
+TableL<-meso_macro_common2 %>% st_drop_geometry()%>%
   group_by(Year, Month, Station, Taxname)%>% #first calculate mean cpue by station for each taxon and month
   summarize(monthly_mean=mean(CPUE))%>%
   group_by(Year, Taxname)%>%
