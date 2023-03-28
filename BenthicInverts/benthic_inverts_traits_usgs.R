@@ -24,7 +24,10 @@ metadata <- read_tsv("https://pubs.usgs.gov/ds/ds187/htodcs/InvertTraitsFields_v
 #write_csv(citations, "./BenthicInverts/usgs_trait_database/InvertTraitsCitations_v1.csv")
 
 #read in taxonomy info for my target taxa
-target <- read_csv("./BenthicInverts/benthic_inverts_taxa_common_5_updated_2023-01-26.csv")
+target <- read_csv("./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
+
+#read in synonyms too
+synonym <- read_csv("./BenthicInverts/benthic_common5_synonyms_2023-03-27.csv")
 
 #explore target taxa-----------------
 
@@ -40,7 +43,7 @@ target_cong <- target %>%
 #species level matches---------------------- 
 #this is a quick check, there could be matches that didn't join because of 
 #subtle differences in spelling or synonyms
-#what will match: exact species names, exact family and higher names
+#what will match: exact species names
 #what won't match: genera because USGS puts "spp." after the genus name in this column
 #can still match theirs to mine using the genus column (see step below)
 match_sp <- target %>% 
@@ -70,6 +73,18 @@ match_sp_ct <- match_sp %>%
   summarise(records = n()) %>% 
   arrange(-records)
 #11 species
+
+#species level matches of synonyms-------------
+
+match_syn <- synonym %>% 
+  select(organism_code,taxon = synonym) %>% 
+  left_join(traits) %>% 
+  add_column(taxon_level = "species") %>% 
+  relocate(taxon_level, .after = organism_code) %>% 
+  #remove non-matching taxa
+  filter(!is.na(trait_record_id))
+#5 matches
+#need to make it clear that these are synonyms; at least includes organism code
 
 
 #genus level matches---------------------- 
@@ -101,6 +116,30 @@ match_gn_ct <- match_gn %>%
   summarize(records = n()) %>% 
   arrange(-records)
 #20 genera; most hits for chironomids, amphipods, annelids
+
+#genus level matches of synonyms----------------
+
+match_gn_syn <- synonym %>% 
+  select(organism_code,genus) %>% 
+  filter(!is.na(genus)) %>% 
+  left_join(traits) %>% 
+  add_column(taxon_level = "genus") %>% 
+  relocate(taxon_level, .after = organism_code) %>% 
+  #remove non-matching taxa
+  filter(!is.na(trait_record_id))
+#901 genus level matches so quite a bit better than species level matches
+#but some are likely duplicates from species level matches
+
+#remove duplicates already present in previous matches
+#includes species, species synonyms, and genus
+match_gn_remain <- match_gn %>% 
+  anti_join(match_sp_f)
+
+
+
+
+
+
 
 #family level matches---------------
 match_fm <- target %>% 
