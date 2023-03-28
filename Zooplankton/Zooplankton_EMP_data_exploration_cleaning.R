@@ -177,7 +177,7 @@ cpue_indiv_5plus <- cpue_indiv_prop %>%
 #drop all ssp with abundances less that 5% of that of most abundant spp
 cpue_prop_dom_5plus <- cpue_indiv_prop %>% 
   filter(dom_prop > 0.05)
-#only 12 taxa remain out of 38 
+#only 8 taxa remain out of 38 
 
 #need to calculate total number of samples: 5662
 n_samples<-meso_macro_complete3 %>% 
@@ -223,7 +223,7 @@ cpue_5plus <- cpue_sample_prop %>%
 #filter to just the species in more than 10% of samples
 cpue_common <- cpue_sample_prop %>% 
   filter(prop>0.10)
-#12 taxa are in more than 10% of samples
+#13 taxa are in more than 10% of samples
 
 #create vector of organism codes to then filter main df
 organisms_common <- cpue_5plus %>% 
