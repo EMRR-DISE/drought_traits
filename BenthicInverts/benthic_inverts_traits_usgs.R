@@ -49,8 +49,8 @@ target_cong <- target %>%
 match_sp <- target %>% 
   select(organism_code,taxon) %>% 
   left_join(traits) %>% 
-  add_column(taxon_level = "species") %>% 
-  relocate(taxon_level, .after = organism_code) %>% 
+  add_column(lit_taxon_level = "species", .after = "taxon") %>%
+  add_column(lit_taxon_type = "target",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #31 matches 
@@ -76,39 +76,56 @@ match_sp_ct <- match_sp %>%
 
 #species level matches of synonyms-------------
 
-match_syn <- synonym %>% 
+match_sp_syn <- synonym %>% 
+  #keep organism code and synonym
+  #but change name of synonym column to taxon to match header in traits df
   select(organism_code,taxon = synonym) %>% 
   left_join(traits) %>% 
-  add_column(taxon_level = "species") %>% 
-  relocate(taxon_level, .after = organism_code) %>% 
+  add_column(lit_taxon_level = "species", .after = "taxon") %>%
+  add_column(lit_taxon_type = "synonym",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #5 matches
 #need to make it clear that these are synonyms; at least includes organism code
 
+#create df with just the organism code and trait record
+#will be used to filter out duplicates in genus df
+match_sp_syn_f <- match_sp_syn %>% 
+  select(organism_code,trait_record_id)
+
+#do any of these synonym records overlap the species name records
+#they shouldn't
+match_sp_syn <- match_sp %>% 
+  anti_join(match_sp_syn_f)
+#didn't drop any species records as expected
+
+#create vector of species and species synonyms
+match_sp_all_f <- bind_rows(match_sp_f,match_sp_syn_f)
 
 #genus level matches---------------------- 
 match_gn <- target %>% 
   select(organism_code,genus) %>% 
   filter(!is.na(genus)) %>% 
   left_join(traits) %>% 
-  add_column(taxon_level = "genus") %>% 
-  relocate(taxon_level, .after = organism_code) %>% 
+  add_column(lit_taxon_level = "genus", .after = "taxon") %>%
+  add_column(lit_taxon_type = "congener",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #125 genus level matches so quite a bit better than species level matches
 #but some are likely duplicates from species level matches
 
-#remove duplicates already present in the species level df
+#remove duplicates already present in the species and species synonym level dfs
 match_gn_remain <- match_gn %>% 
-  anti_join(match_sp_f)
-#looks like it worked; removed 31 rows as expected based on species df
+  anti_join(match_sp_all_f)
+#looks like it worked; removed 31 rows as expected based on species df plus one from sp synonyms df
 
 #create df with just the organism code and trait record
 #will be used to filter out duplicates in family df
-#note that all the species level matches are baked in here too which is good
-match_gn_f <- match_gn %>% 
+match_gn_f <- match_gn_remain %>% 
   select(organism_code,trait_record_id)
+
+#create df with all unique records for sp, sp syn, and genus
+match_sp_all_gn_f <- bind_rows(match_sp_all_f,match_gn_f)
 
 #look at how many records by genus
 match_gn_ct <- match_gn %>% 
@@ -123,23 +140,20 @@ match_gn_syn <- synonym %>%
   select(organism_code,genus) %>% 
   filter(!is.na(genus)) %>% 
   left_join(traits) %>% 
-  add_column(taxon_level = "genus") %>% 
-  relocate(taxon_level, .after = organism_code) %>% 
+  add_column(lit_taxon_level = "genus", .after = "taxon") %>%
+  add_column(lit_taxon_type = "synonym genus",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #901 genus level matches so quite a bit better than species level matches
-#but some are likely duplicates from species level matches
+#but some are duplicates from species level matches
 
-#remove duplicates already present in previous matches
+#remove duplicates already present in the species, species synonym, and genenus level dfs
+match_gn_syn_remain <- match_gn_syn %>% 
+  anti_join(match_sp_all_gn_f)
+#looks like it worked; removed 31 rows as expected based on species df
+
+#next remove duplicates already present in previous matches
 #includes species, species synonyms, and genus
-match_gn_remain <- match_gn %>% 
-  anti_join(match_sp_f)
-
-
-
-
-
-
 
 #family level matches---------------
 match_fm <- target %>% 
