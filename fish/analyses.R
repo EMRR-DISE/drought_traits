@@ -55,42 +55,51 @@ ordiplot(DCA)
 # Zeleny recommends transforming spp composition data using the Hellinger standardization
 
 ### plot with ggplot ----
-data.scores <- as_tibble(scores(DCA, "sites"))
-data.scores$year <- fmwt1[-c(8,13),]$year # add year but remove 1974 and 1979 (no data)
-data.scores$yr_type <- data$yr_type2 # add year type
+# untransformed data (use this)
+DCA.data.scores <- as_tibble(scores(DCA, "sites"))
+DCA.data.scores$year <- fmwt1[-c(8,13),]$year # add year but remove 1974 and 1979 (no data)
+DCA.data.scores$yr_type <- data$yr_type2 # add year type
+DCA.spp.scores <- as_tibble(scores(DCA, "species")) # use vegan scores function to extract spp scores, convert to df
+DCA.spp.scores$species <- c("Am.Shad", "Chinook", "D.Smelt", "Longfin", "Anchovy",
+                            "Herring", "Splittail", "Str.Bass", "Threadfin")
+head(DCA.spp.scores)  #look at the data
 
-spp.scores <- as_tibble(scores(DCA, "species")) # use vegan scores function to extract spp scores, convert to df
-spp.scores$species <- c("Am.Shad", "Chinook", "D.Smelt", "Longfin", "Anchovy",
-                        "Herring", "Splittail", "Str.Bass", "Threadfin")
-head(spp.scores)  #look at the data
+# log-transformed data (don't use this)
+DCA2.data.scores <- as_tibble(scores(DCA2, "sites"))
+DCA2.data.scores$year <- fmwt1[-c(8,13),]$year # add year but remove 1974 and 1979 (no data)
+DCA2.data.scores$yr_type <- data$yr_type2 # add year type
+DCA2.spp.scores <- as_tibble(scores(DCA2, "species")) # use vegan scores function to extract spp scores, convert to df
+DCA2.spp.scores$species <- c("Am.Shad", "Chinook", "D.Smelt", "Longfin", "Anchovy",
+                            "Herring", "Splittail", "Str.Bass", "Threadfin")
+head(DC2A.spp.scores)  #look at the data
 
-# simple DCA plot of the years 1967-2021
+
+# DCA plot of the years 1967-2021, UNtransformed data (use)
 ggplot() +
-  geom_point(data = data.scores, 
-             aes(x = DCA1, y = DCA2),
-             size = 3) +
-  theme_bw()
-
-# color the points by year type
-ggplot() +
-  geom_point(data = data.scores, 
+  geom_point(data = DCA.data.scores, 
              aes(x = DCA1, y = DCA2,
                  color = data$yr_type2),
-             size = 3) +
-  scale_color_manual(values = pal_yrtype2) +
-  theme_bw()
-
-# add species
-ggplot() +
-  geom_point(data = data.scores, 
-             aes(x = DCA1, y = DCA2,
-                 color = data$yr_type2),
-             size = 3) +
-  geom_text(data = spp.scores, 
+             size = 5) +
+  geom_text(data = DCA.spp.scores, 
             aes(x = DCA1, y = DCA2, label = species), 
             alpha = 0.8) +
   xlim(-1.5, 1.5) +
-  scale_color_manual(values = pal_yrtype2) +
+  scale_color_manual(values = pal_yrtype2, name = "WY Type") +
+  ggtitle("DCA of Annual FMWT Indices (1967-2021)") +
+  theme_bw()
+
+# DCA plot of the years 1967-2021, log-transformed data (don't use)
+ggplot() +
+  geom_point(data = DCA2.data.scores, 
+             aes(x = DCA1, y = DCA2,
+                 color = data$yr_type2),
+             size = 5) +
+  geom_text(data = DCA2.spp.scores, 
+            aes(x = DCA1, y = DCA2, label = species), 
+            alpha = 0.8) +
+  xlim(-1.5, 1.5) + ylim(-2, 1) +
+  scale_color_manual(values = pal_yrtype2, name = "WY Type") +
+  ggtitle("DCA of Annual FMWT Indices (1967-2021)", subtitle = "log-transformed data") +
   theme_bw()
 
 ## NMDS ----
@@ -98,48 +107,46 @@ nmds <- metaMDS(data[,1:9], # spp data only
                 noshare = T, 
                 autotransform = FALSE, 
                 trymax = 500)
-plot(nmds, type = "t")
+nmds # stress = 0.1054149
+plot(nmds, type = "n")
+points(nmds, display = "sites", cex = 0.8, pch = 21, col = "red", bg = "red")
+text(nmds, display = "spec", cex = 0.7, col = "blue")
+plt <- ordipointlabel(nmds)
+# set scaling
+ordipointlabel(nmds, scaling = "sites")
+# plot, then add
+plot(nmds, scaling = "symmetric", type = "n")
+ordipointlabel(nmds, display = "species", scaling = "symm", add = T)
+ordipointlabel(nmds, display = "sites", scaling = "symm", add = T)
+# redraw plot
+plot(plt)
 
 ### plot with ggplot ----
-data.scores <- as_tibble(scores(nmds, "sites"))
-data.scores$year <- fmwt1[-c(8,13),]$year # add year but remove 1974 and 1979 (no data)
-data.scores$yr_type <- data$yr_type2 # add year type
+NMDS.data.scores <- as_tibble(scores(nmds, "sites"))
+NMDS.data.scores$year <- fmwt1[-c(8,13),]$year # add year but remove 1974 and 1979 (no data)
+NMDS.data.scores$yr_type <- data$yr_type2 # add year type
 
 
-spp.scores <- as_tibble(scores(nmds, "species")) # use vegan scores function to extract spp scores, convert to df
-spp.scores$species <- c("Am.Shad", "Chinook", "D.Smelt", "Longfin", "Anchovy",
+NMDS.spp.scores <- as_tibble(scores(nmds, "species")) # use vegan scores function to extract spp scores, convert to df
+NMDS.spp.scores$species <- c("Am.Shad", "Chinook", "D.Smelt", "Longfin", "Anchovy",
                         "Herring", "Splittail", "Str.Bass", "Threadfin")
-head(spp.scores)  #look at the data
+head(NMDS.spp.scores)  #look at the data
 
-# simple nmds plot of the years 1967-2021
-ggplot() +
-  geom_point(data = data.scores, 
-             aes(x = NMDS1, y = NMDS2),
-             size = 3) +
-  theme_bw()
+# NMDS plot of the years 1967-2021
 
-# color the points by year type
 ggplot() +
-  geom_point(data = data.scores, 
+  geom_point(data = NMDS.data.scores,
              aes(x = NMDS1, y = NMDS2,
                  color = yr_type),
-             size = 3) +
-  scale_color_manual(values = pal_yrtype2) +
-  theme_bw()
-
-# add species
-ggplot() +
-  geom_point(data = data.scores, 
-             aes(x = NMDS1, y = NMDS2,
-                 color = yr_type),
-             size = 3) +
-  geom_text(data = spp.scores, 
-            aes(x = NMDS1, y = NMDS2, label = species), 
-            alpha = 0.8) +
-  # expand x-axis to accomodate longfin
+             size = 5) +
+  geom_text(data = NMDS.spp.scores,
+            aes(x = NMDS1, y = NMDS2, label = species),
+            alpha = 0.8) + # expand x-axis to accomodate longfin
   xlim(-2, 2) +
-  scale_color_manual(values = pal_yrtype2) +
+  scale_color_manual(values = pal_yrtype2, name = "WY Type") + 
+  ggtitle("NMDS of Annual FMWT Indices (1967-2021)") +
   theme_bw()
+
 
 
 ####
