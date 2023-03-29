@@ -39,7 +39,6 @@ target_cong <- target %>%
   filter(!is.na(genus) & count>1)
 #6 genera; one with three species, the rest with two
 
-
 #species level matches---------------------- 
 #this is a quick check, there could be matches that didn't join because of 
 #subtle differences in spelling or synonyms
@@ -48,7 +47,8 @@ target_cong <- target %>%
 #can still match theirs to mine using the genus column (see step below)
 match_sp <- target %>% 
   select(organism_code,taxon) %>% 
-  left_join(traits) %>% 
+  #add trait data; multiple = "all" says we can expect multiple matches per taxon
+  left_join(traits, multiple = "all") %>% 
   add_column(lit_taxon_level = "species", .after = "taxon") %>%
   add_column(lit_taxon_type = "target",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
@@ -57,7 +57,7 @@ match_sp <- target %>%
 
 #create df with just the organism code and trait record
 #will be used to filter out duplicates in genus df
-match_sp_f <- match_sp %>% 
+cr_sp <- match_sp %>% 
   select(organism_code,trait_record_id)
 
 #are there any missing trait record IDs? 
@@ -75,6 +75,7 @@ match_sp_ct <- match_sp %>%
 #11 species
 
 #species level matches of synonyms-------------
+#this set of records should be non-overlapping with the accepted species name records
 
 match_sp_syn <- synonym %>% 
   #keep organism code and synonym
@@ -86,46 +87,49 @@ match_sp_syn <- synonym %>%
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #5 matches
-#need to make it clear that these are synonyms; at least includes organism code
 
 #create df with just the organism code and trait record
 #will be used to filter out duplicates in genus df
-match_sp_syn_f <- match_sp_syn %>% 
+cr_sp_syn <- match_sp_syn %>% 
   select(organism_code,trait_record_id)
 
 #do any of these synonym records overlap the species name records
 #they shouldn't
-match_sp_syn <- match_sp %>% 
-  anti_join(match_sp_syn_f)
+match_sp_syn_remain <- match_sp %>% 
+  anti_join(cr_sp_syn)
 #didn't drop any species records as expected
 
 #create vector of species and species synonyms
-match_sp_all_f <- bind_rows(match_sp_f,match_sp_syn_f)
+cr_sp_all <- bind_rows(cr_sp,cr_sp_syn)
 
 #genus level matches---------------------- 
+#there will be records in here that are duplicates from the sp. level matches
+
 match_gn <- target %>% 
   select(organism_code,genus) %>% 
   filter(!is.na(genus)) %>% 
-  left_join(traits) %>% 
+  left_join(traits, multiple = "all") %>% 
   add_column(lit_taxon_level = "genus", .after = "taxon") %>%
   add_column(lit_taxon_type = "congener",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #125 genus level matches so quite a bit better than species level matches
-#but some are likely duplicates from species level matches
+#but some are duplicates from species level matches
 
 #remove duplicates already present in the species and species synonym level dfs
 match_gn_remain <- match_gn %>% 
-  anti_join(match_sp_all_f)
-#looks like it worked; removed 31 rows as expected based on species df plus one from sp synonyms df
+  anti_join(cr_sp_all)
+#looks like it worked
+#removed all 31 rows as expected based on species df 
+#plus one from sp synonyms df (some synonyms are same genus, most aren't)
 
 #create df with just the organism code and trait record
 #will be used to filter out duplicates in family df
-match_gn_f <- match_gn_remain %>% 
+cr_gn <- match_gn_remain %>% 
   select(organism_code,trait_record_id)
 
 #create df with all unique records for sp, sp syn, and genus
-match_sp_all_gn_f <- bind_rows(match_sp_all_f,match_gn_f)
+cr_sp_all_gn <- bind_rows(cr_sp_all,cr_gn)
 
 #look at how many records by genus
 match_gn_ct <- match_gn %>% 
@@ -138,40 +142,48 @@ match_gn_ct <- match_gn %>%
 
 match_gn_syn <- synonym %>% 
   select(organism_code,genus) %>% 
+  #there are duplicates for genus within organism_code
+  #because more than one synonym is in same genus
+  distinct(organism_code,genus)  %>% 
   filter(!is.na(genus)) %>% 
-  left_join(traits) %>% 
+  left_join(traits, multiple = "all") %>% 
   add_column(lit_taxon_level = "genus", .after = "taxon") %>%
   add_column(lit_taxon_type = "synonym genus",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
-  filter(!is.na(trait_record_id))
-#901 genus level matches so quite a bit better than species level matches
-#but some are duplicates from species level matches
+  filter(!is.na(trait_record_id)) %>% 
+  arrange(genus,taxon)
+#126 genus level matches 
+#but some are duplicates from previous searches
 
-#remove duplicates already present in the species, species synonym, and genenus level dfs
+#remove duplicates already present in the species, species synonym, and genus level dfs
 match_gn_syn_remain <- match_gn_syn %>% 
-  anti_join(match_sp_all_gn_f)
-#looks like it worked; removed 31 rows as expected based on species df
+  anti_join(cr_sp_all_gn) %>% 
+  arrange(genus,taxon)
+#63 matches remaining
 
-#next remove duplicates already present in previous matches
-#includes species, species synonyms, and genus
+#create df with just the organism code and trait record
+#will be used to filter out duplicates in family df
+cr_gn_syn <- match_gn_syn_remain %>% 
+  select(organism_code,trait_record_id)
+
+#create df with all unique records for sp, sp syn, and genus
+cr_sp_all_gn_all <- bind_rows(cr_sp_all_gn,cr_gn_syn)
+#total rows makes sense (192)
 
 #family level matches---------------
 match_fm <- target %>% 
   select(organism_code,family) %>% 
   filter(!is.na(family)) %>% 
-  left_join(traits) %>% 
-  add_column(taxon_level = "family") %>% 
-  relocate(taxon_level, .after = organism_code) %>% 
+  left_join(traits, multiple = "all") %>% 
+  add_column(lit_taxon_level = "family", .after = "taxon") %>%
+  add_column(lit_taxon_type = "family",.after = "lit_taxon_level") %>% 
   filter(!is.na(trait_record_id))
 #1807 family level matches 
 
-#remove duplicates already present in the species and genus level dfs
+#remove duplicates already present in the sp. and genus searches
 match_fm_remain <- match_fm %>% 
-  anti_join(match_gn_f)
-#I was expecting 1807 -  125 = 1682 but instead got more (1742)
-#could be difference between my classification and theirs on which 
-#genera are in which family
-#compare genus and family matching below in combined data set
+  anti_join(cr_sp_all_gn_all)
+#1708 matches (dropped 99 matches)
 
 #look at how many records by family
 match_fm_ct <- match_fm %>% 
@@ -179,6 +191,8 @@ match_fm_ct <- match_fm %>%
   summarize(records = n()) %>% 
   arrange(-records)
 #14 families; most records for annelids and chironomids
+
+#decided not to search for traits based on families of synonyms
 
 #combine the sp, genus, and family level dfs
 target_taxa_traits <- bind_rows(match_sp,match_gn_remain,match_fm_remain) %>% 
