@@ -24,7 +24,10 @@ metadata <- read_tsv("https://pubs.usgs.gov/ds/ds187/htodcs/InvertTraitsFields_v
 #write_csv(citations, "./BenthicInverts/usgs_trait_database/InvertTraitsCitations_v1.csv")
 
 #read in taxonomy info for my target taxa
-target <- read_csv("./BenthicInverts/benthic_inverts_taxa_common_5_updated_2023-01-26.csv")
+target <- read_csv("./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
+
+#read in synonyms too
+synonym <- read_csv("./BenthicInverts/benthic_common5_synonyms_2023-03-27.csv")
 
 #explore target taxa-----------------
 
@@ -40,14 +43,14 @@ target_cong <- target %>%
 #species level matches---------------------- 
 #this is a quick check, there could be matches that didn't join because of 
 #subtle differences in spelling or synonyms
-#what will match: exact species names, exact family and higher names
+#what will match: exact species names
 #what won't match: genera because USGS puts "spp." after the genus name in this column
 #can still match theirs to mine using the genus column (see step below)
 match_sp <- target %>% 
   select(organism_code,taxon) %>% 
   left_join(traits) %>% 
-  add_column(taxon_level = "species") %>% 
-  relocate(taxon_level, .after = organism_code) %>% 
+  add_column(lit_taxon_level = "species", .after = "taxon") %>%
+  add_column(lit_taxon_type = "target",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #31 matches 
@@ -71,28 +74,58 @@ match_sp_ct <- match_sp %>%
   arrange(-records)
 #11 species
 
+#species level matches of synonyms-------------
+
+match_sp_syn <- synonym %>% 
+  #keep organism code and synonym
+  #but change name of synonym column to taxon to match header in traits df
+  select(organism_code,taxon = synonym) %>% 
+  left_join(traits) %>% 
+  add_column(lit_taxon_level = "species", .after = "taxon") %>%
+  add_column(lit_taxon_type = "synonym",.after = "lit_taxon_level") %>% 
+  #remove non-matching taxa
+  filter(!is.na(trait_record_id))
+#5 matches
+#need to make it clear that these are synonyms; at least includes organism code
+
+#create df with just the organism code and trait record
+#will be used to filter out duplicates in genus df
+match_sp_syn_f <- match_sp_syn %>% 
+  select(organism_code,trait_record_id)
+
+#do any of these synonym records overlap the species name records
+#they shouldn't
+match_sp_syn <- match_sp %>% 
+  anti_join(match_sp_syn_f)
+#didn't drop any species records as expected
+
+#create vector of species and species synonyms
+match_sp_all_f <- bind_rows(match_sp_f,match_sp_syn_f)
 
 #genus level matches---------------------- 
 match_gn <- target %>% 
   select(organism_code,genus) %>% 
   filter(!is.na(genus)) %>% 
   left_join(traits) %>% 
-  add_column(taxon_level = "genus") %>% 
-  relocate(taxon_level, .after = organism_code) %>% 
+  add_column(lit_taxon_level = "genus", .after = "taxon") %>%
+  add_column(lit_taxon_type = "congener",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
   filter(!is.na(trait_record_id))
 #125 genus level matches so quite a bit better than species level matches
+#but some are likely duplicates from species level matches
 
-#remove duplicates already present in the species level df
+#remove duplicates already present in the species and species synonym level dfs
 match_gn_remain <- match_gn %>% 
-  anti_join(match_sp_f)
-#looks like it worked; removed 31 rows as expected based on species df
+  anti_join(match_sp_all_f)
+#looks like it worked; removed 31 rows as expected based on species df plus one from sp synonyms df
 
 #create df with just the organism code and trait record
 #will be used to filter out duplicates in family df
-#note that all the species level matches are baked in here too which is good
-match_gn_f <- match_gn %>% 
+match_gn_f <- match_gn_remain %>% 
   select(organism_code,trait_record_id)
+
+#create df with all unique records for sp, sp syn, and genus
+match_sp_all_gn_f <- bind_rows(match_sp_all_f,match_gn_f)
 
 #look at how many records by genus
 match_gn_ct <- match_gn %>% 
@@ -100,6 +133,27 @@ match_gn_ct <- match_gn %>%
   summarize(records = n()) %>% 
   arrange(-records)
 #20 genera; most hits for chironomids, amphipods, annelids
+
+#genus level matches of synonyms----------------
+
+match_gn_syn <- synonym %>% 
+  select(organism_code,genus) %>% 
+  filter(!is.na(genus)) %>% 
+  left_join(traits) %>% 
+  add_column(lit_taxon_level = "genus", .after = "taxon") %>%
+  add_column(lit_taxon_type = "synonym genus",.after = "lit_taxon_level") %>% 
+  #remove non-matching taxa
+  filter(!is.na(trait_record_id))
+#901 genus level matches so quite a bit better than species level matches
+#but some are duplicates from species level matches
+
+#remove duplicates already present in the species, species synonym, and genenus level dfs
+match_gn_syn_remain <- match_gn_syn %>% 
+  anti_join(match_sp_all_gn_f)
+#looks like it worked; removed 31 rows as expected based on species df
+
+#next remove duplicates already present in previous matches
+#includes species, species synonyms, and genus
 
 #family level matches---------------
 match_fm <- target %>% 
@@ -174,11 +228,10 @@ ttt_famc <- ttt_exp %>%
 #14 family matches
 
 #extract selected traits for target taxa-----------
-#start with body size
-#next look at the following: salin_fresh, salin_brackish, salin_salt
-#thermal_pref, min_temp_reported, max_temp_reported,
-# thermal_comments, turbidity
-#note: max_themal_temp was dropped earlier because all NA
+#start with body size related columns
+#max_body_size is categorical
+#measured_length is probably most relevant size metric
+#importantly this is maximum size of immatures though not sure how this applies to worms, clams, etc
 
 trait_size <- ttt_exp %>%
   select(organism_code:study_longitude
@@ -187,7 +240,29 @@ trait_size <- ttt_exp %>%
   #filter any row with NA for all traits
   #filter(if_any(c(max_body_size:body_shape_case), complete.cases))
   filter(!is.na(measured_length)) %>% 
-  arrange(organism_code)
+  #add column indicating the database
+  add_column(database = "USGS") %>% 
+  #format columns for export
+  select(organism_code:target_family
+         ,lit_taxon_level
+         ,lit_taxon_name
+         ,lit_genus
+         ,lit_family
+         ,database
+         ,trait_record_id
+         ,citation = study_citation
+         ,population_state = study_location_state
+         ,population_description = study_location_region
+         ,study_latitude
+         ,study_longitude
+         ,body_size_max = measured_length
+         ) %>% 
+  #convert wide to long
+  pivot_longer(cols= body_size_max,names_to = "trait_group",values_to = "trait_value") %>% 
+  #add column for trait units
+  mutate(trait_unit = case_when(trait_group == "body_size_max" ~ "mm")) %>% 
+  arrange(lit_taxon_level,organism_code) %>% 
+  glimpse()
 #98 observations total, including genus and family level size estimates
 
 #look closer at body size data
@@ -201,6 +276,15 @@ trait_size_sp_u <- trait_size_sp %>%
   distinct(target_taxon_name)
 #only four species
 
+#write file containing the trait data for our target taxa
+#write_csv(trait_size,"./BenthicInverts/usgs_trait_database/usgs_size.csv")
+
+
+#Temperature traits--------------
+#next look at the following: salin_fresh, salin_brackish, salin_salt
+#thermal_pref, min_temp_reported, max_temp_reported,
+# thermal_comments, turbidity
+#note: max_themal_temp was dropped earlier because all NA
 
 trait_temp_mx <- ttt_exp %>%
   select(organism_code:study_longitude
@@ -220,9 +304,7 @@ trait_temp_mx_sp <- trait_temp_mx %>%
 
 
 
-#write file containing the trait data for our target taxa-----
 
-#write_csv()
 
 
 

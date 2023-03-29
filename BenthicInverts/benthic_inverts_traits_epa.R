@@ -17,13 +17,13 @@ library(readxl) #read excel files
 
 #Freshwater Biological Traits Database 
 #https://www.epa.gov/risk/freshwater-biological-traits-database-traits#:~:text=The%20Freshwater%20Biological%20Traits%20Database,on%20river%20and%20stream%20ecosystems
-epa_traits <- read_excel("./BenthicInverts/FreshwaterBioTraits_20100927.xlsx") %>% 
+epa_traits <- read_excel("./BenthicInverts/epa_trait_database/FreshwaterBioTraits_20100927.xlsx") %>% 
   #clean up column header formatting
   clean_names()
 
 #Benthic invert taxa present in at least 5% of samples
 #NOTE: consider adding TSN to this dataset to match with EPA dataset
-emp_spp <- read_csv("./BenthicInverts/benthic_inverts_taxa_common_5_updated_2022-10-25.csv")
+emp_spp <- read_csv("./BenthicInverts/benthic_inverts_taxa_common_5_updated_2023-01-26.csv")
 
 #try matching taxa with traits by taxon column--------------
 
@@ -38,25 +38,31 @@ epa <- epa_traits %>%
   distinct()
 
 #match by taxon and genus
-sp_traits <- left_join(emp,epa)
-
-sp_traits_match <- sp_traits %>% 
-  filter(!is.na(tsn))
+#made sure the column headers I want to match are same between the two data frames
+#adds epa taxa to list of our taxa
+sp_traits <- inner_join(emp,epa)
 #only 8 of 65 (12%) taxa matched
 #only 2 of these matches are species
 
 #try matching taxa with traits by genus column--------------
 
+#format EMP data
 emp2 <- emp_spp %>% 
-  select(organism_code,taxon_emp=taxon,genus)
+  select(organism_code
+         #rename taxon column to prevent taxon matching between data frames
+         ,taxon_emp=taxon
+         ,genus) %>% 
+  glimpse()
 
+#format EPA data
 epa2 <- epa_traits %>% 
   select(taxon_epa=taxon,tsn,genus) %>% 
   #for now, simplify to one row per taxon
-  distinct()
+  distinct() %>% 
+  glimpse()
 
-#match by taxon and genus
-sp_traits2 <- left_join(emp2,epa2)
+#match by genus only
+sp_traits2 <- inner_join(emp2,epa2, multiple="all")
 
 sp_traits_match2 <- sp_traits2 %>% 
   filter(!is.na(taxon_epa)) %>% 

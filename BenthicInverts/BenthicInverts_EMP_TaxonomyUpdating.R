@@ -4,7 +4,7 @@
 #Automating taxonomy updating for non-rare taxa
 #ie, those in at least 5% of samples for three focal stations
 
-#taxonomy last updated 2/2/2023
+#taxonomy last updated 3/27/2023
 
 #Nick Rasmussen, nicholas.rasmussen@water.ca.gov
 
@@ -30,7 +30,7 @@ benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
   clean_names()
 
 #read in list of organism codes for all taxa found in at least 5% of samples
-common5 <- read_csv("./BenthicInverts/benthic_inverts_taxa_common_5_2023-01-25.csv") %>%
+common5 <- read_csv("./BenthicInverts/benthic_common5_codes_2023-01-25.csv") %>%
   #convert from data frame back to a vector of organism codes
   pull(organism_code)
 
@@ -58,6 +58,11 @@ benthic_spp_format <- benthic_spp %>%
                          ,organism_code == 4337 ~ "bopyrid sp. A" 
                          ,organism_code == 4504 ~ "podocerid sp. A"
                          ,organism_code == 1200 ~ "nematode sp."
+                         #change Synidotea laevidorsalis to S. laticauda (following CALNEMO)
+                         ,organism_code ==4310 ~ "laticauda"
+                         #change Sinelobus sp. A to S. standfordi
+                         #CALNEMO says it's S. cf. stanfordi so use S. stanfordi traits with caution
+                         ,organism_code == 4270 ~ "stanfordi"
                          , TRUE ~ species1)
   ) %>% 
   select(organism_code:family,genus:species, common_name)
@@ -71,13 +76,13 @@ benthic_spp_morpho <- benthic_spp_format %>%
   #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
   filter(grepl(c('sp. |Sp. |Unknown'), species)) %>% 
   arrange(phylum,class, order,family,genus,species)
-#203 of 478 spp are morphospecies; 43% of all species
+#202 of 478 spp are morphospecies; 43% of all species
 
 #Taxa IDed to species
 benthic_spp_true <- benthic_spp_format %>% 
   filter(!grepl('sp. |Sp. |Unknown|No catch',species))%>% 
   arrange(phylum,class, order,family,genus,species)
-#274 of 478 are IDed to species; 57% of all species
+#275 of 478 are IDed to species; 57% of all species
 
 
 #add column to taxonomy data set that combines genus and specific epithet--------
@@ -106,7 +111,7 @@ benthic_spp_names <- benthic_spp_format %>%
   arrange(phylum,class, order,family,genus,species)
 
 #write file for Leela to use
-#write_csv(benthic_spp_names,"./BenthicInverts/BenthicInverts_Taxonomy_NameLabels.csv")
+#write_csv(benthic_spp_names,"./BenthicInverts/nmds/BenthicInverts_Taxonomy_NameLabels.csv")
 
 #Determine how many non-rare taxa are IDed to species vs morphospecies--------------------------
 #after removing species that are in fewer than 5% or 10% of samples
@@ -121,13 +126,13 @@ benthic_spp_names_5 <-benthic_spp_names %>%
 benthic_spp_5_morpho <- benthic_spp_names_5 %>% 
   #NOTE: need to include the space after "sp." or it filters out species names that include "sp" for some reason
   filter(grepl(c('sp. |Sp. |Unknown'), species))
-#14 of 64 spp are morphospecies; 22% of all species
+#13 of 64 spp are morphospecies; 22% of all species
 #all of these are IDed to genus except three (one subfamily, one class, one family)
 
 #5%: Taxa IDed to species
 benthic_spp_5_true <- benthic_spp_names_5 %>% 
   filter(!grepl('sp. |Sp. |Unknown|No catch',species))
-#50 of 64 are IDed to species; 78% of all species
+#51 of 64 are IDed to species; 78% of all species
 
 #NOTE: would need to read in a csv with list of taxa in at least 10% of sample for the code below to run
 #10%: filter the taxonomy dataset using organism codes from data set with only taxa that are in at least 10% of samples
@@ -435,14 +440,11 @@ all_format <- worms_format %>%
   glimpse()
 
 #write a file containing the updated taxonomy
-#write_csv(all_format,"./BenthicInverts/benthic_taxonomy_common5_2023-02-02.csv")
+#write_csv(all_format,"./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
 
-#look for synonyms of target taxa----------------
+#look for synonyms of target taxa on worms----------------
 #use wm_synonyms_() from worrms
-
-#spot check some taxa
-sp1 <- all_format %>% 
-  filter(aphia_id==1037336)
+#note there are two taxa not in worms so this obviously won't generate synonyms for them
 
 #create vector of aphia ids
 worms_aphia <- all_format %>% 
@@ -456,24 +458,76 @@ worms_syn <- wm_synonyms_(id=worms_aphia)
 #18 warnings: 
 #17 indicate "no content", which means those taxa have no synonyms
 #one warning is that a function used by worrms is deprecated
+#note: all matches are exact matches because we used the aphid IDs (not names)
+
+#create version of target taxa data set with just organism code and aphia ID
+worms_aphia_code <- all_format %>% 
+  select(organism_code,aphia_id)
 
 #clean up synonym data set
 worms_syn_format <- worms_syn %>% 
   #just keep the needed columns
   select(aphia_id = valid_AphiaID
-         ,valid_name
+         ,taxon = valid_name
          ,aphia_id_syn = AphiaID
-         ,syn_name = scientificname
+         ,synonym = scientificname
          ,status
          ,rank
-         ,match_type
          ,kingdom:genus
+         ) %>% 
+  #add organism code
+  left_join(worms_aphia_code) %>% 
+  #move organism code to front of df
+  relocate(organism_code,.before = aphia_id) %>% 
+  #add source column
+  add_column(source = "worms",.after = "taxon")
+
+
+#look for synonyms of target taxa on ITIS-----------------
+#just need two that aren't in worms
+
+#search for synonyms based on species names
+#this will create a list for each taxon
+syn_itis <- synonyms(check_itis,db="itis")
+test <- as.uid(syn_itis)
+#one synonym for M. microstoma and none for Isocypris
+
+#make tibbles from lists
+itis_tibble_syn <- syn_itis %>% 
+  map(as_tibble)
+
+#convert from nested dataframe to single dataframe
+itis_format_syn <- enframe(itis_tibble_syn,name="name") %>% 
+  #unnest the tibbles
+  unnest(cols = value) 
+
+#make vector of synonym TSNs
+itis_tsn_syn <- itis_format_syn %>% 
+  pull(syn_tsn)
+
+#get full taxonomy for synonyms using TSNs
+taxize_records_gaps_syn <- classification(itis_tsn_syn, db = 'itis')
+#doesn't provide full taxonomy for synonyms like worms does
+#I guess just use taxonomy for accepted name and replace the genus
+
+#pull row from accepted taxonomy df
+#find and replace the genus 
+#then add this modified row to the worms synonyms file
+itis_syn <- all_format %>% 
+  filter(organism_code==2970) %>% 
+  add_column(
+    aphia_id_syn = NA
+    ,synonym = "Dina microstoma") %>% 
+  relocate(c(aphia_id_syn,synonym),.after=source) %>% 
+  mutate(status = case_when(organism_code==2970~"unaccepted")
+         ,genus = case_when(organism_code==2970~"Dina")
          )
 
-#look closer at subspecies synonyms
-#can probably just filter these out because they're the correct genus and species
-worms_syn_subsp <- worms_syn_format %>% 
-  filter(rank=="Subspecies")
+#add ITIS synonym to worms synonyms
+synonyms_all <- bind_rows(itis_syn,worms_syn_format)
+
+#write synonyms file
+#write_csv(synonyms_all,"BenthicInverts/benthic_common5_synonyms_2023-03-27.csv")
 
 # Look at summaries of different taxonomic levels -----------
 #summarize lowest rank for each taxon

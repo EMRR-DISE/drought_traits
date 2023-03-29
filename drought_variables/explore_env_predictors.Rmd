@@ -34,6 +34,8 @@ Explore the environmental predictor variables for the drought traits analysis. W
 library(tidyverse)
 library(ggforce)
 library(corrr)
+library(vegan)
+library(ggvegan)
 library(here)
 ```
 
@@ -64,23 +66,44 @@ df_env_c <- df_env %>%
 print(df_env_c, n = 50)
 ```
 
+Since some of the relationships between variables may be non-linear, we'll also log transform all variables and run a correlation analysis on them to compare.
+
+```{r log trans data}
+df_env_log <- df_env_c %>% mutate(across(-year, log))
+
+# View data frame
+glimpse(df_env_log)
+```
+
 # Correlations among variables
 
 ## Pearson's Correlation Coefficients
 
-```{r calc and print corr coeff}
-df_env_corr <- df_env_c %>% 
+### Original values
+
+```{r calc and print corr coeff orig}
+df_corr_orig <- df_env_c %>% 
   select(-year) %>% 
   correlate()
 
-fashion(df_env_corr, leading_zeros = TRUE)
+fashion(df_corr_orig, leading_zeros = TRUE)
+```
+
+### log-transformed values
+
+```{r calc and print corr coeff log}
+df_corr_log <- df_env_log %>% 
+  select(-year) %>% 
+  correlate()
+
+fashion(df_corr_log, leading_zeros = TRUE)
 ```
 
 ## Plots
 
-### Scatterplots
+### Scatterplots - original values
 
-```{r corr scatterplot, fig.width = 8, fig.height = 8}
+```{r corr scatterplot orig, fig.width = 8, fig.height = 8}
 df_env_c %>% 
   select(-year) %>% 
   ggplot(aes(x = .panel_x, y = .panel_y)) +
@@ -92,23 +115,135 @@ df_env_c %>%
   theme(axis.text.x = element_text(angle = 90))
 ```
 
-### Correlation plots
+### Scatterplots - log-transformed values
 
-```{r corr coeff plot}
-df_env_corr %>% 
+```{r corr scatterplot log, fig.width = 8, fig.height = 8}
+df_env_log %>% 
+  select(-year) %>%  
+  ggplot(aes(x = .panel_x, y = .panel_y)) +
+  geom_point(size = 1) +
+  facet_matrix(
+    vars(everything()), 
+    layer.diag = FALSE
+  ) +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+### Correlation plot - original values
+
+```{r corr coeff plot orig}
+df_corr_orig %>% 
   rplot(print_cor = TRUE) + 
-  ggtitle("Correlation Plot - Pearson's correlation coefficients") +
+  ggtitle(
+    "Correlation Plot - Pearson's correlation coefficients", 
+    subtitle = "Original values"
+  ) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 ```
 
-```{r corr network plot}
-df_env_corr %>% 
-  network_plot(min_cor = 0.5) +
-  labs(
-    title = "Network Plot - Pearson's correlation coefficients",
-    subtitle = "Only showing variables with coefficients >= 0.5"
-  )
+### Correlation plot - log-transformed values
+
+```{r corr coeff plot log}
+df_corr_log %>% 
+  rplot(print_cor = TRUE) + 
+  ggtitle(
+    "Correlation Plot - Pearson's correlation coefficients", 
+    subtitle = "log-transformed values"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 ```
 
-Inflow has a negative correlation with all the additional environmental predictor variables, the strongest being salinity. For most of the variables besides salinity, there is a lot of variation at the lowest inflow values with decreasing variation as inflow increases. Salinity also has fairly strong positive correlations with most other environmental variables. As a result, we won't include salinity as an environmental predictor. Looking at associations among the remaining variables, nitrate has strong positive correlations with ammonia and water temperature, while ortho-phosphate has the weakest associations with all other variables.
+Inflow has a negative correlation with all the additional environmental predictor variables, the strongest being salinity. For most of the variables besides salinity, there is a lot of variation at the lowest inflow values with decreasing variation as inflow increases. This is less so with the log-transformed values. Salinity also has fairly strong positive correlations with most other environmental variables. Looking at associations among the remaining variables, nitrate has strong positive correlations with ammonia and water temperature, while ortho-phosphate and Secchi depth have the weakest associations with all other variables.
+
+# Principle Component Analysis (PCA)
+
+Let's run a PCA on all of the environmental predictor variables including inflow using the `vegan` package. Again, we'll run the analysis on the original and log-transformed values and compare their results. 
+
+## Original values
+
+```{r pca orig}
+pca_orig <- df_env_c %>% 
+  select(-year) %>%  
+  rda(scale = TRUE)
+
+summary(pca_orig, axes = 0)
+```
+
+The first two axes of the PCA represent 73% of the data with the first axis representing most of it at 59%. Let's take a look at a scree plot and overlay a broken stick model.
+
+```{r screeplot pca orig, warning = FALSE}
+screeplot(pca_orig, bstick = TRUE)
+```
+
+Only the first axis is has an eigenvalue greater than its corresponding length of the stick. This isn't too surprising looking at the results above. Now let's look at a bi-plot of the years and variables for the first two axes. We'll scale the plot for the environmental variables which is the default.
+
+```{r biplot pca orig scale env var, fig.width = 8, fig.height = 6}
+# Pull out site scores and add original data back to use for bi-plot formatting
+df_pca_orig_sites <- pca_orig %>% 
+  fortify(axes = 1:2) %>% 
+  as_tibble() %>% 
+  filter(Score == "sites") %>% 
+  bind_cols(df_env_c) %>% 
+  select(-c(Score, Label))
+
+# Create bi-plot
+autoplot(
+  pca_orig, 
+  layers = "species", 
+  title = "Original values, scaling for environmental variables"
+) + 
+geom_text(
+  data = df_pca_orig_sites, 
+  aes(x = PC1, y = PC2, label = year, color = year),
+  size = 3
+) +
+scale_color_viridis_c(name = "Year", option = "plasma", end = 0.9) +
+theme_bw()
+```
+
+## log-transformed values
+
+```{r pca log}
+pca_log <- df_env_log %>% 
+  select(-year) %>%  
+  rda(scale = TRUE)
+
+summary(pca_log, axes = 0)
+```
+
+Similar to the PCA using the original values, the first two axes of the PCA represent 75% of the data with the first axis representing most of it at 60%.
+
+```{r screeplot pca log, warning = FALSE}
+screeplot(pca_log, bstick = TRUE)
+```
+
+Again, only the first axis is has an eigenvalue greater than its corresponding length of the stick.
+
+```{r biplot pca log, fig.width = 8, fig.height = 8}
+# Pull out site scores and add original data back to use for bi-plot formatting
+df_pca_log_sites <- pca_log %>% 
+  fortify(axes = 1:2) %>% 
+  as_tibble() %>% 
+  filter(Score == "sites") %>% 
+  bind_cols(df_env_log) %>% 
+  select(-c(Score, Label))
+
+# Create bi-plot
+autoplot(
+  pca_log, 
+  layers = "species", 
+  title = "Log-transformed values, scaling for environmental variables"
+) + 
+geom_text(
+  data = df_pca_log_sites, 
+  aes(x = PC1, y = PC2, label = year, color = year),
+  size = 3
+) +
+scale_color_viridis_c(name = "Year", option = "plasma", end = 0.9) +
+theme_bw()
+```
+
+The PCA using log-transformed values looks similar to the one using original values except its flipped upside down and Ammonia and Nitrate are a little further apart.
+
+Overall, Inflow and Salinity are directly opposite each other which isn't surprising and is confirmed by their strong negative relationship. It would be best to choose just one of these as an environmental predictor in our analysis. Temperature is also positioned somewhat opposite from Inflow, but their correlation coefficient isn't as strong, so we could keep Temperature. For the remaining variables, we can try to include all of them for now. Looking at the PCA bi-plot using the original units, Ammonia and Nitrate are fairly close to each other and the Nitrate arrow is a little longer, suggesting that we should include Nitrate and drop Ammonia. However, Nitrate and Ammonia are positioned a little further apart in the PCA bi-plot using log-transformed values, so maybe we keep both as predictors for now.
 

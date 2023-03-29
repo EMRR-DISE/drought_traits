@@ -41,9 +41,9 @@ organism_code,aphia_id,taxon,source,status,rank,kingdom,phylum,class,order,famil
 4950,107414,Rhithropanopeus harrisii,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Decapoda,Panopeidae,Rhithropanopeus
 4350,260458,Gnorimosphaeroma insulare,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Gnorimosphaeroma
 4370,1264222,Gnorimosphaeroma oregonense,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Sphaeromatidae,Gnorimosphaeroma
-4310,148669,Synidotea laevidorsalis,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Idoteidae,Synidotea
+4310,257397,Synidotea laticauda,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Isopoda,Idoteidae,Synidotea
 4410,118375,Uromunna,worms,accepted,Genus,Animalia,Arthropoda,Malacostraca,Isopoda,Munnidae,Uromunna
-4270,247016,Sinelobus,worms,accepted,Genus,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Sinelobus
+4270,247737,Sinelobus stanfordi,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Sinelobus
 4050,415154,Candona,worms,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Candonidae,Candona
 4090,127595,Cyprideis,worms,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Cytherideidae,Cyprideis
 4030,NA,Isocypris,itis,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Cyprididae,Isocypris

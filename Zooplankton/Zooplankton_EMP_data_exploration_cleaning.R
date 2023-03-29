@@ -102,8 +102,8 @@ meso_macro$NewStation <- gsub("^0+", "", meso_macro$NewStation)
 stations_zoop<-metadata%>%filter(taxon=="zooplankton")
 stations_complete<-unique(stations_zoop$station[which(stations_zoop$complete =="y"|stations_zoop$years_missing_n<4&stations_zoop$sampling_frequency=="Usually once a month, more in some years")])
 
-#subset dataset to stations with complete sample coverage and remove data from after 2020- since most 2021 data unavailable
-meso_macro_complete<-meso_macro%>%filter(NewStation%in%stations_complete)%>%filter(Year<2021)
+#subset dataset to stations with complete sample coverage and remove data from after 2020- since most 2021 data unavailable and drop station 42, which was missing from the metadata file but is only sampled up until 1993
+meso_macro_complete<-meso_macro%>%filter(NewStation%in%stations_complete)%>%filter(Year<2021)%>%filter(NewStation!=42)
 
 #examine data coverage for these stations- by year, sampling looks pretty evenly distributed
 zoops_summary_complete<-meso_macro_complete%>%group_by(Latitude, Longitude, Year, NewStation)%>%summarize(N_dates=length(unique(Date)), N_samples=length(unique(SampleID)))
@@ -167,17 +167,17 @@ ggplot(cpue_indiv_prop, aes(x=dom_prop))+
 #drop the 25% of species with lowest total individuals
 cpue_rarest25 <- cpue_indiv_prop %>% 
   filter(rank_prop > 0.25)
-#keeps 29 of 38 species 
+#keeps 21 of 38 species 
 
 #drop all ssp that comprise less than 5% of all individuals
 cpue_indiv_5plus <- cpue_indiv_prop %>% 
   filter(indiv_prop > 0.05)
-#only 7 taxa remain out of 38 
+#only 6 taxa remain out of 38 
 
 #drop all ssp with abundances less that 5% of that of most abundant spp
 cpue_prop_dom_5plus <- cpue_indiv_prop %>% 
   filter(dom_prop > 0.05)
-#only 12 taxa remain out of 38 
+#only 8 taxa remain out of 38 
 
 #need to calculate total number of samples: 5662
 n_samples<-meso_macro_complete3 %>% 
@@ -223,7 +223,7 @@ cpue_5plus <- cpue_sample_prop %>%
 #filter to just the species in more than 10% of samples
 cpue_common <- cpue_sample_prop %>% 
   filter(prop>0.10)
-#12 taxa are in more than 10% of samples
+#13 taxa are in more than 10% of samples
 
 #create vector of organism codes to then filter main df
 organisms_common <- cpue_5plus %>% 
@@ -232,10 +232,19 @@ organisms_common <- cpue_5plus %>%
 #filter dataset to just those taxa
 meso_macro_common<-meso_macro_complete3%>%filter(Taxname%in%organisms_common)
 
+#compare benthic and zoop taxa to ensure no more overlap
+benthic<-read_csv("~/IEP_drought_synthesis/Special Studies/drought_traits/BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
+benthic_taxa<-unique(benthic$taxon)
+
+benthic_zoop<-benthic%>%filter(taxon%in%meso_macro_common$Taxname)
+
+#only Gammarus daiberi is shared between the two datasets- remove
+meso_macro_common2<-meso_macro_common%>%filter(Taxname!="Gammarus daiberi")
+
 ######### summarize data ########################################################################################################################
 
 #calculate annual mean abundance values for each taxon and station- one master Table L, need to subset by micro, meso, macro for further analyis
-TableL<-meso_macro_common %>% st_drop_geometry()%>%
+TableL<-meso_macro_common2 %>% st_drop_geometry()%>%
   group_by(Year, Month, Station, Taxname)%>% #first calculate mean cpue by station for each taxon and month
   summarize(monthly_mean=mean(CPUE))%>%
   group_by(Year, Taxname)%>%
@@ -244,3 +253,6 @@ TableL<-meso_macro_common %>% st_drop_geometry()%>%
 
 write_csv(TableL, "~/IEP_drought_synthesis/Special Studies/drought_traits/Zooplankton/ZoopTableL.csv")
 
+######### metadata ################################################################################################################################
+#get station names to update metadata file
+stations_used<-unique(meso_macro_common2$NewStation)
