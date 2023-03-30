@@ -4,7 +4,6 @@
 #to do list
 #read through metadata to decide which columns of database are useful to me (most probably aren't)
 #then cut down the database before looking for traits for my taxa
-#should look up synonyms for my target taxa, and maybe also outdated families
 
 #load packages
 library(tidyverse)
@@ -148,7 +147,7 @@ match_gn_syn <- synonym %>%
   filter(!is.na(genus)) %>% 
   left_join(traits, multiple = "all") %>% 
   add_column(lit_taxon_level = "genus", .after = "taxon") %>%
-  add_column(lit_taxon_type = "synonym genus",.after = "lit_taxon_level") %>% 
+  add_column(lit_taxon_type = "congener_synonym",.after = "lit_taxon_level") %>% 
   #remove non-matching taxa
   filter(!is.na(trait_record_id)) %>% 
   arrange(genus,taxon)
@@ -176,7 +175,7 @@ match_fm <- target %>%
   filter(!is.na(family)) %>% 
   left_join(traits, multiple = "all") %>% 
   add_column(lit_taxon_level = "family", .after = "taxon") %>%
-  add_column(lit_taxon_type = "family",.after = "lit_taxon_level") %>% 
+  add_column(lit_taxon_type = "confamilial",.after = "lit_taxon_level") %>% 
   filter(!is.na(trait_record_id))
 #1807 family level matches 
 
@@ -194,21 +193,30 @@ match_fm_ct <- match_fm %>%
 
 #decided not to search for traits based on families of synonyms
 
+#combine data from all searches ---------------------
+
 #combine the sp, genus, and family level dfs
-target_taxa_traits <- bind_rows(match_sp,match_gn_remain,match_fm_remain) %>% 
-  remove_empty(which="cols") %>% 
+target_taxa_traits <- bind_rows(match_sp,match_sp_syn,match_gn_remain,match_gn_syn_remain,match_fm_remain) %>% 
+  #remove_empty(which="cols") %>% 
   rename(lit_genus = genus
          , lit_family = family
          , lit_taxon_name = taxon
-         , lit_taxon_level = taxon_level
-         )
-#drops 9 empty columns
+         ) %>% 
+  #add column with ordinal scores for taxon levels
+  #easier to sort
+  mutate(lit_taxon_type_ord = case_when(lit_taxon_type == "target"~1
+                                         ,lit_taxon_type == "synonym"~2
+                                         ,lit_taxon_type == "congener"~3
+                                         ,lit_taxon_type == "congener_synonym"~4
+                                         ,lit_taxon_type == "confamilial"~5
+                                         ),.after="lit_taxon_level") %>% 
+  arrange(organism_code,lit_taxon_type_ord)
 
 #double check for duplicate combos of organism code and trait id
 #should be same number of rows as original df
 ttt_dup <- target_taxa_traits %>% 
   distinct(organism_code,trait_record_id)
-#1867, which is what I expect (ie, no duplicated combos)
+#1900, which is what I expect (ie, no duplicated combos)
 
 #create version of target taxon taxonomy to add back in
 target_sub <- target %>% 
@@ -257,10 +265,14 @@ trait_size <- ttt_exp %>%
   #add column indicating the database
   add_column(database = "USGS") %>% 
   #format columns for export
-  select(organism_code:target_family
-         ,lit_taxon_level
+  select(organism_code:target_taxon_level
          ,lit_taxon_name
+         ,lit_taxon_level
+         ,lit_taxon_type
+         ,lit_taxon_type_ord
+         ,target_genus
          ,lit_genus
+         ,target_family
          ,lit_family
          ,database
          ,trait_record_id
@@ -270,19 +282,19 @@ trait_size <- ttt_exp %>%
          ,study_latitude
          ,study_longitude
          ,body_size_max = measured_length
-         ) %>% 
+         )  %>% 
   #convert wide to long
   pivot_longer(cols= body_size_max,names_to = "trait_group",values_to = "trait_value") %>% 
   #add column for trait units
   mutate(trait_unit = case_when(trait_group == "body_size_max" ~ "mm")) %>% 
-  arrange(lit_taxon_level,organism_code) %>% 
+  arrange(organism_code,lit_taxon_type_ord) %>% 
   glimpse()
-#98 observations total, including genus and family level size estimates
+#101 observations total, including genus and family level size estimates
 
 #look closer at body size data
 trait_size_sp <- trait_size %>% 
   filter(lit_taxon_level=="species")
-#only 6 species level size estimates
+#only 7 species level size estimates
 #could just keep the largest value for each species
 #note: we don't know if these measurements are for adults (likely not)
 
