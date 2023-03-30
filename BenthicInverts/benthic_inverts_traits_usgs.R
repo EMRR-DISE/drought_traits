@@ -302,6 +302,11 @@ trait_size_sp_u <- trait_size_sp %>%
   distinct(target_taxon_name)
 #only four species
 
+#how many target taxa got at least some sort of match?
+trait_size_target <- trait_size %>% 
+  distinct(organism_code)
+#33 of 64 taxa, but note above that only 4 are exact matches
+
 #write file containing the trait data for our target taxa
 #write_csv(trait_size,"./BenthicInverts/usgs_trait_database/usgs_size.csv")
 
