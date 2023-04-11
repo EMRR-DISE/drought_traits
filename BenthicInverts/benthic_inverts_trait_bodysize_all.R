@@ -18,6 +18,7 @@
 library(tidyverse) #suite of data science tools
 library(worrms) #package for pulling data from WoRMS
 library(janitor) #misc functions for cleaning data
+library(dplyr) #changing col names
 
 # read in data ---------------
 
@@ -25,8 +26,8 @@ library(janitor) #misc functions for cleaning data
 #target_tax <- read_csv("benthic_taxonomy_common5_2023-02-02.csv")
 
 #this file is nested one level into the project so adding the file path info
-target_tax <- read_csv("./BenthicInverts/benthic_taxonomy_common5_2023-02-02.csv")
-
+#target_tax <- read_csv("./BenthicInverts/benthic_taxonomy_common5_2023-02-02.csv")
+target_tax <- read_csv("./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
 
 # Example ---------
 #first two taxa in our data set
@@ -174,7 +175,7 @@ w_bsize_ft_code <- left_join(w_bsize_ft,target_tax_truc) %>%
 
 #export as .csv
 #write.csv(w_bsize_ft_code, "benthic.bodysize.worms.csv", row.names=FALSE)
-  
+write.csv(w_bsize_ft_code, "benthic.bodysize.worms2.csv", row.names=FALSE)  
 #look at taxa for which size data were not found--------------
 
 w_bsize_ft_miss <- anti_join(target_tax_truc,w_bsize_ft)  %>% 
@@ -215,5 +216,11 @@ w_traits_gen5 <- wm_attr_data_(id = w_tax_gen5_id)
 #for species level taxa with no match in search, we could look for data for congeners to see what is available
 #but might be better to just search literature and other databases before resorting to this 
 
+#Combining with USGS data----
+#read in USGS data
+usgs_bsize <- read.csv("./BenthicInverts/usgs_trait_database/usgs_size.csv") 
 
-
+#combine with data pull from WoRMS
+total_size <- merge(target_tax, usgs_bsize, by="organism_code")
+unique(total_size$organism_code) #33 unique organism codes with size trait data
+#check how many taxa are still missing
