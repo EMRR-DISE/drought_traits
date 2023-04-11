@@ -1,65 +1,65 @@
-organism_code,native
-1010,1
-1090,1
-1130,1
-1230,1
-1270,1
-1290,1
-2090,1
-2270,1
-2410,1
-2430,1
-2450,1
-2470,1
-2490,0
-2510,1
-2530,1
-2550,1
-2570,1
-2610,1
-2630,1
-2650,1
-2720,1
-2730,0
-2810,1
-2840,1
-2850,1
-2970,1
-3050,0
-3090,0
-3110,0
-3130,0
-3170,0
-3330,1
-3370,0
-3430,0
-3450,0
-4030,1
-4050,1
-4090,1
-4150,0
-4230,0
-4270,0
-4310,0
-4350,1
-4370,1
-4410,0
-4510,0
-4550,0
-4610,1
-4630,1
-4670,0
-4750,0
-4810,1
-4950,0
-5410,1
-5550,1
-6490,1
-6530,1
-6570,1
-6630,0
-6730,0
-6750,1
-6770,1
-6810,0
-6890,0
+organism_code,taxon_worms,genus,species,native
+1010,Girardia tigrina,Girardia,tigrina,1
+1090,Turbellaria,Unknown,turbellarian sp. A,1
+1130,Prostoma graecense,Prostoma,graecense,1
+1230,Dorylaimus,Dorylaimus,sp. A,1
+1270,Actinolaiminae,Actinolaiminae,sp. A,1
+1290,Mermithidae,Mermithid,sp. A,1
+2090,Dero trifida,Dero,trifida,1
+2270,Slavina appendiculata,Slavina,appendiculata,1
+2410,Aulodrilus limnobius,Aulodrilus,limnobius,1
+2430,Aulodrilus pigueti,Aulodrilus,pigueti,1
+2450,Aulodrilus japonicus,Aulodrilus,japonicus,1
+2470,Bothrioneurum vejdovskyanum,Bothrioneurum,vejdovskyanum,1
+2490,Branchiura sowerbyi,Branchiura,sowerbyi,0
+2510,Ilyodrilus frantzi,Ilyodrilus,frantzi,1
+2530,Ilyodrilus templetoni,Ilyodrilus,templetoni,1
+2550,Limnodrilus hoffmeisteri,Limnodrilus,hoffmeisteri,1
+2570,Limnodrilus udekemianus,Limnodrilus,udekemianus,1
+2610,Psammoryctides californianus,Psammoryctides,californianus,1
+2630,Quistadrilus multisetosus,Quistadrilus,multisetosus,1
+2650,Embolocephalus nikolskyi,Embolocephalus,nikolskyi,1
+2720,Tubificoides heterochaetus,Tubificoides,heterochaetus,1
+2730,Varichaetadrilus angustipenis,Varichaetadrilus,angustipenis,0
+2810,Sparganophilus tamesis,Sparganophilus,eiseni,1
+2840,Altmanella freidris,Altmanella,freidris,1
+2850,Lumbriculus variegatus,Lumbriculus,variegatus,1
+2970,Mooreobdella microstoma,Mooreobdella,microstoma,1
+3050,Boccardiella ligerica,Boccardiella,ligerica,0
+3090,Pseudopolydora kempi,Pseudopolydora,kempi,0
+3110,Streblospio benedicti,Streblospio,benedicti,0
+3130,Marenzelleria neglecta,Marenzelleria,neglecta,0
+3170,Heteromastus filiformis,Heteromastus,filiformis,0
+3330,Hediste limnicola,Hediste,limnicola,1
+3370,Alitta succinea,Alitta,succinea,0
+3430,Manayunkia speciosa,Manayunkia,speciosa,0
+3450,Laonome calida,Laonome,calida,0
+4030,Isocypris,Isocypris,sp. A,1
+4050,Candona,Candona,sp. A,1
+4090,Cyprideis,Cyprideis,sp. A,1
+4150,Amphibalanus improvisus,Balanus,improvisus,0
+4230,Nippoleucon hinumensis,Nippoleucon,hinumensis,0
+4270,Sinelobus stanfordi,Sinelobus,sp. A,0
+4310,Synidotea laticauda,Synidotea,laevidorsalis,0
+4350,Gnorimosphaeroma insulare,Gnorimosphaeroma,insulare,1
+4370,Gnorimosphaeroma oregonense,Gnorimosphaeroma,oregonensis,1
+4410,Uromunna,Uromunna,sp. A,0
+4510,Ampelisca abdita,Ampelisca,abdita,0
+4550,Sinocorophium alienense,Sinocorophium,alienense,0
+4610,Americorophium spinicorne,Americorophium,spinicorne,1
+4630,Americorophium stimpsoni,Americorophium,stimpsoni,1
+4670,Grandidierella japonica,Grandidierella,japonica,0
+4750,Gammarus daiberi,Gammarus,daiberi,0
+4810,Hyalella,Hyalella,sp. A,1
+4950,Rhithropanopeus harrisii,Rhithropanopeus,harrisii,0
+5410,Procladius,Procladius,sp. A,1
+5550,Cryptochironomus,Cryptochironomus,sp. A,1
+6490,Fluminicola,Fluminicola,sp. A,1
+6530,Gyraulus circumstriatus,Gyraulus,circumstriatus,1
+6570,Physa,Physa,sp. A,1
+6630,Melanoides tuberculata,Melanoides,tuberculata,0
+6730,Corbicula fluminea,Corbicula,fluminea,0
+6750,Euglesa casertana,Pisidium,casertanum,1
+6770,Euglesa compressa,Pisidium,compressum,1
+6810,Macoma petalum,Limecola,petalum,0
+6890,Potamocorbula amurensis,Potamocorbula,amurensis,0
