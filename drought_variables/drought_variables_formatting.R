@@ -57,7 +57,9 @@ iep_drought <- read_csv("https://raw.githubusercontent.com/InteragencyEcological
 
 #drought periods from Mahardja et al 2021
 #years 1967 to 2021
-dperiod <- read_csv("./drought_variables/drought_periods_mahardja2021.csv")
+dperiod <- 
+  read_csv("./drought_variables/drought_periods_mahardja2021.csv") %>% 
+  filter(year %in% 1967:2021)
 
 # Annual averages of environmental variables from Rosie
 # These are most likely based on an adjusted calendar water year (Dec - Nov)
@@ -86,10 +88,23 @@ annual_inflow <- inflow %>%
 #this should be based on standard water year
 
 water_year <- iep_drought %>% 
-  select(year,water_year_sac = yr_type) %>%
-  filter(year > 1966) %>% 
-  arrange(year) %>% 
-  glimpse()
+  select(
+    year,
+    wy_index_sac = index,
+    wy_type_sac = yr_type,
+    drought_category = drought
+  ) %>%
+  filter(year %in% 1967:2021) %>% 
+  # Correct SV index values for 2020 and 2021 based on most recent report from:
+  # https://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST
+  mutate(
+    wy_index_sac = case_when(
+      year == 2020 ~ 6.12,
+      year == 2021 ~ 3.8,
+      TRUE ~ wy_index_sac
+    )
+  ) %>% 
+  arrange(year)
 
 
 # format environmental variables ------------------------------------------
@@ -107,8 +122,7 @@ df_env <- Drought4Nick %>%
   #the other variables (both standard water year)
 
 df_list <- list(dperiod, water_year, annual_inflow, df_env)
-drought_vars <- df_list %>% 
-  reduce(full_join)
+drought_vars <- df_list %>% reduce(full_join, by = join_by(year))
 #maybe make a column that is water year type as ordinal category instead of factors
 
 #write file
