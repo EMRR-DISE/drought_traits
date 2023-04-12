@@ -55,7 +55,7 @@ Prepare the data by only including inflow, the additional environmental predicto
 
 ```{r prepare data}
 df_env_c <- df_env %>% 
-  select(where(is.numeric) & !starts_with("drought")) %>% 
+  select(where(is.numeric) & !starts_with(c("drought", "wy"))) %>% 
   drop_na() %>% 
   rename(
     Inflow = inflow_annual_cfs,
@@ -177,13 +177,17 @@ screeplot(pca_orig, bstick = TRUE)
 
 Only the first axis is has an eigenvalue greater than its corresponding length of the stick. This isn't too surprising looking at the results above. Now let's look at a bi-plot of the years and variables for the first two axes. We'll scale the plot for the environmental variables which is the default.
 
-```{r biplot pca orig scale env var, fig.width = 8, fig.height = 6}
+```{r biplot pca orig scale, fig.width = 8, fig.height = 6}
 # Pull out site scores and add original data back to use for bi-plot formatting
 df_pca_orig_sites <- pca_orig %>% 
   fortify(axes = 1:2) %>% 
   as_tibble() %>% 
   filter(Score == "sites") %>% 
   bind_cols(df_env_c) %>% 
+  left_join(
+    df_env %>% select(year, wy_index_sac, drought_category), 
+    by = join_by(year)
+  ) %>% 
   select(-c(Score, Label))
 
 # Create bi-plot
@@ -198,6 +202,40 @@ geom_text(
   size = 3
 ) +
 scale_color_viridis_c(name = "Year", option = "plasma", end = 0.9) +
+theme_bw()
+```
+
+Let's look at the same bi-plot but use the Sacramento Valley WY Index to color the years:
+
+```{r biplot pca orig scale svi, fig.width = 8, fig.height = 6}
+autoplot(
+  pca_orig, 
+  layers = "species", 
+  title = "Original values, scaling for environmental variables"
+) + 
+geom_text(
+  data = df_pca_orig_sites, 
+  aes(x = PC1, y = PC2, label = year, color = wy_index_sac),
+  size = 3
+) +
+scale_color_viridis_c(name = "Sac WY Index", option = "plasma", end = 0.9) +
+theme_bw()
+```
+
+And finally the same bi-plot with the Drought Synthesis drought classifications for the color:
+
+```{r biplot pca orig scale drt cat, fig.width = 8, fig.height = 6}
+autoplot(
+  pca_orig, 
+  layers = "species", 
+  title = "Original values, scaling for environmental variables"
+) + 
+geom_text(
+  data = df_pca_orig_sites, 
+  aes(x = PC1, y = PC2, label = year, color = drought_category),
+  size = 3
+) +
+scale_color_viridis_d(name = "Drought Category", direction = -1) +
 theme_bw()
 ```
 
@@ -219,13 +257,19 @@ screeplot(pca_log, bstick = TRUE)
 
 Again, only the first axis is has an eigenvalue greater than its corresponding length of the stick.
 
-```{r biplot pca log, fig.width = 8, fig.height = 8}
+Here is the bi-plot for the first two axes using the log-transformed values:
+
+```{r biplot pca log scale, fig.width = 8, fig.height = 8}
 # Pull out site scores and add original data back to use for bi-plot formatting
 df_pca_log_sites <- pca_log %>% 
   fortify(axes = 1:2) %>% 
   as_tibble() %>% 
   filter(Score == "sites") %>% 
   bind_cols(df_env_log) %>% 
+  left_join(
+    df_env %>% select(year, wy_index_sac, drought_category), 
+    by = join_by(year)
+  ) %>% 
   select(-c(Score, Label))
 
 # Create bi-plot
@@ -240,6 +284,40 @@ geom_text(
   size = 3
 ) +
 scale_color_viridis_c(name = "Year", option = "plasma", end = 0.9) +
+theme_bw()
+```
+
+Same bi-plot but use the Sacramento Valley WY Index for the colors:
+
+```{r biplot pca log scale svi, fig.width = 8, fig.height = 8}
+autoplot(
+  pca_log, 
+  layers = "species", 
+  title = "Log-transformed values, scaling for environmental variables"
+) + 
+geom_text(
+  data = df_pca_log_sites, 
+  aes(x = PC1, y = PC2, label = year, color = wy_index_sac),
+  size = 3
+) +
+scale_color_viridis_c(name = "Sac WY Index", option = "plasma", end = 0.9) +
+theme_bw()
+```
+
+And the same bi-plot with the Drought Synthesis drought classifications for the colors:
+
+```{r biplot pca log scale drt cat, fig.width = 8, fig.height = 8}
+autoplot(
+  pca_log, 
+  layers = "species", 
+  title = "Log-transformed values, scaling for environmental variables"
+) + 
+geom_text(
+  data = df_pca_log_sites, 
+  aes(x = PC1, y = PC2, label = year, color = drought_category),
+  size = 3
+) +
+scale_color_viridis_d(name = "Drought Category", direction = -1) +
 theme_bw()
 ```
 
