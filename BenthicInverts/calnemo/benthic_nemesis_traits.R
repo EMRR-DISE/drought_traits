@@ -48,7 +48,7 @@ df <- url %>%
   html_table() %>%   
   #just keep the third table of the webpage
   #[3] would format it as a list, [[3]] formats it as a df (what we want)
-  .[[3]] %>% 
+  chuck(3) %>% 
   #create better column headers
   rename(trait = X1
          ,value = X2
@@ -106,15 +106,26 @@ url_all <- nemesis_links %>%
 
 #try to scrape the specific table from all webpages
 #eventually replace ulr2 with url_all
-tables_all <- url2 %>% 
-  #read the html from all the webpages
-  map(read_html) %>% 
-  #grab just the tables (multiple per webpage)
-  map(html_elements,css="table") %>% 
-  #convert html to tibbles
-  map(html_table)  
-  #just keep the third table 
-  map(.[[3]]) #this doesn't work
+tables_all <- nemesis_links %>% 
+  drop_na(link) %>% 
+  mutate(
+    df_data = map(
+      link,
+      #read the html from all the webpages 
+      ~ read_html(.x) %>% 
+        #grab just the tables (multiple per webpage)
+        html_elements(css = "table") %>% 
+        #convert html to tibbles
+        html_table()
+    ),
+    # check if any of the elements in df_data are empty and remove them
+    check_df_data = map_lgl(df_data, is_empty)
+  ) %>% 
+  filter(!check_df_data) %>% 
+  #just keep the third table
+  mutate(df_data = map(df_data, ~ chuck(.x, 3)))
+
+
 
 #example
 pages %>% 
