@@ -1,7 +1,7 @@
-
-#Notes----------
-#tried to use the SelectorGadget Chrome extension to scrape the 
-#specific table but it selects all the tables (which I don't want)
+#Special Studies Drought Synthesis
+#Environmental Monitoring Program data
+#Benthic Invertebrate Survey data
+#scrape trait data for non-native species from NEMESIS website
 
 #packages-----------
 library(tidyverse) #suite of data science tools
@@ -47,7 +47,6 @@ df <- url %>%
   #creates list of 6 tibbles because there isn't just one table
   html_table() %>%   
   #just keep the third table of the webpage
-  #[3] would format it as a list, [[3]] formats it as a df (what we want)
   chuck(3) %>% 
   #create better column headers
   rename(trait = X1
@@ -83,35 +82,16 @@ test_table <- url %>%
   #turn the html into a tibble
   html_table() 
   
-#scrape table from multiple webpages----------------------
+#scrape specific table from multiple webpages----------------------
 
-#go to each URL
-#read the html
-#turn the tables into tibbles
-#keep the third table only
-#format the column names
-#add the URL as a column
-#combine all tables into one table
-#join with df with organism codes and taxon names
-
-
-#start with simple example with only two URLs
-url2 <-  c("https://invasions.si.edu/nemesis/species_summary/81746","https://invasions.si.edu/nemesis/species_summary/-82")
-
-#create vector of all URLs
-#note that all URLs are the same except for the webpage specific number at the end
-# prefix = https://invasions.si.edu/nemesis/species_summary/
-url_all <- nemesis_links %>% 
-  pull(link)
-
-#try to scrape the specific table from all webpages
-#eventually replace ulr2 with url_all
 tables_all <- nemesis_links %>% 
+  #one species wasn't on NEMESIS because it's actually cryptogenic
   drop_na(link) %>% 
+  #create a new column with nested dataframe
   mutate(
-    df_data = map(
+    wptables = map(
       link,
-      #read the html from all the webpages 
+      #read the html from all the webpages based on URL in "link" column
       ~ read_html(.x) %>% 
         #grab just the tables (multiple per webpage)
         html_elements(css = "table") %>% 
@@ -119,35 +99,36 @@ tables_all <- nemesis_links %>%
         html_table()
     ),
     # check if any of the elements in df_data are empty and remove them
-    check_df_data = map_lgl(df_data, is_empty)
+    #there are two species with placeholder webpages but no info yet
+    check_df_data = map_lgl(wptables, is_empty)
   ) %>% 
+  #remove the two taxa with empty lists
   filter(!check_df_data) %>% 
   #just keep the third table
-  mutate(df_data = map(df_data, ~ chuck(.x, 3)))
+  mutate(trait_tables = map(wptables, ~ chuck(.x, 3))) %>% 
+  #just keep the needed columns
+  select(organism_code
+         ,taxon_worms
+         ,trait_tables
+         ,link
+  ) %>% 
+  #unnest the trait tables
+  unnest(cols = c(trait_tables)) %>% 
+  #rename the columns
+  rename(trait = X1
+         ,value = X2
+         ,citation = X3
+  ) %>% 
+  mutate(
+    #within value column, change "None" to NA
+    value = case_when(value=="None"~NA, TRUE~value)
+    #make value column numeric
+         ,value=as.numeric(value)
+         ) %>% 
+  glimpse()
 
-
-
-#example
-pages %>% 
-  map(html_node, css = "a.navbar-brand") %>% 
-  map_chr(html_text)
-
-#function for scraping tables from multiple webpages
-#is it possible to just grab the third table from each webpage instead of grabbing all tables?
-read_my_urls <- function(url){
-
-    url2 <- read_html(url)
-
-     Procdetail <- url2 %>% html_nodes("table") %>%
-html_table (fill=T) %>% .[[3]] 
- Procdetail
-}
-
-#run the function on the set of webpage URLs
-my_scraped_data <- lapply(url2, read_my_urls)
-
-
-
+#write the file
+#write_csv(tables_all,"./BenthicInverts/calnemo/benthic_nemesis_traits.csv")
 
 
 
