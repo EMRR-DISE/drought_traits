@@ -1,197 +1,58 @@
-organism_code,taxon_worms,trait,value,citation,link
-3050,Boccardiella ligerica,Minimum Temperature (ºC),0,"Assumed winter temperature, Finland (Eliason and Haahtela 1969).",https://invasions.si.edu/nemesis/species_summary/67012
-3050,Boccardiella ligerica,Maximum Temperature (ºC),31,Wern 1985,https://invasions.si.edu/nemesis/species_summary/67012
-3050,Boccardiella ligerica,Minimum Salinity (‰),0.6,"Field, Kravitz 1987.",https://invasions.si.edu/nemesis/species_summary/67012
-3050,Boccardiella ligerica,Maximum Salinity (‰),30,Kravitz 1983,https://invasions.si.edu/nemesis/species_summary/67012
-3050,Boccardiella ligerica,Maximum Length (mm),18,Blake and Woodwick 1971,https://invasions.si.edu/nemesis/species_summary/67012
-3050,Boccardiella ligerica,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/67012
-3050,Boccardiella ligerica,Broad Salinity Range,NA,Limnetic-Euhaline,https://invasions.si.edu/nemesis/species_summary/67012
-3090,Pseudopolydora kempi,Maximum Temperature (ºC),29,Venezuela (Chollet and Bone 2007),https://invasions.si.edu/nemesis/species_summary/66927
-3090,Pseudopolydora kempi,Minimum Salinity (‰),1.6,"Field observation, Vellar estuary, India (Srikrishnada and Ramamoorthi 1977)",https://invasions.si.edu/nemesis/species_summary/66927
-3090,Pseudopolydora kempi,Maximum Salinity (‰),37,Venezuela (Chollet and Bone 2007),https://invasions.si.edu/nemesis/species_summary/66927
-3090,Pseudopolydora kempi,Minimum Duration,2,"Lecithotrophic form, California, nearly direct development, released from egg capsule at 10-13 chaetigers (Blake and Woodwick 1975)",https://invasions.si.edu/nemesis/species_summary/66927
-3090,Pseudopolydora kempi,Maximum Duration,28,"Planktotrophic form, Japan (Myohara 1979, released from capsule at 3 chaetigers.",https://invasions.si.edu/nemesis/species_summary/66927
-3090,Pseudopolydora kempi,Minimum Length (mm),6.5,"Length of holotype, California (Light 1969).  New adults are probably smaller,",https://invasions.si.edu/nemesis/species_summary/66927
-3090,Pseudopolydora kempi,Maximum Length (mm),22,"Japan, Sato-Okoshi 2000. San Francisco Bay animals averaged 12 mm (Light 1978).",https://invasions.si.edu/nemesis/species_summary/66927
-3090,Pseudopolydora kempi,Broad Temperature Range,NA,Cold temperate-tropical,https://invasions.si.edu/nemesis/species_summary/66927
-3090,Pseudopolydora kempi,Broad Salinity Range,NA,Mesohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/66927
-3110,Streblospio benedicti,Minimum Temperature (ºC),-2,Based on geographical distribution,https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Maximum Temperature (ºC),34.5,"Field, Terminos Lagoon, Mexico (Cruz-Abrego et al. 1994)",https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Minimum Salinity (‰),4,"Field, 4-7 PSU, Kocheshkova and Matviy 2010, Vistula Lagoon, Baltic Sea.",https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Maximum Salinity (‰),45,Salton Sea (g/L).  Note that the composition of this lake's salts differs from seawater (Detwiler et al. 2002).,https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Minimum Dissolved Oxygen (mg/l),0.5,Experimental at 26 C (Llanso 1991),https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Minimum Reproductive Temperature,7.5,"Experimental, animals from Bogue Sound NC. Reproduction reduced below 12.5 C (Levin and Creed 1986)",https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Maximum Reproductive Temperature,30,Reproduction reduced above 25 C C (Levin and Creed 1986),https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Minimum Duration,0,Lecithotrophic larvae are competent to settle upon release (Levin 1984a; Levin 1984b).,https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Maximum Duration,40,"Planktotrophic larvae, in glass tubes, without substrate, 20 C (Levin 1984a; Levin 1984b).",https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Minimum Length (mm),5,Hartman 1945,https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Maximum Length (mm),9.7,Levin and Creed 1986,https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Broad Temperature Range,NA,Cold temperate-Tropical,https://invasions.si.edu/nemesis/species_summary/66939
-3110,Streblospio benedicti,Broad Salinity Range,NA,Mesohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/66939
-3130,Marenzelleria neglecta,Minimum Salinity (‰),0.2,"For adult animals, Darst-Zingst lagoon, Germany (Bochert et al. 1997).",https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Maximum Salinity (‰),30,"Highest tested (Bochert et al. 1997).  Fritsche (1997) found a 72-h LC50 of 29.8 for animals acclimated at 5 PSU and 10 C.  In San Francisco Bay, the seaward limit in a survey of muddy sediments was 16.1 PSU (Lee et al. 2003).",https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Minimum Dissolved Oxygen (mg/l),1,"Marenzelleria spp. are characterised by a very efficient use of oxygen during hypoxia, since anaerobic energy production started at a very low oxygen pressure (critical pO, at about 2 kPa) (Schiedek 1997).  2kPA; ~ 1mg/L",https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Minimum Reproductive Salinity,5,"Mimimum for successful maturation of eggs and sperm, and larval development (Bochert 1997)",https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Maximum Reproductive Salinity,10,"Maximum for successful maturation of eggs and sperm, and larval development.  However, the next highest salinity tested was 25 PSU (Bochert 1997)",https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Minimum Duration,30,"Egg to settling at  20 C,10 PSU (Bochert et al. 1996)",https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Maximum Duration,85,"Egg to settling at  10 C, 20 PSU (Bochert et al. 1996)",https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Minimum Length (mm),30,Animals below 20 mm are all juvenile. Animals >40 mm are adults which have spawned once. (Bochert 1997),https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Maximum Length (mm),115,Sikorski and Bick 2004,https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/-684
-3130,Marenzelleria neglecta,Broad Salinity Range,NA,Limnetic-Polyhaline,https://invasions.si.edu/nemesis/species_summary/-684
-3170,Heteromastus filiformis,Minimum Salinity (‰),5,"Field, But uncommon, below 18 PSU, Netherlands (Wolff 1973)",https://invasions.si.edu/nemesis/species_summary/67420
-3170,Heteromastus filiformis,Maximum Salinity (‰),40,average Red Sea salinity (Wehe and Fiege 2002),https://invasions.si.edu/nemesis/species_summary/67420
-3170,Heteromastus filiformis,Maximum Duration,18,"Larvae from Passamaquoddy Bay (Gulf of Maine) settled in ~17-18 days after hatching (Lacalli 190).  Wolff (1973) gave an estimated planktonic larval duration of 10 days for worms from the Netherlands, based on filed data.",https://invasions.si.edu/nemesis/species_summary/67420
-3170,Heteromastus filiformis,Maximum Length (mm),180,"Hutchings and Rainer (1982). The pygidium has a long, pointed terminal process. Specimens from the UK reach about 100 mm and have 140 segments (Hayward and Ryland 1990); specimens from the North Sea are about 180 mm with 150 segments; and specimens from the US East Coast are about 40 mm with 230 segments (Hutchings and Rainier 1982). Some of this size variation could be due to effects of preservation.",https://invasions.si.edu/nemesis/species_summary/67420
-3170,Heteromastus filiformis,Broad Temperature Range,NA,Cold temperate-Tropical,https://invasions.si.edu/nemesis/species_summary/67420
-3170,Heteromastus filiformis,Broad Salinity Range,NA,Oligohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/67420
-3370,Alitta succinea,Minimum Temperature (ºC),0,Based on geographical range,https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Maximum Temperature (ºC),34,"Maximum temperatures were monthly means (August) recorded in a powerplant effluent in the Patuxent River estuary, Maryland, where N. succinea was present (Nauman and Cory 1969).",https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Minimum Salinity (‰),2.5,"Survival at the minimum salinity was observed in animals from Colorado Lagoon, Long Beach CA Bay at 20 ºC (Freel et al. 1973).",https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Maximum Salinity (‰),65,The maximum salinity was tested with worms from the Salton Sea using “Instant Ocean” artificial seawater (Kuhl and Oglesby 1979).,https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Minimum Reproductive Salinity,14.5,Larval development was unsuccessful at salinities below 14.5 PSU (Kinne 1954).,https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Maximum Reproductive Salinity,50,Epitokal maturation and normal embryonic and larval development in Salton Sea animals was seen at salinities as high as 45 ppt  (Kuhl and Oglesby 1979),https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Minimum Duration,10,"20-24 C, 14-16 PSU, animals from Kiel Bay, Germany (Banse 1954).",https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Maximum Duration,14,"20-24 C, 14-16 PSU, animals from Kiel Bay, Germany (Banse 1954).",https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Minimum Length (mm),14,"Male heteronereids, 14-55 mm; Female heteronereids, 30-75 mm (Pettibone 1963)",https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Maximum Length (mm),170,Pettibone 1963,https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Broad Temperature Range,NA,Cold-temperate-Tropical,https://invasions.si.edu/nemesis/species_summary/-48
-3370,Alitta succinea,Broad Salinity Range,NA,Mesohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/-48
-3450,Laonome calida,Minimum Salinity (‰),0.1,"Field, Old River, San Joaquin Delta, Peterson and Vayssieres 2010",https://invasions.si.edu/nemesis/species_summary/-173
-3450,Laonome calida,Maximum Salinity (‰),35,"Open marine sites, Dampier Archipelago (Capa et al. 2007).",https://invasions.si.edu/nemesis/species_summary/-173
-3450,Laonome calida,Maximum Length (mm),15,Capa et al. 2011,https://invasions.si.edu/nemesis/species_summary/-173
-3450,Laonome calida,Broad Temperature Range,NA,Cold temperate-Tropical,https://invasions.si.edu/nemesis/species_summary/-173
-3450,Laonome calida,Broad Salinity Range,NA,Limnetic-Mesohaline,https://invasions.si.edu/nemesis/species_summary/-173
-4150,Amphibalanus improvisus,Minimum Temperature (ºC),-2,"Based on range, including ice-covered estuaries.",https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Maximum Temperature (ºC),38,"Maximum temperature recorded in effluent canals of a powerplant on the Patuxent River MD, with populations of A. improvisus (Nauman and Cory 1969).  Maximum tolerance levels may be higher.",https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Minimum Salinity (‰),0,Adults can survive long exposure to freshwater (Foster 1970),https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Maximum Salinity (‰),40,"Rare at high salinities (Furman and Yule 1991), but present in the Mediterranean Sea.",https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Minimum Reproductive Temperature,10,Bousfield 1955,https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Maximum Reproductive Temperature,30,Bousfield 1955,https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Minimum Reproductive Salinity,2,"Experimental, lowest tested, 28% metamorphosis, compared to 71-75% at 16-32 ppt (Furman and Yule 1991).",https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Maximum Reproductive Salinity,40,"Experimental, highest tested, 45% metamorphosis, compared to 71-75% at 16-32 ppt, all at 30 C (Furman and Yule 1991).",https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Minimum Duration,4,"Experimental, 30 C, 16-24 ppt, high food density (Furman and Yule 1989).",https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Maximum Duration,18,"15 C, 18 days for intermittently starved larvae (Lang and Marcy 1982)",https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Maximum Length (mm),9,Maximum adult height (Henry and McLauglin 1975),https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Maximum Width (mm),17,Maximum adult width (Henry and McLauglin 1975),https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Broad Temperature Range,NA,Cold temperate-Tropical,https://invasions.si.edu/nemesis/species_summary/89622
-4150,Amphibalanus improvisus,Broad Salinity Range,NA,Oligohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/89622
-4230,Nippoleucon hinumensis,Minimum Temperature (ºC),8,"Field, Seto Inland Sea, Japan (Akiyama et al. 2004a).",https://invasions.si.edu/nemesis/species_summary/-239
-4230,Nippoleucon hinumensis,Maximum Temperature (ºC),28,"Field, Seto Inland Sea , Japan(Akiyama et al. 2004a).",https://invasions.si.edu/nemesis/species_summary/-239
-4230,Nippoleucon hinumensis,Minimum Salinity (‰),0.7,"Field observations, Fresh-Brackish-Muddy Zone (Delta, mean salinity 0.7 PSU, Lee et al. 2003)",https://invasions.si.edu/nemesis/species_summary/-239
-4230,Nippoleucon hinumensis,Maximum Salinity (‰),27.5,"Field, mean salinity Marine-Muddy zone, South and Central Bays (Lee et al. 2003)",https://invasions.si.edu/nemesis/species_summary/-239
-4230,Nippoleucon hinumensis,Maximum Length (mm),5.5,"Female paratype, Japan.  The male holotype is 3.7 mm (Gamo 1967).",https://invasions.si.edu/nemesis/species_summary/-239
-4230,Nippoleucon hinumensis,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/-239
-4230,Nippoleucon hinumensis,Broad Salinity Range,NA,Mesohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/-239
-4270,Sinelobus stanfordi,Minimum Temperature (ºC),-2,"Field, British Columbia (Levings and Rafi 1978)",https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Maximum Temperature (ºC),27,"Field, Chula Vista Boat Ramp, San Diego (Cohen et al. 2002)",https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Minimum Salinity (‰),3.7,"Fraser River Delta, British Columbia (Levings and Rafi 1978).  This is the lowest definite reported salinity for the West Coast form, but other Sinelobus spp. Have colonized fresh water.",https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Maximum Salinity (‰),36.5,"Field data, Chula Vista Boat Ramp, San Francisco Bay (Cohen et al. 2002)",https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Minimum pH,7.6,"La Plata estuary, Argentina (Ambrosio et al. 2014)",https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Maximum pH,8.6,None,https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Minimum Length (mm),2.1,"2.1 for males, 2.5 for females (Gardiner 1975, 'Sinelobus stanfordi from several locations)",https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Maximum Length (mm),3.6,"3.6 for males, 3.0 for females (Gardiner 1975, 'Sinelobus stanfordi from several locations)",https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Broad Temperature Range,NA,Cold temperate-Subtropical,https://invasions.si.edu/nemesis/species_summary/-235
-4270,Sinelobus stanfordi,Broad Salinity Range,NA,Tidal Limnetic-Euhaline,https://invasions.si.edu/nemesis/species_summary/-235
-4310,Synidotea laticauda,Minimum Temperature (ºC),0,Delaware Bay (Bushek and Boyd 2006),https://invasions.si.edu/nemesis/species_summary/546963
-4310,Synidotea laticauda,Maximum Temperature (ºC),30,"Experimental, Delaware Bay (Boyd 2008)",https://invasions.si.edu/nemesis/species_summary/546963
-4310,Synidotea laticauda,Minimum Salinity (‰),1,"Field data, San Francisco Bay (Menzies and Miller 1972); 2 PSU, Guadalquivir Estuary, Spain (Ruiz-Delgado et al. 2019, lab survival)",https://invasions.si.edu/nemesis/species_summary/546963
-4310,Synidotea laticauda,Maximum Salinity (‰),35,"Experimental, Adults and juveniles (5, 11, 25 C) The upper value from field data is 29.1 in San Francisco Bay  (Menzies and Miller 1972).  This was the highest salinity tested in San Francisco Bay (Menzies and Miller 1972) and the Guadalquivir estuary, Spain (Ruiz-Delgado et al. 2019).",https://invasions.si.edu/nemesis/species_summary/546963
-4310,Synidotea laticauda,Minimum Length (mm),3.9,"Probably immature, Spain (Cuesta et al. 1996)",https://invasions.si.edu/nemesis/species_summary/546963
-4310,Synidotea laticauda,Maximum Length (mm),25.3,"Spain (Cuesta et al. 1996, probably male); female, 16 mm (Netherlands, Faasse 2011).",https://invasions.si.edu/nemesis/species_summary/546963
-4310,Synidotea laticauda,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/546963
-4310,Synidotea laticauda,Broad Salinity Range,NA,Oligohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/546963
-4410,Uromunna,Minimum Salinity (‰),0,Graening and Rogers 2013,https://invasions.si.edu/nemesis/species_summary/-438
-4410,Uromunna,Maximum Salinity (‰),10,"Field, Napa Valley Marina (Cohen et al. 2005)",https://invasions.si.edu/nemesis/species_summary/-438
-4410,Uromunna,Maximum Length (mm),1.5,Uromunna reynoldsi (Schultz 1969),https://invasions.si.edu/nemesis/species_summary/-438
-4410,Uromunna,Broad Temperature Range,NA,Warm-temperate,https://invasions.si.edu/nemesis/species_summary/-438
-4410,Uromunna,Broad Salinity Range,NA,Tidal Limnetic-Euhaline,https://invasions.si.edu/nemesis/species_summary/-438
-4510,Ampelisca abdita,Minimum Salinity (‰),4.9,Field (Lee et al. 2003),https://invasions.si.edu/nemesis/species_summary/93329
-4510,Ampelisca abdita,Maximum Salinity (‰),35,Field Data (Bousfield 1973),https://invasions.si.edu/nemesis/species_summary/93329
-4510,Ampelisca abdita,Minimum Reproductive Temperature,8,Mills 1967,https://invasions.si.edu/nemesis/species_summary/93329
-4510,Ampelisca abdita,Minimum Length (mm),4,Adults  (Mills 1964a; Bousfield 1973),https://invasions.si.edu/nemesis/species_summary/93329
-4510,Ampelisca abdita,Maximum Length (mm),8.2,"Adults  (Mills 1964a, Bousfield 1973)",https://invasions.si.edu/nemesis/species_summary/93329
-4510,Ampelisca abdita,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/93329
-4510,Ampelisca abdita,Broad Salinity Range,NA,Mesohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/93329
-4550,Sinocorophium alienense,Minimum Temperature (ºC),30,Field (Chapman 2007),https://invasions.si.edu/nemesis/species_summary/93610
-4550,Sinocorophium alienense,Minimum Salinity (‰),0.7,"Field, mean salinity, Fresh-Brackish-Muddy zone, San Francisco Delta (Lee et al. 2003)",https://invasions.si.edu/nemesis/species_summary/93610
-4550,Sinocorophium alienense,Maximum Salinity (‰),27.5,"Field, mean salinity, Marine-Muddy zone, South and Central San Francisco Bay (Lee et al. 2003)",https://invasions.si.edu/nemesis/species_summary/93610
-4550,Sinocorophium alienense,Maximum Length (mm),6.4,Adult female (Chapman 1988),https://invasions.si.edu/nemesis/species_summary/93610
-4550,Sinocorophium alienense,Broad Temperature Range,NA,Warm temperate,https://invasions.si.edu/nemesis/species_summary/93610
-4550,Sinocorophium alienense,Broad Salinity Range,NA,Tidal Limnetic-Polyhaline,https://invasions.si.edu/nemesis/species_summary/93610
-4670,Grandidierella japonica,Maximum Temperature (ºC),25,"Field, Newport Bay, California (Greenstein and Tiefenthaler 1997)",https://invasions.si.edu/nemesis/species_summary/-82
-4670,Grandidierella japonica,Minimum Salinity (‰),5,"Columbia River estuary, field data (Sytsma et al. 2004)",https://invasions.si.edu/nemesis/species_summary/-82
-4670,Grandidierella japonica,Maximum Salinity (‰),35,Typical euhaline salinity,https://invasions.si.edu/nemesis/species_summary/-82
-4670,Grandidierella japonica,Minimum Length (mm),3.8,Smallest females bearing young (Greenstein and Tiefenthaler 1997),https://invasions.si.edu/nemesis/species_summary/-82
-4670,Grandidierella japonica,Maximum Length (mm),22,"22 mm adult male, 13 mm adult female (Chapman and Dorman 1975)",https://invasions.si.edu/nemesis/species_summary/-82
-4670,Grandidierella japonica,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/-82
-4670,Grandidierella japonica,Broad Salinity Range,NA,Mesohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/-82
-4750,Gammarus daiberi,Minimum Temperature (ºC),0,Based on geographical range,https://invasions.si.edu/nemesis/species_summary/93779
-4750,Gammarus daiberi,Maximum Temperature (ºC),32,"Field, average temperature in thermal effluent, in June, when G. daiberi was present (Nauman and Cory 1969).",https://invasions.si.edu/nemesis/species_summary/93779
-4750,Gammarus daiberi,Minimum Salinity (‰),0,Field data (Bousfield 1973),https://invasions.si.edu/nemesis/species_summary/93779
-4750,Gammarus daiberi,Maximum Salinity (‰),15,Field data (Bousfield 1973),https://invasions.si.edu/nemesis/species_summary/93779
-4750,Gammarus daiberi,Minimum Length (mm),6,Adult females (Bousfield 1973),https://invasions.si.edu/nemesis/species_summary/93779
-4750,Gammarus daiberi,Maximum Length (mm),12.5,Adult males range from 8 to 12.5 mm.  Females are 6-8 mm (Bousfield 1969),https://invasions.si.edu/nemesis/species_summary/93779
-4750,Gammarus daiberi,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/93779
-4750,Gammarus daiberi,Broad Salinity Range,NA,Tidal Limnetic-Mesohaline,https://invasions.si.edu/nemesis/species_summary/93779
-4950,Rhithropanopeus harrisii,Minimum Salinity (‰),0,"Adults survive extended periods in freshwater.  Reproduction is successful at salinities of 5 ppt and below (Goncalves et al. 1995 a,b).",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Maximum Salinity (‰),35,"Adults survive salinities at least as high as 35, but are uncommon at salinities above 18 ppt.  Experimental mortality of larvae increases greatly at salinities above 25 ppt (Goncalves et al. 1995 a,b).",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Minimum Reproductive Temperature,20,"Range tested, Laughlin and French 1989",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Maximum Reproductive Temperature,28,"Range tested, Laughlin and French 1989",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Minimum Reproductive Salinity,1,"Costlow et al. 1966, cited by Goncalves et al. 1995",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Maximum Reproductive Salinity,40,"Costlow et al. 1966, cited by Goncalves et al. 1995",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Minimum Duration,15,"Hatching to First Crab stage, 30 C, 10  ppt,  (Goncalves et al. 1995)",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Maximum Duration,32,"Hatching to First Crab stage, 20 C, 10-20 ppt,  (Goncalves et al. 1995)",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Minimum Width (mm),4.4,"Adult females, 4.5 mm for adult males (Williams 1984)",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Maximum Width (mm),21.3,"Adult male.  Adult female, 16 mm (Williams 1984)",https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Broad Temperature Range,NA,Cold-temperate-Tropical,https://invasions.si.edu/nemesis/species_summary/98790
-4950,Rhithropanopeus harrisii,Broad Salinity Range,NA,Limnetic-Euhaline,https://invasions.si.edu/nemesis/species_summary/98790
-6630,Melanoides tuberculata,Minimum Temperature (ºC),18,10% mortality over 27 days at 17 C (Mitchell and Brandt 2005),https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Maximum Temperature (ºC),32.5,10% mortality over 27 days at 17 C (Mitchell and Brandt 2005),https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Minimum Salinity (‰),0,Widespread in freshwater,https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Maximum Salinity (‰),45,"Experimental (Wingard et al. 2007); Up to 34 in field observations, Biscayne Bay FL mangrove areas  in the Matheson Hammock-Snapper Creek area of Coral Gables, FL/adjacent to Biscayne Bay (Roesseler et al. 1977); Up to 34 PSU in coast streams, Oahu, Hawaii (Englund et al. 2000)",https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Minimum Reproductive Salinity,0,This is a freshwater species,https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Maximum Reproductive Salinity,18,"Experimental, in tanks with gradually increasing salinity (Wingard et al. 2007)",https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Minimum Length (mm),10,Minimum length at maturity (Rader et al. 2003),https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Maximum Length (mm),36,Thompson (2004),https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Broad Temperature Range,NA,Subtropical-tropical,https://invasions.si.edu/nemesis/species_summary/71533
-6630,Melanoides tuberculata,Broad Salinity Range,NA,Nontidal Limnetic-Euhaline,https://invasions.si.edu/nemesis/species_summary/71533
-6730,Corbicula fluminea,Minimum Temperature (ºC),2,"The lower limit for most populations is 2 C, but some populations (NE, CO) seem to have survived in colder locations, suggesting acclimation. However, many northern populations are prone to winter die-offs. 'Though observations suggest that this invading species has become established in numerous northern environments, these locations are protected from winter temperatures by industrial thermal effluents, usually from power plants '...suggesting that these thermally protected populations may serve as stepping stones in further northern expansion' (Kreiser and Mitton 1995).",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Maximum Temperature (ºC),34,"Short term limits for survival of Corbicula fluminea are ~40 C, but for long-term survival, with acclimation at 5-30 C, upper LD 50's (50% Lethal Doses) are 24-34 C (McMahon 1983)",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Minimum Salinity (‰),0,This is a freshwater organsim.,https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Maximum Salinity (‰),13,"Salinity- Corbicula fluminea can tolerate gradual increase to 24 PSU and sudden increases to 14 ppt, but the usual limit for reproducing populations is 2-5 PSU (McMahon 1983). Specimens from Hong Kong tolerated salinities up to 13 PSU with little mortality (Morton and Tong 1985).  In estuaries of southwest Florida (Charlotte Harbor, Tampa Bay, and smaller coastal rivers, C. fluminea was most abundant at salinities below 2 PSU, and was absent above 7 PSU (Montagna et al. 2008).",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Minimum Dissolved Oxygen (mg/l),6,"~70% saturation (McMahon 2000), at temperatures of 20-25 C",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Minimum pH,5.6,"Florida, Kat 1983, cited by Karatayev et al. 2007",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Maximum pH,8.2,"Mino River, Portugal (Araujo et al. 1993)",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Minimum Reproductive Temperature,18,"Field, McMahon 1983",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Maximum Reproductive Temperature,30,"Field, McMahon 1983",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Minimum Length (mm),6.5,"Size at maturity, McMahon 1983",https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Maximum Length (mm),60,McMahon 1983,https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Broad Temperature Range,NA,Cold temperate-Tropical,https://invasions.si.edu/nemesis/species_summary/81387
-6730,Corbicula fluminea,Broad Salinity Range,NA,Fresh-Mesohaline,https://invasions.si.edu/nemesis/species_summary/81387
-6810,Macoma petalum,Minimum Temperature (ºC),0,Based on field occurrences and range in the Northwest Atlantic (Abbott 1974).,https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Maximum Temperature (ºC),33,"24 hr LC 50, Kennedy and Mihursky 1971",https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Minimum Salinity (‰),2.5,"Experimental, acclimated at 5-10 ppt (Castagna and Chanley 1973)",https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Maximum Salinity (‰),35,Typical marine salinity,https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Minimum Reproductive Temperature,10,"Chespeake Bay, field range for larval set, Chesapeake Bay (Shaw 1965, cited by Chanley and Andrews 1971)",https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Maximum Reproductive Temperature,14,"Chespeake Bay, field range for larval set, Chesapeake Bay (Shaw 1965, cited by Chanley and Andrews 1971)",https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Minimum Duration,16,"Larval duration at 15 C, M. balthica, Netherlands (Bos et al. 2007)",https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Maximum Duration,19.5,"Larval duration at 15 C, M. balthica, Netherlands (Bos et al. 2007)",https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Minimum Length (mm),10,Reproduction begins at or near this size (Gosner 1978; Thompson and Nichols 1988),https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Maximum Length (mm),38,"(Abbott 1974, as M. balthica; Gosner 1978)",https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/-204
-6810,Macoma petalum,Broad Salinity Range,NA,Oligohaline-Euhaline,https://invasions.si.edu/nemesis/species_summary/-204
-6890,Potamocorbula amurensis,Minimum Temperature (ºC),8,"Field observations, San Francisco Bay (Carlton et al. 1990)",https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Maximum Temperature (ºC),23,"Field observations, San Francisco Bay (Carlton et al. 1990)",https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Minimum Salinity (‰),0.1,"Experimental, 30 days survival (Carlton et al. 1990).",https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Maximum Salinity (‰),32,"Field observations, San Francisco Bay (Carlton et al. 1990)",https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Minimum Reproductive Temperature,6,"Field observations, ripe eggs and sperm seen (Parchaso and Thompson 2002)",https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Maximum Reproductive Temperature,23,"Field observations, ripe eggs and sperm seen (Parchaso and Thompson 2002)",https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Minimum Reproductive Salinity,2,Survival of 24 hr old larvae (Nicolini and Penry 2000).,https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Maximum Reproductive Salinity,25,Survival of 24 hr old larvae (Nicolini and Penry 2000).,https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Minimum Duration,17,"Fertilization to settling, 15 C (Nicolini and Penry 2000).",https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Maximum Duration,19,"Fertilization to settling, 15 C (Nicolini and Penry 2000).",https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Minimum Length (mm),NA,None,https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Maximum Length (mm),27.5,Carlton et al. 1990,https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Broad Temperature Range,NA,Cold temperate-Warm temperate,https://invasions.si.edu/nemesis/species_summary/81746
-6890,Potamocorbula amurensis,Broad Salinity Range,NA,Tidal Limnetic-Euhaline,https://invasions.si.edu/nemesis/species_summary/81746
+organism_code,target_taxon_name,target_taxon_level,lit_taxon_name,lit_taxon_level,lit_taxon_type,lit_taxon_type_ord,database,citation,trait_group,trait_value,trait_unit,link
+3050,Boccardiella ligerica,species,Boccardiella ligerica,species,target,1,NEMESIS,Wern 1985,thermal_max,31,C,https://invasions.si.edu/nemesis/species_summary/67012
+3050,Boccardiella ligerica,species,Boccardiella ligerica,species,target,1,NEMESIS,Kravitz 1983,salinity_max,30,PSU,https://invasions.si.edu/nemesis/species_summary/67012
+3050,Boccardiella ligerica,species,Boccardiella ligerica,species,target,1,NEMESIS,Blake and Woodwick 1971,body_size_max,18,mm,https://invasions.si.edu/nemesis/species_summary/67012
+3090,Pseudopolydora kempi,species,Pseudopolydora kempi,species,target,1,NEMESIS,Venezuela (Chollet and Bone 2007),thermal_max,29,C,https://invasions.si.edu/nemesis/species_summary/66927
+3090,Pseudopolydora kempi,species,Pseudopolydora kempi,species,target,1,NEMESIS,Venezuela (Chollet and Bone 2007),salinity_max,37,PSU,https://invasions.si.edu/nemesis/species_summary/66927
+3090,Pseudopolydora kempi,species,Pseudopolydora kempi,species,target,1,NEMESIS,"Japan, Sato-Okoshi 2000. San Francisco Bay animals averaged 12 mm (Light 1978).",body_size_max,22,mm,https://invasions.si.edu/nemesis/species_summary/66927
+3110,Streblospio benedicti,species,Streblospio benedicti,species,target,1,NEMESIS,"Field, Terminos Lagoon, Mexico (Cruz-Abrego et al. 1994)",thermal_max,34.5,C,https://invasions.si.edu/nemesis/species_summary/66939
+3110,Streblospio benedicti,species,Streblospio benedicti,species,target,1,NEMESIS,Salton Sea (g/L).  Note that the composition of this lake's salts differs from seawater (Detwiler et al. 2002).,salinity_max,45,PSU,https://invasions.si.edu/nemesis/species_summary/66939
+3110,Streblospio benedicti,species,Streblospio benedicti,species,target,1,NEMESIS,Levin and Creed 1986,body_size_max,9.7,mm,https://invasions.si.edu/nemesis/species_summary/66939
+3130,Marenzelleria neglecta,species,Marenzelleria neglecta,species,target,1,NEMESIS,"Highest tested (Bochert et al. 1997).  Fritsche (1997) found a 72-h LC50 of 29.8 for animals acclimated at 5 PSU and 10 C.  In San Francisco Bay, the seaward limit in a survey of muddy sediments was 16.1 PSU (Lee et al. 2003).",salinity_max,30,PSU,https://invasions.si.edu/nemesis/species_summary/-684
+3130,Marenzelleria neglecta,species,Marenzelleria neglecta,species,target,1,NEMESIS,Sikorski and Bick 2004,body_size_max,115,mm,https://invasions.si.edu/nemesis/species_summary/-684
+3170,Heteromastus filiformis,species,Heteromastus filiformis,species,target,1,NEMESIS,average Red Sea salinity (Wehe and Fiege 2002),salinity_max,40,PSU,https://invasions.si.edu/nemesis/species_summary/67420
+3170,Heteromastus filiformis,species,Heteromastus filiformis,species,target,1,NEMESIS,"Hutchings and Rainer (1982). The pygidium has a long, pointed terminal process. Specimens from the UK reach about 100 mm and have 140 segments (Hayward and Ryland 1990); specimens from the North Sea are about 180 mm with 150 segments; and specimens from the US East Coast are about 40 mm with 230 segments (Hutchings and Rainier 1982). Some of this size variation could be due to effects of preservation.",body_size_max,180,mm,https://invasions.si.edu/nemesis/species_summary/67420
+3370,Alitta succinea,species,Alitta succinea,species,target,1,NEMESIS,"Maximum temperatures were monthly means (August) recorded in a powerplant effluent in the Patuxent River estuary, Maryland, where N. succinea was present (Nauman and Cory 1969).",thermal_max,34,C,https://invasions.si.edu/nemesis/species_summary/-48
+3370,Alitta succinea,species,Alitta succinea,species,target,1,NEMESIS,The maximum salinity was tested with worms from the Salton Sea using “Instant Ocean” artificial seawater (Kuhl and Oglesby 1979).,salinity_max,65,PSU,https://invasions.si.edu/nemesis/species_summary/-48
+3370,Alitta succinea,species,Alitta succinea,species,target,1,NEMESIS,Pettibone 1963,body_size_max,170,mm,https://invasions.si.edu/nemesis/species_summary/-48
+3450,Laonome calida,species,Laonome calida,species,target,1,NEMESIS,"Open marine sites, Dampier Archipelago (Capa et al. 2007).",salinity_max,35,PSU,https://invasions.si.edu/nemesis/species_summary/-173
+3450,Laonome calida,species,Laonome calida,species,target,1,NEMESIS,Capa et al. 2011,body_size_max,15,mm,https://invasions.si.edu/nemesis/species_summary/-173
+4150,Amphibalanus improvisus,species,Amphibalanus improvisus,species,target,1,NEMESIS,"Maximum temperature recorded in effluent canals of a powerplant on the Patuxent River MD, with populations of A. improvisus (Nauman and Cory 1969).  Maximum tolerance levels may be higher.",thermal_max,38,C,https://invasions.si.edu/nemesis/species_summary/89622
+4150,Amphibalanus improvisus,species,Amphibalanus improvisus,species,target,1,NEMESIS,"Rare at high salinities (Furman and Yule 1991), but present in the Mediterranean Sea.",salinity_max,40,PSU,https://invasions.si.edu/nemesis/species_summary/89622
+4150,Amphibalanus improvisus,species,Amphibalanus improvisus,species,target,1,NEMESIS,Maximum adult height (Henry and McLauglin 1975),body_size_max,9,mm,https://invasions.si.edu/nemesis/species_summary/89622
+4150,Amphibalanus improvisus,species,Amphibalanus improvisus,species,target,1,NEMESIS,Maximum adult width (Henry and McLauglin 1975),body_size_max,17,mm,https://invasions.si.edu/nemesis/species_summary/89622
+4230,Nippoleucon hinumensis,species,Nippoleucon hinumensis,species,target,1,NEMESIS,"Field, Seto Inland Sea , Japan(Akiyama et al. 2004a).",thermal_max,28,C,https://invasions.si.edu/nemesis/species_summary/-239
+4230,Nippoleucon hinumensis,species,Nippoleucon hinumensis,species,target,1,NEMESIS,"Field, mean salinity Marine-Muddy zone, South and Central Bays (Lee et al. 2003)",salinity_max,27.5,PSU,https://invasions.si.edu/nemesis/species_summary/-239
+4230,Nippoleucon hinumensis,species,Nippoleucon hinumensis,species,target,1,NEMESIS,"Female paratype, Japan.  The male holotype is 3.7 mm (Gamo 1967).",body_size_max,5.5,mm,https://invasions.si.edu/nemesis/species_summary/-239
+4270,Sinelobus stanfordi,species,Sinelobus stanfordi,species,target,1,NEMESIS,"Field, Chula Vista Boat Ramp, San Diego (Cohen et al. 2002)",thermal_max,27,C,https://invasions.si.edu/nemesis/species_summary/-235
+4270,Sinelobus stanfordi,species,Sinelobus stanfordi,species,target,1,NEMESIS,"Field data, Chula Vista Boat Ramp, San Francisco Bay (Cohen et al. 2002)",salinity_max,36.5,PSU,https://invasions.si.edu/nemesis/species_summary/-235
+4270,Sinelobus stanfordi,species,Sinelobus stanfordi,species,target,1,NEMESIS,"3.6 for males, 3.0 for females (Gardiner 1975, 'Sinelobus stanfordi from several locations)",body_size_max,3.6,mm,https://invasions.si.edu/nemesis/species_summary/-235
+4310,Synidotea laticauda,species,Synidotea laticauda,species,target,1,NEMESIS,"Experimental, Delaware Bay (Boyd 2008)",thermal_max,30,C,https://invasions.si.edu/nemesis/species_summary/546963
+4310,Synidotea laticauda,species,Synidotea laticauda,species,target,1,NEMESIS,"Experimental, Adults and juveniles (5, 11, 25 C) The upper value from field data is 29.1 in San Francisco Bay  (Menzies and Miller 1972).  This was the highest salinity tested in San Francisco Bay (Menzies and Miller 1972) and the Guadalquivir estuary, Spain (Ruiz-Delgado et al. 2019).",salinity_max,35,PSU,https://invasions.si.edu/nemesis/species_summary/546963
+4310,Synidotea laticauda,species,Synidotea laticauda,species,target,1,NEMESIS,"Spain (Cuesta et al. 1996, probably male); female, 16 mm (Netherlands, Faasse 2011).",body_size_max,25.3,mm,https://invasions.si.edu/nemesis/species_summary/546963
+4410,Uromunna,species,Uromunna,species,target,1,NEMESIS,"Field, Napa Valley Marina (Cohen et al. 2005)",salinity_max,10,PSU,https://invasions.si.edu/nemesis/species_summary/-438
+4410,Uromunna,species,Uromunna,species,target,1,NEMESIS,Uromunna reynoldsi (Schultz 1969),body_size_max,1.5,mm,https://invasions.si.edu/nemesis/species_summary/-438
+4510,Ampelisca abdita,species,Ampelisca abdita,species,target,1,NEMESIS,Field Data (Bousfield 1973),salinity_max,35,PSU,https://invasions.si.edu/nemesis/species_summary/93329
+4510,Ampelisca abdita,species,Ampelisca abdita,species,target,1,NEMESIS,"Adults  (Mills 1964a, Bousfield 1973)",body_size_max,8.2,mm,https://invasions.si.edu/nemesis/species_summary/93329
+4550,Sinocorophium alienense,species,Sinocorophium alienense,species,target,1,NEMESIS,"Field, mean salinity, Marine-Muddy zone, South and Central San Francisco Bay (Lee et al. 2003)",salinity_max,27.5,PSU,https://invasions.si.edu/nemesis/species_summary/93610
+4550,Sinocorophium alienense,species,Sinocorophium alienense,species,target,1,NEMESIS,Adult female (Chapman 1988),body_size_max,6.4,mm,https://invasions.si.edu/nemesis/species_summary/93610
+4670,Grandidierella japonica,species,Grandidierella japonica,species,target,1,NEMESIS,"Field, Newport Bay, California (Greenstein and Tiefenthaler 1997)",thermal_max,25,C,https://invasions.si.edu/nemesis/species_summary/-82
+4670,Grandidierella japonica,species,Grandidierella japonica,species,target,1,NEMESIS,Typical euhaline salinity,salinity_max,35,PSU,https://invasions.si.edu/nemesis/species_summary/-82
+4670,Grandidierella japonica,species,Grandidierella japonica,species,target,1,NEMESIS,"22 mm adult male, 13 mm adult female (Chapman and Dorman 1975)",body_size_max,22,mm,https://invasions.si.edu/nemesis/species_summary/-82
+4750,Gammarus daiberi,species,Gammarus daiberi,species,target,1,NEMESIS,"Field, average temperature in thermal effluent, in June, when G. daiberi was present (Nauman and Cory 1969).",thermal_max,32,C,https://invasions.si.edu/nemesis/species_summary/93779
+4750,Gammarus daiberi,species,Gammarus daiberi,species,target,1,NEMESIS,Field data (Bousfield 1973),salinity_max,15,PSU,https://invasions.si.edu/nemesis/species_summary/93779
+4750,Gammarus daiberi,species,Gammarus daiberi,species,target,1,NEMESIS,Adult males range from 8 to 12.5 mm.  Females are 6-8 mm (Bousfield 1969),body_size_max,12.5,mm,https://invasions.si.edu/nemesis/species_summary/93779
+4950,Rhithropanopeus harrisii,species,Rhithropanopeus harrisii,species,target,1,NEMESIS,"Adults survive salinities at least as high as 35, but are uncommon at salinities above 18 ppt.  Experimental mortality of larvae increases greatly at salinities above 25 ppt (Goncalves et al. 1995 a,b).",salinity_max,35,PSU,https://invasions.si.edu/nemesis/species_summary/98790
+4950,Rhithropanopeus harrisii,species,Rhithropanopeus harrisii,species,target,1,NEMESIS,"Adult male.  Adult female, 16 mm (Williams 1984)",body_size_max,21.3,mm,https://invasions.si.edu/nemesis/species_summary/98790
+6630,Melanoides tuberculata,species,Melanoides tuberculata,species,target,1,NEMESIS,10% mortality over 27 days at 17 C (Mitchell and Brandt 2005),thermal_max,32.5,C,https://invasions.si.edu/nemesis/species_summary/71533
+6630,Melanoides tuberculata,species,Melanoides tuberculata,species,target,1,NEMESIS,"Experimental (Wingard et al. 2007); Up to 34 in field observations, Biscayne Bay FL mangrove areas  in the Matheson Hammock-Snapper Creek area of Coral Gables, FL/adjacent to Biscayne Bay (Roesseler et al. 1977); Up to 34 PSU in coast streams, Oahu, Hawaii (Englund et al. 2000)",salinity_max,45,PSU,https://invasions.si.edu/nemesis/species_summary/71533
+6630,Melanoides tuberculata,species,Melanoides tuberculata,species,target,1,NEMESIS,Thompson (2004),body_size_max,36,mm,https://invasions.si.edu/nemesis/species_summary/71533
+6730,Corbicula fluminea,species,Corbicula fluminea,species,target,1,NEMESIS,"Short term limits for survival of Corbicula fluminea are ~40 C, but for long-term survival, with acclimation at 5-30 C, upper LD 50's (50% Lethal Doses) are 24-34 C (McMahon 1983)",thermal_max,34,C,https://invasions.si.edu/nemesis/species_summary/81387
+6730,Corbicula fluminea,species,Corbicula fluminea,species,target,1,NEMESIS,"Salinity- Corbicula fluminea can tolerate gradual increase to 24 PSU and sudden increases to 14 ppt, but the usual limit for reproducing populations is 2-5 PSU (McMahon 1983). Specimens from Hong Kong tolerated salinities up to 13 PSU with little mortality (Morton and Tong 1985).  In estuaries of southwest Florida (Charlotte Harbor, Tampa Bay, and smaller coastal rivers, C. fluminea was most abundant at salinities below 2 PSU, and was absent above 7 PSU (Montagna et al. 2008).",salinity_max,13,PSU,https://invasions.si.edu/nemesis/species_summary/81387
+6730,Corbicula fluminea,species,Corbicula fluminea,species,target,1,NEMESIS,McMahon 1983,body_size_max,60,mm,https://invasions.si.edu/nemesis/species_summary/81387
+6810,Macoma petalum,species,Macoma petalum,species,target,1,NEMESIS,"24 hr LC 50, Kennedy and Mihursky 1971",thermal_max,33,C,https://invasions.si.edu/nemesis/species_summary/-204
+6810,Macoma petalum,species,Macoma petalum,species,target,1,NEMESIS,Typical marine salinity,salinity_max,35,PSU,https://invasions.si.edu/nemesis/species_summary/-204
+6810,Macoma petalum,species,Macoma petalum,species,target,1,NEMESIS,"(Abbott 1974, as M. balthica; Gosner 1978)",body_size_max,38,mm,https://invasions.si.edu/nemesis/species_summary/-204
+6890,Potamocorbula amurensis,species,Potamocorbula amurensis,species,target,1,NEMESIS,"Field observations, San Francisco Bay (Carlton et al. 1990)",thermal_max,23,C,https://invasions.si.edu/nemesis/species_summary/81746
+6890,Potamocorbula amurensis,species,Potamocorbula amurensis,species,target,1,NEMESIS,"Field observations, San Francisco Bay (Carlton et al. 1990)",salinity_max,32,PSU,https://invasions.si.edu/nemesis/species_summary/81746
+6890,Potamocorbula amurensis,species,Potamocorbula amurensis,species,target,1,NEMESIS,Carlton et al. 1990,body_size_max,27.5,mm,https://invasions.si.edu/nemesis/species_summary/81746

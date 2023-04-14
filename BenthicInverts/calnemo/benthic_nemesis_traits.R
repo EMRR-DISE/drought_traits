@@ -3,6 +3,11 @@
 #Benthic Invertebrate Survey data
 #scrape trait data for non-native species from NEMESIS website
 
+#To do list--------
+#will need to manually clean up the "citation" column which has various notes in it
+#should read text of webpages for additional traits. 
+#For example, there may be data on reproduction in the Ecology:General section
+
 #packages-----------
 library(tidyverse) #suite of data science tools
 library(rvest) #scraping info from the internet
@@ -127,8 +132,63 @@ tables_all <- nemesis_links %>%
          ) %>% 
   glimpse()
 
-#write the file
-#write_csv(tables_all,"./BenthicInverts/calnemo/benthic_nemesis_traits.csv")
+#Filter and format trait data-------------- 
+
+#look at unique "traits" 
+unique(tables_all$trait)
+
+#look at number of available records per trait
+tables_all_sum <- tables_all %>% 
+  group_by(trait) %>% 
+  count() %>% 
+  arrange(-n)
+
+#traits to keep
+traits_keep <- c("Maximum Length (mm)","Maximum Width (mm)" ,"Maximum Temperature (ºC)", "Maximum Salinity (‰)")
+
+#filter data set to keep just the desired traits and then format data for export
+tables_all_filt <- tables_all %>% 
+  filter(trait %in% traits_keep) %>%
+  mutate(
+    #rename traits
+    trait_group = case_when((trait == "Maximum Length (mm)" | trait == "Maximum Width (mm)")~"body_size_max"
+                              ,trait == "Maximum Temperature (ºC)" ~ "thermal_max"
+                              ,trait == "Maximum Salinity (‰)" ~ "salinity_max"
+    ) 
+    #create a column for the trait units
+    ,trait_unit = case_when((trait == "Maximum Length (mm)" | trait == "Maximum Width (mm)")~"mm"
+                            ,trait == "Maximum Temperature (ºC)" ~ "C"
+                            ,trait == "Maximum Salinity (‰)" ~ "PSU"
+                            )
+         #create some additional new columns 
+        ,target_taxon_level = "species"
+         #lit_taxon_name does actually sometimes differ from the worms name
+         #so should probably pull the names from the webpages
+         #worth noting though that there will be differences between taxon from NEMESIS and lit cited therein as well
+         ,lit_taxon_name = taxon_worms
+         ,lit_taxon_level = "species"
+         ,lit_taxon_type = "target"
+         ,lit_taxon_type_ord = "1"
+         ,database = "NEMESIS"
+         ) %>% 
+  select(organism_code
+         ,target_taxon_name = taxon_worms
+         ,target_taxon_level
+         ,lit_taxon_name
+         ,lit_taxon_level
+         ,lit_taxon_type
+         ,lit_taxon_type_ord
+         ,database
+         ,citation
+         ,trait_group
+         ,trait_value = value
+         ,trait_unit
+         ,link
+         ) %>% 
+  glimpse()
+  
+#write the file-----------
+#write_csv(tables_all_filt,"./BenthicInverts/calnemo/benthic_nemesis_traits.csv")
 
 
 
