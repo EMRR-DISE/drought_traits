@@ -25,12 +25,12 @@ library(readxl) #reading xlsx files
 # Read in the data-----------------------
 
 #read in non-native status file
-benthic_aliens <- read_excel("./BenthicInverts/calnemo/IEP_BenthicOrganismList2021_w_Intro_status_From Sharon Shiba.xlsx") %>% 
+benthic_aliens <- read_excel("./benthic/data_input/traits_nemesis/IEP_BenthicOrganismList2021_w_Intro_status_From Sharon Shiba.xlsx") %>% 
   clean_names() %>% 
   glimpse()
 
 #read in my list of focal taxa
-focal_taxa <- read_csv("./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv") %>% 
+focal_taxa <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv") %>% 
   glimpse()
 
 # Format data in prep for combining ---------------------
@@ -113,4 +113,4 @@ aliens_focal_format <- aliens_focal %>%
   glimpse()
 
 #export the complete file
-#write_csv(aliens_focal_format,"./BenthicInverts/calnemo/bentic_inverts_trait_origin.csv")
+#write_csv(aliens_focal_format,"./benthic/data_output/traits/benthic_traits_nemesis_origin.csv")

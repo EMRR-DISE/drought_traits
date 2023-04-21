@@ -11,7 +11,7 @@ library(vegan) #multivariate analysis
 
 # Load data sets ----------------
 
-abund <- read_csv("./BenthicInverts/Benthic_TableL.csv")
+abund <- read_csv("./benthic/data_output/benthic_table_l.csv")
 
 
 # Format data for analysis ----------

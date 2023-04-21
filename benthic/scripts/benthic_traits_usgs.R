@@ -23,10 +23,10 @@ metadata <- read_tsv("https://pubs.usgs.gov/ds/ds187/htodcs/InvertTraitsFields_v
 #write_csv(citations, "./BenthicInverts/usgs_trait_database/InvertTraitsCitations_v1.csv")
 
 #read in taxonomy info for my target taxa
-target <- read_csv("./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
+target <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv")
 
 #read in synonyms too
-synonym <- read_csv("./BenthicInverts/benthic_common5_synonyms_2023-03-27.csv")
+synonym <- read_csv("./benthic/data_output/benthic_common5_synonyms_2023-03-27.csv")
 
 #explore target taxa-----------------
 
@@ -308,7 +308,7 @@ trait_size_target <- trait_size %>%
 #33 of 64 taxa, but note above that only 4 are exact matches
 
 #write file containing the trait data for our target taxa
-#write_csv(trait_size,"./BenthicInverts/usgs_trait_database/usgs_size.csv")
+#write_csv(trait_size,"./benthic/data_output/traits/benthic_traits_usgs_size.csv")
 
 
 #Temperature traits--------------

@@ -14,7 +14,7 @@ library(janitor) #misc functions for cleaning data
 nonnatives <- read_csv("./usgs_nonnatives/USRIISv2csvFormat/USRIISv2_MasterList.csv")
 
 #read in our list of target taxa
-target_tax <- read_csv("./BenthicInverts/benthic_taxonomy_common5_2023-02-02.csv")
+target_tax <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv")
 
 # Matching target taxa with USGS list----------
 #the USGS dataset includes ITIS TSN and GBIF key, 

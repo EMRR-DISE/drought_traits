@@ -63,7 +63,7 @@ benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
 
 #organism key with column for latin name for taxa
 #see BenthicInverts_EMP_TaxonomyUpdating for how this was done
-benthic_spp_names <- read_csv("./BenthicInverts/BenthicInverts_Taxonomy_NameLabels.csv") %>% 
+benthic_spp_names <- read_csv("./benthic/data_output/nmds/benthic_taxonomy_name_labels.csv") %>% 
   arrange(organism_code)
 
 #total annual site visits, 1975-2021
@@ -589,7 +589,7 @@ organisms_common10 <- cpue_10plus %>%
 #will update taxonomy for these retained taxa using another script
 common5 <- as.data.frame(organisms_common5) %>% 
   rename(organism_code = organisms_common5)
-#write_csv(common5,"./BenthicInverts/benthic_inverts_taxa_common_5_2023-01-25.csv")
+#write_csv(common5,"./benthic/data_output/benthic_common5_codes_2023-01-25")
 
 #1%: filter abundance data set 
 benthic_cpue1 <- benthic_cpue_stfr %>% 
@@ -834,6 +834,7 @@ TableL_5 <- cpue_mean_annual_nm5 %>%
 #  select(!(station_code:drought))
 
 #export resulting matrices
+#note that file paths are outdated
 #write_csv(pred1,"BenthicInverts/benthic_nmds_predictors_1.csv")
 #write_csv(pred2,"BenthicInverts/benthic_nmds_predictors_2.csv")
 #write_csv(pred5,"BenthicInverts/benthic_nmds_predictors_5.csv")
@@ -848,7 +849,7 @@ TableL_5 <- cpue_mean_annual_nm5 %>%
 #only kept the three long term stations
 #dropped low sampling years
 #only kept taxa present in at least 5% of samples
-#write_csv(TableL_5,"BenthicInverts/Benthic_TableL.csv")
+#write_csv(TableL_5,"./benthic/data_output/benthic_table_l.csv")
 
 
 

@@ -17,13 +17,13 @@ library(readxl) #read excel files
 
 #Freshwater Biological Traits Database 
 #https://www.epa.gov/risk/freshwater-biological-traits-database-traits#:~:text=The%20Freshwater%20Biological%20Traits%20Database,on%20river%20and%20stream%20ecosystems
-epa_traits <- read_excel("./BenthicInverts/epa_trait_database/FreshwaterBioTraits_20100927.xlsx") %>% 
+epa_traits <- read_excel("./benthic/data_input/traits_epa/FreshwaterBioTraits_20100927.xlsx") %>% 
   #clean up column header formatting
   clean_names()
 
 #Benthic invert taxa present in at least 5% of samples
 #NOTE: consider adding TSN to this dataset to match with EPA dataset
-emp_spp <- read_csv("./BenthicInverts/benthic_inverts_taxa_common_5_updated_2023-01-26.csv")
+emp_spp <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv")
 
 #try matching taxa with traits by taxon column--------------
 

@@ -17,7 +17,7 @@ library(purrr) #map functions for scraping multiple webpages at once
 
 #file with NEMESIS record links for each taxon
 #in_database: Y = yes, N = no, S = placeholder record only
-nemesis_links <- read_csv("./BenthicInverts/calnemo/benthic_nemesis_links.csv")
+nemesis_links <- read_csv("./benthic/data_input/traits_nemesis/benthic_nemesis_links.csv")
 
 #examples----------
 
@@ -188,7 +188,7 @@ tables_all_filt <- tables_all %>%
   glimpse()
   
 #write the file-----------
-#write_csv(tables_all_filt,"./BenthicInverts/calnemo/benthic_nemesis_traits.csv")
+#write_csv(tables_all_filt,"./benthic/data_output/traits/benthic_traits_nemesis_size&physiology.csv")
 
 
 
