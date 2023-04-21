@@ -15,12 +15,13 @@
 #library(worms) 
 #searches WoRMS online database; uses plyr which conflicts with tidyverse; load only with functions
 library(janitor) #used to quickly clean up column names
-library(ritis) #searches ITIS online database
 library(taxize) #updating taxonomy using a suite of online databases
-library(worrms) #updating taxonomy using worms database
 library(tidyverse) #suite of data science tools
-#NOTE: ritis and worrms didn't work very well
-#I used worms for WoRMS and taxize for ITIS
+#library(worrms) #didn't work well; updating taxonomy using worms database
+#library(ritis) #didn't work well; searches ITIS online database
+#ultimately, I used worms for WoRMS and taxize for ITIS
+#note: don't load 'worms' here (see code below) because 
+#dependencies don't play nice with tidyverse
 
 # Read in the data-----------------------
 
@@ -30,7 +31,7 @@ benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
   clean_names()
 
 #read in list of organism codes for all taxa found in at least 5% of samples
-common5 <- read_csv("./BenthicInverts/benthic_common5_codes_2023-01-25.csv") %>%
+common5 <- read_csv("./benthic/data_output/benthic_common5_codes_2023-01-25.csv") %>%
   #convert from data frame back to a vector of organism codes
   pull(organism_code)
 
@@ -111,6 +112,7 @@ benthic_spp_names <- benthic_spp_format %>%
   arrange(phylum,class, order,family,genus,species)
 
 #write file for Leela to use
+#note that file path is outdated
 #write_csv(benthic_spp_names,"./BenthicInverts/nmds/BenthicInverts_Taxonomy_NameLabels.csv")
 
 #Determine how many non-rare taxa are IDed to species vs morphospecies--------------------------
@@ -155,10 +157,6 @@ benthic_spp_5_true <- benthic_spp_names_5 %>%
 #automate taxonomy updates: check WoRMS using worms package-------------
 #likely the most updated taxonomy for benthic inverts
 #for taxa not found in WoRMS will then check ITIS 
-
-#to do list
-#probably good to round up synonyms for literature searches of traits
-#could try applying this pipeline to the whole benthic invert taxonomic list
 
 #create list of taxa IDed to species
 specieslist <- benthic_spp_5_true %>% 
@@ -440,7 +438,7 @@ all_format <- worms_format %>%
   glimpse()
 
 #write a file containing the updated taxonomy
-#write_csv(all_format,"./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
+#write_csv(all_format,"./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv")
 
 #look for synonyms of target taxa on worms----------------
 #use wm_synonyms_() from worrms
@@ -489,7 +487,6 @@ worms_syn_format <- worms_syn %>%
 #search for synonyms based on species names
 #this will create a list for each taxon
 syn_itis <- synonyms(check_itis,db="itis")
-test <- as.uid(syn_itis)
 #one synonym for M. microstoma and none for Isocypris
 
 #make tibbles from lists
@@ -527,7 +524,7 @@ itis_syn <- all_format %>%
 synonyms_all <- bind_rows(itis_syn,worms_syn_format)
 
 #write synonyms file
-#write_csv(synonyms_all,"BenthicInverts/benthic_common5_synonyms_2023-03-27.csv")
+#write_csv(synonyms_all,"./benthic/data_output/benthic_common5_synonyms_2023-03-27.csv")
 
 # Look at summaries of different taxonomic levels -----------
 #summarize lowest rank for each taxon
