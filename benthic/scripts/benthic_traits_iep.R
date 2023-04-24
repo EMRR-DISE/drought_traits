@@ -67,3 +67,11 @@ iep_format <- iep_tax_max %>%
          ,trait_unit
   ) %>% 
   glimpse()
+
+#write the output data file------
+#write_csv(iep_format,"./benthic/data_output/traits/benthic_traits_iep_size.csv")
+
+
+
+
+
