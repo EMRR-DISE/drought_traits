@@ -161,8 +161,38 @@ w_bsize_ft_code <- left_join(w_bsize_ft,target_tax_truc) %>%
   #add column indicating these data were pulled from WoRMS
   add_column("trait_database" = "worms",.before = "quality_status")
 
+#format final dataframe
+worms_format <- w_bsize_ft_code %>% 
+  mutate(
+    #clean up life stage column
+    life_stage2 = case_when(life_stage!="adult"~NA,TRUE~life_stage)
+    #add some columns
+    ,lit_taxon_name = taxon
+         ,lit_taxon_level = "species"
+         ,lit_taxon_type = "target"
+         ,lit_taxon_type_ord = 1
+         ,database = "worms"
+    ,trait_group = "body_size_max"
+         ) %>% 
+  #reorder and rename columns
+  select(aphia_id
+         ,organism_code
+         ,target_taxon_name = taxon
+         ,target_taxon_level = rank
+         ,lit_taxon_name:lit_taxon_type_ord
+         ,database
+         ,citation
+         ,life_stage = life_stage2
+         ,trait_group
+         ,trait_value
+         ,trait_unit = units
+         ,quality_status
+  ) %>% 
+  glimpse()
+
+
 #export as .csv
-#write_csv(w_bsize_ft_code, "./benthic/data_output/traits/benthic_traits_worms_size.csv")  
+#write_csv(worms_format, "./benthic/data_output/traits/benthic_traits_worms_size.csv")  
 
 #look at taxa for which size data were not found--------------
 
