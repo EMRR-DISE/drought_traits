@@ -22,27 +22,48 @@ iep <- read_excel("./benthic/data_input/traits_iep/Biomass conversions_CEB Updat
 #taxonomy file with organism codes
 target_tax <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv")
 
+#combine IEP data with taxonomy file----------------
+iep_tax <- left_join(iep, target_tax,by=join_by(taxname==taxon)) %>% 
+  arrange(taxname)
+#did a quick visual comparison between full taxonomy and this output and it looks like the matches worked fine
+#there may be size data in the IEP data set that are higher level than our target taxa but that would be useful to use
+
+#drop the non-matching taxa rows
+iep_tax_trunc <- iep_tax %>% 
+  filter(!is.na(organism_code)) %>% 
+  glimpse()
+#there are multiple rows for some taxa (ethanol vs formalin)
+
+#let's just keep the largest measurement for each taxon
+iep_tax_max <- iep_tax_trunc %>% 
+  group_by(organism_code,taxname,level,reference,rank) %>% 
+  summarize(trait_value = max(max_length),.groups = "drop") %>% 
+  glimpse()
+
+
 #Format the data--------
 
-#look at distribution of sample sizes
-hist(iep$n)
-range(iep$n) #19-700
-
-iep_format <- iep %>%
+iep_format <- iep_tax_max %>%
   mutate(
-    database = "IEP"
+    target_taxon_name =taxname
+    ,lit_taxon_type = "target"
+    ,lit_taxon_type_ord = 1
+    ,database = "IEP"
     ,trait_group = "body_size_max" 
     ,trait_unit = "mm"
   ) %>% 
-  select(lit_taxon_name = taxname
-         ,lit_taxon_level = level
-         ,preservative
-         ,weight_type
-         ,n
+  select(
+    organism_code
+    ,target_taxon_name
+    ,target_taxon_level = rank
+    ,lit_taxon_name = taxname
+    ,lit_taxon_level = level
+    ,lit_taxon_type
+    ,lit_taxon_type_ord
          ,database
          ,citation = reference
          ,trait_group
-         ,trait_value = max_length
+         ,trait_value
          ,trait_unit
   ) %>% 
   glimpse()
