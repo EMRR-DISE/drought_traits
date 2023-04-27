@@ -1,0 +1,39 @@
+AphiaID,Taxon,AphiaID_Syn,Synonym,Status,Rank,Kingdom,Phylum,Class,Order,Family,Genus,Source
+149771,Acanthocyclops,1381155,Cyclops (Acanthocyclops),unaccepted,Subgenus,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Cyclops,worms
+104108,Acartia,347063,Dias,unaccepted,Genus,Animalia,Arthropoda,Copepoda,Calanoida,Acartiidae,Dias,worms
+148370,Daphnia,1302139,Dactylura,unaccepted,Genus,Animalia,Arthropoda,Branchiopoda,Anomopoda,Daphniidae,Dactylura,worms
+148370,Daphnia,1303790,Daphne,unaccepted,Genus,Animalia,Arthropoda,Branchiopoda,Anomopoda,Daphniidae,Daphne,worms
+148370,Daphnia,1303784,Daphniopsis,unaccepted,Genus,Animalia,Arthropoda,Branchiopoda,Anomopoda,Daphniidae,Daphniopsis,worms
+148370,Daphnia,1302145,Hyalodaphnia,unaccepted,Genus,Animalia,Arthropoda,Branchiopoda,Anomopoda,Daphniidae,Hyalodaphnia,worms
+148370,Daphnia,1303794,Leiodaphnia,unaccepted,Genus,Animalia,Arthropoda,Branchiopoda,Anomopoda,Daphniidae,Leiodaphnia,worms
+234062,Diaphanosoma,1303791,Daphnella,unaccepted,Genus,Animalia,Arthropoda,Branchiopoda,Ctenopoda,Sididae,Daphnella,worms
+226635,Hyperacanthomysis longirostris,226309,Acanthomysis bowmani,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Mysida,Mysidae,Acanthomysis,worms
+226635,Hyperacanthomysis longirostris,226636,Acanthomysis longirostris,unaccepted,Species,Animalia,Arthropoda,Malacostraca,Mysida,Mysidae,Acanthomysis,worms
+355153,Pseudodiaptomus forbesi,365296,Schmackeria forbesi,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Schmackeria,worms
+359463,Sinocalanus doerrii,363821,Limnocalanus sinensis doerrii,unaccepted,Subspecies,Animalia,Arthropoda,Copepoda,Calanoida,Centropagidae,Limnocalanus,worms
+157683,Tortanus,347015,Corynura,unaccepted,Genus,Animalia,Arthropoda,Copepoda,Calanoida,Tortanidae,Corynura,worms
+148379,Bosmina (Bosmina) longirostris,248028,Bosmina (Bosmina) longirostris cornuta,unaccepted,Subspecies,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,412805,Bosmina (Bosmina) longirostris curvirostris,unaccepted,Subspecies,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,248027,Bosmina (Bosmina) longirostris pellucida,unaccepted,Subspecies,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,248026,Bosmina (Bosmina) longirostris similis,unaccepted,Subspecies,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303295,Bosmina africanaaustralis,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303301,Bosmina arostris,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303306,Bosmina brevicornis,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303316,Bosmina curvirostris,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303334,Bosmina japonica,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303359,Bosmina pelagica,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303360,Bosmina pellucida,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303382,Bosmina stuhlmanni,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina,worms
+148379,Bosmina (Bosmina) longirostris,1303293,Garbinia adriani,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Garbinia,worms
+148379,Bosmina (Bosmina) longirostris,1299016,Lynceus longirostris,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Laevicaudata,Lynceidae,Lynceus,worms
+148379,Bosmina (Bosmina) longirostris,1303314,Monoculus cornuta,unaccepted,Species,Animalia,Arthropoda,Branchiopoda,Cladocera incertae sedis,NA,Monoculus,worms
+1416974,Eurytemora affinis affinis,104872,Eurytemora affinis,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,worms
+1416974,Eurytemora affinis affinis,363358,Eurytemora affinis hirundoides,unaccepted,Subspecies,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,worms
+1416974,Eurytemora affinis affinis,358635,Eurytemora hirundo,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,worms
+1416974,Eurytemora affinis affinis,149731,Eurytemora hirundoides,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,worms
+1416974,Eurytemora affinis affinis,358636,Eurytemora inermis,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora,worms
+1416974,Eurytemora affinis affinis,149735,Temora affinis,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Temora,worms
+1416974,Eurytemora affinis affinis,360690,Temora inermis,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Temora,worms
+1416974,Eurytemora affinis affinis,365350,Temorella affinis,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Temorella,worms
+1416974,Eurytemora affinis affinis,366181,Temorella affinis hirundoides,unaccepted,Subspecies,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Temorella,worms
+1416974,Eurytemora affinis affinis,366009,Temorella inermis,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Temorella,worms
