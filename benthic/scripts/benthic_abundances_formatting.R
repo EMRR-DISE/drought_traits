@@ -711,6 +711,69 @@ svi <- left_join(cpue_sample_prop,cpue_indiv_prop) %>%
 #but not clear where to make the cut off for rare taxa based on this info alone
 #should look at relationship between community structure and drought metrics to see if that provides clear answer
 
+#look closer at relative abundances of taxa--------------
+#do this to see how much it matters whether we drop some taxa that are higher than genus level
+#and/or we can't find trait data
+#look at relative abundances for all years and stations (did this above in cpue_indiv_prop)
+#add columns that show this for each of the three stations separately as well
+
+#format the df with relative abundances across all stations
+#will join this with station specific values below
+cpue_indiv_prop_all <- cpue_indiv_prop %>% 
+  select(organism_code
+         ,indiv_n_all = indiv_n
+         ,indiv_prop_all = indiv_prop
+         ,rank_prop_all = rank_prop
+         ) %>% 
+  glimpse()
+
+#calculate relative abundance of taxa by station
+cpue_indiv_prop_stn <- benthic_cpue_stfr %>%
+  group_by(organism_code,station_code) %>% 
+  #sum cpue by taxon and station
+  summarise(indiv_n=sum(mean_cpue),.groups = "drop") %>%   
+  #calculate the proportion of all individuals that a taxon comprises
+  mutate(indiv_prop = indiv_n/sum(indiv_n)) %>% 
+  #pivot to wide form so each station has it's own columns
+  pivot_wider(names_from = "station_code", values_from = indiv_n:indiv_prop)
+  glimpse()
+
+#combine with relative abundance across all stations
+cpue_indiv_prop_comb <- left_join(cpue_indiv_prop_all,cpue_indiv_prop_stn) %>% 
+  arrange(-rank_prop_all) %>% 
+  #add column that ranks species 1-249
+  mutate(rank_no = row_number(),.after=rank_prop_all) %>% 
+  glimpse()
+
+#add some of the taxonomy info 
+cpue_indiv_prop_comb_nm <- left_join(cpue_indiv_prop_comb,benthic_spp_names_short) %>% 
+  relocate(species_name,.after = organism_code)
+
+#what proportion of total abundance do first 14 taxa comprise?
+most_abundant <- cpue_indiv_prop_comb_nm[1:14,]
+sum(most_abundant$indiv_prop_all) #0.9237181
+
+#look at subset of taxa for which we don't have body size data 
+missing_size_list <-as.character(c(1090,1230,1270,1290,3330,4030,4050,4090,6570))
+
+#filter to just the missing ones
+missing_size_df <- cpue_indiv_prop_comb_nm %>% 
+  filter(organism_code %in% missing_size_list) %>% 
+  arrange(-rank_prop_all)
+
+#sum the proportion of organisms without size data
+sum(missing_size_df$indiv_prop_all) 
+#0.03243851 so 3% of organisms
+#makes sense given that 14 taxa comprise majority of biomass
+
+#write the output files
+#all relative abundances
+#write_csv(cpue_indiv_prop_comb_nm,"./benthic/data_output/benthic_relative_abundances.csv")
+
+#relative abundances of taxa without size data
+#write_csv(missing_size_df,"./benthic/data_output/benthic_relative_abundances_missing_size.csv")
+
+
 # Calculate Bay-Delta wide annual mean CPUE------------------
 #calculate mean for each station and year
 #then calculate mean for each year across all station
