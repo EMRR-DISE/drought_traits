@@ -29,9 +29,14 @@ benthic_aliens <- read_excel("./benthic/data_input/traits_nemesis/IEP_BenthicOrg
   clean_names() %>% 
   glimpse()
 
-#read in my list of focal taxa
+#read in my list of focal taxa (n = 64, present in at least 5% of samples)
+#these names have been updated as needed (mostly using WoRMS) 
 focal_taxa <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv") %>% 
   glimpse()
+
+#read in list of all taxa found in the three focal stations (n=249)
+#these names haven't been updated, just used the ones from EMP
+all_taxa <- read_csv("./benthic/data_output/benthic_relative_abundances.csv")
 
 # Format data in prep for combining ---------------------
 
@@ -39,6 +44,13 @@ focal_taxa <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-2
 focal_taxa_format <- focal_taxa %>% 
   select(organism_code
          , taxon_worms = taxon) %>% 
+  glimpse()
+
+#all taxa data
+all_taxa_format <- all_taxa %>% 
+  select(organism_code
+         ,common_5perc
+         ,species_name) %>% 
   glimpse()
 
 #NEMESIS data
@@ -106,11 +118,32 @@ aliens_focal_format <- aliens_focal %>%
     #fill NAs with Native
     native = case_when((origin == "Introduced?" | origin == "Cryptogenic" | origin == "Introduced") ~ "0"
                         , is.na(origin) ~ "1")
-                        #,TRUE~origin)
     ) %>% 
   select(-c(origin,comments)) %>% 
   arrange(organism_code) %>% 
   glimpse()
 
 #export the complete file
-#write_csv(aliens_focal_format,"./benthic/data_output/traits/benthic_traits_nemesis_origin.csv")
+#write_csv(aliens_focal_format,"./benthic/data_output/traits/benthic_traits_nemesis_origin_taxa64.csv")
+
+#match up all 249 taxa with the origin info ----------------
+
+aliens_all <- left_join(all_taxa_format,aliens_format) %>% 
+  glimpse()
+#one cryptogenic species; maybe just include as introduced or native since only one
+
+# Format the data set filtered to just the 249 taxa ---------------
+
+aliens_all_format <- aliens_all %>% 
+  mutate(
+    #change one case of Introduced? and Cryptogenic to Introduced (following Cohen and Carlton 1995 which might be outdated)
+    #fill NAs with Native
+    native = case_when((origin == "Introduced?" | origin == "Cryptogenic" | origin == "Introduced") ~ "0"
+                       , is.na(origin) ~ "1"),.after=common_5perc
+  ) %>% 
+  arrange(native,-common_5perc) %>% 
+  glimpse()
+
+#export the complete file
+#write_csv(aliens_all_format,"./benthic/data_output/traits/benthic_traits_nemesis_origin_taxa249.csv")
+
