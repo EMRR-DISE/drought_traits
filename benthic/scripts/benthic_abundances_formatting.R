@@ -745,6 +745,13 @@ cpue_indiv_prop_comb <- left_join(cpue_indiv_prop_all,cpue_indiv_prop_stn) %>%
   mutate(rank_no = row_number(),.after=rank_prop_all) %>% 
   glimpse()
 
+#first create taxonomy data set with just the needed columns (ie, organism code, species name)
+benthic_spp_names_short <- benthic_spp_names %>%
+  select(organism_code,species_name) %>% 
+  #reformat column type 
+  mutate(organism_code = as.character(organism_code)) %>% 
+  glimpse()
+
 #add some of the taxonomy info 
 cpue_indiv_prop_comb_nm <- left_join(cpue_indiv_prop_comb,benthic_spp_names_short) %>% 
   relocate(species_name,.after = organism_code)
@@ -766,9 +773,22 @@ sum(missing_size_df$indiv_prop_all)
 #0.03243851 so 3% of organisms
 #makes sense given that 14 taxa comprise majority of biomass
 
+#create df with the 249 taxa present in our three stations
+#then indicate whether each taxon was in at least 5% of samples
+
+#start with list of 64 taxa in at least 5% of samples
+common5_pa <- common5 %>% 
+  mutate(common5 =1)
+
+#add column with common 5% to relative abundance df
+cpue_indiv_prop_combo_nm_final <- left_join(cpue_indiv_prop_comb_nm,common5_pa) %>% 
+  #add zeros where common5 isn't 1
+  mutate(common_5perc = case_when(is.na(common5)~0,TRUE ~ common5),.after = organism_code) %>% 
+  select(-common5)
+
 #write the output files
 #all relative abundances
-#write_csv(cpue_indiv_prop_comb_nm,"./benthic/data_output/benthic_relative_abundances.csv")
+#write_csv(cpue_indiv_prop_combo_nm_final,"./benthic/data_output/benthic_relative_abundances.csv")
 
 #relative abundances of taxa without size data
 #write_csv(missing_size_df,"./benthic/data_output/benthic_relative_abundances_missing_size.csv")
@@ -806,13 +826,6 @@ cpue_mean_annual10 <- benthic_cpue10 %>%
   summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
 
 #add species names for use as vector labels
-
-#first create taxonomy data set with just the needed columns (ie, organism code, species name)
-benthic_spp_names_short <- benthic_spp_names %>%
-  select(organism_code,species_name) %>% 
-  #reformat column type 
-  mutate(organism_code = as.character(organism_code)) %>% 
-  glimpse()
 
 #1%: add species names to main data set
 cpue_mean_annual_nm1 <- left_join(cpue_mean_annual1,benthic_spp_names_short) %>% 
