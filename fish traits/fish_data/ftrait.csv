@@ -1,0 +1,10 @@
+species,fecundity,habitat,life_span,lmax,origin,life_hist,therm_tol
+Alosa sapidissima,225600,pelagic,13,60,nonnative,anadromous,35
+Clupea pallasii,41000,pelagic,19,46,native,marine,25
+Dorosoma petenense,21000,pelagic,4,22,nonnative,resident,30.9
+Engraulis mordax,206170,pelagic,7,24.8,native,marine,27
+Hypomesus transpacificus,12000,pelagic,2,12,native,semi-anadromous,28.4
+Morone saxatilis,5000000,pelagic,30,125,nonnative,anadromous,32
+Oncorhynchus tshawytscha,17000,littoral,9,100,native,anadromous,28.9
+Pogonichthys macrolepidotus,100000,littoral,9,45,native,semi-anadromous,31
+Spirinchus thaleichthys,24000,pelagic,3,15,native,anadromous,24.8
