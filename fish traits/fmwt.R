@@ -3,6 +3,8 @@
 # project: drought traits (special studies)
 # purpose: load _tidied_ Fall Midwater Trawl data
 
+# last modified: 2023-06-05
+
 # data source and program information:
 # https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/FMWT%20Data/
 # https://iep.ca.gov/Science-Synthesis-Service/Monitoring-Programs/Fall-Midwater-Trawl

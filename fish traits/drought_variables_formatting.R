@@ -1,6 +1,7 @@
 #Special Studies Drought Synthesis
 #Drought environmental variables
 #Round up variables and put into one data table
+# test modification: 2023-06-05
 
 #Nick Rasmussen, nicholas.rasmussen@water.ca.gov
 

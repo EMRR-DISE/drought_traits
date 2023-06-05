@@ -4,7 +4,7 @@
 #updated June 2022
 #_________________________________________________________________________________
 
-# Further modified by Pete Nelson September 1, 2022
+# Further modified by Pete Nelson September 1, 2022 
 # 1976 indices for added species need attention; these are
 # chinook, northern anchovy, pac herring, striped bass age-1 & 2
 
