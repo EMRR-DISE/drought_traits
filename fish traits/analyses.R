@@ -3,7 +3,7 @@
 # project: drought traits (special studies)
 # purpose: analysis of FMWT (fish) data
 # created: 2022-09-02
-# last modified: 2022-12-06
+# last modified: 2023-06-05
 
 # get started -----
 rm(list= ls()[!(ls() %in% c("fmwt1", "spp_occ",    # indices & freq of occurrence

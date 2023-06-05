@@ -4,10 +4,10 @@
 # purpose: complete fourth-corner & RLQ tutorial
 # from: Dray et al. 2014
 # created: 2023-05-23
-# last modified: 
+# last modified: 2023-06-05
 
 # getting started -----
-
+library(tidyverse)
 library(ade4)
 
 # load data ------
@@ -50,10 +50,10 @@ afcL.fish <- # 'L' table of species abundance by year
 score(afcL.fish)
 
 # acpR.fish <- # 'R' table of environmental conditions by year
-  dudi.hillsmith(fenv, # environ data include both quantitative & categorical variables, thus dudi.hillsmith
-    row.w = afcL.fish$lw,
-    scannf = F,
-    nf = 2)
+#  dudi.hillsmith(fenv, # environ data include both quantitative & categorical variables, thus dudi.hillsmith
+#    row.w = afcL.fish$lw,
+#    scannf = F,
+#    nf = 2)
 
 acpR.fish <-
   dudi.pca(fenv[,6:12], # Hill & Smith code isn't working so try pca on numeric environmental data
@@ -63,10 +63,10 @@ acpR.fish <-
 score(acpR.fish)
 
 # acpQ.fish <- # 'Q' table of traits by species
-  dudi.hillsmith(  # trait variables include numeric and categorical data
-    ftrait, 
-    row.w = afcL.fish$cw,
-    scannf = F)
+#  dudi.hillsmith(  # trait variables include numeric and categorical data
+#    ftrait, 
+#    row.w = afcL.fish$cw,
+#    scannf = F)
 
 acpQ.fish <- # 'Q' table of traits by species
   dudi.pca(  # limit trait variables to numeric data
