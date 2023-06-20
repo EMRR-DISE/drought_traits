@@ -202,7 +202,7 @@ zoop_bsize_un <-
   reduce(left_join)
 
 # Clean up traits data set
-zoop_bsize_f <- zoop_bsize_un %>% 
+zoop_bsize_c1 <- zoop_bsize_un %>% 
   mutate(
     life_stage = if_else(!is.na(`Life stage`), `Life stage`, `Life stage...20`),
     trait_value = as.numeric(measurementValue)
@@ -221,7 +221,19 @@ zoop_bsize_f <- zoop_bsize_un %>%
     trait_value,
     trait_unit = Unit,
     Gender
-  ) %>% 
+  )
+
+# Add taxa without trait data in WoRMS to traits data set to be explicit about
+  # taxa with missing data - 4 taxa with missing traits
+zoop_bsize_missing <- target_zoop_c %>% 
+  filter(!AphiaID %in% unique(zoop_bsize_c1$target_aphia_id)) %>% 
+  select(
+    target_aphia_id = AphiaID,
+    target_taxon_name = Taxon,
+    target_taxon_level = Rank
+  )
+
+zoop_bsize_f <- bind_rows(zoop_bsize_c1, zoop_bsize_missing) %>% 
   mutate(
     # Combine information in life_stage, Type, and Dimension columns
     trait_group = "maximum adult body length",
@@ -232,7 +244,8 @@ zoop_bsize_f <- zoop_bsize_un %>%
       paste0(target_taxon_name, "_UnID"),
       target_taxon_name
     )
-  )
+  ) %>% 
+  arrange(target_taxon_name)
 
 # Export trait data from WoRMS
 zoop_bsize_f %>% write_csv(here("Zooplankton/zoop_traits_worms_size.csv"), na = "")
