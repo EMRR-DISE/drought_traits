@@ -25,9 +25,9 @@ library(janitor)
 library(readr)
 
 # load fmwt indices ----
-fmwt_annual_long <- read_csv("fish traits/fish_data/FMWT_index_long.csv") %>% 
+fmwt_annual_long <- read_csv(file.choose()) %>% # nav to FMWT_index_long.csv
   clean_names() # annual indices
-fmwt_by_area_long <- read_csv("fish traits/fish_data/FMWT_trait_long.csv") %>% 
+fmwt_by_area_long <- read_csv(file.choose()) %>%  # nav to FMWT_trait_long.csv
   clean_names() # annual indices by area
 
 ## collapse striper data -----
@@ -52,7 +52,7 @@ fmwt1 <- # differs from FMWT_index_wide.csv in having collapsed the striper data
   add_row(year = c(1974, 1979)) %>% # insert missing years albeit w/o data
   arrange(year)
 
-write_csv(fmwt1, "fish traits/fish_data/fmwt1.csv")
+write_csv(fmwt1, "fish_data/fmwt1.csv")
 
 rm(temp)
 
@@ -78,7 +78,7 @@ fmwt2 <- # differs from FMWT_index_wide.csv in having collapsed the striper data
   clean_names() %>% 
   select(-na)
 
-write_csv(fmwt2, "fish traits/fish_data/fmwt2.csv")
+write_csv(fmwt2, "fish_data/fmwt2.csv")
 
 rm(temp, # temp object
    fmwt_annual_long, fmwt_by_area_long, # temp call on saved data
@@ -96,7 +96,7 @@ data <- read_csv("fish traits/fish_data/FMWT 1967-2021 Catch Matrix_updated.csv"
   filter(index == "1") # retain only index site samples
 str(data)
 
-write_csv(data, "fish traits/fish_data/fmwt_index_sta_complete.csv")
+write_csv(data, "fish_data/fmwt_index_sta_complete.csv")
 
 # load index station GIS data
 sta <- read_csv("fish traits/fish_data/index_stations.csv")
@@ -105,14 +105,14 @@ sta <- read_csv("fish traits/fish_data/index_stations.csv")
 dat_pa <- data %>% 
   mutate(across(.cols = c(29:142), ~ ifelse(.>0,1,0)))
 
-write_csv(dat_pa, "fish traits/fish_data/dat_pa.csv")
+write_csv(dat_pa, "fish_data/dat_pa.csv")
 
 # list index stations, join GIS data
 temp <- dat_pa %>% distinct(station = as.character(station))
 temp2 <- sta %>% mutate(station = as.character(station))
 index_stations <- left_join(temp, temp2, by = "station") %>% relocate(area) %>% arrange(area)
 rm(temp, temp2)
-write_csv(index_stations, "fish traits/fish_data/index_stations.csv")
+write_csv(index_stations, "fish_data/index_stations.csv")
 
 # spp frequency ----
 
@@ -139,7 +139,7 @@ spp_occ <- data_long %>%
   mutate(pct_grand_N = sp_N / grand_N,
          pct_freq = trawls_present / trawls_N)
 
-write_csv(spp_occ %>% arrange(desc(pct_freq)), "fish traits/fish_data/spp_occ.csv")
+write_csv(spp_occ %>% arrange(desc(pct_freq)), "fish_data/spp_occ.csv")
 
 spp_occ %>% filter(pct_freq >= 0.05) %>% 
   arrange(desc(pct_freq)) %>% 
@@ -150,7 +150,7 @@ five_plus <- spp_occ %>% filter(pct_freq >= 0.04) %>%
   select(!grand_N) %>% 
   top_n(10)
 
-write_csv(five_plus, "fish traits/fish_data/five_plus.csv")
+write_csv(five_plus, "fish_data/five_plus.csv")
 
 # clean-up -----
 rm(list = setdiff(ls(),

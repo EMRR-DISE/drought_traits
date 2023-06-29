@@ -4,7 +4,7 @@
 #updated June 2022
 #_________________________________________________________________________________
 
-# Further modified by Pete Nelson September 1, 2022 
+# Further modified by Pete Nelson 20 June 2023 
 # 1976 indices for added species need attention; these are
 # chinook, northern anchovy, pac herring, striped bass age-1 & 2
 
@@ -41,27 +41,43 @@ fnurl <- paste0("https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/
 #use up to date year for naming convention for file wide format
 fn <- paste0("FMWT 1967-",cy," Catch Matrix_updated_tidy.csv")
 
-## load data ----
+## load raw data ----
 #use this bit of code to download the web version
 #new file uploaded every January, check file name is correct
-#Now download the data. It's an csv file in a zipped folder
+#Now download the data. It's a .csv file in a zipped folder
 #so first we have to download the zip folder and extract the file
 temp <- tempfile()
 download.file(fnurl, temp)
-FMWT_raw <- fread(unzip(temp, files = fn))
-unlink(temp)
-
-## data manipulation ----
-#rename a few variables
-FMWT_raw <- FMWT_raw %>%
+FMWT_raw <- fread(unzip(temp, files = fn)) %>%
   rename(Date = SampleDate, 
          # Survey or SurveyNumber: number ascribed to each month of the survey 
          # starting in July (1) and ending in June (12); index surveys are from
          # Sept-Dec, surveys 3-6 respectively
          Survey = SurveyNumber, 
          Station = StationCode, 
-         Index = index) %>%
-  
+         Index = index)
+unlink(temp)
+
+# clear work space of temp/intermed objects: retains raw data only
+rm(list= ls()[!(ls() %in% c("FMWT_raw"))]) 
+
+## spp selection ----
+# SCRATCH -----
+# % occurrence
+spp_occ <- FMWT_raw %>% 
+  filter(Index == "1") %>% # limit to index sites
+  add_count(wt = Catch, name = "grand_N") %>% 
+  add_count(trawls_N = n_distinct(paste(Date, Survey, Station))) %>% 
+  group_by(Species, grand_N, trawls_N) %>% 
+  summarise(trawls_present = sum(Catch > 0), # countif catch>0
+            sp_N = sum(Catch),
+            .groups = "drop") %>% 
+  mutate(pct_grand_N = sp_N / grand_N,
+         pct_freq = trawls_present / trawls_N)
+# SCRATCH -----
+#
+
+FMWT_sel <- FMWT_raw %>%
   #subset just fish (>5% freq by # + Chinook) and variables we care about
   select(Year, Date, Survey, Station, Index, Species, Catch) %>%
   filter(Species %in% c("American Shad", "Striped Bass age-0", "Longfin Smelt", 
@@ -70,10 +86,10 @@ FMWT_raw <- FMWT_raw %>%
                         "Chinook Salmon","Splittail"))
 
 #make variables correct format for joining
-FMWT_raw$Station <- as.character(FMWT_raw$Station)
+FMWT_sel$Station <- as.character(FMWT_sel$Station)
 
 #add areas and weights
-FMWTl <- left_join(FMWT_raw, stas, by = "Station") %>%
+FMWTl <- left_join(FMWT_sel, stas, by = "Station") %>%
   left_join(., wwm, by = "Area")
 
 ###areas used in index calculation
@@ -113,20 +129,24 @@ FMWT_trait_long <- FMWTli %>%
   summarise(index_area = round(sum(wcatch))) %>% 
   clean_names()
 
-write_csv(FMWT_trait_long, "fish traits/fish_data/FMWT_trait_long.csv")
+# save data as .Rdata file
+save(FMWT_trait_long, file = "fish traits/fish_data/FMWT_trait_long.Rdata")
 
+# pivot data to 'wide'
 FMWT_trait_wide <- FMWT_trait_long %>% 
   pivot_wider(names_from = species,
               values_from = index_area) %>% 
   clean_names()
 
-write_csv(FMWT_trait_wide, "fish traits/fish_data/FMWT_trait_wide.csv")
+# save data as .Rdata file
+save(FMWT_trait_wide, file = "fish traits/fish_data/FMWT_trait_wide.Rdata")
 
 # add them all up for the monthly index (ie by annual survey)
 # may/may not be useful
 FMWTim <- group_by(FMWTli, Year, Survey, Species) %>%
   summarize(Index = round(sum(wcatch)))
 
+# TEMP ------
 # clear work space of temp/intermed objects
 rm(list= ls()[!(ls() %in% c("FMWT_trait_wide",
                             "FMWT_trait_long"))]) 
@@ -163,13 +183,13 @@ FMWT <- FMWT %>%
 # NOTE: "FMWT 1967-2021 Catch Matrix_updated_tidy.csv" is saved in the working directory and is the full data set, all species
 # I've moved a copy "FMWT 1967-2021 Catch Matrix_updated_tidy.csv" to drought traits analyses/fish traits/fish_data
 
-fwrite(FMWT, "fish traits/fish_data/fmwt_index_long.csv") # includes only spp found in 5+% of the samples, plus Chinook (just <5%)
+fwrite(FMWT, "C:/Users/pnelson/Documents/Personal/stats & data science/fmwt_index_long.csv") # includes only spp found in 5+% of the samples, plus Chinook (just <5%)
 
 FMWT_wide <- FMWT %>% 
   pivot_wider(names_from = Species, values_from = Index) %>% 
   clean_names()
 
-fwrite(FMWT_wide, "fish traits/fish_data/fmwt_index_wide.csv")
+fwrite(FMWT_wide, "C:/Users/pnelson/Documents/Personal/stats & data science/fmwt_index_wide.csv")
 
 ## clear variables ---- 
 # from local environment
@@ -265,14 +285,14 @@ FMWT_trait_long <- FMWTli %>%
   summarise(index_area = round(sum(wcatch))) %>% 
   clean_names()
 
-write_csv(FMWT_trait_long, "fish traits/fish_data/FMWT_trait_long.csv")
+write_csv(FMWT_trait_long, "C:/Users/pnelson/Documents/Personal/stats & data science/FMWT_trait_long.csv")
 
 FMWT_trait_wide <- FMWT_trait_long %>% 
   pivot_wider(names_from = species,
               values_from = index_area) %>% 
   clean_names()
 
-write_csv(FMWT_trait_wide, "fish traits/fish_data/FMWT_trait_wide.csv")
+write_csv(FMWT_trait_wide, "C:/Users/pnelson/Documents/Personal/stats & data science/FMWT_trait_wide.csv")
 
 # add them all up for the monthly index (ie by annual survey)
 # may/may not be useful
@@ -315,13 +335,13 @@ FMWT <- FMWT %>%
 # NOTE: "FMWT 1967-2021 Catch Matrix_updated_tidy.csv" is saved in the working directory and is the full data set, all species
 # I've moved a copy "FMWT 1967-2021 Catch Matrix_updated_tidy.csv" to drought traits analyses/fish traits/fish_data
 
-fwrite(FMWT, "fish traits/fish_data/fmwt_index_long.csv") # includes only spp found in 5+% of the samples, plus Chinook (just <5%)
+fwrite(FMWT, "C:/Users/pnelson/Documents/Personal/stats & data science/fmwt_index_long.csv") # includes only spp found in 5+% of the samples, plus Chinook (just <5%)
 
 FMWT_wide <- FMWT %>% 
   pivot_wider(names_from = Species, values_from = Index) %>% 
   clean_names()
 
-fwrite(FMWT_wide, "fish traits/fish_data/fmwt_index_wide.csv")
+fwrite(FMWT_wide, "C:/Users/pnelson/Documents/Personal/stats & data science/fmwt_index_wide.csv")
 
 # clear variables ---- 
 # from local environment
