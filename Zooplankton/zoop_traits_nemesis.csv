@@ -1,0 +1,33 @@
+target_taxon_name,target_taxon_level,lit_taxon_name,lit_taxon_level,lit_taxon_type,citation,trait_group,trait_value,trait_unit
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,"Field, San Francisco Bay (Bollens et al. 2011)",thermal minimum,9,degrees C
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,"Field, Zhujiang River (Pearl River) estuary, China (Wong et al. 2000)",thermal maximum,29,degrees C
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Lower limit for abundant occurrence in San Francisco estuary 2.5 PSU (Orsi and Ohtsuka 1999).,salinity minimum,0,PSU
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,"Upper limit for abundant occurrence in  San Francisco estuary,  8.6 ppt (Orsi and Ohtsuka 1999).",salinity maximum,20,PSU
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Maximum,maximum body length,1.6,mm
+Daphnia_UnID,Genus,Daphnia lumholtzi,Species,species within genus,"Daphnia lumholtzi survives in ice-covered lakes as resting eggs (Havel et al. 1993).  Dense swarms of adult females were observed in a Kentucky reservoir, at a water temperature of 8 C (DBeaver et at. Al. 2018).",thermal minimum,4,degrees C
+Daphnia_UnID,Genus,Daphnia lumholtzi,Species,species within genus,"Field (Lake Okeechobee FL, Havens et al. 2012).",thermal maximum,32,degrees C
+Daphnia_UnID,Genus,Daphnia lumholtzi,Species,species within genus,This is a freshwater species.,salinity minimum,0,PSU
+Daphnia_UnID,Genus,Daphnia lumholtzi,Species,species within genus,"Field, Mobile Bay AL (DeVries et al. 2006)",salinity maximum,1.5,PSU
+Daphnia_UnID,Genus,Daphnia lumholtzi,Species,species within genus,Lake Erie (Muzinic 2000) (The length includes spines.),maximum body length,5.7,mm
+Eurytemora affinis affinis,Subspecies,Eurytemora carolleeae,Species,congener,None,thermal minimum,0,degrees C
+Eurytemora affinis affinis,Subspecies,Eurytemora carolleeae,Species,congener,Field and lab (Lee 2000),salinity minimum,0,PSU
+Eurytemora affinis affinis,Subspecies,Eurytemora carolleeae,Species,congener,Field (Lee and Petersen 2002),salinity maximum,40,PSU
+Eurytemora affinis affinis,Subspecies,Eurytemora carolleeae,Species,congener,Adult total length (Gerber 2000; Johnson and Allen 2005),maximum body length,1.5,mm
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,"Suzuki et al. 2009, Chikugo River estuary, (Suzuki et al. 2009)",thermal minimum,8,degrees C
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,"Suzuki et al. 2009, Chikugo River estuary, (Suzuki et al. 2009)",thermal maximum,30,degrees C
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Ranges into tidal freshwater part of Delta (Modlin and Orsi 1997),salinity minimum,0.5,PSU
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,"Field, China Camp marsh, 5/2002, Dean et al. 2005; most abundant at 2 PSU (Modlin and Orsi 1997)",salinity maximum,22,PSU
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Adults (Modlin and Orsi 1997),maximum body length,11.8,mm
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,"Field, Columbia River estuary (Bollens et al. 2012)",thermal minimum,3,degrees C
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,"Maximum in San Joaquin river, near Stockton (Orsi and Mecum 1986)",thermal maximum,27,degrees C
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,"Field, San Francisco Bay (Orsi and Walter 1991)",salinity minimum,0,PSU
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,"Field, San Francisco Bay (Orsi and Walter 1991).  In experiments, nauplii of P. forbesi tolerated salinities at least as high as 14 PSU, and adults, at least 8 PSU. but it has become rare at salinities above 2 PSU, probably because of predation by A. sinensis and by Corbula amurensis.",salinity maximum,16,PSU
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,"Maximum adult length, female (Orsi and Walter 1991)",maximum body length,1.2,mm
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,"Field, Columbia River estuary (Bollens et al. 2012)",thermal minimum,2,degrees C
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,None,salinity minimum,0,PSU
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,"""but ~6.2 is a more common limit"" (Orsi et al. 1983).",salinity maximum,14.6,PSU
+Tortanus_UnID,Genus,Tortanus dextrilobatus,Species,species within genus,"Field Data, San Francisco Bay CA (Hooff and Bollens 2004)",thermal minimum,8,degrees C
+Tortanus_UnID,Genus,Tortanus dextrilobatus,Species,species within genus,"Field Data, San Francisco Bay CA (Hooff and Bollens 2004)",thermal maximum,22,degrees C
+Tortanus_UnID,Genus,Tortanus dextrilobatus,Species,species within genus,"Field Data, San Francisco Bay CA (Orsi and Ohtsuka 1999)",salinity minimum,0.5,PSU
+Tortanus_UnID,Genus,Tortanus dextrilobatus,Species,species within genus,"Field Data, San Francisco Bay CA (Hooff and Bollens 2004)",salinity maximum,28,PSU
+Tortanus_UnID,Genus,Tortanus dextrilobatus,Species,species within genus,"Adult females, 2.05- Adult males(Chen and Zhang 1965);",maximum body length,2.2,mm
