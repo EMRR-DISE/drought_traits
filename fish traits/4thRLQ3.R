@@ -1,9 +1,9 @@
 # Pete Nelson, PhD
 # Department of Water Resources
 # project: drought traits (special studies)
-# purpose: complete fourth-corner & RLQ analyses of fish-trait data
+# purpose: complete fourth-corner & RLQ analyses of fish-trait data, this time with a more restricted set of environmental variables and a larger number of fish species
 # from: Dray et al. 2014
-# created: 2023-05-23
+# created: 2023-06-30
 # last modified: 2023-06-30
 
 # getting started -----
@@ -214,3 +214,4 @@ plot(testRaxes.comb.fish,
      stat = "D2",
      col = c("black", "blue", "orange", "green"))
 par(mfrow = c(1, 1))
+
