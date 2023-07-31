@@ -66,16 +66,28 @@ rm(list= ls()[!(ls() %in% c("FMWT_raw"))])
 # % occurrence
 spp_occ <- FMWT_raw %>% 
   filter(Index == "1") %>% # limit to index sites
-  add_count(wt = Catch, name = "grand_N") %>% 
-  add_count(trawls_N = n_distinct(paste(Date, Survey, Station))) %>% 
+  add_count(wt = Catch, name = "grand_N") %>% # inserts total number of organisms recorded from all trawls (why is it weighted?)
+  add_count(trawls_N = n_distinct(paste(Date, Survey, Station))) %>% # number of trawls completed at each unique combination of date * survey * station
   group_by(Species, grand_N, trawls_N) %>% 
-  summarise(trawls_present = sum(Catch > 0), # countif catch>0
+  summarise(trawls_present = sum(Catch > 0), # count if catch>0
             sp_N = sum(Catch),
             .groups = "drop") %>% 
   mutate(pct_grand_N = sp_N / grand_N,
          pct_freq = trawls_present / trawls_N)
 # SCRATCH -----
 #
+dataset <-
+  tibble(
+    species = c("acropsis", "gonulux", "equipsis", "horribulus"),
+    abundance = c(12, 2, 49, 1)
+  )
+temp <-
+  as_tibble(
+    FMWT_raw[1:500,c(1:5,28:30)] %>%
+      filter(Index == "1") %>% # limit to index sites
+      add_count(wt = Catch, name = "grand_N")
+  )
+
 
 FMWT_sel <- FMWT_raw %>%
   #subset just fish (>5% freq by # + Chinook) and variables we care about
