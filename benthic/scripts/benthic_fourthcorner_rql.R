@@ -10,9 +10,50 @@ library(ade4) #running fourth corner analyses
 library(vegan) #multivariate analysis
 
 # Load data sets ----------------
+#l df
+abund <- read_csv("./benthic/data_output/benthic_table_l.csv") %>%
+  column_to_rownames(var = "year_adjusted")
 
-abund <- read_csv("./benthic/data_output/benthic_table_l.csv")
+#r df
+temp <- read_csv("fish traits/fish_data/drought_variables.csv") #just took from fish for now
+temp[55,10] <- mean(temp$Phos, na.rm = T) # replace NA w mean Phos for 2021
+env <- temp %>%
+  filter(year >= "1981" & year != "2022")%>% 
+  select(c(year, drought_year, water_year_sac, inflow_annual_cfs:Temperature)) %>% 
+  mutate(water_year_sac = as_factor(water_year_sac)) %>% 
+  relocate(water_year_sac, .before = drought_year) %>% 
+  column_to_rownames(var = "year")
 
+#q df
+trait <- read_csv("./benthic/data_output/traits/benthic_table_q.csv") %>%
+  select(-organism_code)
+
+#check dimensions
+dim(abund) #39 x 64 correspondance
+dim(env) #41 x 9 all quantitative -- PCA
+dim(trait) #64 x 3 hillsmith, quantitative and factor
+
+#correspondance for abundance data
+afcL.benthic <- 
+  dudi.coa(abund, scannf = F)
+summary(afcL.benthic) 
+#total inertia 1.107
+
+#hill-smith for environmental data
+acpR.benthic <- 
+  dudi.hillsmith(env, 
+                 row.w = afcL.benthic$lw,
+                 scannf = F,
+                 nf = 2)
+score(acpR.benthic)
+
+#hill-smith again for trait data
+acpQ.benthic <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic$cw,
+    scannf = F)
+score(acpQ.benthic)
 
 # Format data for analysis ----------
 #maybe should look at distribution of abundances
