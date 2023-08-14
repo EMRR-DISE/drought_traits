@@ -55,11 +55,11 @@ organism_code,target_taxon_name,body_size,native
 2810,Sparganophilus tamesis,200,1
 2490,Branchiura sowerbyi,270,0
 1090,Turbellaria,NA,1
-1230,Dorylaimus,NA,1
+1230,Dorylaimus,9,1
 1270,Actinolaiminae,NA,1
 1290,Mermithidae,NA,1
-3330,Hediste limnicola,NA,1
-4030,Isocypris,NA,1
-4050,Candona,NA,1
-4090,Cyprideis,NA,1
-6570,Physa,NA,1
+3330,Hediste limnicola,122,1
+4030,Isocypris,1.2,1
+4050,Candona,1.3,1
+4090,Cyprideis,1.1,1
+6570,Physa,6.9,1
