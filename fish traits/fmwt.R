@@ -127,7 +127,7 @@ data_long <- read_csv("fish traits/fish_data/FMWT 1967-2021 Catch Matrix_updated
   filter(index == "1") # retain only index site samples
 str(data_long)
 
-# % occurrence
+## % occurrence ----
 spp_occ <- data_long %>% 
   filter(index == "1") %>% # limit to index sites
   add_count(wt = catch, name = "grand_N") %>% 

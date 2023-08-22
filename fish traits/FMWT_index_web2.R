@@ -72,8 +72,27 @@ spp_occ <- FMWT_raw %>%
   summarise(trawls_present = sum(Catch > 0), # count if catch>0
             sp_N = sum(Catch),
             .groups = "drop") %>% 
-  mutate(pct_grand_N = sp_N / grand_N,
-         pct_freq = trawls_present / trawls_N)
+  mutate(pct_grand_N = sp_N / grand_N, # total sp count/total spp count
+         pct_freq = trawls_present / trawls_N) # number of trawls w sp/total number of trawls
+
+### 20 most abund -----
+head(
+  spp_occ %>% arrange(desc(pct_grand_N)) %>% select(Species, pct_grand_N, pct_freq),
+  20) %>% 
+  write_csv(., "fish traits/figures/20 most abundant spp.csv")
+
+### 20 most freq -----
+print(
+  spp_occ %>% 
+    arrange(desc(pct_freq)),
+  n = 20
+)
+
+head(
+  spp_occ %>% arrange(desc(pct_freq)) %>% select(Species, pct_grand_N, pct_freq),
+  20) %>% 
+  write_csv(., "fish traits/figures/20 most frequent spp.csv")
+
 # SCRATCH -----
 #
 dataset <-
