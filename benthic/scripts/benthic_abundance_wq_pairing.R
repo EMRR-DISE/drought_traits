@@ -16,8 +16,6 @@ library(ggrepel) #no-noverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
 library(here)
 
-#read in data-----------------
-
 # Read in the data-----------------------
 
 #most of what I need is published on EDI
@@ -58,44 +56,36 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
 
 #EMP water quality data
 #specify the column types upon reading in data
-#benthic_wq <- 
-#  read_csv(
-#    "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.6&entityid=dfeaee030be901ae00b8c0449ea39e9c",
-#    col_types = cols_only(
-#      Station = "c",
-#      Date = col_date("%Y-%m-%d"),
-#      Time = "t",
-#      Secchi = "d",
-#      TurbiditySurface_FNU = "d", #some non-detects present
-#      TurbiditySurface_NTU = "d", #some non-detects present
-#      SpCndSurface = "d",
-#      WTSurface = "d",
-#      DOSurface = "d",
-#    )
-#  ) %>% 
-#  clean_names() %>% 
-#  glimpse()
+benthic_wq <-
+ read_csv(
+   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.9&entityid=cf231071093ac2861893793517db26f3",
+   col_types = cols_only(
+     Station = "c",
+     Date = col_date("%Y-%m-%d"),
+     Time = "t",
+     Secchi = "d",
+     TurbiditySurface_FNU = "d", #some non-detects present
+     TurbiditySurface_NTU = "d", #some non-detects present
+     SpCndSurface = "d",
+     WTSurface = "d",
+     DOSurface = "d",
+   )
+ ) %>%
+ clean_names() %>%
+ glimpse()
 
-#glimpse(benthic_wq)
 # turbidity_surface has two ND values at MD10A - not sure if this matters; if it
 # does, we'll need to decide if we're okay with substituting 0 or some other
 # number for these
 
 #EMP water quality stations
-#wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=827aa171ecae79731cc50ae0e590e5af") %>% 
-#  clean_names() %>% 
-#  glimpse()
+wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=827aa171ecae79731cc50ae0e590e5af") %>%
+ clean_names() %>%
+ glimpse()
 
-#sacramento valley water year types from drought synthesis
-#data originates from http://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST
-water_year <- read_csv("https://raw.githubusercontent.com/InteragencyEcologicalProgram/DroughtSynthesis/main/data/yearassignments.csv") %>% 
-  clean_names()
 
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
-
-#read in drought variable data
-drought_variables <- read_csv("./drought_variables/drought_variables.csv")
 
 
 # Explore water quality data----------------
@@ -121,6 +111,9 @@ wq_stn_g <- wq_stn %>%
 #Convert coordinate reference system (CRS) of basemap and benthic_stn_g to EPSG = 26910
 wq_stn_g_26910 <- st_transform(wq_stn_g, crs = 26910)
 
+#Convert coordinate reference system (CRS) of basemap and benthic_stn_g to EPSG = 26910
+WW_Delta_26910 <- st_transform(WW_Delta, crs = 26910)
+
 #create object from bounding box for the stations
 #add a buffer around points to improve map aesthetic
 bbox_p <- st_bbox(st_buffer(wq_stn_g_26910,2000))
@@ -132,11 +125,11 @@ bbox_p <- st_bbox(st_buffer(wq_stn_g_26910,2000))
     #all stations
     geom_sf(data =wq_stn_g_26910, aes(fill = status), shape = 22, size = 2.5, alpha = 0.8) +
     #add station names as labels and make sure they don't overlap each other or the points
-    geom_sf_label(data = wq_stn_g_26910, aes(x=longitude,y=latitude, label=station) #label the points
-                  ,nudge_x = -0.008, nudge_y = 0.008 #can specify the magnitude of nudges if necessary
-                  , size = 2 #adjust size and position relative to points
-                  ,inherit.aes = F #tells it to look at points not base layer
-    ) + 
+    # geom_sf_label(data = wq_stn_g_26910, aes(x=longitude,y=latitude, label=station) #label the points
+    #               ,nudge_x = -0.008, nudge_y = 0.008 #can specify the magnitude of nudges if necessary
+    #               , size = 2 #adjust size and position relative to points
+    #               ,inherit.aes = F #tells it to look at points not base layer
+    # ) + 
     #zoom in on region where stations are located using bounding box
     coord_sf( 
       xlim =c(bbox_p$xmin,bbox_p$xmax)
