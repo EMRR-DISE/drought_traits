@@ -9,6 +9,12 @@
 # Load packages
 library(tidyverse)
 library(worrms)
+# install zooper and deltamapr packages
+# install.packages("devtools")
+# devtools::install_github("InteragencyEcologicalProgram/zooper")
+# devtools::install_github("InteragencyEcologicalProgram/deltamapr")
+library(zooper)
+library(deltamapr)
 library(here)
 library(conflicted)
 
@@ -104,4 +110,85 @@ df_zoop_taxa_syn_c <- df_zoop_taxa_syn %>%
 
 # Export synonym info for zooplankton
 write_csv(df_zoop_taxa_syn_c, here("Zooplankton/zoop_synonyms.csv"))
+
+# For the genus-level taxa, look for any species within all data sets within zooper
+# First, download meso- and macro-zooplankton data for all data sets, retaining taxa information
+df_all_meso_macro <- Zoopsynther(
+  Data_type = "Taxa",
+  Data_sets = c("EMP", "FRP", "FMWT", "STN", "20mm", "DOP"),
+  Size_class = c("Meso", "Macro"),
+  All_env = FALSE
+)
+
+# Pull out taxa that are only genus-level from the WoRMS search
+zoop_taxa_genus <- filter(df_zoop_taxa_f, Rank == "Genus") %>% pull(Taxon)
+
+# For these taxa, look for any species-level info in the data downloaded from zooper
+zoop_taxa_spp <- df_all_meso_macro %>% 
+  filter(Genus %in% zoop_taxa_genus) %>% 
+  distinct(Genus, Species, Taxname) %>% 
+  drop_na(Species) %>% 
+  pull(Taxname)
+
+# Use worrms package to check accepted names for the 3 taxa that have species-level info
+df_zoop_taxa_spp_records <- 
+  wm_records_names(zoop_taxa_spp, fuzzy = FALSE, marine_only = FALSE) %>% 
+  list_rbind() %>% 
+  distinct()
+
+# All 3 taxa have alternate representation, so redo search using valid names
+df_zoop_taxa_spp_records_c <- df_zoop_taxa_spp_records %>% 
+  filter(scientificname != valid_name) %>% 
+  pull(valid_name) %>% 
+  wm_records_names(zoop_taxa, fuzzy = FALSE, marine_only = FALSE) %>% 
+  list_rbind() %>% 
+  distinct()
+
+# Format taxa info for 3 taxa that have species-level info for export
+df_zoop_taxa_spp_f <- df_zoop_taxa_spp_records_c %>% 
+  select(
+    AphiaID = valid_AphiaID,
+    Taxon = valid_name,
+    status,
+    rank,
+    kingdom,
+    phylum,
+    class,
+    order,
+    family,
+    genus
+  ) %>% 
+  rename_with(str_to_title, matches("^[[:lower:]].+", ignore.case = FALSE)) %>% 
+  # add source column
+  mutate(Source = "worms")
+
+# Export taxonomic info for 3 taxa with species-level info
+write_csv(df_zoop_taxa_spp_f, here("Zooplankton/zoop_taxonomy_spp_level.csv"))
+
+# Search for all synonyms for the 3 taxa with species-level info on WoRMS
+df_zoop_taxa_spp_syn <- wm_synonyms_(df_zoop_taxa_spp_f$AphiaID)
+
+# Clean up synonym data set
+df_zoop_taxa_spp_syn_c <- df_zoop_taxa_spp_syn %>% 
+  # just keep the needed columns
+  select(
+    AphiaID = valid_AphiaID,
+    Taxon = valid_name,
+    AphiaID_Syn = AphiaID,
+    Synonym = scientificname,
+    status,
+    rank,
+    kingdom,
+    phylum,
+    class,
+    order,
+    family,
+    genus
+  ) %>% 
+  rename_with(str_to_title, matches("^[[:lower:]].+", ignore.case = FALSE)) %>% 
+  # add source column
+  mutate(Source = "worms")
+
+# Export synonym info for the 3 taxa with species-level info
+write_csv(df_zoop_taxa_spp_syn_c, here("Zooplankton/zoop_synonyms_spp_level.csv"))
 

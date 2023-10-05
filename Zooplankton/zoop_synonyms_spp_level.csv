@@ -1,0 +1,12 @@
+AphiaID,Taxon,AphiaID_Syn,Synonym,Status,Rank,Kingdom,Phylum,Class,Order,Family,Genus,Source
+729755,Acanthocyclops vernalis vernalis,348436,Acanthocyclops plattensis,unaccepted,Species,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops,worms
+729755,Acanthocyclops vernalis vernalis,157729,Acanthocyclops vernalis,alternate representation,Species,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops,worms
+729755,Acanthocyclops vernalis vernalis,358021,Cyclops elongatus,unaccepted,Species,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Cyclops,worms
+729755,Acanthocyclops vernalis vernalis,254616,Cyclops vernalis,alternate representation,Species,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Cyclops,worms
+729755,Acanthocyclops vernalis vernalis,725743,Cyclops vernalis vernalis,unaccepted,Subspecies,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Cyclops,worms
+729755,Acanthocyclops vernalis vernalis,358206,Diacyclops plattensis,unaccepted,Species,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Diacyclops,worms
+720588,Tortanus (Eutortanus) dextrilobatus,356211,Tortanus dextrilobatus,alternate representation,Species,Animalia,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,worms
+720592,Tortanus (Boreotortanus) discaudatus,364769,Corynura bumpusii,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Tortanidae,Corynura,worms
+720592,Tortanus (Boreotortanus) discaudatus,364771,Corynura discaudata,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Tortanidae,Corynura,worms
+720592,Tortanus (Boreotortanus) discaudatus,360732,Tortanus bumpusii,unaccepted,Species,Animalia,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,worms
+720592,Tortanus (Boreotortanus) discaudatus,157684,Tortanus discaudatus,alternate representation,Species,Animalia,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus,worms
