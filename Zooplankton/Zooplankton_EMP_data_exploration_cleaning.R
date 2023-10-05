@@ -3,16 +3,17 @@
 ####Author: Laura Twardochleb
 
 #### Startup commands #######################################################################################
-setwd("~/IEP_drought_synthesis/Special Studies/drought_traits")
 
-# install Zooper package
-#options(repos = c(
-  #sbashevkin = 'https://sbashevkin.r-universe.dev',
-  #CRAN = 'https://cloud.r-project.org'))
+# install zooper and deltamapr packages
+# install.packages("devtools")
+# devtools::install_github("InteragencyEcologicalProgram/zooper")
+# devtools::install_github("InteragencyEcologicalProgram/deltamapr")
 
-#install.packages('zooper')
 library(zooper)
 library(tidyverse)
+library(sf)
+library(here)
+library(deltamapr)
 
 ########## download zoop community data ########################################################################################################
 
@@ -39,10 +40,6 @@ zoops_summary<-zoops2%>%group_by(Latitude, Longitude, Year, Station)%>%summarize
 
 #spatial filtering
 #download map shapefile
-library(sf)
-library(here)
-library(deltamapr)
-
 #chose this version of the shapefile because it included all the areas we need
 #and splits out Grizzly Bay from Suisun Marsh
 R_EDSM_Subregions_1617P1 
@@ -84,14 +81,15 @@ zoops_spatial_26910<-st_transform(zoops_spatial, crs=26910)
 
 #filter stations to just those within the shapefile bounds
 stn_within_reg <- zoops_spatial_26910 %>% 
-  st_filter(region_focal_diss)
+  st_filter(region_focal_diss) %>% 
+  st_drop_geometry()
 
 #remove microzooplankton (could be analyzed separately); these samples are unreliable for combining with macro and mesosampling due to very low volumes of water sampled
 meso_macro<-filter(stn_within_reg, SizeClass != "Micro")
 
 #temporal filtering: remove stations that are sparsely sampled over time
 #read in station metadata table
-metadata<-read_csv("~/IEP_drought_synthesis/Special Studies/drought_traits/Station_Metadata.csv")
+metadata<-read_csv(here("Station_Metadata.csv"))
 unique(metadata$station)
 
 #remove leading characters 'NZ' and leading zeros from station names in zoop dataset to match station names in metadata and in most EMP documentation
@@ -109,7 +107,6 @@ meso_macro_complete<-meso_macro%>%filter(NewStation%in%stations_complete)%>%filt
 zoops_summary_complete<-meso_macro_complete%>%group_by(Latitude, Longitude, Year, NewStation)%>%summarize(N_dates=length(unique(Date)), N_samples=length(unique(SampleID)))
 
 #Examine sampling coverage by month- create month and season variables
-library(lubridate)
 meso_macro_complete2<-meso_macro_complete%>% #add month variable
   mutate(Month=month(Date))%>% #add seasons
   mutate(Season=case_when(Month%in%3:5 ~ "Spring",
@@ -134,7 +131,7 @@ meso_macro_summary2<-meso_macro_complete3%>% #summarize sampling coverage
 
 #what proportion of bay-delta wide taxa are represented
 spp_all <- unique(meso_macro_complete3$Taxname)
-#27 taxa ID'd to at least genus
+#26 taxa ID'd to at least genus
 
 #calculate abundance metrics by taxon
 cpue_indiv_prop <- meso_macro_complete3 %>%
@@ -167,19 +164,19 @@ ggplot(cpue_indiv_prop, aes(x=dom_prop))+
 #drop the 25% of species with lowest total individuals
 cpue_rarest25 <- cpue_indiv_prop %>% 
   filter(rank_prop > 0.25)
-#keeps 21 of 38 species 
+#keeps 20 of 26 species 
 
 #drop all ssp that comprise less than 5% of all individuals
 cpue_indiv_5plus <- cpue_indiv_prop %>% 
   filter(indiv_prop > 0.05)
-#only 6 taxa remain out of 38 
+#only 6 taxa remain out of 26 
 
 #drop all ssp with abundances less that 5% of that of most abundant spp
 cpue_prop_dom_5plus <- cpue_indiv_prop %>% 
   filter(dom_prop > 0.05)
-#only 8 taxa remain out of 38 
+#only 8 taxa remain out of 26 
 
-#need to calculate total number of samples: 5662
+#need to calculate total number of samples: 5362
 n_samples<-meso_macro_complete3 %>% 
  summarize(count= length(unique(SampleID)))
 
@@ -233,7 +230,7 @@ organisms_common <- cpue_5plus %>%
 meso_macro_common<-meso_macro_complete3%>%filter(Taxname%in%organisms_common)
 
 #compare benthic and zoop taxa to ensure no more overlap
-benthic<-read_csv("~/IEP_drought_synthesis/Special Studies/drought_traits/BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
+benthic<-read_csv(here("benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv"))
 benthic_taxa<-unique(benthic$taxon)
 
 benthic_zoop<-benthic%>%filter(taxon%in%meso_macro_common$Taxname)
@@ -244,15 +241,17 @@ meso_macro_common2<-meso_macro_common%>%filter(Taxname!="Gammarus daiberi")
 ######### summarize data ########################################################################################################################
 
 #calculate annual mean abundance values for each taxon and station- one master Table L, need to subset by micro, meso, macro for further analyis
-TableL<-meso_macro_common2 %>% st_drop_geometry()%>%
+TableL<-meso_macro_common2 %>% 
   group_by(Year, Month, Station, Taxname)%>% #first calculate mean cpue by station for each taxon and month
   summarize(monthly_mean=mean(CPUE))%>%
   group_by(Year, Taxname)%>%
   summarize(cpue_annual=mean(monthly_mean))%>%
-  pivot_wider(names_from = Taxname, values_from = cpue_annual)#next calculate an annual mean for each taxon
-
-write_csv(TableL, "~/IEP_drought_synthesis/Special Studies/drought_traits/Zooplankton/ZoopTableL.csv")
+  pivot_wider(names_from = Taxname, values_from = cpue_annual) %>% #next calculate an annual mean for each taxon
+  ungroup()
+  
+write_csv(TableL, here("Zooplankton/ZoopTableL.csv"))
 
 ######### metadata ################################################################################################################################
 #get station names to update metadata file
 stations_used<-unique(meso_macro_common2$NewStation)
+
