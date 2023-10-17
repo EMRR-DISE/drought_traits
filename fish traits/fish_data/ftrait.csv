@@ -1,10 +1,20 @@
-species,fecundity,habitat,life_span,lmax,origin,life_hist,therm_tol
-Alosa sapidissima,225600,pelagic,13,60,nonnative,anadromous,35
-Clupea pallasii,41000,pelagic,19,46,native,marine,25
-Dorosoma petenense,21000,pelagic,4,22,nonnative,resident,30.9
-Engraulis mordax,206170,pelagic,7,24.8,native,marine,27
-Hypomesus transpacificus,12000,pelagic,2,12,native,semi-anadromous,28.4
-Morone saxatilis,5000000,pelagic,30,125,nonnative,anadromous,32
-Oncorhynchus tshawytscha,17000,littoral,9,100,native,anadromous,28.9
-Pogonichthys macrolepidotus,100000,littoral,9,45,native,semi-anadromous,31
-Spirinchus thaleichthys,24000,pelagic,3,15,native,anadromous,24.8
+name_abr,origin,life_hist,residency,habitat,fecundity,life_span,l_mat,l_max,therm_tol
+am.shad,nonnative,anadromous,migratory,pelagic,225600,13,43.4,60,35
+p.herring,native,marine,migratory,pelagic,41000,19,21.4,46,25
+threadfin,nonnative,freshwater,nonmigratory,pelagic,21000,4,5.2,22,30.9
+n.anchovy,native,marine,nonmigratory,pelagic,206170,7,15,24.8,27
+d.smelt,native,euryhaline ,migratory,pelagic,12000,2,6.1,12,28.4
+striped.b,nonnative,euryhaline ,nonmigratory,benthopelagic,5000000,30,17.4,125,32
+chinook,native,anadromous,migratory,benthopelagic,17000,9,82.2,100,28.9
+splittail,native,euryhaline ,nonmigratory,benthopelagic,100000,9,17,45,31
+longfin,native,anadromous,nonmigratory,pelagic,24000,3,9,15,24.8
+yellowfin,nonnative,euryhaline ,migratory,benthic,32000,3,17,30,32
+wht.sturg,native,euryhaline ,migratory,benthic,476314.6666666667,104,115,610,30.7
+wht.cat,nonnative,freshwater,nonmigratory,benthic,3000,14,20.5,95,31
+topsmelt,native,euryhaline ,nonmigratory,pelagic,1000,9,13.9,37,29
+jacksmelt,native,marine,nonmigratory,pelagic,1000,11,18.5,49.4,27
+shiner.p,native,marine,migratory,benthopelagic,20,9,8.2,23.5,26
+wht.croaker,native,marine,nonmigratory,benthopelagic,16800,15,14,31,18.1
+channel.cat,nonnative,freshwater,migratory,benthic,70000,24,56,132,32
+starry.fl,native,euryhaline ,nonmigratory,benthic,11000000,8,40,91,28
+pf.midshipm,native,marine,nonmigratory,benthic,789,7,16,38,16.8

@@ -13,9 +13,13 @@ library(ade4)
 # load data ------
 ## L df ----
 # fish occurrence data with years prior to 1975 + 1979 removed bc environmental data incomplete for these
-fish <- read_csv("fish traits/fish_data/fmwt1.csv") %>% # derived from fmwt.R, collapsed striper data
-  filter(year >= "1975" & year != "1979") %>% # no (env) data these years
-  column_to_rownames(var = "year")
+fish <- read_csv("fish traits/fish_data/fmwt.csv") %>% # derived from fmwt.R, collapsed striper data
+  filter(year >= "1975" & year != "1979" & year != "2022") %>% # no (env) data these years
+  column_to_rownames(var = "year") %>% 
+  select(american_shad, pacific_herring, threadfin_shad, northern_anchovy, delta_smelt,
+         striped_bass, chinook_salmon, splittail, longfin_smelt, yellowfin_goby,
+         white_sturgeon, white_catfish, topsmelt, jacksmelt, shiner_perch, white_croaker,
+         channel_catfish, starry_flounder, plainfin_midshipman)
 
 ## R df ----
 # environmental data for each year included in fish data
@@ -34,19 +38,16 @@ fenv <- temp %>%
 
 ## Q df ----
 # trait data for each fish sp
-names <- c("am.shad", "p.herring", "threadfin", "n.anchovy", "d.smelt", "striped.b", "chinook", "splittail", "longfin")
-ftrait <- as.data.frame(read_csv("fish traits/fish_data/ftrait.csv")) %>% 
-  select(-"species")
-rownames(ftrait) <- names
+
 ftrait <- ftrait %>% 
-  mutate_at(c("origin", "life_hist", "habitat"), as.factor) %>% 
-  select("origin", "life_hist", "habitat",
-         "lmax", "fecundity", "life_span", "therm_tol") # order the variables w categorical first
+  mutate_at(c("origin", "life_hist", "residency", "habitat"), as.factor) %>% 
+  mutate_at(c("fecundity", "life_span", "l_mat", "l_max", "therm_tol"), as.numeric)
+glimpse(ftrait)
 
 # check that the dimensions of the LQR tables match
 dim(fish) # L df, 46 years and 9 spp; quantitative--PCA is fine
 dim(fenv) # R df, each year per each of the environmental variables; multiple factorial variables + quantitative
-dim(ftrait) # Q df, each spp described by 7 traits (fecundity, habitat, lmax, etc); like fenv, mixed
+dim(ftrait) # Q df, each spp described by 7 traits (fecundity, habitat, l_max, etc); like fenv, mixed
 
 # RLQ -----
 
@@ -71,7 +72,7 @@ score(acpR.fish)
 
 acpQ.fish <- # 'Q' table of traits by species
   dudi.hillsmith(  # trait variables include numeric and categorical data
-    ftrait, 
+    ftrait[,2:10], # left the spp names out
     row.w = afcL.fish$cw,
     scannf = F)
 score(acpQ.fish)
@@ -101,7 +102,7 @@ summary(rlq.fish)
 
 nrepet <- 49999 # takes a couple minutes
 four.comb.fish <- fourthcorner(
-  fenv, fish, ftrait,
+  fenv, fish, ftrait[,2:10],
   modeltype = 6,
   p.adjust.method.G = "none",
   p.adjust.method.D = "none",

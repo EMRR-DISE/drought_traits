@@ -25,36 +25,56 @@ library(janitor)
 library(readr)
 
 # load fmwt indices ----
-fmwt_annual_long <- read_csv(file.choose()) %>% # nav to FMWT_index_long.csv
-  clean_names() # annual indices
-fmwt_by_area_long <- read_csv(file.choose()) %>%  # nav to FMWT_trait_long.csv
-  clean_names() # annual indices by area
+FMWT_raw <- readRDS("fish traits/fish_data/FMWT_raw.rds")
 
-## collapse striper data -----
-# sums age-0, -1, -2 striped bass indices into a total for "striped bass" 
+# collapse striper data -----
+# sums age-0, -1, -2, -3 striped bass indices into a total for "striped bass" 
 
-### annual totals, no area subtotals -----
-temp <- 
-  fmwt_annual_long %>% 
+# temporary df of annual weighted catch ('index') for all year classes of striped bass
+temp1 <- 
+  FMWT_raw %>% 
+  filter(index == "1") %>% # limit to index sites
   group_by(year) %>% 
-  filter(species == "Striped Bass age-0" | species == "Striped Bass age-1" | species == "Striped Bass age-2") %>% 
-  summarise(species = "Striped Bass", index = sum(index)) %>% 
-  bind_rows(fmwt_annual_long %>% 
-              filter(species != "Striped Bass age-0" & 
-                       species != "Striped Bass age-1" & 
-                       species != "Striped Bass age-2")) %>% 
+  filter(species == "Striped Bass age-0" | 
+           species == "Striped Bass age-1" | 
+           species == "Striped Bass age-2" |
+           species == "Striped Bass age-3" |
+           species == "Striped Bass age-3+") %>% 
+  summarise(species = "Striped Bass", 
+            index = sum(catch, na.rm = TRUE)) # note that 'index' becomes summed annual weighted catch!
+
+# temporary df of annual weighted catch ('index') for all fishes except striped bass
+temp2 <- 
+  FMWT_raw %>% 
+  group_by(year, species) %>% 
+  summarise(index = sum(catch, na.rm = TRUE)) %>% 
+  filter(species != "Striped Bass age-0" & 
+           species != "Striped Bass age-1" & 
+           species != "Striped Bass age-2" &
+           species != "Striped Bass age-3" &
+           species != "Striped Bass age-3+")
+
+# annual totals, index sites only, no area subtotals -----
+fmwt1 <-
+  bind_rows(temp1, temp2) %>% 
   arrange(year, species)
 
-fmwt1 <- # differs from FMWT_index_wide.csv in having collapsed the striper data...
-  temp %>% 
-  pivot_wider(names_from = species, values_from = index) %>% 
+# spp x year (pivot) ----
+
+fmwt <- 
+  fmwt1 %>% 
+  pivot_wider(names_from = species, 
+              values_from = index, 
+              values_fill = 0) %>% 
   clean_names() %>% 
-  add_row(year = c(1974, 1979)) %>% # insert missing years albeit w/o data
   arrange(year)
 
-write_csv(fmwt1, "fish_data/fmwt1.csv")
+write_csv(fmwt, "fish traits/fish_data/fmwt.csv")
+saveRDS(fmwt, file = "fish traits/fish_data/fmwt.rds")
 
-rm(temp)
+rm(fmwt1, temp1, temp2, FMWT_raw)
+
+# SCRATCH ######################################
 
 ### area subtotals ----
 temp <- 

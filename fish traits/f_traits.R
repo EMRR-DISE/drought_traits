@@ -16,6 +16,21 @@ names(dat)
 
 ftrait <-
   dat %>% 
+  clean_names() %>% 
+  select(c(name_abr, origin:therm_tol))
+
+ftrait
+
+saveRDS(ftrait, file = "fish traits/fish_data/ftrait.rds")
+write_csv(ftrait, "fish traits/fish_data/ftrait.csv")
+
+# SCRATCH ###############################
+dat <- read_excel("fish traits/fish_data/Traits_DataEntryFishes_2023-02-28.xlsx", sheet = "og data")
+glimpse(dat)
+names(dat)
+
+ftrait <-
+  dat %>% 
   pivot_wider(id_cols = target_taxon_name, 
               names_from = trait_group, 
               values_from = trait_value) %>% 
@@ -31,8 +46,3 @@ ftrait <-
          therm_tol = as.numeric(thermal_tolerance),
          .keep = "none") %>% 
   relocate(species, .before = fecundity)
-
-ftrait
-
-saveRDS(ftrait, file = "fish traits/fish_data/ftrait.rds")
-write_csv(ftrait, "fish traits/fish_data/ftrait.csv")

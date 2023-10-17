@@ -4,7 +4,7 @@
 #updated June 2022
 #_________________________________________________________________________________
 
-# Further modified by Pete Nelson 20 June 2023 
+# Further modified by Pete Nelson 28 September 2023 
 # 1976 indices for added species need attention; these are
 # chinook, northern anchovy, pac herring, striped bass age-1 & 2
 
@@ -48,7 +48,7 @@ fn <- paste0("FMWT 1967-",cy," Catch Matrix_updated_tidy.csv")
 #so first we have to download the zip folder and extract the file
 temp <- tempfile()
 download.file(fnurl, temp)
-FMWT_raw <- fread(unzip(temp, files = fn)) %>%
+temp2 <- fread(unzip(temp, files = fn)) %>%
   rename(Date = SampleDate, 
          # Survey or SurveyNumber: number ascribed to each month of the survey 
          # starting in July (1) and ending in June (12); index surveys are from
@@ -57,41 +57,67 @@ FMWT_raw <- fread(unzip(temp, files = fn)) %>%
          Station = StationCode, 
          Index = index)
 unlink(temp)
+levels(as.factor(temp2$Species))
 
-# clear work space of temp/intermed objects: retains raw data only
-rm(list= ls()[!(ls() %in% c("FMWT_raw"))]) 
+inverts <- c("Aequorea spp", "Chrysaora fuscensens", "Comb Jelly", "Crangon Shrimp", "Jellyfish", "Maeotias", "Mississippi Grass Shrimp", "Moon Jellies", "Mud Shrimp", "Palaemon spp.", "Polyorchis", "Scrippsia pacifica", "Shrimp (unid)", "Siberian Prawn", "Unid")
+
+FMWT_raw <- temp2 %>% 
+  clean_names() %>% 
+  filter(!species %in% inverts) # strips all (?!) invertebrates from the data
+
+saveRDS(FMWT_raw, file = "fish traits/fish_data/FMWT_raw.rds")
 
 ## spp selection ----
-# SCRATCH -----
-# % occurrence
+
+### % occurrence -----
 spp_occ <- FMWT_raw %>% 
-  filter(Index == "1") %>% # limit to index sites
-  add_count(wt = Catch, name = "grand_N") %>% # inserts total number of organisms recorded from all trawls (why is it weighted?)
-  add_count(trawls_N = n_distinct(paste(Date, Survey, Station))) %>% # number of trawls completed at each unique combination of date * survey * station
-  group_by(Species, grand_N, trawls_N) %>% 
-  summarise(trawls_present = sum(Catch > 0), # count if catch>0
-            sp_N = sum(Catch),
+  filter(index == "1") %>% # limit to index sites
+  add_count(wt = catch, name = "grand_N") %>% # inserts total number of organisms recorded from all trawls, areas weighted by size
+  add_count(trawls_N = n_distinct(paste(date, survey, station))) %>% # number of trawls completed at each unique combination of date * survey * station
+  group_by(species, grand_N, trawls_N) %>% 
+  summarise(trawls_present = sum(catch > 0), # count if catch>0
+            sp_N = sum(catch),
             .groups = "drop") %>% 
   mutate(pct_grand_N = sp_N / grand_N, # total sp count/total spp count
-         pct_freq = trawls_present / trawls_N) # number of trawls w sp/total number of trawls
+         pct_freq = trawls_present / trawls_N)
 
 ### 20 most abund -----
-head(
-  spp_occ %>% arrange(desc(pct_grand_N)) %>% select(Species, pct_grand_N, pct_freq),
-  20) %>% 
-  write_csv(., "fish traits/figures/20 most abundant spp.csv")
+print(
+  spp_occ %>%
+  arrange(desc(pct_grand_N)) %>%
+  select(species, pct_grand_N, pct_freq), 
+  n = 25)
+
+spp_occ %>%
+  arrange(desc(pct_grand_N)) %>%
+  select(species, pct_grand_N, pct_freq) %>% 
+  write_csv(., "fish traits/fish_data/spp abund.csv")
+
+spp_occ %>%
+  arrange(desc(pct_grand_N)) %>%
+  select(species, pct_grand_N, pct_freq) %>% 
+  head(., 25) %>% 
+  write_csv(., "fish traits/fish_data/spp abund top 20.csv")
 
 ### 20 most freq -----
 print(
   spp_occ %>% 
     arrange(desc(pct_freq)),
-  n = 20
+  n = 25
 )
 
 head(
-  spp_occ %>% arrange(desc(pct_freq)) %>% select(Species, pct_grand_N, pct_freq),
-  20) %>% 
+  spp_occ %>% arrange(desc(pct_freq)) %>% 
+    select(species, pct_grand_N, pct_freq),
+  25) %>% 
   write_csv(., "fish traits/figures/20 most frequent spp.csv")
+
+# clear work space of temp/intermed objects
+rm(list= ls()[!(ls() %in% c("FMWT_raw", # raw FMWT data
+                            "inverts", # invertebrate names to be removed
+                            "spp_occ", # 20 most abundant fish spp (by counts) based on index sites
+                            "wwm" # areas & weighting used for calculating indices
+                            ))]) 
 
 # SCRATCH -----
 #
