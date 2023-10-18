@@ -4,7 +4,7 @@
 #updated June 2022
 #_________________________________________________________________________________
 
-# Further modified by Pete Nelson 28 September 2023 
+# Further modified by Pete Nelson 2023-10-17 
 # 1976 indices for added species need attention; these are
 # chinook, northern anchovy, pac herring, striped bass age-1 & 2
 
@@ -66,6 +66,11 @@ FMWT_raw <- temp2 %>%
   filter(!species %in% inverts) # strips all (?!) invertebrates from the data
 
 saveRDS(FMWT_raw, file = "fish traits/fish_data/FMWT_raw.rds")
+
+rm(list = 
+     ls()[!(ls() %in% c("FMWT_raw"))])  # remove all objects except raw fmwt data
+
+# STOP HERE ----
 
 ## spp selection ----
 

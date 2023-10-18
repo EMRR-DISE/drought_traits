@@ -55,6 +55,7 @@ temp2 <-
            species != "Striped Bass age-3+")
 
 # annual totals, index sites only, no area subtotals -----
+# combines these for striped bass + all other fishes
 fmwt1 <-
   bind_rows(temp1, temp2) %>% 
   arrange(year, species)
@@ -73,6 +74,8 @@ write_csv(fmwt, "fish traits/fish_data/fmwt.csv")
 saveRDS(fmwt, file = "fish traits/fish_data/fmwt.rds")
 
 rm(fmwt1, temp1, temp2, FMWT_raw)
+
+# STOP HERE ----
 
 # SCRATCH ######################################
 

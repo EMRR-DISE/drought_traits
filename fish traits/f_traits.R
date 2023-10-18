@@ -4,7 +4,7 @@
 # purpose: format fish trait data
 
 # created: 2023-05-23
-# last modified: 2023-06-05
+# last modified: 2023-10-17
 
 library(readxl)
 library(tidyverse)
@@ -20,6 +20,8 @@ ftrait <-
   select(c(name_abr, origin:therm_tol))
 
 ftrait
+
+rm(dat)
 
 saveRDS(ftrait, file = "fish traits/fish_data/ftrait.rds")
 write_csv(ftrait, "fish traits/fish_data/ftrait.csv")

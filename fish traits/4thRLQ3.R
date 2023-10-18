@@ -4,7 +4,7 @@
 # purpose: complete fourth-corner & RLQ analyses of fish-trait data, this time with a more restricted set of environmental variables and a larger number of fish species
 # from: Dray et al. 2014
 # created: 2023-06-30
-# last modified: 2023-06-30
+# last modified: 2023-10-12
 
 # getting started -----
 library(tidyverse)
@@ -35,6 +35,7 @@ fenv <- temp %>%
   mutate(water_year_sac = as_factor(water_year_sac)) %>% 
   relocate(water_year_sac, .before = drought_year) %>% 
   column_to_rownames(var = "year")
+rm(temp)
 
 ## Q df ----
 # trait data for each fish sp
