@@ -40,6 +40,8 @@ rm(temp)
 ## Q df ----
 # trait data for each fish sp
 
+ftrait <- readRDS("fish traits/fish_data/ftrait.rds")
+
 ftrait <- ftrait %>% 
   mutate_at(c("origin", "life_hist", "residency", "habitat"), as.factor) %>% 
   mutate_at(c("fecundity", "life_span", "l_mat", "l_max", "therm_tol"), as.numeric)
@@ -60,7 +62,7 @@ afcL.fish <- # 'L' table of species abundance by year
 score(afcL.fish)
 
 ## environment ----
-# Because the environmental data includes both quantitative and categorical variables, should use dudi.hillsmith() (dudi.mixed() if ordered variables). Didn't work initially because I hadn't defined the appropriate variables as factors.
+# Because the environmental data includes both quantitative and categorical variables, should use dudi.hillsmith() (dudi.mixed() if ordered variables). 
 acpR.fish <- # 'R' table of environmental conditions by year
   dudi.hillsmith(fenv, # environ data include both quantitative & categorical variables, thus dudi.hillsmith
                  row.w = afcL.fish$lw,
@@ -108,7 +110,19 @@ four.comb.fish <- fourthcorner(
   p.adjust.method.G = "none",
   p.adjust.method.D = "none",
   nrepet = nrepet
-)
+) # gets error msg: "'tabQ' must contain only numeric values or factors" but ftrait[,2:10] does!
+
+# SCRATCH ----
+nrepet <- 999 # few reps for working things out
+temp <- ftrait %>% 
+  mutate(name_abr = as_factor(name_abr))
+four.comb.fish <- fourthcorner(
+  fenv, fish, temp,
+  modeltype = 2,
+  p.adjust.method.G = "none",
+  p.adjust.method.D = "none",
+  nrepet = nrepet
+) # gets error msg: "'tabQ' must contain only numeric values or factors" but ftrait[,2:10] does!
 
 # When you plot the results, blue cells correspond to negative significant relationships while red cells correspond to positive ones (modify using argument col). In this example, there are some associations btwn categorical traits and quantitative environmental variables which can be measured in three different ways (Legendre et al 1997). These three methods correspond to three possible values of the stat argument in the plot and print functions:
 # stat="D2": association is measured btwn quantitative variable and each category separately. A correlation coefficient is used to indicate the strength of the association between the given category and the small or large values of the quantitative variable.
