@@ -105,32 +105,28 @@ summary(rlq.fish)
 
 nrepet <- 49999 # takes a couple minutes
 four.comb.fish <- fourthcorner(
-  fenv, fish, ftrait[,2:10],
+  fenv, fish, ftrait,
   modeltype = 6,
   p.adjust.method.G = "none",
   p.adjust.method.D = "none",
   nrepet = nrepet
-) # gets error msg: "'tabQ' must contain only numeric values or factors" but ftrait[,2:10] does!
+)
 
-# SCRATCH ----
-nrepet <- 999 # few reps for working things out
-temp <- ftrait %>% 
-  mutate(name_abr = as_factor(name_abr))
+nrepet <- 49999 
+
 four.comb.fish <- fourthcorner(
-  fenv, fish, temp,
+  fenv, fish, ftrait,
   modeltype = 2,
   p.adjust.method.G = "none",
   p.adjust.method.D = "none",
   nrepet = nrepet
-) # gets error msg: "'tabQ' must contain only numeric values or factors" but ftrait[,2:10] does!
+)
 
 # When you plot the results, blue cells correspond to negative significant relationships while red cells correspond to positive ones (modify using argument col). In this example, there are some associations btwn categorical traits and quantitative environmental variables which can be measured in three different ways (Legendre et al 1997). These three methods correspond to three possible values of the stat argument in the plot and print functions:
 # stat="D2": association is measured btwn quantitative variable and each category separately. A correlation coefficient is used to indicate the strength of the association between the given category and the small or large values of the quantitative variable.
 # stat="G": the association btwn the quantitative variable and the whole categorical variable is measured by a global statsistic (F)
 # stat="D": association is estimated btwn the quantitative variable and each category separately by a measure of the within-group homogeneity. The strength of the association is indicated by the dispersion of the values of the quantitative variable for a given category.
 # In the rest of the tutorial, the focus is on the D2 statistic. The correction of p-values by a sequential procedure leads to significant associations if the maximal p-value is lower than alpha=0.05. 
-
-# There seem to be no significant relationships in the fish/env/trait data sets!
 
 plot(four.comb.fish, alpha = 0.05, stat = "D2")
 

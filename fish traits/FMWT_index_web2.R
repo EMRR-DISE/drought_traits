@@ -1,12 +1,19 @@
+# Pete Nelson, PhD
+# Department of Water Resources
+# project: drought traits (special studies)
+# purpose: acquire Fall Midwater Trawl data from CDFW site
+
+# last modified: 2023-10-24
+# Step 1 in fish work flow
+
+# exports as FMWT_raw.rds
+# execute 1:76 only
+
 #script to calculate Fall Midwater Trawl indices for species of interest
 #Originally created March 2020 by Rosemary Hartman at CA DWR
 #Modified by James White March 27, 2020 for external use
 #updated June 2022
-#_________________________________________________________________________________
-
-# Further modified by Pete Nelson 2023-10-17 
-# 1976 indices for added species need attention; these are
-# chinook, northern anchovy, pac herring, striped bass age-1 & 2
+#_________________________________
 
 # prep ----
 #load necessary libraries

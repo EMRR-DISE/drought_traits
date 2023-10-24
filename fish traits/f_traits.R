@@ -5,6 +5,7 @@
 
 # created: 2023-05-23
 # last modified: 2023-10-17
+# Step 4 in fish work flow
 
 library(readxl)
 library(tidyverse)
@@ -17,7 +18,9 @@ names(dat)
 ftrait <-
   dat %>% 
   clean_names() %>% 
-  select(c(name_abr, origin:therm_tol))
+  select(c(name_abr, origin:therm_tol)) %>% 
+  remove_rownames %>% 
+  column_to_rownames(var = "name_abr") # convert spp names to rownames
 
 ftrait
 

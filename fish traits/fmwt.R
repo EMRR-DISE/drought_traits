@@ -4,6 +4,7 @@
 # purpose: load _tidied_ Fall Midwater Trawl data
 
 # last modified: 2023-06-05
+# Step 2 in fish work flow
 
 # data source and program information:
 # https://filelib.wildlife.ca.gov/Public/TownetFallMidwaterTrawl/FMWT%20Data/
