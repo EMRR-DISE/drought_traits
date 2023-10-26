@@ -1,20 +1,20 @@
-name_abr,origin,life_hist,residency,habitat,fecundity,life_span,l_mat,l_max,therm_tol
-am.shad,nonnative,anadromous,migratory,pelagic,225600,13,43.4,60,35
-p.herring,native,marine,migratory,pelagic,41000,19,21.4,46,25
-threadfin,nonnative,freshwater,nonmigratory,pelagic,21000,4,5.2,22,30.9
-n.anchovy,native,marine,nonmigratory,pelagic,206170,7,15,24.8,27
-d.smelt,native,euryhaline ,migratory,pelagic,12000,2,6.1,12,28.4
-striped.b,nonnative,euryhaline ,nonmigratory,benthopelagic,5000000,30,17.4,125,32
-chinook,native,anadromous,migratory,benthopelagic,17000,9,82.2,100,28.9
-splittail,native,euryhaline ,nonmigratory,benthopelagic,100000,9,17,45,31
-longfin,native,anadromous,nonmigratory,pelagic,24000,3,9,15,24.8
-yellowfin,nonnative,euryhaline ,migratory,benthic,32000,3,17,30,32
-wht.sturg,native,euryhaline ,migratory,benthic,476314.6666666667,104,115,610,30.7
-wht.cat,nonnative,freshwater,nonmigratory,benthic,3000,14,20.5,95,31
-topsmelt,native,euryhaline ,nonmigratory,pelagic,1000,9,13.9,37,29
-jacksmelt,native,marine,nonmigratory,pelagic,1000,11,18.5,49.4,27
-shiner.p,native,marine,migratory,benthopelagic,20,9,8.2,23.5,26
-wht.croaker,native,marine,nonmigratory,benthopelagic,16800,15,14,31,18.1
-channel.cat,nonnative,freshwater,migratory,benthic,70000,24,56,132,32
-starry.fl,native,euryhaline ,nonmigratory,benthic,11000000,8,40,91,28
-pf.midshipm,native,marine,nonmigratory,benthic,789,7,16,38,16.8
+origin,life_hist,residency,habitat,fecundity,life_span,l_mat,l_max,therm_tol
+nonnative,anadromous,migratory,pelagic,225600,13,43.4,60,35
+native,marine,migratory,pelagic,41000,19,21.4,46,25
+nonnative,freshwater,nonmigratory,pelagic,21000,4,5.2,22,30.9
+native,marine,nonmigratory,pelagic,206170,7,15,24.8,27
+native,euryhaline ,migratory,pelagic,12000,2,6.1,12,28.4
+nonnative,euryhaline ,nonmigratory,benthopelagic,5000000,30,17.4,125,32
+native,anadromous,migratory,benthopelagic,17000,9,82.2,100,28.9
+native,euryhaline ,nonmigratory,benthopelagic,100000,9,17,45,31
+native,anadromous,nonmigratory,pelagic,24000,3,9,15,24.8
+nonnative,euryhaline ,migratory,benthic,32000,3,17,30,32
+native,euryhaline ,migratory,benthic,476314.6666666667,104,115,610,30.7
+nonnative,freshwater,nonmigratory,benthic,3000,14,20.5,95,31
+native,euryhaline ,nonmigratory,pelagic,1000,9,13.9,37,29
+native,marine,nonmigratory,pelagic,1000,11,18.5,49.4,27
+native,marine,migratory,benthopelagic,20,9,8.2,23.5,26
+native,marine,nonmigratory,benthopelagic,16800,15,14,31,18.1
+nonnative,freshwater,migratory,benthic,70000,24,56,132,32
+native,euryhaline ,nonmigratory,benthic,11000000,8,40,91,28
+native,marine,nonmigratory,benthic,789,7,16,38,16.8

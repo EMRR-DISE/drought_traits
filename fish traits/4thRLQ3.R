@@ -75,7 +75,7 @@ score(acpR.fish)
 
 acpQ.fish <- # 'Q' table of traits by species
   dudi.hillsmith(  # trait variables include numeric and categorical data
-    ftrait[,2:10], # left the spp names out
+    ftrait, 
     row.w = afcL.fish$cw,
     scannf = F)
 score(acpQ.fish)
