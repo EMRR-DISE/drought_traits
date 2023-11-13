@@ -227,3 +227,5 @@ plot(testRaxes.comb.fish,
      col = c("black", "blue", "orange", "green"))
 par(mfrow = c(1, 1))
 
+# SCRATCH #######
+data <- list(spe = as.data.frame(fish), env = as.data.frame(fenv), traits = as.data.frame(ftrait))
