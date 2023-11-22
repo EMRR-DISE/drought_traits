@@ -162,6 +162,7 @@ four.comb.fish_mod2 <- fourthcorner(
 four.comb.fish_mod4 <- fourthcorner(
   fenv, fish, ftrait,
   modeltype = 4, # why include this in the example given likelihood of type I error?
+<<<<<<< HEAD
   p.adjust.method.G = "none",
   p.adjust.method.D = "none",
   nrepet = nrepet
@@ -177,6 +178,87 @@ four.comb.fish_mod6.1 <- fourthcorner(
   nrepet = nrepet
 )
 
+four.comb.fish_mod2.1 <- fourthcorner(
+  fenv1, fish, ftrait1,
+  modeltype = 2, # why include this in the example given likelihood of type I error?
+=======
+>>>>>>> 899525cad01dde12a4a697b84fae3c745d3685a0
+  p.adjust.method.G = "none",
+  p.adjust.method.D = "none",
+  nrepet = nrepet
+)
+
+<<<<<<< HEAD
+four.comb.fish_mod4.1 <- fourthcorner(
+  fenv1, fish, ftrait1,
+  modeltype = 4, # why include this in the example given likelihood of type I error?
+=======
+# same 4th corner graphical results except with the reduced number of variables (ie fenv1, ftrait1)
+four.comb.fish_mod6.1 <- fourthcorner(
+  fenv1, fish, ftrait1,
+  modeltype = 6, # Dray and Legendre (2008) and ter Braak et al. (20012) showed that all models 
+  # except model 6 have inflated type I error
+>>>>>>> 899525cad01dde12a4a697b84fae3c745d3685a0
+  p.adjust.method.G = "none",
+  p.adjust.method.D = "none",
+  nrepet = nrepet
+)
+
+<<<<<<< HEAD
+# When you plot the results, blue cells correspond to negative significant relationships while red cells 
+# correspond to positive ones (modify using argument col). In this example, there are some associations 
+# btwn categorical traits and quantitative environmental variables which can be measured in three different 
+# ways (Legendre et al 1997). These three methods correspond to three possible values of the stat argument 
+# in the plot and print functions:
+# stat="D2": association is measured btwn quantitative variable and each category separately. A correlation 
+# coefficient is used to indicate the strength of the association between the given category and the small 
+# or large values of the quantitative variable.
+# stat="G": the association btwn the quantitative variable and the whole categorical variable is measured by 
+# a global statistic (F)
+# stat="D": association is estimated btwn the quantitative variable and each category separately by a measure 
+# of the within-group homogeneity. The strength of the association is indicated by the dispersion of the 
+# values of the quantitative variable for a given category.
+# In the rest of the tutorial, the focus is on the D2 statistic. The correction of p-values by a sequential 
+# procedure leads to significant associations if the maximal p-value is lower than alpha=0.05. 
+
+plot(four.comb.fish_mod6, alpha = 0.05, stat = "D2")
+plot(four.comb.fish_mod2, alpha = 0.05, stat = "D2")
+
+plot(four.comb.fish_mod6.1, alpha = 0.05, stat = "D2")
+plot(four.comb.fish_mod2.1, alpha = 0.05, stat = "D2")
+
+plot(four.comb.fish_mod4, alpha = 0.05, stat = "D2")
+plot(four.comb.fish_mod4.1, alpha = 0.05, stat = "D2")
+
+# Now, adjust p-values for multiple comparisons using the fdr method using the p.adjust.4thcorner function 
+# (assuming nrepet set to 49999, though I got the same results with nrepet=9999).
+
+four.comb.fish.2.adj <-
+  p.adjust.4thcorner(
+    four.comb.fish_mod2,
+    p.adjust.method.G = "fdr",
+    p.adjust.method.D = "fdr"
+  )
+
+four.comb.fish.6.adj <-
+  p.adjust.4thcorner(
+    four.comb.fish_mod6,
+    p.adjust.method.G = "fdr",
+    p.adjust.method.D = "fdr"
+  )
+
+plot(four.comb.fish.2.adj,
+     alpha = 0.05,
+     stat = "D2")
+plot(four.comb.fish.6.adj,
+     alpha = 0.05,
+     stat = "D2")
+
+# same, w reduced number of levels
+four.comb.fish.2.1.adj <-
+  p.adjust.4thcorner(
+    four.comb.fish_mod2.1,
+=======
 four.comb.fish_mod2.1 <- fourthcorner(
   fenv1, fish, ftrait1,
   modeltype = 2, # why include this in the example given likelihood of type I error?
@@ -231,10 +313,13 @@ four.comb.fish.2.adj <-
 four.comb.fish.6.adj <-
   p.adjust.4thcorner(
     four.comb.fish_mod6,
+>>>>>>> 899525cad01dde12a4a697b84fae3c745d3685a0
     p.adjust.method.G = "fdr",
     p.adjust.method.D = "fdr"
   )
 
+<<<<<<< HEAD
+=======
 plot(four.comb.fish.2.adj,
      alpha = 0.05,
      stat = "D2")
@@ -250,6 +335,7 @@ four.comb.fish.2.1.adj <-
     p.adjust.method.D = "fdr"
   )
 
+>>>>>>> 899525cad01dde12a4a697b84fae3c745d3685a0
 four.comb.fish.6.1.adj <-
   p.adjust.4thcorner(
     four.comb.fish_mod6.1,
