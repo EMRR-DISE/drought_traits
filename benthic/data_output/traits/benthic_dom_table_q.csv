@@ -1,0 +1,15 @@
+organism_code,name,armoring,dispersal,habit,reproduction,salinity_tolerance_cont,trophic_habit,voltinism,body_size,native
+2470,Bothrioneurum vejdovskyanum,N,N,B,A,27.5,CG,U,35,1
+2550,Limnodrilus hoffmeisteri,N,N,B,S,13,CG,U,60,1
+2730,Varichaetadrilus angustipenis,N,N,B,B,10.5,CG,U,15,0
+3050,Boccardiella ligerica,N,A,T,S,30,CF,U,18,0
+3430,Manayunkia speciosa,N,N,T,S,11,CF,U,4,0
+3450,Laonome calida,N,A,T,B,35,CF,U,15,0
+4090,Cyprideis,G,N,B,S,63,CG,U,1.1,1
+4230,Nippoleucon hinumensis,P,N,S,S,27.5,CG,U,5.5,0
+4550,Sinocorophium alienense,P,N,T,S,27.5,CG,M,6.4,0
+4610,Americorophium spinicorne,P,N,T,S,33.6,CG,M,7.5,1
+4630,Americorophium stimpsoni,P,N,T,S,33.6,CG,M,7.8,1
+4750,Gammarus daiberi,P,N,S,S,15,S,M,12.5,0
+6730,Corbicula fluminea,G,P,B,B,13,CF,M,60,0
+6890,Potamocorbula amurensis,G,A,B,S,32,CF,M,27.5,0
