@@ -72,6 +72,7 @@ traits_lit_format <- traits_lit_dom %>%
   #just keep the needed columns
   select(
     organism_code
+    ,name = target_taxon_name
     ,trait_group
     ,trait_value
     ,trait_unit
@@ -102,14 +103,17 @@ traits_lit_group_wide <- traits_lit_format %>%
   pivot_wider(names_from = trait_group, values_from = trait_value)
   
 
-#format body size and origin data set----------------------
+#format body size and origin data set and combine with rest of trait data----------------------
 #filter to just the 14 dominant taxa
 #probably just use a left_join() to the formatted lit traits data set 
 
-traits_dom_all <- left_join(traits_lit_group_wide,size_origin_all) %>%   
+size_origin_all_format <- size_origin_all %>% 
+  select(-target_taxon_name)
+
+traits_dom_all <- left_join(traits_lit_group_wide,size_origin_all_format) %>%   
   #reorder columns
   select(organism_code
-         ,name = target_taxon_name
+         ,name
          ,armoring:voltinism
          ,body_size
          ,native
