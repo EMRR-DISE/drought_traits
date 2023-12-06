@@ -46,13 +46,47 @@ envn <- temp %>%
   column_to_rownames(var = "year") %>% 
   glimpse()
 
-#q df
+#non-rare benthic: q df
 trait <- read_csv("./benthic/data_output/traits/benthic_table_q.csv") %>%
   select(-organism_code) %>% 
   #drop rows for three higher level taxa
   filter(!(target_taxon_name=="Turbellaria" | target_taxon_name=="Actinolaiminae"|target_taxon_name=="Mermithidae")) %>% 
   column_to_rownames(var = "target_taxon_name") %>% 
   glimpse()
+
+#dominant benthic: read in q df
+trait_dominant <- read_csv("./benthic/data_output/traits/benthic_dom_table_q.csv") 
+
+#format dominant benthic taxa q table
+trait_dom <- trait_dominant %>%
+  select(-organism_code) %>% 
+  column_to_rownames(var = "name") %>%
+  #make categorical traits into factors
+  mutate(across(c(
+    armoring
+    ,dispersal
+    ,habit
+    ,reproduction
+    ,trophic_habit
+    ,voltinism
+    ,native
+  ),factor)) %>% 
+  glimpse()
+
+#dominant benthic: format l df
+#trait table (table q) and environmental table (table r) should be ready to go
+#just need to filter taxa for abundances table (table l)
+
+#create vector of dominant taxa names
+dom_names <- trait_dominant %>% 
+  pull(name)
+
+#format abundance table
+#use select(all_of()) to just keep the columns with names in the vector of 14 dominant taxa
+abund_dom <- abund %>% 
+  select(all_of(dom_names))
+
+#non-rare benthic: start analysis--------------------
 
 #check dimensions
 dim(abund) #39 x 61 correspondance
@@ -90,7 +124,7 @@ acpQ.benthic <- # 'Q' table of traits by species
     scannf = F)
 score(acpQ.benthic)
 
-#RQL analysis-------
+#non-rare benthic: RQL analysis-------
 
 #build model
 rlq.benthic <- rlq(acpR.benthic, afcL.benthic, acpQ.benthic,
@@ -109,7 +143,7 @@ s.arrow(rlq.benthic$c1)
 s.label(rlq.benthic$lQ, boxes = FALSE)
 
 
-#Fourth corner analysis--------------
+#non-rare benthic: Fourth corner analysis--------------
 
 #build model
 #this is version without adjustment of pvalues for multiple comparisons
@@ -130,7 +164,7 @@ four.comb.benthic_padj <- fourthcorner(envn, abund,
                                   p.adjust.method.D = "fdr", nrepet = nrepet)
 plot(four.comb.benthic_padj, alpha = 0.05, stat = "D2")
 
-#combined RQL and Fourth Corner---------------
+#non-rare benthic: combined RQL and Fourth Corner---------------
 
 testrlq.benthic <- randtest(rlq.benthic, modeltype = 6, nrepet = nrepet)
 testrlq.benthic
@@ -182,7 +216,7 @@ plot(testQaxes.comb.benthic, alpha = 0.05, type = "biplot",
 plot(testRaxes.comb.benthic, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
 
-# Format data for analysis ----------
+#non-rare benthic: Format data for analysis ----------
 #maybe should look at distribution of abundances
 #Bocard et al 2011: CA is a method adapted to the analysis of species abundance data without pre-transformation
 
@@ -191,7 +225,7 @@ plot(testRaxes.comb.benthic, alpha = 0.05, type = "biplot",
 #aft <- (abund)^(1/4)
 #aft2 <- sqrt(abund)
 
-# Run correspondence analysis on abundance data set ---------------
+#non-rare benthic: Run correspondence analysis on abundance data set ---------------
 
 #run in ade4
 abund_coa <- dudi.coa(abund, scannf = F, nf=2)
@@ -232,5 +266,47 @@ plot(abund_cca, main = "CA abundances - biplot scaling 2")
 
 
 
+
+
+
+
+#dominant benthic: start analysis--------------------
+
+#check dimensions
+dim(abund_dom) #39 x 14 correspondance
+dim(envn) #39 x 6 all quantitative -- PCA
+dim(trait_dom) #14 x 9 hillsmith, quantitative and factor
+
+#correspondance for abundance data
+afcL.benthic_dom <- 
+  dudi.coa(abund_dom, scannf = F)
+summary(afcL.benthic_dom) 
+#total inertia 1.006, which is a little worse than the non-rare taxa analysis with more taxa but fewer traits
+
+#start with PCA for environmental data
+acpR.benthic_dom <- 
+  dudi.pca(envn, 
+           row.w = afcL.benthic_dom$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_dom)
+#plots look pretty good
+
+#hill-smith for environmental data
+#acpR.benthic_dom <- 
+#  dudi.hillsmith(envn, 
+#                  row.w = afcL.benthic_dom$lw,
+#                  scannf = F,
+#                  nf = 2)
+# score(acpR.benthic_dom)
+
+#hill-smith for trait data
+acpQ.benthic_dom <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait_dom, 
+    row.w = afcL.benthic_dom$cw,
+    scannf = F)
+score(acpQ.benthic_dom)
 
 
