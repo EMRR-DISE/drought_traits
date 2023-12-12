@@ -328,3 +328,88 @@ par(mfrow = c(1, 3))
 s.arrow(rlq.benthic_dom$l1)
 s.arrow(rlq.benthic_dom$c1)
 s.label(rlq.benthic_dom$lQ, boxes = FALSE)
+
+#dominant benthic: Fourth corner analysis----
+
+#build model
+#this is version without adjustment of pvalues for multiple comparisons
+nrepet <- 49999 
+four.comb.benthic_dom <- fourthcorner(envn, abund_dom,
+                                  trait_dom, modeltype = 6, p.adjust.method.G = "none",
+                                  p.adjust.method.D = "none", nrepet = nrepet)
+
+#plot results
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_dom, alpha = 0.05, stat = "D2")
+#no significant relationships
+
+#rerun model with adjustment of pvalues
+#not much point though given that analysis w/o pvalue adjustment had no sign. comparisons
+four.comb.benthic_padj_dom <- fourthcorner(envn, abund_dom,
+                                       trait_dom, modeltype = 6, p.adjust.method.G = "fdr",
+                                       p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_dom, alpha = 0.05, stat = "D2")
+
+#dominant benthic: combined RQL and Fourth Corner----
+
+testrlq.benthic_dom <- randtest(rlq.benthic_dom, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_dom
+#Model 2 sign. but Model 4 not (p = 0.1)
+
+plot(testrlq.benthic_dom)
+
+#The total inertia of RLQ analysis is equal to the SRLQ multivariate statistic defined in Dray and
+#Legendre (2008). This statistic is returned by the fourthcorner2 function
+Srlq_dom <- fourthcorner2(envn,abund_dom,trait_dom,
+                      modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_dom$trRLQ 
+
+#biplot
+#plot should be devoid of relationship lines
+plot(four.comb.benthic_padj_dom, x.rlq = rlq.benthic_dom, alpha = 0.05,
+     stat = "D2", type = "biplot")
+#yep just shows the traits and env predictors
+
+#Another approach is provided by the fourthcorner.rlq function and consists in testing directly the
+#links between RLQ axes and traits (typetest="Q.axes") or environmental variables (typetest="R.axes").
+testQaxes.comb.benthic_dom <- fourthcorner.rlq(rlq.benthic_dom, modeltype = 6,
+                                           typetest = "Q.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+                                           p.adjust.method.D = "fdr")
+testRaxes.comb.benthic_dom <- fourthcorner.rlq(rlq.benthic_dom, modeltype = 6,
+                                           typetest = "R.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+                                           p.adjust.method.D = "fdr")
+print(testQaxes.comb.benthic_dom, stat = "D")
+#no significant pvalues
+
+print(testRaxes.comb.benthic_dom, stat = "D")
+#phos significant
+
+#Results can be represented using a table with colors indicating significance :
+par(mfrow = c(1, 2))
+plot(testQaxes.comb.benthic_dom, alpha = 0.05, type = "table",
+     stat = "D2")
+plot(testRaxes.comb.benthic_dom, alpha = 0.05, type = "table",
+     stat = "D2")
+#only phos significant
+
+# #Significance with axes can also be reported on the factorial map of RLQ analysis. Here, significant
+# associations with the first axis are represented in blue, with the second axis in orange, with both axes in
+# green (variables with no significant association are in black):
+par(mfrow = c(1, 2))
+plot(testQaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
+     stat = "D2", col = c("black", "blue", "orange", "green"))
+plot(testRaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
+     stat = "D2", col = c("black", "blue", "orange", "green"))
+
+
+
+
+
+
+
+
+
+
+
+
+
