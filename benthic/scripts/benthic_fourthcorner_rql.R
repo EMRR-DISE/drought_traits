@@ -310,3 +310,21 @@ acpQ.benthic_dom <- # 'Q' table of traits by species
 score(acpQ.benthic_dom)
 
 
+
+#dominant benthic: RQL analysis----
+
+#build model
+rlq.benthic_dom <- rlq(acpR.benthic_dom, afcL.benthic_dom, acpQ.benthic_dom,
+                   scannf = FALSE)
+
+#plot results
+plot(rlq.benthic_dom)
+
+#look at results summary
+summary(rlq.benthic_dom)
+
+#plot subset of graphs
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_dom$l1)
+s.arrow(rlq.benthic_dom$c1)
+s.label(rlq.benthic_dom$lQ, boxes = FALSE)
