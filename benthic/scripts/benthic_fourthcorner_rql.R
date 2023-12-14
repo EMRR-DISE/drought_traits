@@ -46,6 +46,33 @@ envn <- temp %>%
   column_to_rownames(var = "year") %>% 
   glimpse()
 
+#past work with clams has shown a one year lag in changes to abundances and distributions
+#create new column with year shifted to one year later to match the abundance data for one year later
+#eg, the year 1980 will be 1981 in new lag column so it will match with abundances for 1981
+envn_lag1 <- temp %>%
+  #add column with one year lag
+  mutate(year_lag1 = year + 1,.after = year) %>% 
+  #filter out lag years that won't match abundances because data aren't available
+  filter(year_lag1 >= "1981" & year_lag1 < "2022" & year_lag1 !="2004" & year_lag1 !="2005")%>% 
+  #let's just start with a subset of variables, focusing on continuous ones (ie, no factors)
+  #also let's drop flow because highly correlated with salinity
+  select(
+    year_lag1
+    #, drought_year
+    #, water_year_sac
+    #, inflow_annual_cfs
+    , nitrate
+    , ammonia
+    , phos
+    , salinity
+    , secchi
+    , temperature
+  ) %>% 
+  #mutate(water_year_sac = as_factor(water_year_sac)) %>% 
+  #relocate(water_year_sac, .before = drought_year) %>% 
+  column_to_rownames(var = "year_lag1") %>% 
+  glimpse()
+
 #non-rare benthic: q df
 trait <- read_csv("./benthic/data_output/traits/benthic_table_q.csv") %>%
   select(-organism_code) %>% 
