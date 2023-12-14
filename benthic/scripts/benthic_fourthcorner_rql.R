@@ -341,20 +341,21 @@ four.comb.benthic_dom <- fourthcorner(envn, abund_dom,
 #plot results
 par(mfrow = c(1, 1))
 plot(four.comb.benthic_dom, alpha = 0.05, stat = "D2")
-#no significant relationships
+#a few sig results
+four.comb.benthic_dom
 
 #rerun model with adjustment of pvalues
-#not much point though given that analysis w/o pvalue adjustment had no sign. comparisons
 four.comb.benthic_padj_dom <- fourthcorner(envn, abund_dom,
                                        trait_dom, modeltype = 6, p.adjust.method.G = "fdr",
                                        p.adjust.method.D = "fdr", nrepet = nrepet)
-plot(four.comb.benthic_padj_dom, alpha = 0.05, stat = "D2")
+plot(four.comb.benthic_padj_dom, alpha = 0.05, stat = "D2") 
+#no sig results
 
 #dominant benthic: combined RQL and Fourth Corner----
 
 testrlq.benthic_dom <- randtest(rlq.benthic_dom, modeltype = 6, nrepet = nrepet)
 testrlq.benthic_dom
-#Model 2 sign. but Model 4 not (p = 0.1)
+#Model 2 sign. but Model 4 not (p = 0.76)
 
 plot(testrlq.benthic_dom)
 
@@ -382,7 +383,7 @@ print(testQaxes.comb.benthic_dom, stat = "D")
 #no significant pvalues
 
 print(testRaxes.comb.benthic_dom, stat = "D")
-#phos significant
+#phos significant, nitrate/ammonia/salinity/temperature close 
 
 #Results can be represented using a table with colors indicating significance :
 par(mfrow = c(1, 2))
@@ -400,8 +401,6 @@ plot(testQaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
 plot(testRaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
-
-
 
 
 
