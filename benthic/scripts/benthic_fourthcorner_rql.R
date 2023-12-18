@@ -429,13 +429,109 @@ plot(testQaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
 plot(testRaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
 
+#year_lag benthic: start analysis----
 
+#check dimensions
+dim(abund_dom) #39 x 14 correspondance
+dim(envn_lag1) #39 x 6 all quantitative -- PCA
+dim(trait_dom) #14 x 9 hillsmith, quantitative and factor
 
+#start with PCA for environmental data
+acpR.benthic_dom_lag <- 
+  dudi.pca(envn_lag1, 
+           row.w = afcL.benthic_dom$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_dom)
 
+#year_lag benthic: RQL analysis----
 
+#build model
+rlq.benthic_dom_lag <- rlq(acpR.benthic_dom_lag, afcL.benthic_dom, acpQ.benthic_dom,
+                       scannf = FALSE)
 
+#plot results
+plot(rlq.benthic_dom_lag)
 
+#look at results summary
+summary(rlq.benthic_dom_lag)
 
+#plot subset of graphs
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_dom_lag$l1)
+s.arrow(rlq.benthic_dom_lag$c1)
+s.label(rlq.benthic_dom_lag$lQ, boxes = FALSE)
 
+#year_lag benthic: Fourth corner analysis----
 
+#build model
+#this is version without adjustment of pvalues for multiple comparisons
+nrepet <- 49999 
+four.comb.benthic_dom_lag <- fourthcorner(envn_lag1, abund_dom,
+                                      trait_dom, modeltype = 6, p.adjust.method.G = "none",
+                                      p.adjust.method.D = "none", nrepet = nrepet)
 
+#plot results
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_dom_lag, alpha = 0.05, stat = "D2")
+#a few sig results
+four.comb.benthic_dom_lag
+#a few sig results!
+
+#rerun model with adjustment of pvalues
+four.comb.benthic_padj_dom_lag <- fourthcorner(envn_lag1, abund_dom,
+                                           trait_dom, modeltype = 6, p.adjust.method.G = "fdr",
+                                           p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_dom_lag, alpha = 0.05, stat = "D2") 
+#no significant results
+
+#year_lag benthic: combined RQL and Fourth Corner----
+
+testrlq.benthic_dom_lag <- randtest(rlq.benthic_dom_lag, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_dom_lag
+#Model 2 sig. but Model 4 not (p = 0.53)
+
+plot(testrlq.benthic_dom_lag)
+
+#The total inertia of RLQ analysis is equal to the SRLQ multivariate statistic defined in Dray and
+#Legendre (2008). This statistic is returned by the fourthcorner2 function
+Srlq_dom_lag <- fourthcorner2(envn_lag1,abund_dom,trait_dom,
+                          modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_dom_lag$trRLQ 
+
+#biplot
+#plot should be devoid of relationship lines
+plot(four.comb.benthic_padj_dom_lag, x.rlq = rlq.benthic_dom_lag, alpha = 0.05,
+     stat = "D2", type = "biplot")
+#yep just shows the traits and env predictors
+
+#Another approach is provided by the fourthcorner.rlq function and consists in testing directly the
+#links between RLQ axes and traits (typetest="Q.axes") or environmental variables (typetest="R.axes").
+testQaxes.comb.benthic_dom_lag <- fourthcorner.rlq(rlq.benthic_dom_lag, modeltype = 6,
+                                               typetest = "Q.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+                                               p.adjust.method.D = "fdr")
+testRaxes.comb.benthic_dom_lag <- fourthcorner.rlq(rlq.benthic_dom_lag, modeltype = 6,
+                                               typetest = "R.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+                                               p.adjust.method.D = "fdr")
+print(testQaxes.comb.benthic_dom_lag, stat = "D")
+#no significant pvalues
+
+print(testRaxes.comb.benthic_dom_lag, stat = "D")
+#a few significant
+
+#Results can be represented using a table with colors indicating significance :
+par(mfrow = c(1, 2))
+plot(testQaxes.comb.benthic_dom_lag, alpha = 0.05, type = "table",
+     stat = "D2")
+plot(testRaxes.comb.benthic_dom_lag, alpha = 0.05, type = "table",
+     stat = "D2")
+
+# #Significance with axes can also be reported on the factorial map of RLQ analysis. Here, significant
+# associations with the first axis are represented in blue, with the second axis in orange, with both axes in
+# green (variables with no significant association are in black):
+par(mfrow = c(1, 2))
+plot(testQaxes.comb.benthic_dom_lag, alpha = 0.05, type = "biplot",
+     stat = "D2", col = c("black", "blue", "orange", "green"))
+plot(testRaxes.comb.benthic_dom_lag, alpha = 0.05, type = "biplot",
+     stat = "D2", col = c("black", "blue", "orange", "green"))
