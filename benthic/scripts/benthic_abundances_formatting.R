@@ -30,6 +30,8 @@ library(here)
 
 # To do list -----------------------------
 
+#could add new data; current EDI package is 1975-2022; so far, I'm using 1975-2021
+
 #make sure there isn't overlap in taxa between zoop and benthic inverts
 #eg, I saw ostracods in benthic inverts data which are probably also in zoop
 
@@ -751,6 +753,86 @@ cpue_indiv_prop_combo_nm_final <- left_join(cpue_indiv_prop_comb_nm,common5_pa) 
 #relative abundances of taxa without size data
 #write_csv(missing_size_df,"./benthic/data_output/benthic_relative_abundances_missing_size.csv")
 
+#Calculate Bay-Delta wide seasonal Mean CPUE-----------------------
+#using data set that only keeps species in at least 5% of sample
+#note that EMP published their data by calendar year
+#so winter (Dec-Feb) for last year (2021) will only have one sample instead of three
+#actually I don't think it did the calculation for that year at all
+#EDI data includes 2022 now
+
+#spring: March-May
+cpue_mean_spring5 <- benthic_cpue5 %>% 
+  #keep data just for spring months
+  filter(month==3 | month==4 | month==5) %>% 
+  #calculate mean for each station and year
+  group_by(year_adjusted,station_code,organism_code) %>% 
+  summarize(cpue_stn=mean(mean_cpue), .groups = 'drop') %>% 
+  #now calculate mean for each year (across all stations)
+  group_by(year_adjusted,organism_code) %>% 
+  summarize(cpue_annual=mean(cpue_stn), .groups = 'drop') %>% 
+  #add species names
+  left_join(benthic_spp_names_short) %>% 
+  #drop organism codes and reorder column
+  select(year_adjusted,species_name,cpue_annual) %>% 
+  #make Table L
+  pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) %>% 
+  glimpse()
+
+#summer: June-August
+cpue_mean_summer5 <- benthic_cpue5 %>% 
+  #keep data just for summer months
+  filter(month==6 | month==7 | month==8) %>% 
+  #calculate mean for each station and year
+  group_by(year_adjusted,station_code,organism_code) %>% 
+  summarize(cpue_stn=mean(mean_cpue), .groups = 'drop') %>% 
+  #now calculate mean for each year (across all stations)
+  group_by(year_adjusted,organism_code) %>% 
+  summarize(cpue_annual=mean(cpue_stn), .groups = 'drop') %>% 
+  #add species names
+  left_join(benthic_spp_names_short) %>% 
+  #drop organism codes and reorder column
+  select(year_adjusted,species_name,cpue_annual) %>% 
+  #make Table L
+  pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) %>% 
+  glimpse()
+
+#fall: Sept-Nov
+cpue_mean_fall5 <- benthic_cpue5 %>% 
+  #keep data just for fall months
+  filter(month==9 | month==10 | month==11) %>% 
+  #calculate mean for each station and year
+  group_by(year_adjusted,station_code,organism_code) %>% 
+  summarize(cpue_stn=mean(mean_cpue), .groups = 'drop') %>% 
+  #now calculate mean for each year (across all stations)
+  group_by(year_adjusted,organism_code) %>% 
+  summarize(cpue_annual=mean(cpue_stn), .groups = 'drop') %>% 
+  #add species names
+  left_join(benthic_spp_names_short) %>% 
+  #drop organism codes and reorder column
+  select(year_adjusted,species_name,cpue_annual) %>% 
+  #make Table L
+  pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) %>% 
+  glimpse()
+
+#winter: Dec-Feb
+cpue_mean_winter5 <- benthic_cpue5 %>% 
+  #keep data just for winter months
+  filter(month==12 | month==1 | month==2) %>% 
+  #calculate mean for each station and year
+  group_by(year_adjusted,station_code,organism_code) %>% 
+  summarize(cpue_stn=mean(mean_cpue), .groups = 'drop') %>% 
+  #now calculate mean for each year (across all stations)
+  group_by(year_adjusted,organism_code) %>% 
+  summarize(cpue_annual=mean(cpue_stn), .groups = 'drop') %>% 
+  #add species names
+  left_join(benthic_spp_names_short) %>% 
+  #drop organism codes and reorder column
+  select(year_adjusted,species_name,cpue_annual) %>% 
+  #make Table L
+  pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) %>% 
+  glimpse()
+
+
 
 # Calculate Bay-Delta wide annual mean CPUE------------------
 #calculate mean for each station and year
@@ -759,14 +841,14 @@ cpue_indiv_prop_combo_nm_final <- left_join(cpue_indiv_prop_comb_nm,common5_pa) 
 #could use a different summary statistic (eg, median)
 
 #1%: generate annual mean CPUE values for each taxon
-cpue_mean_annual1 <- benthic_cpue1 %>% 
-  group_by(year,station_code,organism_code) %>% 
-  summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
+# cpue_mean_annual1 <- benthic_cpue1 %>% 
+#   group_by(year,station_code,organism_code) %>% 
+#   summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
 
 #2%: generate annual mean CPUE values for each taxon
-cpue_mean_annual2 <- benthic_cpue2 %>% 
-  group_by(year,station_code,organism_code) %>% 
-  summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
+# cpue_mean_annual2 <- benthic_cpue2 %>% 
+#   group_by(year,station_code,organism_code) %>% 
+#   summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
 
 #5%: generate annual mean CPUE values for each taxon
 cpue_mean_annual5 <- benthic_cpue5 %>% 
@@ -779,21 +861,21 @@ cpue_mean_annual5 <- benthic_cpue5 %>%
   
 
 #10%: generate annual mean CPUE values for each taxon
-cpue_mean_annual10 <- benthic_cpue10 %>% 
-  group_by(year,station_code,organism_code) %>% 
-  summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
+# cpue_mean_annual10 <- benthic_cpue10 %>% 
+#   group_by(year,station_code,organism_code) %>% 
+#   summarize(cpue_annual=mean(mean_cpue), .groups = 'drop')
 
 #add species names for use as vector labels
 
 #1%: add species names to main data set
-cpue_mean_annual_nm1 <- left_join(cpue_mean_annual1,benthic_spp_names_short) %>% 
-  #drop name codes and reorder column
-  select(year,station_code,species_name,cpue_annual) 
-
-#2%: add species names to main data set
-cpue_mean_annual_nm2 <- left_join(cpue_mean_annual2,benthic_spp_names_short) %>% 
-  #drop name codes and reorder column
-  select(year,station_code,species_name,cpue_annual) 
+# cpue_mean_annual_nm1 <- left_join(cpue_mean_annual1,benthic_spp_names_short) %>% 
+#   #drop name codes and reorder column
+#   select(year,station_code,species_name,cpue_annual) 
+# 
+# #2%: add species names to main data set
+# cpue_mean_annual_nm2 <- left_join(cpue_mean_annual2,benthic_spp_names_short) %>% 
+#   #drop name codes and reorder column
+#   select(year,station_code,species_name,cpue_annual) 
 
 #5%: add species names to main data set
 cpue_mean_annual_nm5 <- left_join(cpue_mean_annual5,benthic_spp_names_short) %>% 
@@ -801,9 +883,9 @@ cpue_mean_annual_nm5 <- left_join(cpue_mean_annual5,benthic_spp_names_short) %>%
   select(year_adjusted,species_name,cpue_annual)
 
 #10%: add species names to main data set
-cpue_mean_annual_nm10 <- left_join(cpue_mean_annual10,benthic_spp_names_short) %>% 
-  #drop name codes and reorder column
-  select(year,station_code,species_name,cpue_annual) 
+# cpue_mean_annual_nm10 <- left_join(cpue_mean_annual10,benthic_spp_names_short) %>% 
+#   #drop name codes and reorder column
+#   select(year,station_code,species_name,cpue_annual) 
   
 # Format Table L (station-year x taxon) -----------
 
