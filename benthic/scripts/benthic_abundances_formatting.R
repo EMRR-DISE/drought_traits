@@ -781,7 +781,7 @@ benthic_cpue5_seasons_n <- benthic_cpue5_seasons %>%
   summarize(n = n())  %>% 
   #just look at the cases where n isn't 3
   filter(n<3) %>% 
-  arrange(n)
+  arrange(n,season)
 #37 of 465 samples are missing one or two samples, so not too bad (only 8 missing two)
 #note there are some station-season combos that don't show up at all because all missing (w 2021)
 
