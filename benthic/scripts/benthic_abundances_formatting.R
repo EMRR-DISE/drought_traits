@@ -756,17 +756,49 @@ cpue_indiv_prop_combo_nm_final <- left_join(cpue_indiv_prop_comb_nm,common5_pa) 
 #Calculate Bay-Delta wide seasonal Mean CPUE-----------------------
 #using data set that only keeps species in at least 5% of sample
 #note that EMP published their data by calendar year
-#so winter (Dec-Feb) for last year (2021) will only have one sample instead of three
-#actually I don't think it did the calculation for that year at all
-#EDI data includes 2022 now
+#so winter (Dec-Feb) for last year (2021) isn't calculated (also no data for Dec 2020)
+#should look at number of samples by year for each season (ideally always three months)
+
+#label months by season
+benthic_cpue5_seasons <- benthic_cpue5 %>% 
+  mutate(
+    season = case_when(month==12 | month==1 | month==2 ~ "w"
+                       ,month==3 | month==4 | month==5 ~ "sp"
+                       ,month==6 | month==7 | month==8 ~ "su"
+                       ,month==9 | month==10 | month==11 ~ "f"
+                       )
+  ) %>% 
+  glimpse()
+
+#look at number of samples by station, year, season
+benthic_cpue5_seasons_n <- benthic_cpue5_seasons %>% 
+  #just keep the needed columns
+  select(year_adjusted,season,month,station_code) %>% 
+  #shed rows for all the taxa so just one per station-month combo
+  distinct(year_adjusted,season,month,station_code) %>% 
+  #count samples by season
+  group_by(year_adjusted,season,station_code) %>% 
+  summarize(n = n())  %>% 
+  #just look at the cases where n isn't 3
+  filter(n<3) %>% 
+  arrange(n)
+#37 of 465 samples are missing one or two samples, so not too bad (only 8 missing two)
+#note there are some station-season combos that don't show up at all because all missing (w 2021)
+
+#check for NA in seasons
+# season_na <- benthic_cpue5_seasons %>% 
+#   filter(is.na(season))
+#no NAs as expected
 
 #spring: March-May
-cpue_mean_spring5 <- benthic_cpue5 %>% 
+cpue_mean_spring5 <- benthic_cpue5_seasons %>% 
   #keep data just for spring months
-  filter(month==3 | month==4 | month==5) %>% 
+  filter(season == "sp") %>% 
   #calculate mean for each station and year
   group_by(year_adjusted,station_code,organism_code) %>% 
-  summarize(cpue_stn=mean(mean_cpue), .groups = 'drop') %>% 
+  summarize(cpue_stn=mean(mean_cpue)
+            , .groups = 'drop'
+            )  %>% 
   #now calculate mean for each year (across all stations)
   group_by(year_adjusted,organism_code) %>% 
   summarize(cpue_annual=mean(cpue_stn), .groups = 'drop') %>% 
@@ -777,11 +809,12 @@ cpue_mean_spring5 <- benthic_cpue5 %>%
   #make Table L
   pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) %>% 
   glimpse()
+#write_csv(cpue_mean_spring5,"./benthic/data_output/benthic_table_l_spring.csv")
 
 #summer: June-August
-cpue_mean_summer5 <- benthic_cpue5 %>% 
+cpue_mean_summer5 <- benthic_cpue5_seasons %>% 
   #keep data just for summer months
-  filter(month==6 | month==7 | month==8) %>% 
+  filter(season == "su") %>% 
   #calculate mean for each station and year
   group_by(year_adjusted,station_code,organism_code) %>% 
   summarize(cpue_stn=mean(mean_cpue), .groups = 'drop') %>% 
@@ -795,11 +828,12 @@ cpue_mean_summer5 <- benthic_cpue5 %>%
   #make Table L
   pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) %>% 
   glimpse()
+#write_csv(cpue_mean_summer5,"./benthic/data_output/benthic_table_l_summer.csv")
 
 #fall: Sept-Nov
-cpue_mean_fall5 <- benthic_cpue5 %>% 
+cpue_mean_fall5 <- benthic_cpue5_seasons %>% 
   #keep data just for fall months
-  filter(month==9 | month==10 | month==11) %>% 
+  filter(season == "f") %>% 
   #calculate mean for each station and year
   group_by(year_adjusted,station_code,organism_code) %>% 
   summarize(cpue_stn=mean(mean_cpue), .groups = 'drop') %>% 
@@ -813,11 +847,13 @@ cpue_mean_fall5 <- benthic_cpue5 %>%
   #make Table L
   pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) %>% 
   glimpse()
+#write_csv(cpue_mean_fall5,"./benthic/data_output/benthic_table_l_fall.csv")
 
 #winter: Dec-Feb
-cpue_mean_winter5 <- benthic_cpue5 %>% 
+#2021 is currently based on just Dec 2020
+cpue_mean_winter5 <- benthic_cpue5_seasons %>% 
   #keep data just for winter months
-  filter(month==12 | month==1 | month==2) %>% 
+  filter(season == "w") %>% 
   #calculate mean for each station and year
   group_by(year_adjusted,station_code,organism_code) %>% 
   summarize(cpue_stn=mean(mean_cpue), .groups = 'drop') %>% 
@@ -831,7 +867,7 @@ cpue_mean_winter5 <- benthic_cpue5 %>%
   #make Table L
   pivot_wider(id_cols = c(year_adjusted),names_from = species_name,values_from=cpue_annual) %>% 
   glimpse()
-
+#write_csv(cpue_mean_winter5,"./benthic/data_output/benthic_table_l_winter.csv")
 
 
 # Calculate Bay-Delta wide annual mean CPUE------------------
