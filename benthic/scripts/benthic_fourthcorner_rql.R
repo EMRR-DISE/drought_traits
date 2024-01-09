@@ -46,6 +46,28 @@ envn <- temp %>%
   column_to_rownames(var = "year") %>% 
   glimpse()
 
+#have to remove 2021 from the winter season analysis as there were no samples that year
+envn_winter <- temp %>%
+  filter(year >= "1981" & year != "2022" & year!="2004" & year!="2005" & year!="2021")%>% 
+  #let's just start with a subset of variables, focusing on continuous ones (ie, no factors)
+  #also let's drop flow because highly correlated with salinity
+  select(
+    year
+    #, drought_year
+    #, water_year_sac
+    #, inflow_annual_cfs
+    , nitrate
+    , ammonia
+    , phos
+    , salinity
+    , secchi
+    , temperature
+  ) %>% 
+  #mutate(water_year_sac = as_factor(water_year_sac)) %>% 
+  #relocate(water_year_sac, .before = drought_year) %>% 
+  column_to_rownames(var = "year") %>% 
+  glimpse()
+
 #past work with clams has shown a one year lag in changes to abundances and distributions
 #create new column with year shifted to one year later to match the abundance data for one year later
 #eg, the year 1980 will be 1981 in new lag column so it will match with abundances for 1981
@@ -72,6 +94,17 @@ envn_lag1 <- temp %>%
   #relocate(water_year_sac, .before = drought_year) %>% 
   column_to_rownames(var = "year_lag1") %>% 
   glimpse()
+
+#looking at differences between seasons
+#new abundance table l for each season
+abund_fall <- read_csv("./benthic/data_output/benthic_table_l_fall.csv") %>%
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A","year_adjusted"))
+abund_spring <- read_csv("./benthic/data_output/benthic_table_l_spring.csv") %>%
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A","year_adjusted"))
+abund_summer <- read_csv("./benthic/data_output/benthic_table_l_summer.csv") %>%
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A","year_adjusted"))
+abund_winter <- read_csv("./benthic/data_output/benthic_table_l_winter.csv") %>%
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A","year_adjusted"))
 
 #non-rare benthic: q df
 trait <- read_csv("./benthic/data_output/traits/benthic_table_q.csv") %>%
@@ -534,4 +567,261 @@ par(mfrow = c(1, 2))
 plot(testQaxes.comb.benthic_dom_lag, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
 plot(testRaxes.comb.benthic_dom_lag, alpha = 0.05, type = "biplot",
+     stat = "D2", col = c("black", "blue", "orange", "green"))
+
+#seasons benthic: start analysis----
+
+#check dimensions
+dim(abund_winter) #39 x 61 correspondance
+dim(envn) #39 x 6 all quantitative -- PCA
+dim(trait) #61 x 2 hillsmith, quantitative and factor
+
+#for winter only, will remove 2021 from environmental table (table r)
+envn_winter <- envn[-c(2021)]
+
+#correspondance for abundance data
+
+afcL.benthic_fall <- 
+  dudi.coa(abund_fall, scannf = F)
+summary(afcL.benthic_fall)
+#total inertia: 1.59
+afcL.benthic_spring <- 
+  dudi.coa(abund_spring, scannf = F)
+summary(afcL.benthic_spring)
+#total inertia: 1.527
+afcL.benthic_summer <- 
+  dudi.coa(abund_summer, scannf = F)
+summary(afcL.benthic_summer)
+#total inertia: 1.31
+afcL.benthic_winter <- 
+  dudi.coa(abund_winter, scannf = F)
+summary(afcL.benthic_winter)
+#total inertia: 1.777
+
+#start with PCA for environmental data
+
+acpR.benthic_fall <- 
+  dudi.pca(envn, 
+           row.w = afcL.benthic_fall$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+           )
+score(acpR.benthic_fall)
+acpR.benthic_spring <- 
+  dudi.pca(envn, 
+           row.w = afcL.benthic_spring$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_spring)
+acpR.benthic_summer <- 
+  dudi.pca(envn, 
+           row.w = afcL.benthic_summer$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_summer)
+acpR.benthic_winter <- 
+  dudi.pca(envn_winter, 
+           row.w = afcL.benthic_winter$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_winter)
+
+#hill-smith again for trait data
+acpQ.benthic_fall <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic_fall$cw,
+    scannf = F)
+score(acpQ.benthic_fall)
+acpQ.benthic_spring <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic_spring$cw,
+    scannf = F)
+score(acpQ.benthic_spring)
+acpQ.benthic_summer <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic_summer$cw,
+    scannf = F)
+score(acpQ.benthic_summer)
+acpQ.benthic_winter <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic_winter$cw,
+    scannf = F)
+score(acpQ.benthic_winter)
+
+#season benthic: RQL analysis----
+
+#build model
+rlq.benthic_fall <- rlq(acpR.benthic_fall, afcL.benthic_fall, acpQ.benthic_fall,
+                           scannf = FALSE)
+rlq.benthic_spring <- rlq(acpR.benthic_spring, afcL.benthic_spring, acpQ.benthic_spring,
+                        scannf = FALSE)
+rlq.benthic_summer <- rlq(acpR.benthic_summer, afcL.benthic_summer, acpQ.benthic_summer,
+                        scannf = FALSE)
+rlq.benthic_winter <- rlq(acpR.benthic_winter, afcL.benthic_winter, acpQ.benthic_winter,
+                        scannf = FALSE)
+
+#plot results
+plot(rlq.benthic_fall)
+plot(rlq.benthic_spring)
+plot(rlq.benthic_summer)
+plot(rlq.benthic_winter)
+
+#look at results summary
+summary(rlq.benthic_fall)
+
+#plot subset of graphs
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_fall$l1)
+s.arrow(rlq.benthic_fall$c1)
+s.label(rlq.benthic_fall$lQ, boxes = FALSE)
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_spring$l1)
+s.arrow(rlq.benthic_spring$c1)
+s.label(rlq.benthic_spring$lQ, boxes = FALSE)
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_summer$l1)
+s.arrow(rlq.benthic_summer$c1)
+s.label(rlq.benthic_summer$lQ, boxes = FALSE)
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_winter$l1)
+s.arrow(rlq.benthic_winter$c1)
+s.label(rlq.benthic_winter$lQ, boxes = FALSE)
+
+#season benthic: Fourth corner analysis----
+
+#build model
+#this is version without adjustment of pvalues for multiple comparisons
+nrepet <- 49999 
+four.comb.benthic_fall <- fourthcorner(envn, abund_fall,
+                                          trait, modeltype = 6, p.adjust.method.G = "none",
+                                          p.adjust.method.D = "none", nrepet = nrepet)
+four.comb.benthic_spring <- fourthcorner(envn, abund_spring,
+                                       trait, modeltype = 6, p.adjust.method.G = "none",
+                                       p.adjust.method.D = "none", nrepet = nrepet)
+four.comb.benthic_summer <- fourthcorner(envn, abund_summer,
+                                       trait, modeltype = 6, p.adjust.method.G = "none",
+                                       p.adjust.method.D = "none", nrepet = nrepet)
+four.comb.benthic_winter <- fourthcorner(envn_winter, abund_winter,
+                                       trait, modeltype = 6, p.adjust.method.G = "none",
+                                       p.adjust.method.D = "none", nrepet = nrepet)
+
+#plot results
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_fall, alpha = 0.05, stat = "D2")#nothing significant, some close
+four.comb.benthic_fall#no sig results
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_spring, alpha = 0.05, stat = "D2")#some sig results
+four.comb.benthic_spring#some sig, one close
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_summer, alpha = 0.05, stat = "D2")#nothing significant, some close
+four.comb.benthic_summer#no sig results, some close
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_winter, alpha = 0.05, stat = "D2")#nothing significant, some close
+four.comb.benthic_winter#no sig results, one close
+
+
+#rerun model with adjustment of pvalues
+four.comb.benthic_padj_fall <- fourthcorner(envn, abund_fall,
+                                               trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                               p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_fall, alpha = 0.05, stat = "D2") 
+#no significant results
+four.comb.benthic_padj_spring <- fourthcorner(envn, abund_spring,
+                                            trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                            p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_spring, alpha = 0.05, stat = "D2")
+#no sig results
+four.comb.benthic_padj_summer <- fourthcorner(envn, abund_summer,
+                                            trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                            p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_summer, alpha = 0.05, stat = "D2")
+#no sig results
+four.comb.benthic_padj_winter <- fourthcorner(envn_winter, abund_winter,
+                                            trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                            p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_winter, alpha = 0.05, stat = "D2")
+#no sig results
+
+#season benthic: combined RQL and Fourth Corner----
+
+testrlq.benthic_fall <- randtest(rlq.benthic_fall, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_fall
+plot(testrlq.benthic_fall)
+#Model 2 sig. but Model 4 not (p = 0.11)
+testrlq.benthic_spring <- randtest(rlq.benthic_spring, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_spring
+plot(testrlq.benthic_spring)
+#model 2 sig, model 4 close p=0.11
+testrlq.benthic_summer <- randtest(rlq.benthic_summer, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_summer
+plot(testrlq.benthic_summer)
+#model 2 sig, model 4 close p=0.07
+testrlq.benthic_winter <- randtest(rlq.benthic_winter, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_winter
+plot(testrlq.benthic_winter)
+#model 2 sig
+
+
+#The total inertia of RLQ analysis is equal to the SRLQ multivariate statistic defined in Dray and
+#Legendre (2008). This statistic is returned by the fourthcorner2 function
+Srlq_fall <- fourthcorner2(envn,abund_fall,trait,
+                              modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_fall$trRLQ 
+Srlq_spring <- fourthcorner2(envn,abund_spring,trait,
+                           modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_spring$trRLQ 
+Srlq_summer <- fourthcorner2(envn,abund_summer,trait,
+                           modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_summer$trRLQ 
+Srlq_winter <- fourthcorner2(envn_winter,abund_winter,trait,
+                           modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_winter$trRLQ 
+
+#biplot
+#plot should be devoid of relationship lines
+plot(four.comb.benthic_padj_fall, x.rlq = rlq.benthic_fall, alpha = 0.05,
+     stat = "D2", type = "biplot")
+plot(four.comb.benthic_padj_spring, x.rlq = rlq.benthic_spring, alpha = 0.05,
+     stat = "D2", type = "biplot")
+plot(four.comb.benthic_padj_summer, x.rlq = rlq.benthic_summer, alpha = 0.05,
+     stat = "D2", type = "biplot")
+plot(four.comb.benthic_padj_winter, x.rlq = rlq.benthic_winter, alpha = 0.05,
+     stat = "D2", type = "biplot")
+#yep just shows the traits and env predictors
+
+#Another approach is provided by the fourthcorner.rlq function and consists in testing directly the
+#links between RLQ axes and traits (typetest="Q.axes") or environmental variables (typetest="R.axes").
+testQaxes.comb.benthic_fall <- fourthcorner.rlq(rlq.benthic_fall, modeltype = 6,
+                                                   typetest = "Q.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+                                                   p.adjust.method.D = "fdr")
+testRaxes.comb.benthic_fall <- fourthcorner.rlq(rlq.benthic_fall, modeltype = 6,
+                                                   typetest = "R.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+                                                   p.adjust.method.D = "fdr")
+print(testQaxes.comb.benthic_fall, stat = "D")
+#no significant pvalues
+
+print(testRaxes.comb.benthic_fall, stat = "D")
+#no significant pvalues
+
+#Results can be represented using a table with colors indicating significance :
+par(mfrow = c(1, 2))
+plot(testQaxes.comb.benthic_fall, alpha = 0.05, type = "table",
+     stat = "D2")
+plot(testRaxes.comb.benthic_fall, alpha = 0.05, type = "table",
+     stat = "D2")
+
+# #Significance with axes can also be reported on the factorial map of RLQ analysis. Here, significant
+# associations with the first axis are represented in blue, with the second axis in orange, with both axes in
+# green (variables with no significant association are in black):
+par(mfrow = c(1, 2))
+plot(testQaxes.comb.benthic_fall, alpha = 0.05, type = "biplot",
+     stat = "D2", col = c("black", "blue", "orange", "green"))
+plot(testRaxes.comb.benthic_fall, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
