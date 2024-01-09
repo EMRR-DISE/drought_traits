@@ -32,10 +32,15 @@ This document provides an interactive map of the sampling locations used in the 
 ```{r load packages, message = FALSE, warning = FALSE}
 # Load packages
 library(tidyverse)
-library(readxl)
+library(scales)
 library(sf)
 library(leaflet)
+library(contentid)
 library(here)
+library(conflicted)
+
+# Declare package conflict preferences
+conflicts_prefer(dplyr::filter())
 
 # Check if we are in the correct working directory
 i_am("Sample_Location_Map.Rmd")
@@ -44,38 +49,108 @@ i_am("Sample_Location_Map.Rmd")
 
 # Import and Prepare Data
 
-```{r import data}
+Biological data:
 
-# Import station coordinates 
-df_coord <- read_excel(path = "./Station_Metadata.xlsx", sheet = "Data")
-
+```{r import data biological, message = FALSE}
+# Import station coordinates for biological data
+df_coord <- read_csv(here("Station_coordinates.csv"))
 
 # Prepare station coordinates for leaflet map
 sf_coord <- df_coord %>% 
-  select(
-    taxon,
-    program,
-    station,
+  rename(
     latitude = lat_wgs84,
     longitude = long_wgs84
   ) %>% 
   drop_na(latitude, longitude) %>% 
-  filter(program %in% c("EMP", "MWTR")) %>% 
   st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+```
 
+Region polygon:
+
+```{r import data region}
 # Import Region polygon
 sf_region <- read_sf(here("spatial_files/region.shp"))
 
-# Convert CRS of Region polygon to WGS84 so that it works with the leaflet map
+# Convert CRS of Region polygon to WGS84 so that it works with the leaflet maps
 sf_region_4326 <- st_transform(sf_region, crs = 4326)
 ```
 
+EMP water quality data:
 
-# Sampling Locations Map
+```{r import data wq emp, message = FALSE}
+# Register a contentid for the EMP WQ data and station coordinates from the EDI data package 458.10
+# This only needs to be done once
+# EMP station coordinates
+# register(
+#   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.10&entityid=86dd696bc3f8407ff52954094e1e9dcf"
+# )
+
+# EMP WQ data:
+# register(
+#   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.10&entityid=cf231071093ac2861893793517db26f3"
+# )
+
+# Define contentid for EMP station coordinates
+id_emp_coord <- "hash://sha256/120d7790b505f22a103ee392d13ca1c02b37fb9842d549942580b04c94eb2c67"
+
+# Define contentid for EMP WQ data
+id_emp_wq <- "hash://sha256/4c4b56d7d2a888b35efe2a6f2818f2b8b2fab26d0adb8f1c73ef522996b26ea8"
+
+# Resolve the contentid's storing local copies for faster import
+file_emp_coord <- resolve(id_emp_coord, store = TRUE)
+file_emp_wq <- resolve(id_emp_wq, store = TRUE)
+
+# Import EMP WQ data and station coordinates from the local copies using their contentid's
+df_emp_coord <- read_csv(file_emp_coord)
+
+df_emp_wq <- read_csv(
+  file = file_emp_wq,
+  col_types = cols_only(
+    Station = "c",
+    Date = "c",
+    Secchi = "d",
+    SpCndSurface = "d",
+    SpCndBottom = "d",
+    WTSurface = "d",
+    WTBottom = "d",
+    DissAmmonia_Sign = "c",
+    DissAmmonia = "d",
+    DissNitrateNitrite_Sign = "c",
+    DissNitrateNitrite = "d",
+    DissOrthophos_Sign = "c",
+    DissOrthophos = "d"
+  )
+)
+
+# Prepare EMP station coordinates for leaflet map
+sf_emp_coord <- df_emp_coord %>% 
+  drop_na(Latitude, Longitude) %>% 
+  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>% 
+  replace_na(list(EndDate = "ongoing"))
+
+# Prepare EMP WQ data for heatmap of sampling effort
+df_emp_wq_c <- df_emp_wq %>% 
+  mutate(
+    Date = ymd(Date),
+    # Add placeholder values for <RL records without RL values
+    DissAmmonia = if_else(DissAmmonia_Sign == "<" & is.na(DissAmmonia), 0.01, DissAmmonia),
+    DissNitrateNitrite = if_else(DissNitrateNitrite_Sign == "<" & is.na(DissNitrateNitrite), 0.01, DissNitrateNitrite),
+    DissOrthophos = if_else(DissOrthophos_Sign == "<" & is.na(DissOrthophos), 0.01, DissOrthophos)
+  ) %>% 
+  # Remove records where values for all parameters are NA
+  filter(!if_all(where(is.numeric), is.na)) %>% 
+  # Only include 2021 and earlier
+  mutate(Year = year(Date), .after = Date) %>% 
+  filter(Year <= 2021)
+```
+
+# Biological Data
+
+## Sampling Locations Map
 
 This interactive map allows for zooming and panning. Hover over a station marker to get more information about it. The blue polygon represents the region boundary we are considering for the spatial extent of the study.
 
-```{r create leaflet map}
+```{r create leaflet map biological}
 # Define color palette for Surveys 
 color_pal <- colorFactor(palette = "viridis", domain = sf_coord$taxon)
 
@@ -99,5 +174,94 @@ leaflet() %>%
     values = sf_coord$taxon,
     title = "Taxon"
   )
+```
+
+# Water Quality Data - EMP
+
+## Sampling Locations Map
+
+```{r create leaflet map emp}
+# Create map using leaflet
+leaflet() %>% 
+  addTiles() %>%
+  addCircleMarkers(
+    data = sf_emp_coord,
+    radius = 5,
+    fillColor = "yellow",
+    fillOpacity = 0.8,
+    weight = 0.5,
+    color = "black",
+    opacity = 1,
+    label = paste0(
+      "Station: ", sf_emp_coord$Station, 
+      "; Start Date:", sf_emp_coord$StartDate,
+      "; End Date:", sf_emp_coord$EndDate
+    )
+  ) %>% 
+  addPolylines(data = sf_region_4326)
+```
+
+## Sampling Effort {.tabset .tabset-pills}
+
+```{r func heatmap sampling effort emp}
+# Function to create heatmaps of sampling effort for each parameter
+heatmap_by_param <- function(df, param) {
+  df %>%
+    drop_na(all_of(param)) %>% 
+    count(Station, Year, name = "num_samples") %>%
+    mutate(Station = fct_rev(factor(Station))) %>%
+    ggplot(aes(x = Year, y = Station, fill = num_samples)) +
+    geom_tile() +
+    scale_x_continuous(
+      limits = c(1974, 2022),
+      breaks = breaks_pretty(20), 
+      expand = expansion()
+    ) +
+    scale_fill_viridis_c(name = "Number of Samples") +
+    theme_bw() +
+    theme(
+      axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+      legend.position = "top"
+    )
+}
+```
+
+```{r create heatmap sampling effort emp}
+# Create nested dataframe and generate heatmaps for each parameter
+ndf_emp_wq <-
+  tibble(
+    Parameter = c(
+      "WTSurface",
+      "WTBottom",
+      "SpCndSurface",
+      "SpCndBottom",
+      "Secchi",
+      "DissAmmonia",
+      "DissNitrateNitrite",
+      "DissOrthophos"
+    ),
+    Pretty_Name = c(
+      "Water Temperature (surface)",
+      "Water Temperature (bottom)",
+      "Specific Conductance (surface)",
+      "Specific Conductance (bottom)",
+      "Secchi depth",
+      "Dissolved Ammonia",
+      "Dissolved Nitrate + Nitrite",
+      "Dissolved Ortho-phosphate"
+    ),
+    df_data = rep(list(df_emp_wq_c), 8)
+  ) %>% 
+  mutate(plt_samp_effort = map2(df_data, Parameter, heatmap_by_param))
+```
+
+```{r print heatmap sampling effort emp, echo = FALSE, results = "asis", fig.width = 8, fig.height = 7.5}
+for (i in 1:nrow(ndf_emp_wq)) {
+  # Create subheadings for each Parameter
+  cat("### ", ndf_emp_wq$Parameter[i], "\n\n")
+  # Print plot
+  print(ndf_emp_wq$plt_samp_effort[[i]])
+  cat("\n\n")
+}
 ```
 
