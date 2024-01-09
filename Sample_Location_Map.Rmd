@@ -258,7 +258,7 @@ ndf_emp_wq <-
 ```{r print heatmap sampling effort emp, echo = FALSE, results = "asis", fig.width = 8, fig.height = 7.5}
 for (i in 1:nrow(ndf_emp_wq)) {
   # Create subheadings for each Parameter
-  cat("### ", ndf_emp_wq$Parameter[i], "\n\n")
+  cat("### ", ndf_emp_wq$Pretty_Name[i], "\n\n")
   # Print plot
   print(ndf_emp_wq$plt_samp_effort[[i]])
   cat("\n\n")
