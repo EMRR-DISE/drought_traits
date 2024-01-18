@@ -98,13 +98,21 @@ envn_lag1 <- temp %>%
 #looking at differences between seasons
 #new abundance table l for each season
 abund_fall <- read_csv("./benthic/data_output/benthic_table_l_fall.csv") %>%
-  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A","year_adjusted"))
+  column_to_rownames(var = "year_adjusted") %>% 
+  #drop columns for three higher level taxa
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
 abund_spring <- read_csv("./benthic/data_output/benthic_table_l_spring.csv") %>%
-  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A","year_adjusted"))
+  column_to_rownames(var = "year_adjusted") %>% 
+  #drop columns for three higher level taxa
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
 abund_summer <- read_csv("./benthic/data_output/benthic_table_l_summer.csv") %>%
-  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A","year_adjusted"))
+  column_to_rownames(var = "year_adjusted") %>% 
+  #drop columns for three higher level taxa
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
 abund_winter <- read_csv("./benthic/data_output/benthic_table_l_winter.csv") %>%
-  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A","year_adjusted"))
+  column_to_rownames(var = "year_adjusted") %>% 
+  #drop columns for three higher level taxa
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A")) 
 
 #non-rare benthic: q df
 trait <- read_csv("./benthic/data_output/traits/benthic_table_q.csv") %>%
