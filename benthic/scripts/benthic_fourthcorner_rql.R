@@ -31,7 +31,7 @@ envn <- temp %>%
   #also let's drop flow because highly correlated with salinity
   select(
     year
-    #, drought_year
+    , drought_year_trunc #added this later to adjust analyses, post uninteresting results
     #, water_year_sac
     #, inflow_annual_cfs
     , nitrate
@@ -53,7 +53,7 @@ envn_winter <- temp %>%
   #also let's drop flow because highly correlated with salinity
   select(
     year
-    #, drought_year
+    , drought_year_trunc #added this in later, post uninteresting results
     #, water_year_sac
     #, inflow_annual_cfs
     , nitrate
@@ -80,7 +80,32 @@ envn_lag1 <- temp %>%
   #also let's drop flow because highly correlated with salinity
   select(
     year_lag1
-    #, drought_year
+    , drought_year_trunc #added this in later, results were initially interesting for year_lag but we added it to other analyses as well
+    #, water_year_sac
+    #, inflow_annual_cfs
+    , nitrate
+    , ammonia
+    , phos
+    , salinity
+    , secchi
+    , temperature
+  ) %>% 
+  #mutate(water_year_sac = as_factor(water_year_sac)) %>% 
+  #relocate(water_year_sac, .before = drought_year) %>% 
+  column_to_rownames(var = "year_lag1") %>% 
+  glimpse()
+
+#adjust lag environmental data for winter season analysis, to remove the year 2021
+envn_lag1_winter <- temp %>%
+  #add column with one year lag
+  mutate(year_lag1 = year + 1,.after = year) %>% 
+  #filter out lag years that won't match abundances because data aren't available
+  filter(year_lag1 >= "1981" & year_lag1 < "2022" & year_lag1 !="2004" & year_lag1 !="2005" & year_lag1 !="2021")%>% 
+  #let's just start with a subset of variables, focusing on continuous ones (ie, no factors)
+  #also let's drop flow because highly correlated with salinity
+  select(
+    year_lag1
+    , drought_year_trunc #added this in later, results were initially interesting for year_lag but we added it to other analyses as well
     #, water_year_sac
     #, inflow_annual_cfs
     , nitrate
@@ -470,7 +495,7 @@ plot(testQaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
 plot(testRaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
 
-#year_lag benthic: start analysis----
+#dom year_lag benthic: start analysis----
 
 #check dimensions
 dim(abund_dom) #39 x 14 correspondance
@@ -486,7 +511,7 @@ acpR.benthic_dom_lag <-
   )
 score(acpR.benthic_dom)
 
-#year_lag benthic: RQL analysis----
+#dom year_lag benthic: RQL analysis----
 
 #build model
 rlq.benthic_dom_lag <- rlq(acpR.benthic_dom_lag, afcL.benthic_dom, acpQ.benthic_dom,
@@ -504,7 +529,7 @@ s.arrow(rlq.benthic_dom_lag$l1)
 s.arrow(rlq.benthic_dom_lag$c1)
 s.label(rlq.benthic_dom_lag$lQ, boxes = FALSE)
 
-#year_lag benthic: Fourth corner analysis----
+#dom year_lag benthic: Fourth corner analysis----
 
 #build model
 #this is version without adjustment of pvalues for multiple comparisons
@@ -527,7 +552,7 @@ four.comb.benthic_padj_dom_lag <- fourthcorner(envn_lag1, abund_dom,
 plot(four.comb.benthic_padj_dom_lag, alpha = 0.05, stat = "D2") 
 #no significant results
 
-#year_lag benthic: combined RQL and Fourth Corner----
+#dom year_lag benthic: combined RQL and Fourth Corner----
 
 testrlq.benthic_dom_lag <- randtest(rlq.benthic_dom_lag, modeltype = 6, nrepet = nrepet)
 testrlq.benthic_dom_lag
@@ -577,7 +602,7 @@ plot(testQaxes.comb.benthic_dom_lag, alpha = 0.05, type = "biplot",
 plot(testRaxes.comb.benthic_dom_lag, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
 
-#seasons benthic: start analysis----
+#season benthic: start analysis----
 
 #check dimensions
 dim(abund_winter) #39 x 61 correspondance
@@ -832,4 +857,369 @@ par(mfrow = c(1, 2))
 plot(testQaxes.comb.benthic_fall, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
 plot(testRaxes.comb.benthic_fall, alpha = 0.05, type = "biplot",
+     stat = "D2", col = c("black", "blue", "orange", "green"))
+
+#season/lag benthic: start analysis----
+
+#check dimensions
+dim(abund_winter) #38 x 61 correspondance (for winter)
+dim(envn_lag1_winter) #38 x 7 all quantitative -- PCA
+dim(trait) #61 x 2 hillsmith, quantitative and factor
+
+#correspondance for abundance data, same as non-lag seasonal analysis
+
+afcL.benthic_fall <- 
+  dudi.coa(abund_fall, scannf = F)
+summary(afcL.benthic_fall)
+#total inertia: 1.59
+afcL.benthic_spring <- 
+  dudi.coa(abund_spring, scannf = F)
+summary(afcL.benthic_spring)
+#total inertia: 1.527
+afcL.benthic_summer <- 
+  dudi.coa(abund_summer, scannf = F)
+summary(afcL.benthic_summer)
+#total inertia: 1.31
+afcL.benthic_winter <- 
+  dudi.coa(abund_winter, scannf = F)
+summary(afcL.benthic_winter)
+#total inertia: 1.777
+
+#start with PCA for environmental data
+
+acpR.benthic_fall_lag <- 
+  dudi.pca(envn_lag1, 
+           row.w = afcL.benthic_fall$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_fall_lag)
+acpR.benthic_spring_lag <- 
+  dudi.pca(envn_lag1, 
+           row.w = afcL.benthic_spring$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_spring_lag)
+acpR.benthic_summer_lag <- 
+  dudi.pca(envn_lag1, 
+           row.w = afcL.benthic_summer$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_summer_lag)
+acpR.benthic_winter_lag <- 
+  dudi.pca(envn_lag1_winter, 
+           row.w = afcL.benthic_winter$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_winter_lag)
+
+#hill-smith again for trait data, same as non-lag seasonal analysis
+acpQ.benthic_fall <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic_fall$cw,
+    scannf = F)
+score(acpQ.benthic_fall)
+acpQ.benthic_spring <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic_spring$cw,
+    scannf = F)
+score(acpQ.benthic_spring)
+acpQ.benthic_summer <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic_summer$cw,
+    scannf = F)
+score(acpQ.benthic_summer)
+acpQ.benthic_winter <- # 'Q' table of traits by species
+  dudi.hillsmith(  # trait variables include numeric and categorical data
+    trait, 
+    row.w = afcL.benthic_winter$cw,
+    scannf = F)
+score(acpQ.benthic_winter)
+
+#season/lag benthic: RQL analysis----
+
+#build model
+rlq.benthic_fall_lag <- rlq(acpR.benthic_fall_lag, afcL.benthic_fall, acpQ.benthic_fall,
+                        scannf = FALSE)
+rlq.benthic_spring_lag <- rlq(acpR.benthic_spring_lag, afcL.benthic_spring, acpQ.benthic_spring,
+                          scannf = FALSE)
+rlq.benthic_summer_lag <- rlq(acpR.benthic_summer_lag, afcL.benthic_summer, acpQ.benthic_summer,
+                          scannf = FALSE)
+rlq.benthic_winter_lag <- rlq(acpR.benthic_winter_lag, afcL.benthic_winter, acpQ.benthic_winter,
+                          scannf = FALSE)
+
+#plot results
+plot(rlq.benthic_fall_lag)
+plot(rlq.benthic_spring_lag)
+plot(rlq.benthic_summer_lag)
+plot(rlq.benthic_winter_lag)
+
+#look at results summary
+summary(rlq.benthic_fall_lag)
+
+#plot subset of graphs
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_fall_lag$l1)
+s.arrow(rlq.benthic_fall_lag$c1)
+s.label(rlq.benthic_fall_lag$lQ, boxes = FALSE)
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_spring_lag$l1)
+s.arrow(rlq.benthic_spring_lag$c1)
+s.label(rlq.benthic_spring_lag$lQ, boxes = FALSE)
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_summer_lag$l1)
+s.arrow(rlq.benthic_summer_lag$c1)
+s.label(rlq.benthic_summer_lag$lQ, boxes = FALSE)
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_winter_lag$l1)
+s.arrow(rlq.benthic_winter_lag$c1)
+s.label(rlq.benthic_winter_lag$lQ, boxes = FALSE)
+
+#season/lag benthic: Fourth corner analysis----
+
+#build model
+#this is version without adjustment of pvalues for multiple comparisons
+nrepet <- 49999 
+four.comb.benthic_fall_lag <- fourthcorner(envn_lag1, abund_fall,
+                                       trait, modeltype = 6, p.adjust.method.G = "none",
+                                       p.adjust.method.D = "none", nrepet = nrepet)
+four.comb.benthic_spring_lag <- fourthcorner(envn_lag1, abund_spring,
+                                         trait, modeltype = 6, p.adjust.method.G = "none",
+                                         p.adjust.method.D = "none", nrepet = nrepet)
+four.comb.benthic_summer_lag <- fourthcorner(envn_lag1, abund_summer,
+                                         trait, modeltype = 6, p.adjust.method.G = "none",
+                                         p.adjust.method.D = "none", nrepet = nrepet)
+four.comb.benthic_winter_lag <- fourthcorner(envn_lag1_winter, abund_winter,
+                                         trait, modeltype = 6, p.adjust.method.G = "none",
+                                         p.adjust.method.D = "none", nrepet = nrepet)
+
+#plot results
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_fall_lag, alpha = 0.05, stat = "D2")#nothing significant, some close
+four.comb.benthic_fall_lag#some sig results
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_spring_lag, alpha = 0.05, stat = "D2")#some sig results
+four.comb.benthic_spring_lag#some sig
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_summer_lag, alpha = 0.05, stat = "D2")#nothing significant, some close
+four.comb.benthic_summer_lag#some sig results
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_winter_lag, alpha = 0.05, stat = "D2")#nothing significant, some close
+four.comb.benthic_winter_lag#some sig results
+
+
+#rerun model with adjustment of pvalues
+four.comb.benthic_padj_fall_lag <- fourthcorner(envn_lag1, abund_fall,
+                                            trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                            p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_fall_lag, alpha = 0.05, stat = "D2") 
+#2 significant results
+four.comb.benthic_padj_spring_lag <- fourthcorner(envn_lag1, abund_spring,
+                                              trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                              p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_spring_lag, alpha = 0.05, stat = "D2")
+#no sig results
+four.comb.benthic_padj_summer_lag <- fourthcorner(envn_lag1, abund_summer,
+                                              trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                              p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_summer_lag, alpha = 0.05, stat = "D2")
+#no sig results
+four.comb.benthic_padj_winter_lag <- fourthcorner(envn_lag1_winter, abund_winter,
+                                              trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                              p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_winter_lag, alpha = 0.05, stat = "D2")
+#no sig results
+
+#season/lag benthic: combined RQL and Fourth Corner----
+
+testrlq.benthic_fall_lag <- randtest(rlq.benthic_fall_lag, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_fall_lag
+plot(testrlq.benthic_fall_lag)
+#Model 2 sig
+testrlq.benthic_spring_lag <- randtest(rlq.benthic_spring_lag, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_spring_lag
+plot(testrlq.benthic_spring_lag)
+#model 2 sig
+testrlq.benthic_summer_lag <- randtest(rlq.benthic_summer_lag, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_summer_lag
+plot(testrlq.benthic_summer_lag)
+#model 2 sig
+testrlq.benthic_winter_lag <- randtest(rlq.benthic_winter_lag, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_winter_lag
+plot(testrlq.benthic_winter_lag)
+#model 2 sig
+
+
+#The total inertia of RLQ analysis is equal to the SRLQ multivariate statistic defined in Dray and
+#Legendre (2008). This statistic is returned by the fourthcorner2 function
+Srlq_fall_lag <- fourthcorner2(envn_lag1,abund_fall,trait,
+                           modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_fall_lag$trRLQ 
+Srlq_spring_lag <- fourthcorner2(envn_lag1,abund_spring,trait,
+                             modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_spring_lag$trRLQ 
+Srlq_summer_lag <- fourthcorner2(envn_lag1,abund_summer,trait,
+                             modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_summer_lag$trRLQ 
+Srlq_winter_lag <- fourthcorner2(envn_lag1_winter,abund_winter,trait,
+                             modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_winter_lag$trRLQ 
+
+#biplot
+#plot should be devoid of relationship lines
+plot(four.comb.benthic_padj_fall_lag, x.rlq = rlq.benthic_fall_lag, alpha = 0.05,
+     stat = "D2", type = "biplot")
+  #uh oh, this one has 2 relationship lines?
+
+plot(four.comb.benthic_padj_spring_lag, x.rlq = rlq.benthic_spring_lag, alpha = 0.05,
+     stat = "D2", type = "biplot")
+plot(four.comb.benthic_padj_summer_lag, x.rlq = rlq.benthic_summer_lag, alpha = 0.05,
+     stat = "D2", type = "biplot")
+plot(four.comb.benthic_padj_winter_lag, x.rlq = rlq.benthic_winter_lag, alpha = 0.05,
+     stat = "D2", type = "biplot")
+#yep just shows the traits and env predictors
+
+# #Another approach is provided by the fourthcorner.rlq function and consists in testing directly the
+# #links between RLQ axes and traits (typetest="Q.axes") or environmental variables (typetest="R.axes").
+# testQaxes.comb.benthic_fall <- fourthcorner.rlq(rlq.benthic_fall, modeltype = 6,
+#                                                 typetest = "Q.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+#                                                 p.adjust.method.D = "fdr")
+# testRaxes.comb.benthic_fall <- fourthcorner.rlq(rlq.benthic_fall, modeltype = 6,
+#                                                 typetest = "R.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+#                                                 p.adjust.method.D = "fdr")
+# print(testQaxes.comb.benthic_fall, stat = "D")
+# #no significant pvalues
+# 
+# print(testRaxes.comb.benthic_fall, stat = "D")
+# #no significant pvalues
+# 
+# #Results can be represented using a table with colors indicating significance :
+# par(mfrow = c(1, 2))
+# plot(testQaxes.comb.benthic_fall, alpha = 0.05, type = "table",
+#      stat = "D2")
+# plot(testRaxes.comb.benthic_fall, alpha = 0.05, type = "table",
+#      stat = "D2")
+# 
+# # #Significance with axes can also be reported on the factorial map of RLQ analysis. Here, significant
+# # associations with the first axis are represented in blue, with the second axis in orange, with both axes in
+# # green (variables with no significant association are in black):
+# par(mfrow = c(1, 2))
+# plot(testQaxes.comb.benthic_fall, alpha = 0.05, type = "biplot",
+#      stat = "D2", col = c("black", "blue", "orange", "green"))
+# plot(testRaxes.comb.benthic_fall, alpha = 0.05, type = "biplot",
+#      stat = "D2", col = c("black", "blue", "orange", "green"))
+
+
+
+#non-rare year_lag benthic: start analysis----
+
+#check dimensions
+dim(abund) #39 x 61 correspondance
+dim(envn_lag1) #39 x 7 all quantitative -- PCA
+dim(trait) #61 x 2 hillsmith, quantitative and factor
+
+#start with PCA for environmental data
+acpR.benthic_nonrare_lag <- 
+  dudi.pca(envn_lag1, 
+           row.w = afcL.benthic$lw,
+           scannf = F,
+           nf = 2 #leave this out for now to see all eigenvalues
+  )
+score(acpR.benthic_nonrare_lag1)
+
+#non-rare year_lag benthic: RQL analysis----
+
+#build model
+rlq.benthic_nonrare_lag <- rlq(acpR.benthic_nonrare_lag, afcL.benthic, acpQ.benthic,
+                           scannf = FALSE)
+
+#plot results
+plot(rlq.benthic_nonrare_lag)
+
+#look at results summary
+summary(rlq.benthic_nonrare_lag)
+
+#plot subset of graphs
+par(mfrow = c(1, 3))
+s.arrow(rlq.benthic_nonrare_lag$l1)
+s.arrow(rlq.benthic_nonrare_lag$c1)
+s.label(rlq.benthic_nonrare_lag$lQ, boxes = FALSE)
+
+#non-rare year_lag benthic: Fourth corner analysis----
+
+#build model
+#this is version without adjustment of pvalues for multiple comparisons
+nrepet <- 49999 
+four.comb.benthic_nonrare_lag <- fourthcorner(envn_lag1, abund,
+                                          trait, modeltype = 6, p.adjust.method.G = "none",
+                                          p.adjust.method.D = "none", nrepet = nrepet)
+
+#plot results
+par(mfrow = c(1, 1))
+plot(four.comb.benthic_nonrare_lag, alpha = 0.05, stat = "D2")
+#a few sig results
+four.comb.benthic_nonrare_lag
+#a few sig results!
+
+#rerun model with adjustment of pvalues
+four.comb.benthic_padj_nonrare_lag <- fourthcorner(envn_lag1, abund,
+                                               trait, modeltype = 6, p.adjust.method.G = "fdr",
+                                               p.adjust.method.D = "fdr", nrepet = nrepet)
+plot(four.comb.benthic_padj_nonrare_lag, alpha = 0.05, stat = "D2") 
+#no significant results
+
+#non-rare year_lag benthic: combined RQL and Fourth Corner----
+
+testrlq.benthic_nonrare_lag <- randtest(rlq.benthic_nonrare_lag, modeltype = 6, nrepet = nrepet)
+testrlq.benthic_nonrare_lag
+#Model 2 sig. but Model 4 not (p = 0.53)
+
+plot(testrlq.benthic_nonrare_lag)
+
+#The total inertia of RLQ analysis is equal to the SRLQ multivariate statistic defined in Dray and
+#Legendre (2008). This statistic is returned by the fourthcorner2 function
+Srlq_nonrare_lag <- fourthcorner2(envn_lag1,abund,trait,
+                              modeltype = 6, p.adjust.method.G = "fdr", nrepet = nrepet)
+Srlq_nonrare_lag$trRLQ 
+
+#biplot
+#plot should be devoid of relationship lines
+plot(four.comb.benthic_padj_nonrare_lag, x.rlq = rlq.benthic_nonrare_lag, alpha = 0.05,
+     stat = "D2", type = "biplot")
+#yep just shows the traits and env predictors
+
+#Another approach is provided by the fourthcorner.rlq function and consists in testing directly the
+#links between RLQ axes and traits (typetest="Q.axes") or environmental variables (typetest="R.axes").
+testQaxes.comb.benthic_nonrare_lag <- fourthcorner.rlq(rlq.benthic_nonrare_lag, modeltype = 6,
+                                                   typetest = "Q.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+                                                   p.adjust.method.D = "fdr")
+testRaxes.comb.benthic_nonrare_lag <- fourthcorner.rlq(rlq.benthic_nonrare_lag, modeltype = 6,
+                                                   typetest = "R.axes", nrepet = nrepet, p.adjust.method.G = "fdr",
+                                                   p.adjust.method.D = "fdr")
+print(testQaxes.comb.benthic_nonrare_lag, stat = "D")
+#no significant pvalues
+
+print(testRaxes.comb.benthic_nonrare_lag, stat = "D")
+#4 significant
+
+#Results can be represented using a table with colors indicating significance :
+par(mfrow = c(1, 2))
+plot(testQaxes.comb.benthic_nonrare_lag, alpha = 0.05, type = "table",
+     stat = "D2")
+plot(testRaxes.comb.benthic_nonrare_lag, alpha = 0.05, type = "table",
+     stat = "D2")
+
+# #Significance with axes can also be reported on the factorial map of RLQ analysis. Here, significant
+# associations with the first axis are represented in blue, with the second axis in orange, with both axes in
+# green (variables with no significant association are in black):
+par(mfrow = c(1, 2))
+plot(testQaxes.comb.benthic_nonrare_lag, alpha = 0.05, type = "biplot",
+     stat = "D2", col = c("black", "blue", "orange", "green"))
+plot(testRaxes.comb.benthic_nonrare_lag, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
