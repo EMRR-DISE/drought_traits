@@ -1,20 +1,20 @@
-origin,life_hist,residency,habitat,fecundity,life_span,l_mat,l_max,therm_tol
-nonnative,anadromous,migratory,pelagic,225600,13,43.4,60,35
-native,marine,migratory,pelagic,41000,19,21.4,46,25
-nonnative,freshwater,nonmigratory,pelagic,21000,4,5.2,22,30.9
-native,marine,nonmigratory,pelagic,206170,7,15,24.8,27
-native,euryhaline ,migratory,pelagic,12000,2,6.1,12,28.4
-nonnative,euryhaline ,nonmigratory,benthopelagic,5000000,30,17.4,125,32
-native,anadromous,migratory,benthopelagic,17000,9,82.2,100,28.9
-native,euryhaline ,nonmigratory,benthopelagic,100000,9,17,45,31
-native,anadromous,nonmigratory,pelagic,24000,3,9,15,24.8
-nonnative,euryhaline ,migratory,benthic,32000,3,17,30,32
-native,euryhaline ,migratory,benthic,476314.6666666667,104,115,610,30.7
-nonnative,freshwater,nonmigratory,benthic,3000,14,20.5,95,31
-native,euryhaline ,nonmigratory,pelagic,1000,9,13.9,37,29
-native,marine,nonmigratory,pelagic,1000,11,18.5,49.4,27
-native,marine,migratory,benthopelagic,20,9,8.2,23.5,26
-native,marine,nonmigratory,benthopelagic,16800,15,14,31,18.1
-nonnative,freshwater,migratory,benthic,70000,24,56,132,32
-native,euryhaline ,nonmigratory,benthic,11000000,8,40,91,28
-native,marine,nonmigratory,benthic,789,7,16,38,16.8
+origin,life_hist,residency,habitat,troph,troph_se,diet,reproduction,fecundity,life_span,l_mat,l_max,therm_tol,fish_vul
+nonnative,anadromous,migratory,pelagic,3.5,0.3,microcarnivore,pelagic,225600,13,43.4,60,35,50
+native,marine,migratory,pelagic,3.2,0.2,microcarnivore,adhesive,41000,19,21.4,46,25,49
+nonnative,freshwater,nonmigratory,pelagic,2.8,0.1,planktivore,adhesive,21000,4,5.2,22,30.9,23
+native,marine,nonmigratory,pelagic,3.1,0.28,planktivore,broadcast,206170,7,15,24.8,27,24
+native,euryhaline ,migratory,pelagic,3.2,0.1,planktivore,demersal,12000,2,6.1,12,28.4,10
+nonnative,euryhaline ,nonmigratory,benthopelagic,4.7,0.2,piscivore,pelagic,5000000,30,17.4,125,32,61
+native,anadromous,migratory,benthopelagic,4.4,0.7,piscivore,demersal,17000,9,82.2,100,28.9,90
+native,euryhaline ,nonmigratory,benthopelagic,2.9,0.3,microcarnivore,adhesive,100000,9,17,45,31,34
+native,anadromous,nonmigratory,pelagic,3.2,0.35,microcarnivore,adhesive,24000,3,9,15,24.8,28
+nonnative,euryhaline ,migratory,benthic,3.4,0.3,invertivore,nest,32000,3,17,30,32,33
+native,euryhaline ,migratory,benthic,3.3,0.1,invertivore,demersal,476314.6666666667,104,115,610,30.7,87
+nonnative,freshwater,nonmigratory,benthic,3.2,0.45,carnivore,nest,3000,14,20.5,95,31,43
+native,euryhaline ,nonmigratory,pelagic,2.8,0.28,planktivore,adhesive,1000,9,13.9,37,29,27
+native,marine,nonmigratory,pelagic,2.3,0.21,planktivore,adhesive,1000,11,18.5,49.4,27,35
+native,marine,migratory,benthopelagic,3,0.31,omnivorous,viviparous,20,9,8.2,23.5,26,10
+native,marine,nonmigratory,benthopelagic,3.4,0.49,invertivore,pelagic,16800,15,14,31,18.1,31
+nonnative,freshwater,migratory,benthic,4.2,0.3,carnivore,nest,70000,24,56,132,32,73
+native,euryhaline ,nonmigratory,benthic,3.6,0.1,carnivore,pelagic,11000000,8,40,91,28,51
+native,marine,nonmigratory,benthic,4,0.67,carnivore,nest,789,7,16,38,16.8,28

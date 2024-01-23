@@ -18,11 +18,10 @@ names(dat)
 ftrait <-
   dat %>% 
   clean_names() %>% 
-  select(c(name_abr, origin:therm_tol)) %>% 
+  select(c(name_abr, origin:fish_vul)) %>% 
   remove_rownames %>% 
-  column_to_rownames(var = "name_abr") # convert spp names to rownames
-
-ftrait
+  column_to_rownames(var = "name_abr") %>% # convert spp names to rownames
+  print()
 
 rm(dat)
 
