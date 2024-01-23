@@ -71,27 +71,25 @@ afcL.fish <- # 'L' table of species abundance by year
 score(afcL.fish)
 
 ## environment ----
-# Because the environmental data includes both quantitative and categorical variables, should use dudi.hillsmith() (dudi.mixed() if ordered variables). 
+# Because the environmental data includes both quantitative and ordered categorical variables, should use dudi.mix(). 
 acpR.fish <- # 'R' table of environmental conditions by year
-  dudi.hillsmith(fenv, # environ data include both quantitative & categorical variables, thus dudi.hillsmith
-                 row.w = afcL.fish$lw,
+  dudi.mix(fenv, # environ data include both quantitative & ordered variables
                  scannf = F,
                  nf = 2)
 score(acpR.fish)
 
 # reduced variables
 acpR.fish1 <- # 'R' table of environmental conditions by year
-  dudi.hillsmith(fenv1, # environ data include both quantitative & categorical variables, thus dudi.hillsmith
-                 row.w = afcL.fish$lw,
+  dudi.mix(fenv1,
                  scannf = F,
                  nf = 2)
 score(acpR.fish1)
 
 ## traits -----
-# Again, should be able to use dudi.hillsmith() because trait data include both quant and categorical data.
+# Use dudi.hillsmith() because trait data includes categorical but not ordered data.
 
 acpQ.fish <- # 'Q' table of traits by species
-  dudi.hillsmith(  # trait variables include numeric and categorical data
+  dudi.hillsmith(
     ftrait, 
     row.w = afcL.fish$cw,
     scannf = F)
@@ -99,7 +97,7 @@ score(acpQ.fish)
 
 # removed life_span
 acpQ.fish1 <- # 'Q' table of traits by species
-  dudi.hillsmith(  # trait variables include numeric and categorical data
+  dudi.hillsmith(
     ftrait1, 
     row.w = afcL.fish$cw,
     scannf = F)
@@ -152,49 +150,7 @@ four.comb.fish_mod6 <- fourthcorner(
   nrepet = nrepet
 )
 
-four.comb.fish_mod2 <- fourthcorner(
-  fenv, fish, ftrait,
-  modeltype = 2, # why include this in the example given likelihood of type I error?
-  p.adjust.method.G = "none",
-  p.adjust.method.D = "none",
-  nrepet = nrepet
-)
-
-four.comb.fish_mod4 <- fourthcorner(
-  fenv, fish, ftrait,
-  modeltype = 4, # why include this in the example given likelihood of type I error?
-  p.adjust.method.G = "none",
-  p.adjust.method.D = "none",
-  nrepet = nrepet
-)
-
 # same 4th corner graphical results except with the reduced number of variables (ie fenv1, ftrait1)
-four.comb.fish_mod6.1 <- fourthcorner(
-  fenv1, fish, ftrait1,
-  modeltype = 6, # Dray and Legendre (2008) and ter Braak et al. (20012) showed that all models 
-  # except model 6 have inflated type I error
-  p.adjust.method.G = "none",
-  p.adjust.method.D = "none",
-  nrepet = nrepet
-)
-
-four.comb.fish_mod2.1 <- fourthcorner(
-  fenv1, fish, ftrait1,
-  modeltype = 2, # why include this in the example given likelihood of type I error?
-  p.adjust.method.G = "none",
-  p.adjust.method.D = "none",
-  nrepet = nrepet
-)
-
-four.comb.fish_mod4.1 <- fourthcorner(
-  fenv1, fish, ftrait1,
-  modeltype = 4, # why include this in the example given likelihood of type I error?
-# same 4th corner graphical results except with the reduced number of variables (ie fenv1, ftrait1)
-p.adjust.method.G = "none",
-p.adjust.method.D = "none",
-nrepet = nrepet
-)
-
 four.comb.fish_mod6.1 <- fourthcorner(
   fenv1, fish, ftrait1,
   modeltype = 6, # Dray and Legendre (2008) and ter Braak et al. (20012) showed that all models 
@@ -221,23 +177,10 @@ four.comb.fish_mod6.1 <- fourthcorner(
 # procedure leads to significant associations if the maximal p-value is lower than alpha=0.05. 
 
 plot(four.comb.fish_mod6, alpha = 0.05, stat = "D2")
-plot(four.comb.fish_mod2, alpha = 0.05, stat = "D2")
-
 plot(four.comb.fish_mod6.1, alpha = 0.05, stat = "D2")
-plot(four.comb.fish_mod2.1, alpha = 0.05, stat = "D2")
-
-plot(four.comb.fish_mod4, alpha = 0.05, stat = "D2")
-plot(four.comb.fish_mod4.1, alpha = 0.05, stat = "D2")
 
 # Now, adjust p-values for multiple comparisons using the fdr method using the p.adjust.4thcorner function 
 # (assuming nrepet set to 49999, though I got the same results with nrepet=9999).
-
-four.comb.fish.2.adj <-
-  p.adjust.4thcorner(
-    four.comb.fish_mod2,
-    p.adjust.method.G = "fdr",
-    p.adjust.method.D = "fdr"
-  )
 
 four.comb.fish.6.adj <-
   p.adjust.4thcorner(
@@ -246,37 +189,13 @@ four.comb.fish.6.adj <-
     p.adjust.method.D = "fdr"
   )
 
-plot(four.comb.fish.2.adj,
-     alpha = 0.05,
-     stat = "D2")
-plot(four.comb.fish.6.adj,
-     alpha = 0.05,
-     stat = "D2")
-
 # same, w reduced number of levels
-four.comb.fish.2.1.adj <-
+four.comb.fish.6.1.adj <-
   p.adjust.4thcorner(
-    four.comb.fish_mod2.1,
+    four.comb.fish_mod6.1,
     p.adjust.method.G = "fdr",
     p.adjust.method.D = "fdr"
   )
-
-    
-four.comb.fish_mod2.1 <- fourthcorner(
-  fenv1, fish, ftrait1,
-  modeltype = 2, # why include this in the example given likelihood of type I error?
-  p.adjust.method.G = "none",
-  p.adjust.method.D = "none",
-  nrepet = nrepet
-)
-
-four.comb.fish_mod4.1 <- fourthcorner(
-  fenv1, fish, ftrait1,
-  modeltype = 4, # why include this in the example given likelihood of type I error?
-  p.adjust.method.G = "none",
-  p.adjust.method.D = "none",
-  nrepet = nrepet
-)
 
 # When you plot the results, blue cells correspond to negative significant relationships while red cells 
 # correspond to positive ones (modify using argument col). In this example, there are some associations 
@@ -295,23 +214,10 @@ four.comb.fish_mod4.1 <- fourthcorner(
 # procedure leads to significant associations if the maximal p-value is lower than alpha=0.05. 
 
 plot(four.comb.fish_mod6, alpha = 0.05, stat = "D2")
-plot(four.comb.fish_mod2, alpha = 0.05, stat = "D2")
-
 plot(four.comb.fish_mod6.1, alpha = 0.05, stat = "D2")
-plot(four.comb.fish_mod2.1, alpha = 0.05, stat = "D2")
-
-plot(four.comb.fish_mod4, alpha = 0.05, stat = "D2")
-plot(four.comb.fish_mod4.1, alpha = 0.05, stat = "D2")
 
 # Now, adjust p-values for multiple comparisons using the fdr method using the p.adjust.4thcorner function 
 # (assuming nrepet set to 49999, though I got the same results with nrepet=9999).
-
-four.comb.fish.2.adj <-
-  p.adjust.4thcorner(
-    four.comb.fish_mod2,
-    p.adjust.method.G = "fdr",
-    p.adjust.method.D = "fdr"
-  )
 
 four.comb.fish.6.adj <-
   p.adjust.4thcorner(
@@ -320,20 +226,11 @@ four.comb.fish.6.adj <-
     p.adjust.method.D = "fdr"
   )
 
-plot(four.comb.fish.2.adj,
-     alpha = 0.05,
-     stat = "D2")
 plot(four.comb.fish.6.adj,
      alpha = 0.05,
      stat = "D2")
 
 # same, w reduced number of levels
-four.comb.fish.2.1.adj <-
-  p.adjust.4thcorner(
-    four.comb.fish_mod2.1,
-    p.adjust.method.G = "fdr",
-    p.adjust.method.D = "fdr"
-  )
 
 four.comb.fish.6.1.adj <-
   p.adjust.4thcorner(
@@ -342,27 +239,24 @@ four.comb.fish.6.1.adj <-
     p.adjust.method.D = "fdr"
   )
 
-plot(four.comb.fish.2.1.adj,
-     alpha = 0.05,
-     stat = "D2")
 plot(four.comb.fish.6.1.adj,
      alpha = 0.05,
      stat = "D2")
 
 # Adjusted p-values can be obtained directly using the fourthcorner function:
 (fourthcorner.mod6 <- 
-  fourthcorner(fenv, fish, ftrait,
-             modeltype = 6,
-             p.adjust.method.G = "fdr",
-             p.adjust.method.D = "fdr",
-             nrepet = nrepet))
+    fourthcorner(fenv, fish, ftrait,
+                 modeltype = 6,
+                 p.adjust.method.G = "fdr",
+                 p.adjust.method.D = "fdr",
+                 nrepet = nrepet))
 
 (fourthcorner.mod6.1 <- 
-  fourthcorner(fenv1, fish, ftrait1,
-             modeltype = 6,
-             p.adjust.method.G = "fdr",
-             p.adjust.method.D = "fdr",
-             nrepet = nrepet))
+    fourthcorner(fenv1, fish, ftrait1,
+                 modeltype = 6,
+                 p.adjust.method.G = "fdr",
+                 p.adjust.method.D = "fdr",
+                 nrepet = nrepet))
 
 # 4th+RLQ ----
 
@@ -370,9 +264,9 @@ plot(four.comb.fish.6.1.adj,
 
 # First evaluate the global significance of the traits-environment relationships using test based on total inertia of the RLQ analysis:
 (testrlq.fish <- 
-  randtest(rlq.fish,
-           modeltype = 6,
-           nrepet = nrepet))
+   randtest(rlq.fish,
+            modeltype = 6,
+            nrepet = nrepet))
 
 plot(testrlq.fish)
 

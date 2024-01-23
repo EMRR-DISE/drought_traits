@@ -17,7 +17,10 @@ fenv <- read_csv("fish traits/fish_data/drought_variables.csv") %>%
          water_year_sac = as_factor(water_year_sac),
          .keep = "unused")
 
-fenv
+# replace Phos 2021 datum (NA) with mean of all previous years
+fenv[55,10] <- mean(fenv$Phos, na.rm = T) # replace NA w mean Phos for 2021
+
+print(fenv, n=Inf)
 
 saveRDS(fenv, file = "fish traits/fish_data/fenv.rds")
 write_csv(fenv, "fish traits/fish_data/fenv.csv")
