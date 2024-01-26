@@ -695,7 +695,7 @@ cpue_indiv_prop_stn <- benthic_cpue_stfr %>%
   #calculate the proportion of all individuals that a taxon comprises
   mutate(indiv_prop = indiv_n/sum(indiv_n)) %>% 
   #pivot to wide form so each station has it's own columns
-  pivot_wider(names_from = "station_code", values_from = indiv_n:indiv_prop)
+  pivot_wider(names_from = "station_code", values_from = indiv_n:indiv_prop) %>% 
   glimpse()
 
 #combine with relative abundance across all stations
