@@ -2,6 +2,14 @@
 #Environmental Monitoring Program data
 #Benthic Invertebrate Survey data
 
+# To do list--------------
+#run versions of analysis with other metrics of drought in place of salinity (eg, inflow)
+#make sure envn_winter and envn_lag1_winter have correct dimensions
+#try different types of lags
+#For analyses by year, try 2 year lag instead of one year lag
+#for analyses by season, could try matching a season's abundance with envn from same season, one earlier, two earlier, etc
+#consider look at dominant inverts by season
+
 # Load required packages -----------------
 
 library(tidyverse) #suite of data science tools
@@ -9,23 +17,93 @@ library(janitor) #used to quickly clean up column names
 library(ade4) #running fourth corner analyses
 library(vegan) #multivariate analysis
 
-# Load data sets ----------------
-#l df
+# Load and format trait data -----------------
+
+#non-rare benthic invert traits
+trait <- read_csv("./benthic/data_output/traits/benthic_table_q.csv") %>%
+  select(-organism_code) %>% 
+  #drop rows for three higher level taxa
+  filter(!(target_taxon_name=="Turbellaria" | target_taxon_name=="Actinolaiminae"|target_taxon_name=="Mermithidae")) %>% 
+  column_to_rownames(var = "target_taxon_name") %>% 
+  glimpse()
+
+#dominant benthic invert traits
+trait_dominant <- read_csv("./benthic/data_output/traits/benthic_dom_table_q.csv") 
+
+#format dominant benthic invert traits data frame
+trait_dom <- trait_dominant %>%
+  select(-organism_code) %>% 
+  column_to_rownames(var = "name") %>%
+  #make categorical traits into factors
+  mutate(across(c(
+    armoring
+    ,dispersal
+    ,habit
+    ,reproduction
+    ,trophic_habit
+    ,voltinism
+    ,native
+  ),factor)) %>% 
+  glimpse()
+
+# Load and format abundances ----------------
+
+#Non-rare taxa: Abundances by year
+#can just subset this to get Table L for dominant 14 taxa
 abund <- read_csv("./benthic/data_output/benthic_table_l.csv") %>%
   column_to_rownames(var = "year_adjusted") %>% 
   #drop columns for three higher level taxa
   select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A")) %>% 
   glimpse()
 
-#r df
-temp <- read_csv("fish traits/fish_data/drought_variables.csv") %>%  #just took from fish for now
+#Create dominant benthic invert abundances data frame
+#it will be a subset of columns from non-rare taxa abundances data frame 
+
+#create vector of dominant taxa names
+dom_names <- trait_dominant %>% 
+  pull(name)
+
+#format abundance table
+#use select(all_of()) to just keep the columns with names in the vector of 14 dominant taxa
+abund_dom <- abund %>% 
+  select(all_of(dom_names))
+
+#Abundances by season
+abund_fall <- read_csv("./benthic/data_output/benthic_table_l_fall.csv") %>%
+  column_to_rownames(var = "year_adjusted") %>% 
+  #drop columns for three higher level taxa
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
+
+abund_spring <- read_csv("./benthic/data_output/benthic_table_l_spring.csv") %>%
+  column_to_rownames(var = "year_adjusted") %>% 
+  #drop columns for three higher level taxa
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
+
+abund_summer <- read_csv("./benthic/data_output/benthic_table_l_summer.csv") %>%
+  column_to_rownames(var = "year_adjusted") %>% 
+  #drop columns for three higher level taxa
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
+
+abund_winter <- read_csv("./benthic/data_output/benthic_table_l_winter.csv") %>%
+  column_to_rownames(var = "year_adjusted") %>% 
+  #drop columns for three higher level taxa
+  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A")) 
+
+# Load and format environmental variables ----------------
+
+#read in data with all variables
+#NOTE: this is a draft version of variables; will replace with refined one later
+temp <- read_csv("./drought_variables/drought_variables.csv") %>%  
   #clean up column names
   clean_names() %>% 
   glimpse()
 
-temp[55,10] <- mean(temp$phos, na.rm = T) # replace NA w mean Phos for 2021
+# replace NA w mean Phos for 2021
+temp[55,12] <- mean(temp$phos, na.rm = T) 
 
+#format data frame to match benthic invert abundances data frame
 envn <- temp %>%
+  #just keep the years for which we have benthic invert abundance data
   filter(year >= "1981" & year != "2022" & year!="2004" & year!="2005")%>% 
   #let's just start with a subset of variables, focusing on continuous ones (ie, no factors)
   #also let's drop flow because highly correlated with salinity
@@ -76,8 +154,6 @@ envn_lag1 <- temp %>%
   mutate(year_lag1 = year + 1,.after = year) %>% 
   #filter out lag years that won't match abundances because data aren't available
   filter(year_lag1 >= "1981" & year_lag1 < "2022" & year_lag1 !="2004" & year_lag1 !="2005")%>% 
-  #let's just start with a subset of variables, focusing on continuous ones (ie, no factors)
-  #also let's drop flow because highly correlated with salinity
   select(
     year_lag1
     , drought_year_trunc #added this in later, results were initially interesting for year_lag but we added it to other analyses as well
@@ -101,8 +177,6 @@ envn_lag1_winter <- temp %>%
   mutate(year_lag1 = year + 1,.after = year) %>% 
   #filter out lag years that won't match abundances because data aren't available
   filter(year_lag1 >= "1981" & year_lag1 < "2022" & year_lag1 !="2004" & year_lag1 !="2005" & year_lag1 !="2021")%>% 
-  #let's just start with a subset of variables, focusing on continuous ones (ie, no factors)
-  #also let's drop flow because highly correlated with salinity
   select(
     year_lag1
     , drought_year_trunc #added this in later, results were initially interesting for year_lag but we added it to other analyses as well
@@ -120,64 +194,6 @@ envn_lag1_winter <- temp %>%
   column_to_rownames(var = "year_lag1") %>% 
   glimpse()
 
-#looking at differences between seasons
-#new abundance table l for each season
-abund_fall <- read_csv("./benthic/data_output/benthic_table_l_fall.csv") %>%
-  column_to_rownames(var = "year_adjusted") %>% 
-  #drop columns for three higher level taxa
-  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
-abund_spring <- read_csv("./benthic/data_output/benthic_table_l_spring.csv") %>%
-  column_to_rownames(var = "year_adjusted") %>% 
-  #drop columns for three higher level taxa
-  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
-abund_summer <- read_csv("./benthic/data_output/benthic_table_l_summer.csv") %>%
-  column_to_rownames(var = "year_adjusted") %>% 
-  #drop columns for three higher level taxa
-  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A"))
-abund_winter <- read_csv("./benthic/data_output/benthic_table_l_winter.csv") %>%
-  column_to_rownames(var = "year_adjusted") %>% 
-  #drop columns for three higher level taxa
-  select(-c("turbellarian sp. A","mermithid sp. A","Actinolaiminae sp. A")) 
-
-#non-rare benthic: q df
-trait <- read_csv("./benthic/data_output/traits/benthic_table_q.csv") %>%
-  select(-organism_code) %>% 
-  #drop rows for three higher level taxa
-  filter(!(target_taxon_name=="Turbellaria" | target_taxon_name=="Actinolaiminae"|target_taxon_name=="Mermithidae")) %>% 
-  column_to_rownames(var = "target_taxon_name") %>% 
-  glimpse()
-
-#dominant benthic: read in q df
-trait_dominant <- read_csv("./benthic/data_output/traits/benthic_dom_table_q.csv") 
-
-#format dominant benthic taxa q table
-trait_dom <- trait_dominant %>%
-  select(-organism_code) %>% 
-  column_to_rownames(var = "name") %>%
-  #make categorical traits into factors
-  mutate(across(c(
-    armoring
-    ,dispersal
-    ,habit
-    ,reproduction
-    ,trophic_habit
-    ,voltinism
-    ,native
-  ),factor)) %>% 
-  glimpse()
-
-#dominant benthic: format l df
-#trait table (table q) and environmental table (table r) should be ready to go
-#just need to filter taxa for abundances table (table l)
-
-#create vector of dominant taxa names
-dom_names <- trait_dominant %>% 
-  pull(name)
-
-#format abundance table
-#use select(all_of()) to just keep the columns with names in the vector of 14 dominant taxa
-abund_dom <- abund %>% 
-  select(all_of(dom_names))
 
 #non-rare benthic: start analysis--------------------
 
