@@ -195,11 +195,11 @@ envn_lag1_winter <- temp %>%
   glimpse()
 
 
-#non-rare benthic: start analysis--------------------
+# Analysis: Non-rare taxa, annual, no time lag --------------------
 
 #check dimensions
 dim(abund) #39 x 61 correspondance
-dim(envn) #39 x 6 all quantitative -- PCA
+dim(envn) #39 x 7 hillsmith, quantitative and factor
 dim(trait) #61 x 2 hillsmith, quantitative and factor
 
 #correspondance for abundance data
@@ -209,21 +209,21 @@ summary(afcL.benthic)
 #total inertia 1.107
 
 #start with PCA for environmental data
-acpR.benthic <- 
-  dudi.pca(envn, 
-                 row.w = afcL.benthic$lw,
-                 scannf = F,
-                 nf = 2 #leave this out for now to see all eigenvalues
-           )
-score(acpR.benthic)
-
-#hill-smith for environmental data
-#acpR.benthic <- 
-#  dudi.hillsmith(envn, 
+# acpR.benthic <- 
+#   dudi.pca(envn, 
 #                  row.w = afcL.benthic$lw,
 #                  scannf = F,
-#                  nf = 2)
+#                  nf = 2 #leave this out for now to see all eigenvalues
+#            )
 # score(acpR.benthic)
+
+#hill-smith for environmental data
+acpR.benthic <-
+ dudi.hillsmith(envn,
+                 row.w = afcL.benthic$lw,
+                 scannf = F,
+                 nf = 2)
+score(acpR.benthic)
 
 #hill-smith again for trait data
 acpQ.benthic <- # 'Q' table of traits by species
@@ -233,7 +233,7 @@ acpQ.benthic <- # 'Q' table of traits by species
     scannf = F)
 score(acpQ.benthic)
 
-#non-rare benthic: RQL analysis-------
+#RQL analysis
 
 #build model
 rlq.benthic <- rlq(acpR.benthic, afcL.benthic, acpQ.benthic,
@@ -252,7 +252,7 @@ s.arrow(rlq.benthic$c1)
 s.label(rlq.benthic$lQ, boxes = FALSE)
 
 
-#non-rare benthic: Fourth corner analysis--------------
+#Fourth corner analysis
 
 #build model
 #this is version without adjustment of pvalues for multiple comparisons
@@ -273,7 +273,7 @@ four.comb.benthic_padj <- fourthcorner(envn, abund,
                                   p.adjust.method.D = "fdr", nrepet = nrepet)
 plot(four.comb.benthic_padj, alpha = 0.05, stat = "D2")
 
-#non-rare benthic: combined RQL and Fourth Corner---------------
+#combined RQL and Fourth Corner
 
 testrlq.benthic <- randtest(rlq.benthic, modeltype = 6, nrepet = nrepet)
 testrlq.benthic
@@ -306,7 +306,7 @@ print(testQaxes.comb.benthic, stat = "D")
 #AxcR1 / body_size is close before adjustment (p = 0.07)
 
 print(testRaxes.comb.benthic, stat = "D")
-#none are significant but four are close
+#5 are right at p=0.05
 
 #Results can be represented using a table with colors indicating significance :
 par(mfrow = c(1, 2))
@@ -369,21 +369,11 @@ plot(abund_cca,
 plot(abund_cca, main = "CA abundances - biplot scaling 2")
 
 
-
-
-
-
-
-
-
-
-
-
-#dominant benthic: start analysis--------------------
+# Analysis: Dominant taxa, annual, no time lag --------------------
 
 #check dimensions
 dim(abund_dom) #39 x 14 correspondance
-dim(envn) #39 x 6 all quantitative -- PCA
+dim(envn) #39 x 7 hillsmith, quantitative and factor
 dim(trait_dom) #14 x 9 hillsmith, quantitative and factor
 
 #correspondance for abundance data
@@ -393,22 +383,22 @@ summary(afcL.benthic_dom)
 #total inertia 1.006, which is a little worse than the non-rare taxa analysis with more taxa but fewer traits
 
 #start with PCA for environmental data
-acpR.benthic_dom <- 
-  dudi.pca(envn, 
-           row.w = afcL.benthic_dom$lw,
-           scannf = F,
-           nf = 2 #leave this out for now to see all eigenvalues
-  )
-score(acpR.benthic_dom)
+# acpR.benthic_dom <- 
+#   dudi.pca(envn, 
+#            row.w = afcL.benthic_dom$lw,
+#            scannf = F,
+#            nf = 2 #leave this out for now to see all eigenvalues
+#   )
+# score(acpR.benthic_dom)
 #plots look pretty good
 
 #hill-smith for environmental data
-#acpR.benthic_dom <- 
-#  dudi.hillsmith(envn, 
-#                  row.w = afcL.benthic_dom$lw,
-#                  scannf = F,
-#                  nf = 2)
-# score(acpR.benthic_dom)
+acpR.benthic_dom <-
+ dudi.hillsmith(envn,
+                 row.w = afcL.benthic_dom$lw,
+                 scannf = F,
+                 nf = 2)
+score(acpR.benthic_dom)
 
 #hill-smith for trait data
 acpQ.benthic_dom <- # 'Q' table of traits by species
@@ -418,9 +408,7 @@ acpQ.benthic_dom <- # 'Q' table of traits by species
     scannf = F)
 score(acpQ.benthic_dom)
 
-
-
-#dominant benthic: RQL analysis----
+#RQL analysis
 
 #build model
 rlq.benthic_dom <- rlq(acpR.benthic_dom, afcL.benthic_dom, acpQ.benthic_dom,
@@ -438,7 +426,7 @@ s.arrow(rlq.benthic_dom$l1)
 s.arrow(rlq.benthic_dom$c1)
 s.label(rlq.benthic_dom$lQ, boxes = FALSE)
 
-#dominant benthic: Fourth corner analysis----
+#Fourth corner analysis
 
 #build model
 #this is version without adjustment of pvalues for multiple comparisons
@@ -460,7 +448,7 @@ four.comb.benthic_padj_dom <- fourthcorner(envn, abund_dom,
 plot(four.comb.benthic_padj_dom, alpha = 0.05, stat = "D2") 
 #no sig results
 
-#dominant benthic: combined RQL and Fourth Corner----
+#combined RQL and Fourth Corner
 
 testrlq.benthic_dom <- randtest(rlq.benthic_dom, modeltype = 6, nrepet = nrepet)
 testrlq.benthic_dom
@@ -511,21 +499,29 @@ plot(testQaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
 plot(testRaxes.comb.benthic_dom, alpha = 0.05, type = "biplot",
      stat = "D2", col = c("black", "blue", "orange", "green"))
 
-#dom year_lag benthic: start analysis----
+# Analysis: Dominant taxa, annual, one year lag --------------------
 
 #check dimensions
 dim(abund_dom) #39 x 14 correspondance
-dim(envn_lag1) #39 x 6 all quantitative -- PCA
+dim(envn_lag1) #39 x 7 hillsmith, quantitative and factor
 dim(trait_dom) #14 x 9 hillsmith, quantitative and factor
 
 #start with PCA for environmental data
-acpR.benthic_dom_lag <- 
-  dudi.pca(envn_lag1, 
-           row.w = afcL.benthic_dom$lw,
-           scannf = F,
-           nf = 2 #leave this out for now to see all eigenvalues
-  )
-score(acpR.benthic_dom)
+# acpR.benthic_dom_lag <- 
+#   dudi.pca(envn_lag1, 
+#            row.w = afcL.benthic_dom$lw,
+#            scannf = F,
+#            nf = 2 #leave this out for now to see all eigenvalues
+#   )
+# score(acpR.benthic_dom_lag)
+
+#hill-smith for environmental data
+acpR.benthic_dom_lag <-
+  dudi.hillsmith(envn_lag1,
+                 row.w = afcL.benthic_dom$lw,
+                 scannf = F,
+                 nf = 2)
+score(acpR.benthic_dom_lag)
 
 #dom year_lag benthic: RQL analysis----
 
