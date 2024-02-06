@@ -21,7 +21,9 @@ ftrait <-
   select(c(name_abr, origin:fish_vul)) %>% 
   remove_rownames %>% 
   column_to_rownames(var = "name_abr") %>% # convert spp names to rownames
-  print()
+  mutate_at(c("origin", "life_hist", "residency", "habitat",
+              "diet", "reproduction"), as.factor) %>% 
+  mutate_at(c("fecundity", "life_span", "l_mat", "l_max", "therm_tol"), as.numeric)
 
 rm(dat)
 

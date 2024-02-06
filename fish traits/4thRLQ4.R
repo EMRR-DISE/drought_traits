@@ -13,53 +13,37 @@ library(ade4)
 # load data ------
 ## L df ----
 # fish occurrence data with years prior to 1975 + 1979 removed bc environmental data incomplete for these
-fish <- read_csv("fish traits/fish_data/fmwt.csv") %>% # derived from fmwt.R, collapsed striper data
-  filter(year >= "1975" & year != "1979" & year != "2022") %>% # no (env) data these years
-  column_to_rownames(var = "year") %>% 
-  select(american_shad, pacific_herring, threadfin_shad, northern_anchovy, delta_smelt,
-         striped_bass, chinook_salmon, splittail, longfin_smelt, yellowfin_goby,
-         white_sturgeon, white_catfish, topsmelt, jacksmelt, shiner_perch, white_croaker,
-         channel_catfish, starry_flounder, plainfin_midshipman)
+fish <- read_rds("fish traits/fish_data/fish.rds") %>% print()
+glimpse(fish)
 
 ## R df ----
 # environmental data for each year included in fish data
-
-### revisions ----
-# Modified original environmental data set to limit some of the redundant or less-than-useful variables. 
-fenv <- read_rds("fish traits/fish_data/fenv.rds")
-fenv <- fenv %>% 
-  filter(year >= "1975" & year != "1979" & year != "2022") %>% 
-  select(c(year, drought_year, water_year_sac, inflow_annual_cfs:Temperature)) %>% 
-  mutate(water_year_sac = as_factor(water_year_sac)) %>% 
-  relocate(water_year_sac, .before = drought_year) %>% 
-  column_to_rownames(var = "year")
-rm(temp)
-
-# remove water_year_sac, Ammonia, Secchi--first, not so relevant; remainder, closely correlated w other variables
-fenv1 <- fenv %>% 
-  select(-c(water_year_sac, Ammonia, Secchi))
+fenv <- read_rds("fish traits/fish_data/fenv.rds") %>% print()
+glimpse(fenv)
 
 ## Q df ----
 # trait data for each fish sp
 
-ftrait <- readRDS("fish traits/fish_data/ftrait.rds")
+ftrait <- read_rds("fish traits/fish_data/ftrait.rds")
 glimpse(ftrait)
-
-ftrait <- ftrait %>% 
-  mutate_at(c("origin", "life_hist", "residency", "habitat",
-              "diet", "reproduction"), as.factor) %>% 
-  mutate_at(c("fecundity", "life_span", "l_mat", "l_max", "therm_tol"), as.numeric)
-glimpse(ftrait)
-
-# remove life_span; closely correlated with l_max
-cor(ftrait$life_span, ftrait$l_max, method = "pearson")
-ftrait1 <- ftrait %>% 
-  select(-life_span)
 
 # check that the dimensions of the LQR tables match
 dim(fish) # L df, 46 years and 19 spp; quantitative--PCA is fine
 dim(fenv) # R df, each year per each of the environmental variables; multiple factorial variables + quantitative
 dim(ftrait) # Q df, each spp described by 7 traits (fecundity, habitat, l_max, etc); like fenv, mixed
+
+## revisions ----
+# versions of the above with reduced variables to reduce autocorrelation
+# R df: remove water_year_sac, Ammonia, Secchi--first, not so relevant; remainder, closely correlated w other variables
+fenv1 <- fenv %>% 
+  select(-c(water_year_sac, Ammonia, Secchi))
+
+# no need (for now?) to reduce L, the spp table
+
+# Q df: remove life_span; closely correlated with l_max
+cor(ftrait$life_span, ftrait$l_max, method = "pearson")
+ftrait1 <- ftrait %>% 
+  select(-life_span)
 
 # RLQ -----
 
@@ -67,43 +51,47 @@ dim(ftrait) # Q df, each spp described by 7 traits (fecundity, habitat, l_max, e
 # Works fine because entirely quantitative, so used correspondence analysis.
 afcL.fish <- # 'L' table of species abundance by year
   dudi.coa(fish,   # correspondence analysis appl to spp table
-           scannf = F)
+           scannf = F,
+           nf = 2) %>% # 19 column weights ($cw); 19 spp
+  print() 
 score(afcL.fish)
 
 ## environment ----
-# Because the environmental data includes both quantitative and ordered categorical variables, should use dudi.mix(). 
+# Because the environmental data includes ordered categorical variables, should use dudi.mix(). 
 acpR.fish <- # 'R' table of environmental conditions by year
-  dudi.mix(fenv, # environ data include both quantitative & ordered variables
-                 scannf = F,
-                 nf = 2)
+  dudi.mix(fenv,
+           scannf = F, # display eigenvalue barplot?; 12 column weights ($cw)
+           nf = 2) %>% # number of kept axes
+  print() 
 score(acpR.fish)
 
 # reduced variables
 acpR.fish1 <- # 'R' table of environmental conditions by year
-  dudi.mix(fenv1,
-                 scannf = F,
+  dudi.mix(fenv1, # environ data include both quantitative & categorical variables, thus dudi.hillsmith
+                 scannf = F, # can't/don't weight?
                  nf = 2)
 score(acpR.fish1)
 
 ## traits -----
-# Use dudi.hillsmith() because trait data includes categorical but not ordered data.
+# Use dudi.hillsmith() because trait data include both quant and categorical data.
 
 acpQ.fish <- # 'Q' table of traits by species
-  dudi.hillsmith(
+  dudi.hillsmith(  # trait variables include numeric and categorical data
     ftrait, 
-    row.w = afcL.fish$cw,
+    row.w = afcL.fish$cw, # weight based on previous corr analysis (species)
     scannf = F)
 score(acpQ.fish)
 
 # removed life_span
 acpQ.fish1 <- # 'Q' table of traits by species
-  dudi.hillsmith(
+  dudi.hillsmith(  # trait variables include numeric and categorical data
     ftrait1, 
-    row.w = afcL.fish$cw,
+    row.w = afcL.fish$cw, # weight based on previous corr analysis (species)
     scannf = F)
 score(acpQ.fish1)
 
 ## combine spp-env-traits -----
+# trouble here
 rlq.fish <-
   rlq(acpR.fish, afcL.fish, acpQ.fish,
       scannf = F)
