@@ -345,7 +345,7 @@ benthic_cpue_stf <- benthic_cpue_t %>% filter(station_code %in% stn_within_reg) 
   glimpse()
 
 #check which stations are included
-unique(benthic_cpue_stf$station_code)
+benthic_stn_remain <-unique(benthic_cpue_stf$station_code)
 #three stations as expected: "D4-L"   "D7-C"   "D28A-L"
 
 #how many samples after filtering?
@@ -353,6 +353,23 @@ sample_num <- benthic_cpue_stf %>%
   distinct(sample_date,station_code) %>% 
   count()
 #1360 samples
+
+#df with remaining stations
+benthic_stn_g_26910_remain <- benthic_stn_g_26910 %>% 
+  filter(station_code %in% benthic_stn_remain)
+
+#map remaining stations
+(map_benthic_left <-ggplot()+
+    #CDFW Delta waterways
+    geom_sf(data= WW_Delta_26910, fill= "skyblue3", color= "black", alpha = 0.6)+
+    #region perimeter
+    geom_sf(data =region_shape, alpha = 0.4, size = 1, color = "black", fill = "grey") +
+    #all stations
+    geom_sf(data =benthic_stn_g_26910_remain, fill = "red", shape = 22, size = 4, alpha = 0.8) +
+    #add title
+    ggtitle("All Benthic Invert Stations")+
+    theme_bw()
+)
 
 
 
@@ -572,6 +589,9 @@ benthic_cpue5 <- benthic_cpue_stfr %>%
   #sort by date, station, organism code
   arrange(sample_date, station_code, organism_code) %>% 
   glimpse()
+
+#write a file with this data set
+#write_csv(benthic_cpue5,"./benthic/data_output/benthic_common5_abundances.csv")
 
 #10%: filter abundance data set 
 benthic_cpue10 <- benthic_cpue_stfr %>% 
