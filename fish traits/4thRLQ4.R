@@ -9,6 +9,7 @@
 # getting started -----
 library(tidyverse)
 library(ade4)
+library(magrittr)
 
 # load data ------
 ## L df ----
@@ -18,94 +19,105 @@ glimpse(fish)
 
 ## R df ----
 # environmental data for each year included in fish data
-fenv <- read_rds("fish traits/fish_data/fenv.rds") %>% print()
+# reverse environmental data to merely quant + factorial (no longer ordered)
+fenv <- read_rds("fish traits/fish_data/fenv.rds") %>% 
+  mutate(drought_year_trunc = factor(drought_year_trunc, ordered = F),
+         water_year_sac = factor(water_year_sac, ordered = F)) %>% 
+  select(-c(drought_year, Nitrate, Salinity, Secchi)) 
+# trying to reduce number of variables
 glimpse(fenv)
 
 ## Q df ----
 # trait data for each fish sp
-
-ftrait <- read_rds("fish traits/fish_data/ftrait.rds")
+# combo of quantitative and factorial variables
+ftrait <- read_rds("fish traits/fish_data/ftrait.rds") %>% 
+  select(-c(troph_se, life_span, fish_vul))
+# trying to reduce number of variables
 glimpse(ftrait)
 
 # check that the dimensions of the LQR tables match
 dim(fish) # L df, 46 years and 19 spp; quantitative--PCA is fine
-dim(fenv) # R df, each year per each of the environmental variables; multiple factorial variables + quantitative
-dim(ftrait) # Q df, each spp described by 7 traits (fecundity, habitat, l_max, etc); like fenv, mixed
-
-## revisions ----
-# versions of the above with reduced variables to reduce autocorrelation
-# R df: remove water_year_sac, Ammonia, Secchi--first, not so relevant; remainder, closely correlated w other variables
-fenv1 <- fenv %>% 
-  select(-c(water_year_sac, Ammonia, Secchi))
-
-# no need (for now?) to reduce L, the spp table
-
-# Q df: remove life_span; closely correlated with l_max
-cor(ftrait$life_span, ftrait$l_max, method = "pearson")
-ftrait1 <- ftrait %>% 
-  select(-life_span)
+dim(fenv) # R df, each year per each of the 10 environmental variables; multiple factorial variables + quantitative
+dim(ftrait) # Q df, each spp described by 14 traits (fecundity, habitat, l_max, etc); like fenv, mixed
 
 # RLQ -----
 
-## fish ----
+## L: fish ----
 # Works fine because entirely quantitative, so used correspondence analysis.
-afcL.fish <- # 'L' table of species abundance by year
+(dudi.L <- # 'L' table of species abundance by year
   dudi.coa(fish,   # correspondence analysis appl to spp table
            scannf = F,
-           nf = 2) %>% # 19 column weights ($cw); 19 spp
-  print() 
-score(afcL.fish)
+           nf = 2))
 
-## environment ----
-# Because the environmental data includes ordered categorical variables, should use dudi.mix(). 
-acpR.fish <- # 'R' table of environmental conditions by year
-  dudi.mix(fenv,
+score(dudi.L)
+
+## R: environment ----
+# Because the environmental data includes ordered categorical variables, should use dudi.mix(), but this doesn't allow for weighting rows
+(dudi.R <- # 'R' table of environmental conditions by year
+  dudi.hillsmith(fenv,
            scannf = F, # display eigenvalue barplot?; 12 column weights ($cw)
-           nf = 2) %>% # number of kept axes
-  print() 
-score(acpR.fish)
+           nf = 2,
+           row.w = dudi.L$lw))
 
-# reduced variables
-acpR.fish1 <- # 'R' table of environmental conditions by year
-  dudi.mix(fenv1, # environ data include both quantitative & categorical variables, thus dudi.hillsmith
-                 scannf = F, # can't/don't weight?
-                 nf = 2)
-score(acpR.fish1)
+score(dudi.R)
 
-## traits -----
+## Q: traits -----
 # Use dudi.hillsmith() because trait data include both quant and categorical data.
 
-acpQ.fish <- # 'Q' table of traits by species
+(acpQ.fish <- # 'Q' table of traits by species
   dudi.hillsmith(  # trait variables include numeric and categorical data
     ftrait, 
-    row.w = afcL.fish$cw, # weight based on previous corr analysis (species)
-    scannf = F)
+    row.w = dudi.L$cw, # weight based on previous corr analysis (species)
+    scannf = F))
 score(acpQ.fish)
 
-# removed life_span
-acpQ.fish1 <- # 'Q' table of traits by species
-  dudi.hillsmith(  # trait variables include numeric and categorical data
-    ftrait1, 
-    row.w = afcL.fish$cw, # weight based on previous corr analysis (species)
-    scannf = F)
-score(acpQ.fish1)
-
 ## combine spp-env-traits -----
-# trouble here
-rlq.fish <-
-  rlq(acpR.fish, afcL.fish, acpQ.fish,
-      scannf = F)
+# "RLQ analysis performs a double inertia analysis of two arrays (R and Q) with a link expressed by a contingency table (L). The rows of L correspond to the rows of R and the columns of L correspond to the rows of Q. [checks out]"
 
-rlq.fish1 <-
-  rlq(acpR.fish1, afcL.fish, acpQ.fish1,
-      scannf = F) # note: didn't change any of the fish spp, hence retain afcL.fish
+rlq.fish <-
+  rlq(dudi.R, dudi.L, acpQ.fish,
+      scannf = F,
+      nf = 2)
+# trouble here if using dudi.mix() for R: "Non equal row weights"
+
+dudi.R # 46 numeric row weights
+dudi.L # 46 numeric row weights
+acpQ.fish # 19 numeric row weights!
+
+dim(fish) # L 46 rows (years), 19 columns (spp)
+dim(fenv) # R 46 rows (years), 6 columns (env variables)
+dim(ftrait) # Q 19 rows (spp), 11 columns (traits)
 
 # RLQ analysis finds coefficients in $c1 to obtain a linear combo of traits (spp scores in $1Q) and coefficients (in $l1) to obtain a linear combo of env variables (site scores in $1R). The covariance btwn these 2 set scores is maximized and equal to the square root of the corresponding eigenvalue.
 
 ## plot results ----
 plot(rlq.fish)
-plot(rlq.fish1)
 
+
+
+### env v year ----
+# mod fenv for plotting
+fenv.p <- rownames_to_column(fenv, "year")
+
+# create df environmental ordination for plotting
+env <- rownames_to_column(rlq.fish$mR, "year") %>% 
+  left_join(., fenv.p,
+            by = "year")
+
+ggplot(env,
+       aes(x=NorS1, y=NorS2)) +
+  geom_text(aes(color = drought_year_trunc,
+                label = year)) +
+  ggtitle("PCA: Environmental Conditions") +
+  theme_bw()
+
+# basis...
+ggplot(env,
+       aes(x=NorS1, y=NorS2)) +
+  geom_point() +
+  ggtitle("PCA: Environmental Conditions") +
+  theme_bw()
+  
 # Plot figures separately as follows:
 par(mfrow = c(1, 3)) 
 s.arrow(rlq.fish$l1) 
@@ -113,15 +125,8 @@ s.arrow(rlq.fish$c1)
 s.label(rlq.fish$lQ, boxes = FALSE)
 par(mfrow = c(1, 1))
 
-par(mfrow = c(1, 3)) 
-s.arrow(rlq.fish1$l1) 
-s.arrow(rlq.fish1$c1) 
-s.label(rlq.fish1$lQ, boxes = FALSE)
-par(mfrow = c(1, 1))
-
 # It's important to see how the individual parts (ie cov(traits, env)^2 = var(traits) x var(env) x cor(traits, env)^2) of the compromise are considered. Hence, compare the RLQ analysis to the separate analyses which maximize independently the structure of the trait (pca traits), structure of the environment (Hill-Smith analysis environmental variables) and correlation (correspondence analysis of the sites-spp table). Comparisons provided summary function:
 summary(rlq.fish)
-summary(rlq.fish1)
 
 # Fourth-corner ----
 # Analysis tests associations btwn individual traits and environmental variables. To obtain test w correct type I error, results of model 2 (permutation of sites, ie rows) and 4 (permutation of spp, ie columns) should be combined. While the former version of ade4 required three steps (tests w the two models and combination of the results), the combined approach can now be generated by setting the modeltype argument to 6. Note that we used a very high number of repetitions (nrepet <- 49999) to have enough power in corrected tests. This time-consuming and could be modified to speed up the different analyses (eg nrepet <- 999, the default setting).
@@ -138,16 +143,6 @@ four.comb.fish_mod6 <- fourthcorner(
   nrepet = nrepet
 )
 
-# same 4th corner graphical results except with the reduced number of variables (ie fenv1, ftrait1)
-four.comb.fish_mod6.1 <- fourthcorner(
-  fenv1, fish, ftrait1,
-  modeltype = 6, # Dray and Legendre (2008) and ter Braak et al. (20012) showed that all models 
-  # except model 6 have inflated type I error
-  p.adjust.method.G = "none",
-  p.adjust.method.D = "none",
-  nrepet = nrepet
-)
-
 # When you plot the results, blue cells correspond to negative significant relationships while red cells 
 # correspond to positive ones (modify using argument col). In this example, there are some associations 
 # btwn categorical traits and quantitative environmental variables which can be measured in three different 
@@ -165,7 +160,6 @@ four.comb.fish_mod6.1 <- fourthcorner(
 # procedure leads to significant associations if the maximal p-value is lower than alpha=0.05. 
 
 plot(four.comb.fish_mod6, alpha = 0.05, stat = "D2")
-plot(four.comb.fish_mod6.1, alpha = 0.05, stat = "D2")
 
 # Now, adjust p-values for multiple comparisons using the fdr method using the p.adjust.4thcorner function 
 # (assuming nrepet set to 49999, though I got the same results with nrepet=9999).
@@ -177,14 +171,6 @@ four.comb.fish.6.adj <-
     p.adjust.method.D = "fdr"
   )
 
-# same, w reduced number of levels
-four.comb.fish.6.1.adj <-
-  p.adjust.4thcorner(
-    four.comb.fish_mod6.1,
-    p.adjust.method.G = "fdr",
-    p.adjust.method.D = "fdr"
-  )
-
 # When you plot the results, blue cells correspond to negative significant relationships while red cells 
 # correspond to positive ones (modify using argument col). In this example, there are some associations 
 # btwn categorical traits and quantitative environmental variables which can be measured in three different 
@@ -202,7 +188,6 @@ four.comb.fish.6.1.adj <-
 # procedure leads to significant associations if the maximal p-value is lower than alpha=0.05. 
 
 plot(four.comb.fish_mod6, alpha = 0.05, stat = "D2")
-plot(four.comb.fish_mod6.1, alpha = 0.05, stat = "D2")
 
 # Now, adjust p-values for multiple comparisons using the fdr method using the p.adjust.4thcorner function 
 # (assuming nrepet set to 49999, though I got the same results with nrepet=9999).
@@ -218,29 +203,9 @@ plot(four.comb.fish.6.adj,
      alpha = 0.05,
      stat = "D2")
 
-# same, w reduced number of levels
-
-four.comb.fish.6.1.adj <-
-  p.adjust.4thcorner(
-    four.comb.fish_mod6.1,
-    p.adjust.method.G = "fdr",
-    p.adjust.method.D = "fdr"
-  )
-
-plot(four.comb.fish.6.1.adj,
-     alpha = 0.05,
-     stat = "D2")
-
 # Adjusted p-values can be obtained directly using the fourthcorner function:
 (fourthcorner.mod6 <- 
     fourthcorner(fenv, fish, ftrait,
-                 modeltype = 6,
-                 p.adjust.method.G = "fdr",
-                 p.adjust.method.D = "fdr",
-                 nrepet = nrepet))
-
-(fourthcorner.mod6.1 <- 
-    fourthcorner(fenv1, fish, ftrait1,
                  modeltype = 6,
                  p.adjust.method.G = "fdr",
                  p.adjust.method.D = "fdr",
@@ -258,13 +223,6 @@ plot(four.comb.fish.6.1.adj,
 
 plot(testrlq.fish)
 
-(testrlq.fish1 <- 
-    randtest(rlq.fish1,
-             modeltype = 6,
-             nrepet = nrepet))
-
-plot(testrlq.fish1)
-
 # Total inertia of RLQ analysis is equal to the S(RLQ) multivariate statistic defined in Dray & Legrende (2008). this stat is returned by fourthcorner2 function:
 Srlq <- fourthcorner2(
   fenv, fish, ftrait,
@@ -274,27 +232,14 @@ Srlq <- fourthcorner2(
 )
 Srlq$trRLQ
 
-Srlq1 <- fourthcorner2(
-  fenv1, fish, ftrait1,
-  modeltype = 6,
-  p.adjust.method.G = "fdr",
-  nrepet = nrepet
-)
-Srlq1$trRLQ
-
-# Both approaches can be combined if RLQ scores are used to represent traits and environmental variables on a biplot. Then, significant associations revealed by the 4thcorner approach can be represented using segments (blue for neg, red for pos, see argument col). Only traits and environmental variables that have at least one significant association are reprresented. Here, we apply this method using adjusted p-values for multiple comparisons and alpha=0.05.
+# Both approaches can be combined if RLQ scores are used to represent traits and environmental variables on a biplot. Then, significant associations revealed by the 4thcorner approach can be represented using segments (blue for neg, red for pos, see argument col). Only traits and environmental variables that have at least one significant association are represented. Here, we apply this method using adjusted p-values for multiple comparisons and alpha=0.05.
 
 plot(four.comb.fish.6.adj,
      x.rlq = rlq.fish,
-     alpha = 0.05,
+     alpha = 1,
      stat = "D2",
-     type = "biplot")
-
-plot(four.comb.fish.6.1.adj, 
-     x.rlq = rlq.fish1, 
-     alpha = 0.05,
-     stat = "D2",
-     type = "biplot")
+     type = "biplot",
+     main = "test")
 
 # Another approach is provided by the fourthcorner.rlq function and consists of testing directly the links btwn RLQ axes and traits (typetest = "Q.axes") or environmental variables (typetest = "R.axes").
 
@@ -317,26 +262,6 @@ testRaxes.comb.fish <-
 print(testQaxes.comb.fish, stat = "D")
 print(testRaxes.comb.fish, stat = "D")
 
-# ...and w reduced variables
-testQaxes.comb.fish1 <-
-  fourthcorner.rlq(rlq.fish1,
-                   modeltype = 6,
-                   typetest = "Q.axes",
-                   nrepet = nrepet,
-                   p.adjust.method.G = "fdr",
-                   p.adjust.method.D = "fdr")
-
-testRaxes.comb.fish1 <-
-  fourthcorner.rlq(rlq.fish1,
-                   modeltype = 6,
-                   typetest = "R.axes",
-                   nrepet = nrepet,
-                   p.adjust.method.G = "fdr",
-                   p.adjust.method.D = "fdr")
-
-print(testQaxes.comb.fish1, stat = "D")
-print(testRaxes.comb.fish1, stat = "D")
-
 # Present result in table format with colors to indicate significance:
 par(mfrow = c(1, 2))
 plot(testQaxes.comb.fish,
@@ -344,15 +269,6 @@ plot(testQaxes.comb.fish,
      type = "table",
      stat = "D2")
 plot(testRaxes.comb.fish,
-     alpha = 0.05,
-     type = "table",
-     stat = "D2")
-
-plot(testQaxes.comb.fish1,
-     alpha = 0.05,
-     type = "table",
-     stat = "D2")
-plot(testRaxes.comb.fish1,
      alpha = 0.05,
      type = "table",
      stat = "D2")
@@ -369,18 +285,6 @@ plot(testRaxes.comb.fish,
      type = "biplot",
      stat = "D2",
      col = c("black", "blue", "orange", "green"))
-
-plot(testQaxes.comb.fish1,
-     alpha = 0.05,
-     type = "biplot",
-     stat = "D2",
-     col = c("black", "blue", "orange", "green"))
-plot(testRaxes.comb.fish1,
-     alpha = 0.05,
-     type = "biplot",
-     stat = "D2",
-     col = c("black", "blue", "orange", "green"))
-
 
 par(mfrow = c(1, 1))
 
