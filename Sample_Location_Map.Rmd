@@ -64,7 +64,7 @@ mapview_from_coord <- function(sf, layer_name, pt_color) {
     col.regions = pt_color,
     alpha.regions = 0.8,
     cex = 5,
-    label = "station"
+    label = "Station"
   )
 }
 
@@ -166,17 +166,14 @@ Spatial data for maps:
 # Prepare station coordinates of biological data for map - separate by taxon so
   # they can be added as independent layers
 ndf_bio_coord <- df_bio_coord %>%
-  rename(
-    latitude = lat_wgs84,
-    longitude = long_wgs84
-  ) %>%
-  drop_na(latitude, longitude) %>%
-  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) %>% 
+  rename_with(str_to_title) %>% 
+  drop_na(Lat_wgs84, Long_wgs84) %>%
+  st_as_sf(coords = c("Long_wgs84", "Lat_wgs84"), crs = 4326) %>% 
   # Convert CRS so that its the same as the region and subregion polygons
   st_transform(crs = st_crs(sf_delta)) %>% 
-  nest(.by = taxon, .key = "sf_coord") %>% 
-  mutate(taxon = str_to_title(taxon)) %>% 
-  arrange(taxon)
+  nest(.by = Taxon, .key = "sf_coord") %>% 
+  mutate(Taxon = str_to_title(Taxon)) %>% 
+  arrange(Taxon)
 
 # Prepare EMP station coordinates for map
 sf_emp_coord <- df_emp_coord %>% 
@@ -236,7 +233,7 @@ This interactive map allows for zooming and panning. Hover over or click a stati
 ndf_bio_coord %>% 
   mutate(
     point_color = plasma(n = 4),
-    map_obj = pmap(list(sf_coord, taxon, point_color), mapview_from_coord)
+    map_obj = pmap(list(sf_coord, Taxon, point_color), mapview_from_coord)
   ) %>% 
   pull(map_obj) %>% 
   append(ls_map_polygons) %>%
