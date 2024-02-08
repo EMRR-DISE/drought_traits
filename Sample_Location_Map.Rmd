@@ -27,14 +27,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This document provides an interactive map of the sampling locations used in the trait-based special study for the Drought Synthesis. 
 
+
 # Global code and functions
 
 ```{r load packages, message = FALSE, warning = FALSE}
 # Load packages
 library(tidyverse)
 library(scales)
+library(viridisLite)
 library(sf)
-library(leaflet)
+library(mapview)
+# Make sure we are using `deltamapr` version 1.0.0, commit 5b11044a14aada45562d92899e2d8db42c0e8daf
+# install.packages("devtools") 
+# devtools::install_github("InteragencyEcologicalProgram/deltamapr", ref = "5b11044a14aada45562d92899e2d8db42c0e8daf")
+library(deltamapr)
 library(contentid)
 library(here)
 library(conflicted)
@@ -44,40 +50,68 @@ conflicts_prefer(dplyr::filter())
 
 # Check if we are in the correct working directory
 i_am("Sample_Location_Map.Rmd")
+
+# Set default options for mapview - turn off basemap color shuffle
+mapviewOptions(basemaps.color.shuffle = FALSE)
+```
+
+```{r global functions}
+# Function to create custom individual mapview objects for a set of coordinates
+mapview_from_coord <- function(sf, layer_name, pt_color) {
+  mapview(
+    sf,
+    layer.name = layer_name,
+    col.regions = pt_color,
+    alpha.regions = 0.8,
+    cex = 5,
+    label = "station"
+  )
+}
+
+# Function to create heatmaps of sampling effort for each parameter
+heatmap_by_param <- function(df, param) {
+  df %>%
+    drop_na(all_of(param)) %>% 
+    count(Station, Year, name = "num_samples") %>%
+    mutate(Station = fct_rev(factor(Station))) %>%
+    ggplot(aes(x = Year, y = Station, fill = num_samples)) +
+    geom_tile() +
+    scale_x_continuous(
+      limits = c(1974, 2022),
+      breaks = breaks_pretty(20), 
+      expand = expansion()
+    ) +
+    scale_fill_viridis_c(name = "Number of Samples") +
+    theme_bw() +
+    theme(
+      axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+      legend.position = "top"
+    )
+}
 ```
 
 
-# Import and Prepare Data
+# Import Data
 
-Biological data:
+Spatial data:
 
-```{r import data biological, message = FALSE}
+```{r import spatial data, message = FALSE}
 # Import station coordinates for biological data
-df_coord <- read_csv(here("Station_coordinates.csv"))
+df_bio_coord <- read_csv(here("Station_coordinates.csv"))
 
-# Prepare station coordinates for leaflet map
-sf_coord <- df_coord %>% 
-  rename(
-    latitude = lat_wgs84,
-    longitude = long_wgs84
-  ) %>% 
-  drop_na(latitude, longitude) %>% 
-  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
-```
-
-Region polygon:
-
-```{r import data region}
-# Import Region polygon
+# Import region polygon used for filtering spatial extent of biological data
 sf_region <- read_sf(here("spatial_files/region.shp"))
 
-# Convert CRS of Region polygon to WGS84 so that it works with the leaflet maps
-sf_region_4326 <- st_transform(sf_region, crs = 4326)
+# Load Delta subregion polygons from the Drought Synthesis
+sf_delta <- R_EDSM_Subregions_Mahardja_FLOAT %>% 
+  select(SubRegion) %>% 
+  # Remove a few subregions outside our area of interest
+  filter(!SubRegion %in% c("San Francisco Bay", "South Bay", "Upper Napa River")) 
 ```
 
-EMP water quality data:
+EMP WQ data:
 
-```{r import data wq emp, message = FALSE}
+```{r import emp wq data, message = FALSE}
 # Register a contentid for the EMP WQ data and station coordinates from the EDI data package 458.10
 # This only needs to be done once
 # EMP station coordinates
@@ -121,13 +155,59 @@ df_emp_wq <- read_csv(
     DissOrthophos = "d"
   )
 )
+```
 
-# Prepare EMP station coordinates for leaflet map
+
+# Prepare Data
+
+Spatial data for maps:
+
+```{r prepare spatial data}
+# Prepare station coordinates of biological data for map - separate by taxon so
+  # they can be added as independent layers
+ndf_bio_coord <- df_bio_coord %>%
+  rename(
+    latitude = lat_wgs84,
+    longitude = long_wgs84
+  ) %>%
+  drop_na(latitude, longitude) %>%
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) %>% 
+  # Convert CRS so that its the same as the region and subregion polygons
+  st_transform(crs = st_crs(sf_delta)) %>% 
+  nest(.by = taxon, .key = "sf_coord") %>% 
+  mutate(taxon = str_to_title(taxon)) %>% 
+  arrange(taxon)
+
+# Prepare EMP station coordinates for map
 sf_emp_coord <- df_emp_coord %>% 
   drop_na(Latitude, Longitude) %>% 
   st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>% 
+  # Convert CRS so that its the same as the subregion polygons
+  st_transform(crs = st_crs(sf_delta)) %>%
   replace_na(list(EndDate = "ongoing"))
 
+# Create list of two mapview layers of the region and subregion polygons to be used across maps
+ls_map_polygons <- list(
+  mapview(
+    sf_region, 
+    alpha.regions = 0,
+    color = "blue",
+    lwd = 2,
+    legend = FALSE,
+    layer.name = "Region boundary"
+  ),
+  mapview(
+    sf_delta,
+    alpha.regions = 0.4,
+    legend = FALSE,
+    layer.name = "Delta subregions"
+  )
+)
+```
+
+EMP WQ data for sampling effort heatmaps:
+
+```{r prepare emp wq data}
 # Prepare EMP WQ data for heatmap of sampling effort
 df_emp_wq_c <- df_emp_wq %>% 
   mutate(
@@ -144,87 +224,41 @@ df_emp_wq_c <- df_emp_wq %>%
   filter(Year <= 2021)
 ```
 
+
 # Biological Data
 
 ## Sampling Locations Map
 
-This interactive map allows for zooming and panning. Hover over a station marker to get more information about it. The blue polygon represents the region boundary we are considering for the spatial extent of the study.
+This interactive map allows for zooming and panning. Hover over or click a station marker to get more information about it. The layers button on the top left allows for toggling individual layers on and off. The blue polygon represents the region boundary we are considering for the spatial extent of the study, and the polygons within it represent subregions used in the Drought Synthesis.
 
-```{r create leaflet map biological}
-# Define color palette for Surveys 
-color_pal <- colorFactor(palette = "viridis", domain = sf_coord$taxon)
-
-# Create map using leaflet
-leaflet() %>% 
-  addTiles() %>%
-  addCircleMarkers(
-    data = sf_coord,
-    radius = 5,
-    fillColor = ~color_pal(taxon),
-    fillOpacity = 0.8,
-    weight = 0.5,
-    color = "black",
-    opacity = 1,
-    label = paste0("Station: ", sf_coord$station)
+```{r create map biological}
+# Create map using mapview
+ndf_bio_coord %>% 
+  mutate(
+    point_color = plasma(n = 4),
+    map_obj = pmap(list(sf_coord, taxon, point_color), mapview_from_coord)
   ) %>% 
-  addPolylines(data = sf_region_4326) %>%
-  addLegend(
-    position = "topright",
-    pal = color_pal,
-    values = sf_coord$taxon,
-    title = "Taxon"
-  )
+  pull(map_obj) %>% 
+  append(ls_map_polygons) %>%
+  reduce(`+`)
 ```
+
 
 # Water Quality Data - EMP
 
 ## Sampling Locations Map
 
-```{r create leaflet map emp}
-# Create map using leaflet
-leaflet() %>% 
-  addTiles() %>%
-  addCircleMarkers(
-    data = sf_emp_coord,
-    radius = 5,
-    fillColor = "yellow",
-    fillOpacity = 0.8,
-    weight = 0.5,
-    color = "black",
-    opacity = 1,
-    label = paste0(
-      "Station: ", sf_emp_coord$Station, 
-      "; Start Date:", sf_emp_coord$StartDate,
-      "; End Date:", sf_emp_coord$EndDate
-    )
-  ) %>% 
-  addPolylines(data = sf_region_4326)
+This interactive map allows for zooming and panning. Hover over or click a station marker to get more information about it. The layers button on the top left allows for toggling individual layers on and off. The blue polygon represents the region boundary we are considering for the spatial extent of the study, and the polygons within it represent subregions used in the Drought Synthesis.
+
+```{r create map emp}
+# Create map using mapview
+sf_emp_coord %>% 
+  mapview_from_coord("EMP WQ Stations", "yellow") %>% 
+  append(ls_map_polygons) %>%
+  reduce(`+`)
 ```
 
 ## Sampling Effort {.tabset .tabset-pills}
-
-```{r func heatmap sampling effort emp}
-# Function to create heatmaps of sampling effort for each parameter
-heatmap_by_param <- function(df, param) {
-  df %>%
-    drop_na(all_of(param)) %>% 
-    count(Station, Year, name = "num_samples") %>%
-    mutate(Station = fct_rev(factor(Station))) %>%
-    ggplot(aes(x = Year, y = Station, fill = num_samples)) +
-    geom_tile() +
-    scale_x_continuous(
-      limits = c(1974, 2022),
-      breaks = breaks_pretty(20), 
-      expand = expansion()
-    ) +
-    scale_fill_viridis_c(name = "Number of Samples") +
-    theme_bw() +
-    theme(
-      axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
-      legend.position = "top"
-    )
-}
-```
 
 ```{r create heatmap sampling effort emp}
 # Create nested dataframe and generate heatmaps for each parameter
