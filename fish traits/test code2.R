@@ -14,9 +14,9 @@ data(aravo)
 
 aravo
 glimpse(aravo)
-dim(aravo$spe)
-dim(aravo$traits)
-dim(aravo$env)
+dim(aravo$spe) # 75 plots eval for as many as 82 plant spp
+dim(aravo$traits) # 82 plant spp eval for each of 8 plant traits
+dim(aravo$env) # 75 plots eval for each of 6 environmental variables
 
 # RLQ ---------------
 ## analyze each table ---------
@@ -27,7 +27,8 @@ afcL.aravo <- dudi.coa(aravo$spe, scannf = F)
 acpR.aravo <- dudi.hillsmith(aravo$env, row.w = afcL.aravo$lw, scannf = FALSE) 
 acpQ.aravo <- dudi.pca(aravo$traits, row.w = afcL.aravo$cw, scannf = FALSE)
 
-# Note that the RLQ analysis requires that traits and environmental variables be weighted by the sites and spp weights derived from the previous correspondence analysis.
+# Note that the RLQ analysis requires that trait and environmental variables be weighted by the sites and spp weights derived from the previous correspondence analysis. For this reason, you can't included ordered factors for either trait or environmental data; this would require the use of dudi.mix() which doesn't allow for the inclusion of weighted rows.
+
 rlq.aravo <- rlq(acpR.aravo, afcL.aravo, acpQ.aravo, scannf = FALSE)
 plot(rlq.aravo)
 s.arrow(rlq.aravo$l1) # bottom, 2nd from left; environment
