@@ -3,7 +3,6 @@
 #Benthic Invertebrate Survey data
 
 # To do list--------------
-#make sure all categorical traits and env. variables are coded correctly as factors
 #run versions of analysis with other metrics of drought in place of salinity (eg, inflow)
 #make sure envn_winter and envn_lag1_winter have correct dimensions
 #try different types of lags
