@@ -1,0 +1,486 @@
+---
+title: "Explore EMP Water Quality Data"
+author: "Dave Bosworth"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document: 
+    code_folding: show
+    toc: true
+    toc_float:
+      collapsed: false
+editor_options: 
+  chunk_output_type: console
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = here::here("docs"),
+      envir = globalenv()
+    )
+    })
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+Explore the water quality data collected by EMP in order to process it correctly for inclusion in the drought environmental predictors data set. 
+
+# Global code and functions
+
+```{r load packages, message = FALSE, warning = FALSE}
+# Load packages
+library(tidyverse)
+library(scales)
+library(viridisLite)
+library(sf)
+library(mapview)
+# Make sure we are using `deltamapr` version 1.0.0, commit 5b11044a14aada45562d92899e2d8db42c0e8daf
+# install.packages("devtools") 
+# devtools::install_github("InteragencyEcologicalProgram/deltamapr", ref = "5b11044a14aada45562d92899e2d8db42c0e8daf")
+library(deltamapr)
+library(contentid)
+library(here)
+library(conflicted)
+
+# Declare package conflict preferences
+conflicts_prefer(dplyr::filter())
+
+# Check if we are in the correct working directory
+i_am("drought_variables/explore_emp_wq_data.Rmd")
+
+# Set default options for mapview - turn off basemap color shuffle
+mapviewOptions(basemaps.color.shuffle = FALSE)
+```
+
+```{r global functions}
+# Function to create custom individual mapview objects for a set of coordinates
+mapview_from_coord <- function(sf, layer_name, pt_color) {
+  mapview(
+    sf,
+    layer.name = layer_name,
+    col.regions = pt_color,
+    alpha.regions = 0.8,
+    cex = 5,
+    label = "Station"
+  )
+}
+
+# Function to create heatmaps of sampling effort
+heatmap_sampeff <- function(df) {
+  df %>%
+    mutate(Station = fct_rev(factor(Station))) %>%
+    ggplot(aes(x = Year, y = Station, fill = num_samples)) +
+    geom_tile() +
+    scale_x_continuous(
+      limits = c(1974, 2022),
+      breaks = breaks_pretty(20), 
+      expand = expansion()
+    ) +
+    scale_fill_viridis_c(name = "Number of Samples") +
+    theme_bw() +
+    theme(
+      axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+      legend.position = "top"
+    )
+}
+```
+
+
+# Import data
+
+Import EMP WQ data and station coordinates from the [EDI data package 458.10](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.458.10).
+
+```{r import emp wq data, message = FALSE}
+# Register a contentid for the EMP WQ data and station coordinates from the EDI data package 458.10
+# This only needs to be done once
+# EMP station coordinates
+# register(
+#   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.10&entityid=86dd696bc3f8407ff52954094e1e9dcf"
+# )
+
+# EMP WQ data:
+# register(
+#   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.10&entityid=cf231071093ac2861893793517db26f3"
+# )
+
+# Define contentid for EMP station coordinates
+id_emp_coord <- "hash://sha256/120d7790b505f22a103ee392d13ca1c02b37fb9842d549942580b04c94eb2c67"
+
+# Define contentid for EMP WQ data
+id_emp_wq <- "hash://sha256/4c4b56d7d2a888b35efe2a6f2818f2b8b2fab26d0adb8f1c73ef522996b26ea8"
+
+# Resolve the contentid's storing local copies for faster import
+file_emp_coord <- resolve(id_emp_coord, store = TRUE)
+file_emp_wq <- resolve(id_emp_wq, store = TRUE)
+
+# Import EMP WQ data and station coordinates from the local copies using their contentid's
+df_emp_coord <- read_csv(file_emp_coord)
+
+df_emp_wq <- read_csv(
+  file = file_emp_wq,
+  col_types = cols_only(
+    Station = "c",
+    Date = "c",
+    Secchi = "d",
+    SpCndSurface = "d",
+    SpCndBottom = "d",
+    WTSurface = "d",
+    WTBottom = "d",
+    DissAmmonia_Sign = "c",
+    DissAmmonia = "d",
+    DissNitrateNitrite_Sign = "c",
+    DissNitrateNitrite = "d",
+    DissOrthophos_Sign = "c",
+    DissOrthophos = "d"
+  )
+)
+```
+
+Import spatial data including the station coordinates for biological data and the Delta subregion polygons from the Drought Synthesis.
+
+```{r import spatial data, message = FALSE}
+# Import station coordinates for biological data
+df_bio_coord <- read_csv(here("Station_coordinates.csv"))
+
+# Load Delta subregion polygons from the Drought Synthesis
+sf_delta <- R_EDSM_Subregions_Mahardja_FLOAT %>% 
+  select(SubRegion) %>% 
+  # Remove a few subregions outside our area of interest
+  filter(!SubRegion %in% c("San Francisco Bay", "South Bay", "Upper Napa River")) 
+```
+
+
+# Prepare Data
+
+Spatial data for maps:
+
+```{r prepare spatial data}
+# Prepare station coordinates of biological data for map - separate by taxon so
+  # they can be added as independent layers
+ndf_bio_coord <- df_bio_coord %>%
+  rename_with(str_to_title) %>% 
+  drop_na(Lat_wgs84, Long_wgs84) %>%
+  # Remove phytoplankton stations because we're using a different set of
+    # environmental predictors for them
+  filter(Taxon != "phytoplankton") %>% 
+  st_as_sf(coords = c("Long_wgs84", "Lat_wgs84"), crs = 4326) %>% 
+  # Convert CRS so that its the same as the region and subregion polygons
+  st_transform(crs = st_crs(sf_delta)) %>% 
+  nest(.by = Taxon, .key = "sf_coord") %>% 
+  mutate(Taxon = str_to_title(Taxon)) %>% 
+  arrange(Taxon)
+
+# Prepare EMP station coordinates for map
+sf_emp_coord <- df_emp_coord %>% 
+  drop_na(Latitude, Longitude) %>% 
+  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>% 
+  # Convert CRS so that its the same as the subregion polygons
+  st_transform(crs = st_crs(sf_delta)) %>%
+  replace_na(list(EndDate = "ongoing"))
+```
+
+EMP WQ data:
+
+```{r prepare emp wq data}
+# Prepare EMP WQ data for heatmap of sampling effort
+df_emp_wq_c <- df_emp_wq %>% 
+  mutate(
+    Date = ymd(Date),
+    # Add placeholder values for <RL records without RL values
+    DissAmmonia = if_else(DissAmmonia_Sign == "<" & is.na(DissAmmonia), 0.01, DissAmmonia),
+    DissNitrateNitrite = if_else(DissNitrateNitrite_Sign == "<" & is.na(DissNitrateNitrite), 0.01, DissNitrateNitrite),
+    DissOrthophos = if_else(DissOrthophos_Sign == "<" & is.na(DissOrthophos), 0.01, DissOrthophos)
+  ) %>% 
+  # Remove records where values for all parameters are NA
+  filter(!if_all(where(is.numeric), is.na)) %>% 
+  # Only include 2021 and earlier
+  mutate(
+    Month = month(Date),
+    Year = year(Date),
+    .after = Date
+  ) %>% 
+  filter(Year <= 2021) %>% 
+  # Drop "Sign" variables because they're no longer necessary
+  select(!ends_with("_Sign"))
+```
+
+
+# Filter data spatially
+
+In order to spatially filter the EMP WQ sampling locations, we need to find the Delta subregions where biological data has been collected and categorize them based on taxon. We'll then use the resulting subregion polygons to spatially filter the EMP WQ stations.
+
+```{r categorize delta subregions}
+# Filter and categorize polygons from sf_delta
+sf_delta_bio <- ndf_bio_coord %>% 
+  mutate(
+    sf_subr = list(sf_delta),
+    sf_subr_filt = map2(
+      sf_subr, 
+      sf_coord, 
+      ~ st_join(.x, .y, join = st_intersects) %>% 
+        drop_na(Station) %>% 
+        distinct(SubRegion, geometry)
+    )
+  ) %>% 
+  select(Taxon, sf_subr_filt) %>% 
+  unnest(sf_subr_filt) %>% 
+  arrange(Taxon) %>% 
+  group_by(SubRegion) %>% 
+  mutate(
+    Taxon = str_flatten_comma(Taxon),
+    Taxon = if_else(Taxon == "Benthic, Fishes, Zooplankton", "All Taxa", Taxon)
+  ) %>% 
+  ungroup() %>% 
+  distinct() %>% 
+  st_as_sf(crs = st_crs(sf_delta))
+
+# Create list of two mapview layers of the subregion polygons (all and filtered)
+  # to be used across maps
+ls_subr_polygons <- list(
+  mapview(
+    sf_delta,
+    col.regions = "grey",
+    layer.name = "All Subregions",
+    alpha.regions = 0.5,
+    legend = FALSE
+  ),
+  mapview(
+    sf_delta_bio, 
+    zcol = "Taxon", 
+    layer.name = "Filtered Subregions",
+    label = "SubRegion"
+  )
+)
+```
+
+Let's visualize these subregions with the biological and EMP WQ stations overlayed.
+
+## Subregions map with biological sampling locations
+
+```{r map biological}
+ndf_bio_coord %>% 
+  mutate(
+    point_color = plasma(n = 3),
+    map_obj = pmap(list(sf_coord, Taxon, point_color), mapview_from_coord)
+  ) %>% 
+  pull(map_obj) %>% 
+  append(ls_subr_polygons, after = 0) %>% 
+  reduce(`+`)
+```
+
+## Subregions map with EMP WQ locations
+
+```{r map emp wq}
+sf_emp_coord %>% 
+  mapview_from_coord("EMP WQ Stations", "yellow") %>% 
+  append(ls_subr_polygons, after = 0) %>%
+  reduce(`+`)
+```
+
+## Filter EMP WQ stations
+
+After looking at the maps above, we'll add the "Franks Tract" subregion to the polygons used for spatially filtering the EMP WQ stations. Otherwise, the polygons used for filtering look good. We'll come back to how they are categorized later.
+
+```{r spatially filter emp wq}
+# Add Franks Tract subregion to the polygons used for filtering
+sf_delta_bio_c <- sf_delta_bio %>% 
+  bind_rows(sf_delta %>% filter(SubRegion == "Franks Tract")) %>% 
+  replace_na(list(Taxon = "Extra"))
+
+# Spatially join subregions to the EMP WQ coordinates and remove stations
+  # outside of subregions
+sf_emp_coord_sfilt <- sf_emp_coord %>% 
+  st_join(sf_delta_bio_c, join = st_intersects) %>% 
+  drop_na(SubRegion)
+
+# Remove data for stations outside of subregions from EMP WQ dataset
+df_emp_wq_sfilt <- df_emp_wq_c %>% filter(Station %in% unique(sf_emp_coord_sfilt$Station))
+```
+
+
+# Combine overlapping stations
+
+In order to combine overlapping EMP WQ stations and to filter them temporally, let's take a look at a map of where the filtered EMP WQ stations are located and heatmaps of their sampling effort.
+
+## Map of EMP WQ stations
+
+```{r map emp wq sfilt}
+sf_emp_coord_sfilt %>% 
+  mapview_from_coord("EMP WQ Stations", "yellow") +
+  mapview(
+    sf_delta_bio_c, 
+    zcol = "Taxon", 
+    layer.name = "Filtered Subregions",
+    label = "SubRegion"
+  )
+```
+
+## Sampling Effort {.tabset .tabset-pills}
+
+```{r create heatmap sampling effort emp}
+# Create a tibble of parameters to be used for the heatmaps
+df_emp_wq_param <- 
+  tibble(
+    Parameter = c(
+      "WTSurface",
+      "WTBottom",
+      "SpCndSurface",
+      "SpCndBottom",
+      "Secchi",
+      "DissAmmonia",
+      "DissNitrateNitrite",
+      "DissOrthophos"
+    ),
+    Pretty_Name = c(
+      "Water Temperature (surface)",
+      "Water Temperature (bottom)",
+      "Specific Conductance (surface)",
+      "Specific Conductance (bottom)",
+      "Secchi depth",
+      "Dissolved Ammonia",
+      "Dissolved Nitrate + Nitrite",
+      "Dissolved Ortho-phosphate"
+    )
+  )
+
+# Create nested dataframe and generate heatmaps for each parameter
+ndf_emp_wq <- df_emp_wq_param %>% 
+  mutate(
+    df_data = list(df_emp_wq_sfilt),
+    df_data_filt = map2(df_data, Parameter, ~ drop_na(.x, all_of(.y)))
+  ) %>% 
+  add_row(
+    Pretty_Name = "All Parameters", 
+    df_data_filt = list(df_emp_wq_sfilt), 
+    .before = 1
+  ) %>% 
+  mutate(
+    plt_samp_effort = map(
+      df_data_filt,
+      ~ count(.x, Station, Year, name = "num_samples") %>%
+        heatmap_sampeff()
+    )
+  )
+```
+
+```{r print heatmap sampling effort emp, warning = FALSE, echo = FALSE, results = "asis", fig.width = 8, fig.height = 7.5}
+for (i in 1:nrow(ndf_emp_wq)) {
+  # Create subheadings for each Parameter
+  cat("### ", ndf_emp_wq$Pretty_Name[i], "\n\n")
+  # Print plot
+  print(ndf_emp_wq$plt_samp_effort[[i]])
+  cat("\n\n")
+}
+```
+
+## Combine Stations
+
+Looking at the map of filtered EMP WQ stations and heatmaps of their sampling effort, we'll combine the following stations:
+
+* D41 and D42
+* MD10 and MD10A
+* S42 and NZS42
+
+```{r combine overlapping stations}
+# Combine overlapping stations in both WQ and station coordinates dataframes
+ls_emp_sfilt_c <- 
+  lst(
+    df_emp_wq_sfilt,
+    sf_emp_coord_sfilt
+  ) %>% 
+  map(
+    ~ mutate(
+      .x,
+      Station = case_when(
+        Station %in% c("D41", "D42") ~ "D41-D42",
+        Station %in% c("MD10", "MD10A") ~ "MD10-MD10A",
+        Station %in% c("S42", "NZS42") ~ "S42-NZS42",
+        .default = Station
+      )
+    )
+  )
+```
+
+
+# Filter data temporally
+
+Next, we'll filter stations temporally based on their time series completeness. We'll keep stations that have less than 10% missing data assuming a monthly sampling frequency. This will be for each station's overall sampling record - not for each individual parameter.
+
+```{r temporally filter emp wq}
+# Calculate total number of monthly sampling events expected between 1975-2021
+yrs_range <- range(ls_emp_sfilt_c$df_emp_wq_sfilt$Year)
+num_yrs_mo <- length(yrs_range[1]:yrs_range[2]) * 12
+
+# Calculate threshold for number of sampling events (10% missing)
+num_yrs_thresh <- round(num_yrs_mo - num_yrs_mo * 0.1)
+
+# Determine which stations meet the time series completeness criteria
+lt_sta_keep <- ls_emp_sfilt_c$df_emp_wq_sfilt %>% 
+  distinct(Station, Month, Year) %>% 
+  count(Station) %>% 
+  filter(n >= num_yrs_thresh) %>% 
+  pull(Station)
+
+# Filter stations temporally in both WQ and station coordinates dataframes
+ls_emp_sfilt_tf <- ls_emp_sfilt_c %>% map(~ filter(.x, Station %in% lt_sta_keep))
+```
+
+## Map of final EMP WQ stations
+
+Let's take a look at a map of the final EMP WQ stations after spatial and temporal filtering. These will be used in the drought environmental predictors data set.
+
+```{r map emp wq sfilt tfilt}
+ls_emp_sfilt_tf$sf_emp_coord_sfilt %>% 
+  mapview_from_coord("EMP WQ Stations", "yellow") +
+  mapview(
+    sf_delta_bio_c, 
+    zcol = "Taxon", 
+    layer.name = "Filtered Subregions",
+    label = "SubRegion"
+  )
+```
+
+## Sampling Effort {.tabset .tabset-pills}
+
+Let's also take a look at heatmaps of monthly sampling effort for each parameter of the final EMP WQ stations after spatial and temporal filtering.
+
+```{r create heatmap sampling effort emp final}
+# Create nested dataframe and generate heatmaps for each parameter
+ndf_emp_wq_f <- df_emp_wq_param %>% 
+  mutate(
+    df_data = list(ls_emp_sfilt_tf$df_emp_wq_sfilt),
+    df_data_filt = map2(df_data, Parameter, ~ drop_na(.x, all_of(.y)))
+  ) %>% 
+  add_row(
+    Pretty_Name = "All Parameters", 
+    df_data_filt = list(ls_emp_sfilt_tf$df_emp_wq_sfilt), 
+    .before = 1
+  ) %>% 
+  mutate(
+    plt_samp_effort = map(
+      df_data_filt,
+      ~ distinct(.x, Station, Month, Year) %>% 
+        count(Station, Year, name = "num_samples") %>%
+        heatmap_sampeff()
+    )
+  )
+```
+
+```{r print heatmap sampling effort emp final, warning = FALSE, echo = FALSE, results = "asis", fig.width = 8}
+for (i in 1:nrow(ndf_emp_wq_f)) {
+  # Create subheadings for each Parameter
+  cat("### ", ndf_emp_wq_f$Pretty_Name[i], "\n\n")
+  # Print plot
+  print(ndf_emp_wq_f$plt_samp_effort[[i]])
+  cat("\n\n")
+}
+```
+
+
+# Conclusions and Next Steps
+
+* The fish sampling locations extend further west than the stations for benthic and zooplankton. We'll probably end up creating two versions of the EMP water quality data to be included in the environmental predictors data set - one for fish and another for benthic and zooplankton. For fish, we'll include all EMP WQ stations after spatial and temporal filtering. For benthic and zooplankton, we'll exclude stations D41-D42 and D6 which are outside of the spatial range for sampling for these two taxonomic groups.
+* We'll include the following parameters in the environmental predictors data set: water temperature (surface), specific conductance or salinity (surface), Secchi depth, dissolved ammonia, dissolved nitrate + nitrite, and dissolved ortho-phosphate. Unfortunately, nutrient data wasn't collected at D10, D12, D16, and D22 from 1996-2016. We'll need to decide if we'll include these stations in the averages for the nutrient parameters. Also, EMP didn't start collecting dissolved ammonia until 1979.
+
