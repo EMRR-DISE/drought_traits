@@ -71,7 +71,7 @@ mapview_from_coord <- function(sf, layer_name, pt_color) {
 heatmap_sampeff <- function(df) {
   df %>%
     mutate(Station = fct_rev(factor(Station))) %>%
-    ggplot(aes(x = Year, y = Station, fill = num_samples)) +
+    ggplot(aes(x = YearAdj, y = Station, fill = num_samples)) +
     geom_tile() +
     scale_x_continuous(
       limits = c(1974, 2022),
@@ -195,13 +195,15 @@ df_emp_wq_c <- df_emp_wq %>%
   ) %>% 
   # Remove records where values for all parameters are NA
   filter(!if_all(where(is.numeric), is.na)) %>% 
-  # Only include 2021 and earlier
+  # Only include 2021 and earlier - use adjusted calendar year:
+    # December-November, with December of the previous calendar year included with
+    # the following year
   mutate(
     Month = month(Date),
-    Year = year(Date),
+    YearAdj = if_else(Month == 12, year(Date) + 1, year(Date)),
     .after = Date
   ) %>% 
-  filter(Year <= 2021) %>% 
+  filter(YearAdj <= 2021) %>% 
   # Drop "Sign" variables because they're no longer necessary
   select(!ends_with("_Sign"))
 ```
@@ -359,7 +361,7 @@ ndf_emp_wq <- df_emp_wq_param %>%
   mutate(
     plt_samp_effort = map(
       df_data_filt,
-      ~ count(.x, Station, Year, name = "num_samples") %>%
+      ~ count(.x, Station, YearAdj, name = "num_samples") %>%
         heatmap_sampeff()
     )
   )
@@ -410,7 +412,7 @@ Next, we'll filter stations temporally based on their time series completeness. 
 
 ```{r temporally filter emp wq}
 # Calculate total number of monthly sampling events expected between 1975-2021
-yrs_range <- range(ls_emp_sfilt_c$df_emp_wq_sfilt$Year)
+yrs_range <- range(ls_emp_sfilt_c$df_emp_wq_sfilt$YearAdj)
 num_yrs_mo <- length(yrs_range[1]:yrs_range[2]) * 12
 
 # Calculate threshold for number of sampling events (10% missing)
@@ -418,7 +420,7 @@ num_yrs_thresh <- round(num_yrs_mo - num_yrs_mo * 0.1)
 
 # Determine which stations meet the time series completeness criteria
 lt_sta_keep <- ls_emp_sfilt_c$df_emp_wq_sfilt %>% 
-  distinct(Station, Month, Year) %>% 
+  distinct(Station, Month, YearAdj) %>% 
   count(Station) %>% 
   filter(n >= num_yrs_thresh) %>% 
   pull(Station)
@@ -461,8 +463,8 @@ ndf_emp_wq_f <- df_emp_wq_param %>%
   mutate(
     plt_samp_effort = map(
       df_data_filt,
-      ~ distinct(.x, Station, Month, Year) %>% 
-        count(Station, Year, name = "num_samples") %>%
+      ~ distinct(.x, Station, Month, YearAdj) %>% 
+        count(Station, YearAdj, name = "num_samples") %>%
         heatmap_sampeff()
     )
   )
@@ -481,6 +483,6 @@ for (i in 1:nrow(ndf_emp_wq_f)) {
 
 # Conclusions and Next Steps
 
-* The fish sampling locations extend further west than the stations for benthic and zooplankton. We'll probably end up creating two versions of the EMP water quality data to be included in the environmental predictors data set - one for fish and another for benthic and zooplankton. For fish, we'll include all EMP WQ stations after spatial and temporal filtering. For benthic and zooplankton, we'll exclude stations D41-D42 and D6 which are outside of the spatial range for sampling for these two taxonomic groups.
-* We'll include the following parameters in the environmental predictors data set: water temperature (surface), specific conductance or salinity (surface), Secchi depth, dissolved ammonia, dissolved nitrate + nitrite, and dissolved ortho-phosphate. Unfortunately, nutrient data wasn't collected at D10, D12, D16, and D22 from 1996-2016. We'll need to decide if we'll include these stations in the averages for the nutrient parameters. Also, EMP didn't start collecting dissolved ammonia until 1979.
+* The fish sampling locations extend further west than the stations for benthic and zooplankton. We'll create two versions of the EMP water quality data to be included in the environmental predictors data set - one for fish and another for benthic and zooplankton. For fish, we'll include all EMP WQ stations after spatial and temporal filtering. For benthic and zooplankton, we'll exclude stations D41-D42 and D6 which are outside of the spatial range for sampling for these two taxonomic groups.
+* We'll include the following parameters in the environmental predictors data set: water temperature (surface), specific conductance (surface), Secchi depth, dissolved ammonia, dissolved nitrate + nitrite, and dissolved ortho-phosphate. Unfortunately, nutrient data wasn't collected at D10, D12, D16, and D22 from 1996-2016, so we won't include these stations in the averages for the nutrient parameters. Also, EMP didn't start collecting dissolved ammonia until 1979.
 
