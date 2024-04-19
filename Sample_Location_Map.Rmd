@@ -33,7 +33,6 @@ This document provides an interactive map of the sampling locations used in the 
 ```{r load packages, message = FALSE, warning = FALSE}
 # Load packages
 library(tidyverse)
-library(scales)
 library(viridisLite)
 library(sf)
 library(mapview)
@@ -41,7 +40,6 @@ library(mapview)
 # install.packages("devtools") 
 # devtools::install_github("InteragencyEcologicalProgram/deltamapr", ref = "5b11044a14aada45562d92899e2d8db42c0e8daf")
 library(deltamapr)
-library(contentid)
 library(here)
 library(conflicted)
 
@@ -67,33 +65,9 @@ mapview_from_coord <- function(sf, layer_name, pt_color) {
     label = "Station"
   )
 }
-
-# Function to create heatmaps of sampling effort for each parameter
-heatmap_by_param <- function(df, param) {
-  df %>%
-    drop_na(all_of(param)) %>% 
-    count(Station, Year, name = "num_samples") %>%
-    mutate(Station = fct_rev(factor(Station))) %>%
-    ggplot(aes(x = Year, y = Station, fill = num_samples)) +
-    geom_tile() +
-    scale_x_continuous(
-      limits = c(1974, 2022),
-      breaks = breaks_pretty(20), 
-      expand = expansion()
-    ) +
-    scale_fill_viridis_c(name = "Number of Samples") +
-    theme_bw() +
-    theme(
-      axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
-      legend.position = "top"
-    )
-}
 ```
 
-
 # Import Data
-
-Spatial data:
 
 ```{r import spatial data, message = FALSE}
 # Import station coordinates for biological data
@@ -109,58 +83,7 @@ sf_delta <- R_EDSM_Subregions_Mahardja_FLOAT %>%
   filter(!SubRegion %in% c("San Francisco Bay", "South Bay", "Upper Napa River")) 
 ```
 
-EMP WQ data:
-
-```{r import emp wq data, message = FALSE}
-# Register a contentid for the EMP WQ data and station coordinates from the EDI data package 458.10
-# This only needs to be done once
-# EMP station coordinates
-# register(
-#   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.10&entityid=86dd696bc3f8407ff52954094e1e9dcf"
-# )
-
-# EMP WQ data:
-# register(
-#   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.10&entityid=cf231071093ac2861893793517db26f3"
-# )
-
-# Define contentid for EMP station coordinates
-id_emp_coord <- "hash://sha256/120d7790b505f22a103ee392d13ca1c02b37fb9842d549942580b04c94eb2c67"
-
-# Define contentid for EMP WQ data
-id_emp_wq <- "hash://sha256/4c4b56d7d2a888b35efe2a6f2818f2b8b2fab26d0adb8f1c73ef522996b26ea8"
-
-# Resolve the contentid's storing local copies for faster import
-file_emp_coord <- resolve(id_emp_coord, store = TRUE)
-file_emp_wq <- resolve(id_emp_wq, store = TRUE)
-
-# Import EMP WQ data and station coordinates from the local copies using their contentid's
-df_emp_coord <- read_csv(file_emp_coord)
-
-df_emp_wq <- read_csv(
-  file = file_emp_wq,
-  col_types = cols_only(
-    Station = "c",
-    Date = "c",
-    Secchi = "d",
-    SpCndSurface = "d",
-    SpCndBottom = "d",
-    WTSurface = "d",
-    WTBottom = "d",
-    DissAmmonia_Sign = "c",
-    DissAmmonia = "d",
-    DissNitrateNitrite_Sign = "c",
-    DissNitrateNitrite = "d",
-    DissOrthophos_Sign = "c",
-    DissOrthophos = "d"
-  )
-)
-```
-
-
 # Prepare Data
-
-Spatial data for maps:
 
 ```{r prepare spatial data}
 # Prepare station coordinates of biological data for map - separate by taxon so
@@ -175,15 +98,8 @@ ndf_bio_coord <- df_bio_coord %>%
   mutate(Taxon = str_to_title(Taxon)) %>% 
   arrange(Taxon)
 
-# Prepare EMP station coordinates for map
-sf_emp_coord <- df_emp_coord %>% 
-  drop_na(Latitude, Longitude) %>% 
-  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>% 
-  # Convert CRS so that its the same as the subregion polygons
-  st_transform(crs = st_crs(sf_delta)) %>%
-  replace_na(list(EndDate = "ongoing"))
-
-# Create list of two mapview layers of the region and subregion polygons to be used across maps
+# Create list of two mapview layers of the region and subregion polygons to be
+  # used in the map
 ls_map_polygons <- list(
   mapview(
     sf_region, 
@@ -202,29 +118,7 @@ ls_map_polygons <- list(
 )
 ```
 
-EMP WQ data for sampling effort heatmaps:
-
-```{r prepare emp wq data}
-# Prepare EMP WQ data for heatmap of sampling effort
-df_emp_wq_c <- df_emp_wq %>% 
-  mutate(
-    Date = ymd(Date),
-    # Add placeholder values for <RL records without RL values
-    DissAmmonia = if_else(DissAmmonia_Sign == "<" & is.na(DissAmmonia), 0.01, DissAmmonia),
-    DissNitrateNitrite = if_else(DissNitrateNitrite_Sign == "<" & is.na(DissNitrateNitrite), 0.01, DissNitrateNitrite),
-    DissOrthophos = if_else(DissOrthophos_Sign == "<" & is.na(DissOrthophos), 0.01, DissOrthophos)
-  ) %>% 
-  # Remove records where values for all parameters are NA
-  filter(!if_all(where(is.numeric), is.na)) %>% 
-  # Only include 2021 and earlier
-  mutate(Year = year(Date), .after = Date) %>% 
-  filter(Year <= 2021)
-```
-
-
-# Biological Data
-
-## Sampling Locations Map
+# Sampling Locations Map
 
 This interactive map allows for zooming and panning. Hover over or click a station marker to get more information about it. The layers button on the top left allows for toggling individual layers on and off. The blue polygon represents the region boundary we are considering for the spatial extent of the study, and the polygons within it represent subregions used in the Drought Synthesis.
 
@@ -238,61 +132,5 @@ ndf_bio_coord %>%
   pull(map_obj) %>% 
   append(ls_map_polygons) %>%
   reduce(`+`)
-```
-
-
-# Water Quality Data - EMP
-
-## Sampling Locations Map
-
-This interactive map allows for zooming and panning. Hover over or click a station marker to get more information about it. The layers button on the top left allows for toggling individual layers on and off. The blue polygon represents the region boundary we are considering for the spatial extent of the study, and the polygons within it represent subregions used in the Drought Synthesis.
-
-```{r create map emp}
-# Create map using mapview
-sf_emp_coord %>% 
-  mapview_from_coord("EMP WQ Stations", "yellow") %>% 
-  append(ls_map_polygons) %>%
-  reduce(`+`)
-```
-
-## Sampling Effort {.tabset .tabset-pills}
-
-```{r create heatmap sampling effort emp}
-# Create nested dataframe and generate heatmaps for each parameter
-ndf_emp_wq <-
-  tibble(
-    Parameter = c(
-      "WTSurface",
-      "WTBottom",
-      "SpCndSurface",
-      "SpCndBottom",
-      "Secchi",
-      "DissAmmonia",
-      "DissNitrateNitrite",
-      "DissOrthophos"
-    ),
-    Pretty_Name = c(
-      "Water Temperature (surface)",
-      "Water Temperature (bottom)",
-      "Specific Conductance (surface)",
-      "Specific Conductance (bottom)",
-      "Secchi depth",
-      "Dissolved Ammonia",
-      "Dissolved Nitrate + Nitrite",
-      "Dissolved Ortho-phosphate"
-    ),
-    df_data = rep(list(df_emp_wq_c), 8)
-  ) %>% 
-  mutate(plt_samp_effort = map2(df_data, Parameter, heatmap_by_param))
-```
-
-```{r print heatmap sampling effort emp, echo = FALSE, results = "asis", fig.width = 8, fig.height = 7.5}
-for (i in 1:nrow(ndf_emp_wq)) {
-  # Create subheadings for each Parameter
-  cat("### ", ndf_emp_wq$Pretty_Name[i], "\n\n")
-  # Print plot
-  print(ndf_emp_wq$plt_samp_effort[[i]])
-  cat("\n\n")
-}
 ```
 
