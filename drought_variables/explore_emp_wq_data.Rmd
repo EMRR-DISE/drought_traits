@@ -27,6 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Explore the water quality data collected by EMP in order to process it correctly for inclusion in the drought environmental predictors data set. 
 
+
 # Global code and functions
 
 ```{r load packages, message = FALSE, warning = FALSE}
@@ -84,6 +85,17 @@ heatmap_sampeff <- function(df) {
       axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
       legend.position = "top"
     )
+}
+
+# Function to create boxplots for each individual parameter
+boxplot_param <- function(df) {
+  df %>% 
+    ggplot(aes(x = Station, y = Result)) +
+    geom_boxplot(outliers = FALSE) +
+    geom_jitter(aes(color = YearAdj), width = 0.2) +
+    scale_color_viridis_c(name = "Adjusted\nYear", option = "plasma") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 }
 ```
 
@@ -203,9 +215,7 @@ df_emp_wq_c <- df_emp_wq %>%
     YearAdj = if_else(Month == 12, year(Date) + 1, year(Date)),
     .after = Date
   ) %>% 
-  filter(YearAdj <= 2021) %>% 
-  # Drop "Sign" variables because they're no longer necessary
-  select(!ends_with("_Sign"))
+  filter(YearAdj <= 2021)
 ```
 
 
@@ -348,7 +358,7 @@ df_emp_wq_param <-
   )
 
 # Create nested dataframe and generate heatmaps for each parameter
-ndf_emp_wq <- df_emp_wq_param %>% 
+ndf_emp_wq_sampeff <- df_emp_wq_param %>% 
   mutate(
     df_data = list(df_emp_wq_sfilt),
     df_data_filt = map2(df_data, Parameter, ~ drop_na(.x, all_of(.y)))
@@ -368,11 +378,11 @@ ndf_emp_wq <- df_emp_wq_param %>%
 ```
 
 ```{r print heatmap sampling effort emp, warning = FALSE, echo = FALSE, results = "asis", fig.width = 8, fig.height = 7.5}
-for (i in 1:nrow(ndf_emp_wq)) {
+for (i in 1:nrow(ndf_emp_wq_sampeff)) {
   # Create subheadings for each Parameter
-  cat("### ", ndf_emp_wq$Pretty_Name[i], "\n\n")
+  cat("### ", ndf_emp_wq_sampeff$Pretty_Name[i], "\n\n")
   # Print plot
-  print(ndf_emp_wq$plt_samp_effort[[i]])
+  print(ndf_emp_wq_sampeff$plt_samp_effort[[i]])
   cat("\n\n")
 }
 ```
@@ -387,11 +397,8 @@ Looking at the map of filtered EMP WQ stations and heatmaps of their sampling ef
 
 ```{r combine overlapping stations}
 # Combine overlapping stations in both WQ and station coordinates dataframes
-ls_emp_sfilt_c <- 
-  lst(
-    df_emp_wq_sfilt,
-    sf_emp_coord_sfilt
-  ) %>% 
+ls_emp_sfilt <- 
+  lst(df_emp_wq_sfilt, sf_emp_coord_sfilt) %>% 
   map(
     ~ mutate(
       .x,
@@ -412,21 +419,21 @@ Next, we'll filter stations temporally based on their time series completeness. 
 
 ```{r temporally filter emp wq}
 # Calculate total number of monthly sampling events expected between 1975-2021
-yrs_range <- range(ls_emp_sfilt_c$df_emp_wq_sfilt$YearAdj)
+yrs_range <- range(ls_emp_sfilt$df_emp_wq_sfilt$YearAdj)
 num_yrs_mo <- length(yrs_range[1]:yrs_range[2]) * 12
 
 # Calculate threshold for number of sampling events (10% missing)
 num_yrs_thresh <- round(num_yrs_mo - num_yrs_mo * 0.1)
 
 # Determine which stations meet the time series completeness criteria
-lt_sta_keep <- ls_emp_sfilt_c$df_emp_wq_sfilt %>% 
+lt_sta_keep <- ls_emp_sfilt$df_emp_wq_sfilt %>% 
   distinct(Station, Month, YearAdj) %>% 
   count(Station) %>% 
   filter(n >= num_yrs_thresh) %>% 
   pull(Station)
 
 # Filter stations temporally in both WQ and station coordinates dataframes
-ls_emp_sfilt_tf <- ls_emp_sfilt_c %>% map(~ filter(.x, Station %in% lt_sta_keep))
+ls_emp_sfilt_tf <- ls_emp_sfilt %>% map(~ filter(.x, Station %in% lt_sta_keep))
 ```
 
 ## Map of final EMP WQ stations
@@ -444,13 +451,15 @@ ls_emp_sfilt_tf$sf_emp_coord_sfilt %>%
   )
 ```
 
+The fish sampling locations extend further west than the stations for benthic and zooplankton. We'll create two versions of the EMP water quality data to be included in the environmental predictors data set - one for fish and another for benthic and zooplankton. For fish, we'll include all EMP WQ stations after spatial and temporal filtering. For benthic and zooplankton, we'll exclude stations D41-D42 and D6 which are outside of the spatial range for sampling for these two taxonomic groups.
+
 ## Sampling Effort {.tabset .tabset-pills}
 
 Let's also take a look at heatmaps of monthly sampling effort for each parameter of the final EMP WQ stations after spatial and temporal filtering.
 
 ```{r create heatmap sampling effort emp final}
 # Create nested dataframe and generate heatmaps for each parameter
-ndf_emp_wq_f <- df_emp_wq_param %>% 
+ndf_emp_wq_sampeff_f <- df_emp_wq_param %>% 
   mutate(
     df_data = list(ls_emp_sfilt_tf$df_emp_wq_sfilt),
     df_data_filt = map2(df_data, Parameter, ~ drop_na(.x, all_of(.y)))
@@ -471,15 +480,293 @@ ndf_emp_wq_f <- df_emp_wq_param %>%
 ```
 
 ```{r print heatmap sampling effort emp final, warning = FALSE, echo = FALSE, results = "asis", fig.width = 8}
-for (i in 1:nrow(ndf_emp_wq_f)) {
+for (i in 1:nrow(ndf_emp_wq_sampeff_f)) {
   # Create subheadings for each Parameter
-  cat("### ", ndf_emp_wq_f$Pretty_Name[i], "\n\n")
+  cat("### ", ndf_emp_wq_sampeff_f$Pretty_Name[i], "\n\n")
   # Print plot
-  print(ndf_emp_wq_f$plt_samp_effort[[i]])
+  print(ndf_emp_wq_sampeff_f$plt_samp_effort[[i]])
   cat("\n\n")
 }
 ```
 
+A couple of observations from the sampling effort plots:
+
+* We'll include the following parameters in the environmental predictors data set: water temperature (surface), specific conductance (surface), Secchi depth, dissolved ammonia, dissolved nitrate + nitrite, and dissolved ortho-phosphate. 
+* Unfortunately, nutrient data wasn't collected at D10, D12, D16, and D22 from 1996-2016, so we won't include these stations in the averages for the nutrient parameters. Also, EMP didn't start collecting dissolved ammonia until 1979.
+
+
+# Inspect Data for Outliers
+
+Now that we finished with the spatial and temporal filtering, we'll take a look to see if there are any obvious outliers that should be omitted from the data set before averaging.
+
+```{r prepare emp wq data for outlier insp}
+# Restructure data to long format to allow for easier plotting and
+  # implementation of functions for outlier inspection
+# Separate nutrient parameters from WQ measurements because only the nutrients
+  # have "Sign" variables
+df_emp_wq_f_nutr <- ls_emp_sfilt_tf$df_emp_wq_sfilt %>% 
+  select(Station, Date, Month, YearAdj, starts_with("Diss")) %>% 
+  rename_with(~ paste0(.x, "_Result"), starts_with("Diss") & !ends_with("_Sign")) %>% 
+  pivot_longer(
+    cols = starts_with("Diss"), 
+    names_to = c("Parameter", ".value"), 
+    names_sep = "_"
+  ) %>% 
+  drop_na(Result)
+
+# Exclude bottom measurements because they won't be used in the drought
+  # environmental predictors data set - they have too few samples
+wq_params <- c("Secchi", "SpCndSurface", "WTSurface")
+
+df_emp_wq_f_wqmeas <- ls_emp_sfilt_tf$df_emp_wq_sfilt %>% 
+  select(Station, Date, Month, YearAdj, all_of(wq_params)) %>% 
+  pivot_longer(
+    cols = all_of(wq_params), 
+    names_to = "Parameter", 
+    values_to = "Result"
+  ) %>% 
+  drop_na(Result)
+```
+
+## High RL Values
+
+There are a few nutrient values that are less than the reporting limit with reporting limits that are very high compared to the range of the values for the parameter (> 75th percentile). This includes the highest dissolved ortho-phosphate value in the data set. We will flag and take a closer look at these values for possible removal from the data set.
+
+```{r flag and inspect high rl values nutr}
+df_nutr_high_rl_flag <- df_emp_wq_f_nutr %>% 
+  group_by(Parameter) %>% 
+  mutate(Quant_75 = quantile(Result, probs = 0.75)) %>% 
+  ungroup() %>% 
+  mutate(HighRL_flag = if_else(Sign == "<" & Result > Quant_75, TRUE, FALSE))
+
+# View flagged data points
+df_nutr_high_rl_flag %>% 
+  filter(HighRL_flag) %>%
+  arrange(Parameter, desc(Result)) %>% 
+  print(n = 40)
+
+# View range of values for each parameter
+df_emp_wq_f_nutr %>% 
+  summarize(
+    min_val = min(Result),
+    first_quantile = quantile(Result, probs = 0.25),
+    median = median(Result),
+    third_quantile = quantile(Result, probs = 0.75),
+    max_val = max(Result),
+    .by = Parameter
+  ) %>% 
+  arrange(Parameter)
+```
+
+Upon closer inspection, all 37 values that are less than the reporting limit with reporting limits that are greater than the 75th percentile of the values for the parameter should be removed from the data set.
+
+```{r rm high rl values nutr}
+df_emp_wq_f_nutr_c1 <- df_nutr_high_rl_flag %>% 
+  filter(!HighRL_flag) %>% 
+  select(-c(Quant_75, HighRL_flag))
+```
+
+## Boxplots {.tabset .tabset-pills}
+
+Next, let's make some basic boxplots to look for outliers.
+
+```{r create boxplots}
+ndf_emp_wq_bplt <- df_emp_wq_f_nutr_c1 %>% 
+  # Remove nutrient data collected at D10, D12, D16, and D22 because of 
+    # inadequate sampling
+  filter(!Station %in% c("D10", "D12", "D16", "D22")) %>% 
+  bind_rows(df_emp_wq_f_wqmeas) %>% 
+  nest(.by = Parameter, .key = "df_data") %>% 
+  left_join(df_emp_wq_param, by = join_by(Parameter)) %>% 
+  mutate(plt_boxplot = map(df_data, boxplot_param)) %>% 
+  arrange(Parameter)
+```
+
+```{r print boxplots, warning = FALSE, echo = FALSE, results = "asis"}
+for (i in 1:nrow(ndf_emp_wq_bplt)) {
+  # Create subheadings for each Parameter
+  cat("### ", ndf_emp_wq_bplt$Pretty_Name[i], "\n\n")
+  # Print plot
+  print(ndf_emp_wq_bplt$plt_boxplot[[i]])
+  cat("\n\n")
+}
+```
+
+## Flag Outliers
+
+There are a few outliers that stand out in the boxplots that need to be investigated further:
+
+* Specific Conductance at D12 and D22
+* Dissolved Ammonia at D28A
+* Dissolved Nitrate + Nitrite at D28A and D4
+
+Now we'll look for outliers more objectively by using Z-score tests to flag data points to investigate further. For the water quality measurement parameters (Secchi depth, Specific Conductance, and Water Temperature), we'll use a standard Z-score test to flag data more than 10 SDs away from the mean of each station. For the nutrient parameters, we'll use the modified Z-score test with the same threshold. We used the modified test for nutrients because its more resistant to censored data.
+
+```{r flag and inspect outliers wq meas, warning = FALSE, fig.width = 8}
+# Start with the Z-score test on WQ measurement parameters
+df_wqmeas_flag <- df_emp_wq_f_wqmeas %>% 
+  group_by(Parameter, Station) %>% 
+  mutate(
+    tmp_mean = mean(Result),
+    tmp_sd = sd(Result),
+    Zscore = if_else(tmp_sd == 0, NA_real_, abs((Result - tmp_mean) / tmp_sd)),
+    Zscore_flag = case_when(Zscore > 10 ~ TRUE, .default = FALSE)
+  ) %>% 
+  ungroup() %>% 
+  select(!starts_with("tmp_"))
+
+# View flagged data points
+df_wqmeas_flag %>% filter(Zscore_flag) %>% arrange(Parameter, desc(Zscore))
+
+# Plot specific conductance at all stations from adjusted year 1999-2001 to look
+  # at flagged values from D12 and D22
+df_emp_wq_f_wqmeas %>% 
+  filter(
+    Parameter == "SpCndSurface",
+    YearAdj %in% 1999:2001
+  ) %>% 
+  ggplot(aes(x = Date, y = Result, color = Station)) +
+  geom_line() +
+  geom_point() +
+  scale_color_viridis_d(option = "plasma") +
+  theme_bw()
+
+# Plot specific conductance at all stations for adjusted year 1994 to look at
+  # flagged value from D16
+df_emp_wq_f_wqmeas %>% 
+  filter(
+    Parameter == "SpCndSurface",
+    YearAdj == 1994
+  ) %>% 
+  ggplot(aes(x = Date, y = Result, color = Station)) +
+  geom_line() +
+  geom_point() +
+  scale_color_viridis_d(option = "plasma") +
+  theme_bw()
+```
+
+The flagged specific conductance values at D12 and D22 look suspicious enough to omit from the data set; however, while the flagged value at D16 looks questionable, we'll leave it in the data set. 
+
+```{r flag and inspect outliers nutr, warning = FALSE, fig.width = 8}
+# Now, let's run the modified Z-score test on the nutrient parameters
+df_nutr_modzscore_flag <- df_emp_wq_f_nutr_c1 %>% 
+  group_by(Parameter, Station) %>% 
+  mutate(
+    tmp_median = median(Result),
+    tmp_mad = mad(Result),
+    ModZscore = if_else(tmp_mad == 0, NA_real_, abs(0.6745 * (Result - tmp_median) / tmp_mad)),
+    ModZscore_flag = case_when(ModZscore > 15 ~ TRUE, .default = FALSE)
+  ) %>% 
+  ungroup() %>% 
+  select(!starts_with("tmp_"))
+
+# View flagged data points
+df_nutr_modzscore_flag %>% filter(ModZscore_flag) %>% arrange(Parameter, desc(ModZscore))
+
+# Plot dissolved ammonia at all stations from adjusted years 1995-1996 to look
+  # at flagged value from D28A
+df_emp_wq_f_nutr_c1 %>% 
+  filter(
+    Parameter == "DissAmmonia",
+    YearAdj %in% 1995:1996
+  ) %>% 
+  ggplot(aes(x = Date, y = Result, color = Station)) +
+  geom_line() +
+  geom_point() +
+  scale_color_viridis_d(option = "plasma") +
+  theme_bw()
+
+# Plot dissolved ammonia at all stations from adjusted years 2003-2004 to look
+  # at flagged value from P8
+df_emp_wq_f_nutr_c1 %>% 
+  filter(
+    Parameter == "DissAmmonia",
+    YearAdj %in% 2003:2004
+  ) %>% 
+  ggplot(aes(x = Date, y = Result, color = Station)) +
+  geom_line() +
+  geom_point() +
+  scale_color_viridis_d(option = "plasma") +
+  theme_bw()
+
+# Plot dissolved nitrate + nitrite at all stations from adjusted years 2017-2019
+  # to look at flagged values from D28A and D4
+df_emp_wq_f_nutr_c1 %>% 
+  filter(
+    Parameter == "DissNitrateNitrite",
+    YearAdj %in% 2017:2019
+  ) %>% 
+  ggplot(aes(x = Date, y = Result, color = Station)) +
+  geom_line() +
+  geom_point() +
+  scale_color_viridis_d(option = "plasma") +
+  theme_bw()
+```
+
+After inspecting the data flagged by the modified Z-score test, the dissolved ammonia values appear to be valid based on best professional judgment, so we will only exclude the dissolved nitrate + nitrite values flagged by the modified Z-score test.
+
+## Remove Outliers
+
+Now we'll remove the outliers we determined as bad data.
+
+```{r rm flagged outliers}
+# Un-flag the specific conductance value at D16 and remove the remaining flagged
+  # data points from the data set
+df_emp_wq_f_wqmeas_c <- df_wqmeas_flag %>% 
+  mutate(
+    Zscore_flag = if_else(
+      Parameter == "SpCndSurface" & Station == "D16" & Date == "1994-09-27",
+      FALSE,
+      Zscore_flag
+    )
+  ) %>% 
+  filter(!Zscore_flag)
+
+# Un-flag the DissAmmonia values and remove the DissNitrateNitrite flagged data
+  # points from the data set
+df_emp_wq_f_nutr_c2 <- df_nutr_modzscore_flag %>%
+  mutate(ModZscore_flag = if_else(Parameter == "DissAmmonia", FALSE, ModZscore_flag)) %>% 
+  filter(!ModZscore_flag)
+
+# Recombine WQ measurement and nutrient data now that all outliers have been
+  # removed
+df_emp_wq_f_long <- df_emp_wq_f_nutr_c2 %>% 
+  # Remove nutrient data collected at D10, D12, D16, and D22 because of 
+    # inadequate sampling
+  filter(!Station %in% c("D10", "D12", "D16", "D22")) %>% 
+  bind_rows(df_emp_wq_f_wqmeas_c) %>% 
+  select(!contains("Zscore"))
+```
+
+# Sampling Effort after removing outliers {.tabset .tabset-pills}
+
+Let's take one more look at heatmaps of monthly sampling effort for each parameter after removing outliers to assess the final data before averaging.
+
+```{r create heatmap sampling effort emp after rm outliers}
+# Create nested dataframe and generate heatmaps for each parameter
+ndf_emp_wq_sampeff_f2 <- df_emp_wq_f_long %>% 
+  nest(.by = Parameter, .key = "df_data") %>% 
+  left_join(df_emp_wq_param, by = join_by(Parameter)) %>% 
+  mutate(
+    plt_samp_effort = map(
+      df_data,
+      ~ distinct(.x, Station, Month, YearAdj) %>% 
+        count(Station, YearAdj, name = "num_samples") %>%
+        heatmap_sampeff()
+    )
+  ) %>% 
+  arrange(Parameter)
+```
+
+```{r print heatmap sampling effort emp after rm outliers, warning = FALSE, echo = FALSE, results = "asis", fig.width = 8}
+for (i in 1:nrow(ndf_emp_wq_sampeff_f2)) {
+  # Create subheadings for each Parameter
+  cat("## ", ndf_emp_wq_sampeff_f2$Pretty_Name[i], "\n\n")
+  # Print plot
+  print(ndf_emp_wq_sampeff_f2$plt_samp_effort[[i]])
+  cat("\n\n")
+}
+```
 
 # Conclusions and Next Steps
 
