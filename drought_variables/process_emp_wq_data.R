@@ -116,7 +116,7 @@ df_emp_wq_c <- df_emp_wq %>%
   filter(YearAdj <= 2021) %>% 
   # Rename a few parameters
   rename(
-    SpecificCond = SpCndSurface,
+    SpCond = SpCndSurface,
     WaterTemp = WTSurface
   )
 
@@ -213,7 +213,7 @@ df_emp_wq_f_nutr <- df_emp_wq_sfilt_tf %>%
   drop_na(Result)
 
 # WQ measurement parameters
-wq_params <- c("Secchi", "SpecificCond", "WaterTemp")
+wq_params <- c("Secchi", "SpCond", "WaterTemp")
 
 df_emp_wq_f_wqmeas <- df_emp_wq_sfilt_tf %>% 
   select(Station, Date, Month, YearAdj, all_of(wq_params)) %>% 
@@ -244,7 +244,7 @@ df_emp_wq_f_wqmeas_c1 <- df_emp_wq_f_wqmeas %>%
     # collected at D16.
   mutate(
     Zscore_flag = if_else(
-      Parameter == "SpecificCond" & Station == "D16" & Date == "1994-09-27",
+      Parameter == "SpCond" & Station == "D16" & Date == "1994-09-27",
       FALSE,
       Zscore_flag
     )
