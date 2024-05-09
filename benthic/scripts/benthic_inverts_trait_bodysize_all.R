@@ -23,22 +23,10 @@ library(dplyr) #changing col names
 # read in data ---------------
 
 #just need the taxonomy info for our target taxa
-#target_tax <- read_csv("benthic_taxonomy_common5_2023-02-02.csv")
-
-#this file is nested one level into the project so adding the file path info
-#target_tax <- read_csv("./BenthicInverts/benthic_taxonomy_common5_2023-02-02.csv")
-target_tax <- read_csv("./BenthicInverts/benthic_common5_taxonomy_2023-03-27.csv")
+target_tax <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv")
 
 # Pull data from WoRMS ---------
-#first two taxa in our data set
 
-#vector of aphia ids
-#b_aphia <- c(992855,1040874,1037336,1037349,157597,137577,1041002,131114,181523,177538,1040661,234850,131191,129884,482186,689413,421139,
-#             238740,431367,182361,107414,260458,1264222,397175,885716,177538,	157593,	137556, 992890, 1040676, 1040959, 182695, 1040573, 
-#             1040647,1040644,1040874,
-#             333585,155021,131167,751827,225694,181580,1299015,431330,431331,158020,158091)
-
-#an easier way to do this which I should have told you about
 #this will create a vector of all the IDs in the original file
 b_aphia <- target_tax %>% 
   pull(aphia_id)
@@ -175,7 +163,7 @@ w_bsize_ft_code <- left_join(w_bsize_ft,target_tax_truc) %>%
 
 #export as .csv
 #write.csv(w_bsize_ft_code, "benthic.bodysize.worms.csv", row.names=FALSE)
-write.csv(w_bsize_ft_code, "benthic.bodysize.worms2.csv", row.names=FALSE)  
+#write.csv(w_bsize_ft_code, "benthic.bodysize.worms2.csv", row.names=FALSE)  
 #look at taxa for which size data were not found in WoRMS--------------
 
 w_bsize_ft_miss <- anti_join(target_tax_truc,w_bsize_ft)  %>% 

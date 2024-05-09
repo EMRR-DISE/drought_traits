@@ -8,7 +8,7 @@
 #USGS
 #NEMESIS
 #WoRMS
-#CDFW zoop lab (eventually)
+#CDFW zoop lab
 
 # Load required packages -----------------
 library(tidyverse) #suite of data science tools
@@ -21,7 +21,6 @@ usgs <- read_csv("./benthic/data_output/traits/benthic_traits_usgs_size.csv")
 worms <- read_csv("./benthic/data_output/traits/benthic_traits_worms_size.csv") 
 nemesis <- read_csv("./benthic/data_output/traits/benthic_traits_nemesis_size&physiology.csv") 
 iep <- read_csv("./benthic/data_output/traits/benthic_traits_iep_size.csv") 
-
 
 #also read in full list of taxa
 emp <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-27.csv")
@@ -146,10 +145,63 @@ emp_trunc <- emp %>%
 #now combine the two dfs
 size_all <- left_join(emp_trunc,size_spec_max_distinct) %>% 
   #sort so taxa with missing data are at bottom
-  arrange(trait_value)
+  arrange(trait_value) %>% 
+  glimpse()
 
-#write integrated and filtered size data set------
+#write integrated and filtered size data set for late creating a matrix of all trait data for analysis
 #write_csv(size_all,"./benthic/data_output/traits/benthic_traits_integrated_size.csv")
+
+
+#create another version of dataset that retains multiple values for size------------------
+#these are the cases in which the max size was the same from multiple resources 
+
+#now combine the two dfs
+size_all_mult <- left_join(emp_trunc,size_spec_max) %>% 
+  #sort so taxa with missing data are at bottom
+  arrange(trait_value) %>% 
+  glimpse()
+
+#edit, remove, reorder columns for export
+size_all_final <- size_all_mult %>% 
+  #add some missing columns that will need to be filled in manually
+  add_column(field_lab = NA
+             ,population_country = NA
+             ,trait_value_rank = NA
+             ) %>% 
+  mutate(target_taxon_level = tolower(target_taxon_level)
+                                       ,lit_taxon_level = tolower(lit_taxon_level)) %>% 
+  select(
+    organism_code:lit_taxon_type
+    #,lit_taxon_type_ord #ordinal category for lit_taxon_type
+    #,target_genus #this is in the taxonomy
+    #,lit_genus #already have lit_taxon_name
+    # ,target_family
+    # ,lit_family
+    ,citation
+    ,database
+    ,field_lab
+    ,population_country
+    ,population_state
+    ,population_description
+    ,trait_group
+    ,trait_value_rank
+    ,trait_value
+    ,trait_unit
+    # ,trait_record_id #mostly NAs
+    # ,study_latitude #all NAs
+    # ,study_longitude #all NAs
+    # ,aphia_id #this is in the taxonomy
+    # ,life_stage #either adult or NA
+    # ,quality_status #either NA or unreviewed so not informative
+    # ,link #not needed for published data file
+            ) %>% 
+  glimpse()
+
+#write integrated and filtered size data set for publishing on EDI
+#has a few cases where there are multiple (identical) measurements per taxon
+#write_csv(size_all_final,"./benthic/data_output/traits/benthic_traits_integrated_size_edi.csv")  
+
+
 
 
 
