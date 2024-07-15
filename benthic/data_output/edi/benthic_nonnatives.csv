@@ -1,0 +1,25 @@
+organism_code,target_taxon_name,target_taxon_level,lit_taxon_name,lit_taxon_type,native_range,invasion_year,invasion_pathways,citation,notes
+6890,Potamocorbula amurensis,species,Potamocorbula amurensis,target,"South China to South Siberia, Japan",1986,ballast water,Cohen and Carlton 1995 ,
+2730,Varichaetadrilus angustipenis,species,Varichaetadrilus angustipenis,target,NA,1982,NA,Cohen and Carlton 1995 ,
+6730,Corbicula fluminea,species,Corbicula fluminea,target,"China, Korea, Japan",1945,individual release,Cohen and Carlton 1995 ,
+4750,Gammarus daiberi,species,Gammarus daiberi,target,Northwest Atlantic,1983,"ballast water, ship fouling",Cohen and Carlton 1995 ,
+3430,Manayunkia speciosa,species,Manayunkia speciosa,target,East North America,1963,ballast water,Cohen and Carlton 1995 ,Likely introduced earlier than reported year
+4230,Nippoleucon hinumensis,species,Nippoleucon hinumensis,target,Japan,1986,ballast water,Cohen and Carlton 1995 ,
+3050,Boccardiella ligerica,species,Boccardiella ligerica,target,Northwest European Coast,1954,ballast water,Cohen and Carlton 1995 ,Likely introduced earlier than reported year
+6630,Melanoides tuberculata,species,Melanoides tuberculata,target,Africa to East Indies,1988,individual release,Cohen and Carlton 1995 ,
+4670,Grandidierella japonica,species,Grandidierella japonica,target,Japan,1966,"ballast water, Japanese oyster shipment, ship fouling/boring",Cohen and Carlton 1995 ,
+3090,Pseudopolydora kempi,species,Pseudopolydora kempi,target,Indian Ocean or Northwest Pacific,1972,"ballast water, Japanese oyster shipment, ship fouling/boring",Cohen and Carlton 1995 ,
+2490,Branchiura sowerbyi,species,Branchiura sowerbyi,target,Asia,1963,"ballast water, individual release, solid ballast",Cohen and Carlton 1995 ,Likely introduced earlier than reported year
+4510,Ampelisca abdita,species,Ampelisca abdita,target,Northwest Atlantic,1954,"ballast water, Atlantic oyster shipment",Cohen and Carlton 1995 ,
+3110,Streblospio benedicti,species,Streblospio benedicti,target,Atlantic,1932,ship fouling/boring,Cohen and Carlton 1995 ,Likely introduced earlier than reported year
+4950,Rhithropanopeus harrisii,species,Rhithropanopeus harrisii,target,Northwest Atlantic,1937,"ballast water, Atlantic oyster shipment, ship fouling/boring",Cohen and Carlton 1995 ,
+3170,Heteromastus filiformis,species,Heteromastus filiformis,target,Northwest Atlantic,1936,"ballast water, Atlantic oyster shipment",Cohen and Carlton 1995 ,Likely introduced earlier than reported year
+4150,Amphibalanus improvisus,species,Balanus improvisus,synonym,Atlantic and Gulf Coasts of North America,1853,ship fouling,Cohen and Carlton 1995 ,Likely introduced earlier than reported year
+6810,Macoma petalum,species,Macoma petalum,target,Northwest Atlantic,1988,"Atlantic oyster shipment, solid ballast",Cohen and Carlton 1995 ,Likely introduced earlier than reported year
+4270,Sinelobus stanfordi,species,Sinelobus cf. stanfordi,synonym,NA,1943,NA,Miller 1968,
+4550,Sinocorophium alienense,species,Corophium alienense,synonym,NA,1973,NA,Chapman 1988,described from specimen collected in San Francisco Bay
+3450,Laonome calida,species,Laonome calida,target,Australia,1989,"ship fouling, ballast water",Cohen and Carlton 1995 ,misidentified as Potamilla sp. in Cohen and Carlton 1995
+3130,Marenzelleria neglecta,species,Marenzelleria neglecta,target,Northwest Atlantic,1991,NA,Cohen and Carlton 1995 ,misidentified as Maranselleria viridis in Cohen and Carlton 1995
+4310,Synidotea laticauda,species,Synidotea laticauda,target,NA,1897,NA,Cohen and Carlton 1995 ,described by Benedict from single specimen in San Francisco Bay
+3370,Alitta succinea,species,Nereis succinea,synonym,"North Sea of Germany, possibly East Coast of North America",1896,NA,Carlton 1979,
+4410,Uromunna sp. A,genus,Munna sp. A,synonym,NA,1989,NA,Light et al 2005,

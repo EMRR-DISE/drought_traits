@@ -1,0 +1,433 @@
+taxon_name,trait_category,trait,trait_value,trait_unit,trait_description,citation
+Achnanthes,morphological,cell volume,262,um3,average daily cell volume for the genus ,computed from dataset
+Achnanthes,morphological,GALD,16.07,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Achnanthes,morphological,armour ,1,categorical,hard (1) or soft (0) body,Spaulding and Edlund 2008
+Achnanthes,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Spaulding and Edlund 2008
+Achnanthes,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Achnanthes,morphological,diatom size index,C2,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Achnanthes,morphological,life form,sc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Spaulding and Edlund 2008
+Achnanthes,morphological,diatom life form,mnp,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Achnanthes,ecological ,mobility  ,m,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Spaulding and Edlund 2008
+Achnanthes,ecological ,water type ,fe,categorical,"freshwater (f), marine water (m), estuarine water (e)",Spaulding and Edlund 2008
+Achnanthes,ecological ,habitat ,pb,categorical,"planktonic (p), benthic (b)",Spaulding and Edlund 2008
+Achnanthes,ecological ,diatom guild,l,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Passy 2007;  Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Achnanthes,physiological,optimum ammonium concentration,0.14,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum nitrate concentration,0.31,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum dissolved organic nitrogen concentration,0.2,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum dissolved orthophosphate concentration,0.07,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum total phosphate concentration,0.11,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum silica concentration,15.7,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum Secchi disk depth ,77.01,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum specific conductance ,437,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum water temperature ,16.57,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum turbidity ,19.48,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum outflow,629.664,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Achnanthes,physiological,optimum San Joaquin River ,126.476,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,morphological,cell volume,1250.28,um3,average daily cell volume for the genus ,computed from dataset
+Aulacoseira,morphological,GALD,16.57,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Aulacoseira,morphological,armour ,1,categorical,hard (1) or soft (0) body,Spaulding et al. 2021
+Aulacoseira,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Patapova and English 2010
+Aulacoseira,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Aulacoseira,morphological,diatom size index,C4,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Aulacoseira,morphological,life form,cf,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Spaulding et al. 2021
+Aulacoseira,morphological,diatom life form,c,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Aulacoseira,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Spaulding et al. 2021
+Aulacoseira,ecological ,water type ,f,categorical,"freshwater (f), marine water (m), estuarine water (e)",Spaulding et al. 2021
+Aulacoseira,ecological ,habitat ,pb,categorical,"planktonic (p), benthic (b)",Spaulding et al. 2021; P. W. Lehman (personnal communication)
+Aulacoseira,ecological ,diatom guild,p,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Passy 2007; Riato et al. 2022; Rimet and Bouchez 2012
+Aulacoseira,physiological,optimum ammonium concentration,0.13,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum nitrate concentration,0.4,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum dissolved organic nitrogen concentration,0.22,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum dissolved orthophosphate concentration,0.07,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum total phosphate concentration,0.11,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum silica concentration,14.19,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum Secchi disk depth ,87.56,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum specific conductance ,1460,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum water temperature ,17.63,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum turbidity ,22.79,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum outflow,438.424,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Aulacoseira,physiological,optimum San Joaquin River ,88.928,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,morphological,cell volume,297.02,um3,average daily cell volume for the genus ,computed from dataset
+Chlamydomonas,morphological,GALD,7.53,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Chlamydomonas,morphological,armour ,0,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Chlamydomonas,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Wehr et al. 2015
+Chlamydomonas,morphological,pigment,ab,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Chlamydomonas,morphological,diatom size index,NA,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,
+Chlamydomonas,morphological,life form,s,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015
+Chlamydomonas,morphological,diatom life form,NA,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",
+Chlamydomonas,ecological ,mobility  ,m,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015
+Chlamydomonas,ecological ,water type ,fm,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Chlamydomonas,ecological ,habitat ,pb,categorical,"planktonic (p), benthic (b)",Wehr et al. 2015
+Chlamydomonas,ecological ,diatom guild,NA,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",
+Chlamydomonas,physiological,optimum ammonium concentration,0.16,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum nitrate concentration,0.73,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum dissolved organic nitrogen concentration,0.3,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum dissolved orthophosphate concentration,0.11,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum total phosphate concentration,0.16,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum silica concentration,13.89,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum Secchi disk depth ,82.68,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum specific conductance ,1310,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum water temperature ,18.72,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum turbidity ,23.35,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum outflow,638.736,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Chlamydomonas,physiological,optimum San Joaquin River ,166.348,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,morphological,cell volume,430.81,um3,average daily cell volume for the genus ,computed from dataset
+Chroococcus,morphological,GALD,3.68,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Chroococcus,morphological,armour ,0,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Chroococcus,morphological,attachment,up,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Guiry and Guiry 2023
+Chroococcus,morphological,pigment,ay,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Chroococcus,morphological,diatom size index,NA,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,
+Chroococcus,morphological,life form,sc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015
+Chroococcus,morphological,diatom life form,NA,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",
+Chroococcus,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015
+Chroococcus,ecological ,water type ,fm,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Chroococcus,ecological ,habitat ,b,categorical,"planktonic (p), benthic (b)",Wehr et al. 2015
+Chroococcus,ecological ,diatom guild,NA,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",
+Chroococcus,physiological,optimum ammonium concentration,0.06,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum nitrate concentration,0.69,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum dissolved organic nitrogen concentration,0.28,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum dissolved orthophosphate concentration,0.19,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum total phosphate concentration,0.2,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum silica concentration,12.74,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum Secchi disk depth ,"130,20",cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum specific conductance ,1675,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum water temperature ,23.44,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum turbidity ,15.69,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum outflow,161.98,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Chroococcus,physiological,optimum San Joaquin River ,22.568,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,morphological,cell volume,1110.92,um3,average daily cell volume for the genus ,computed from dataset
+Cocconeis,morphological,GALD,19.02,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Cocconeis,morphological,armour ,1,categorical,hard (1) or soft (0) body,Costa et al. 2019
+Cocconeis,morphological,attachment,p,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Grubaugh and Potapova 2012
+Cocconeis,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Cocconeis,morphological,diatom size index,C4,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Cocconeis,morphological,life form,s,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Costa et al. 2019
+Cocconeis,morphological,diatom life form,amn,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Cocconeis,ecological ,mobility  ,m,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Costa et al. 2019
+Cocconeis,ecological ,water type ,f,categorical,"freshwater (f), marine water (m), estuarine water (e)",Costa et al. 2019
+Cocconeis,ecological ,habitat ,b,categorical,"planktonic (p), benthic (b)",Costa et al. 2019
+Cocconeis,ecological ,diatom guild,l,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Passy 2007; Riato et al. 2022; Rimet and Bouchez 2012
+Cocconeis,physiological,optimum ammonium concentration,0.19,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum nitrate concentration,0.43,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum dissolved organic nitrogen concentration,0.23,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum dissolved orthophosphate concentration,0.06,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum total phosphate concentration,0.1,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum silica concentration,15.88,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum Secchi disk depth ,103.2,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum specific conductance ,847,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum water temperature ,17.01,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum turbidity ,24.92,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum outflow,440.916,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Cocconeis,physiological,optimum San Joaquin River ,69.244,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,morphological,cell volume,1293.69,um3,average daily cell volume for the genus ,computed from dataset
+Cryptomonas,morphological,GALD,16.77,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Cryptomonas,morphological,armour ,0,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Cryptomonas,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Wehr et al. 2015; Guiry and Guiry 2023
+Cryptomonas,morphological,pigment,acy,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Cryptomonas,morphological,diatom size index,NA,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,
+Cryptomonas,morphological,life form,sc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ", Guiry and Guiry  2023
+Cryptomonas,morphological,diatom life form,NA,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",
+Cryptomonas,ecological ,mobility  ,m,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015
+Cryptomonas,ecological ,water type ,fme,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Cryptomonas,ecological ,habitat ,p,categorical,"planktonic (p), benthic (b)",Wehr et al. 2015
+Cryptomonas,ecological ,diatom guild,NA,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",
+Cryptomonas,physiological,optimum ammonium concentration,0.12,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum nitrate concentration,0.67,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum dissolved organic nitrogen concentration,0.27,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum dissolved orthophosphate concentration,0.11,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum total phosphate concentration,0.15,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum silica concentration,13.75,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum Secchi disk depth ,81.06,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum specific conductance ,3658,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum water temperature ,18.72,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum turbidity ,22.07,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum outflow,427.728,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Cryptomonas,physiological,optimum San Joaquin River ,116.844,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,morphological,cell volume,1541.98,um3,average daily cell volume for the genus ,computed from dataset
+Cyclotella,morphological,GALD,9.82,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Cyclotella,morphological,armour ,1,categorical,hard (1) or soft (0) body,Lowe and Manoylov 2011
+Cyclotella,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Lowe and Manoylov 2011
+Cyclotella,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Cyclotella,morphological,diatom size index,C5,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Cyclotella,morphological,life form,s,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Lowe and Manoylov 2011
+Cyclotella,morphological,diatom life form,n,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Riato et al. 2022
+Cyclotella,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Lowe and Manoylov 2011
+Cyclotella,ecological ,water type ,fme,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Cyclotella,ecological ,habitat ,p,categorical,"planktonic (p), benthic (b)",Lowe and Manoylov 2011
+Cyclotella,ecological ,diatom guild,p,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA", Riato et al. 2022; Rimet and Bouchez 2012
+Cyclotella,physiological,optimum ammonium concentration,0.14,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum nitrate concentration,0.56,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum dissolved organic nitrogen concentration,0.27,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum dissolved orthophosphate concentration,0.1,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum total phosphate concentration,0.14,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum silica concentration,14.24,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum Secchi disk depth ,73.76,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum specific conductance ,2558,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum water temperature ,17.59,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum turbidity ,22.69,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum outflow,578.228,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Cyclotella,physiological,optimum San Joaquin River ,121.212,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,morphological,cell volume,3965,um3,average daily cell volume for the genus ,computed from dataset
+Entomoneis,morphological,GALD,43.21,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Entomoneis,morphological,armour ,1,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Entomoneis,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Bahls 2012
+Entomoneis,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Entomoneis,morphological,diatom size index,C5,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Entomoneis,morphological,life form,s,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015
+Entomoneis,morphological,diatom life form,an ,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA", Rimet and Bouchez 2012
+Entomoneis,ecological ,mobility  ,m,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015
+Entomoneis,ecological ,water type ,m,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Entomoneis,ecological ,habitat ,b,categorical,"planktonic (p), benthic (b)",Wehr et al. 2015
+Entomoneis,ecological ,diatom guild,l,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Passy 2007; Riato et al. 2022; Rimet and Bouchez 2012
+Entomoneis,physiological,optimum ammonium concentration,0.09,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum nitrate concentration,0.4,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum dissolved organic nitrogen concentration,0.22,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum dissolved orthophosphate concentration,0.06,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum total phosphate concentration,0.1,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum silica concentration,14.66,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum Secchi disk depth ,50.77,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum specific conductance ,5019,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum water temperature ,17.36,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum turbidity ,19,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum outflow,337.624,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Entomoneis,physiological,optimum San Joaquin River ,60.424,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,morphological,cell volume,691.8,um3,average daily cell volume for the genus ,computed from dataset
+Fragilaria,morphological,GALD,19.88,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Fragilaria,morphological,armour ,1,categorical,hard (1) or soft (0) body,Morales et al. 2013
+Fragilaria,morphological,attachment,uv,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Morales 2010; Morales et al. 2013
+Fragilaria,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Fragilaria,morphological,diatom size index,C4,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Fragilaria,morphological,life form,sc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015
+Fragilaria,morphological,diatom life form,cp,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Fragilaria,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Morales et al. 2013
+Fragilaria,ecological ,water type ,fm,categorical,"freshwater (f), marine water (m), estuarine water (e)",Morales et al. 2013
+Fragilaria,ecological ,habitat ,pb,categorical,"planktonic (p), benthic (b)",Morales et al. 2013
+Fragilaria,ecological ,diatom guild,h,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Passy 2007; Riato et al. 2022; Rimet and Bouchez 2012
+Fragilaria,physiological,optimum ammonium concentration,0.21,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum nitrate concentration,0.34,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum dissolved organic nitrogen concentration,0.23,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum dissolved orthophosphate concentration,0.06,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum total phosphate concentration,0.1,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum silica concentration,16.14,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum Secchi disk depth ,97.25,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum specific conductance ,618,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum water temperature ,15.97,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum turbidity ,25.49,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum outflow,652.624,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Fragilaria,physiological,optimum San Joaquin River ,159.432,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,morphological,cell volume,5524.5,um3,average daily cell volume for the genus ,computed from dataset
+Melosira,morphological,GALD,24.72,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Melosira,morphological,armour ,1,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Melosira,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Potapova 2009
+Melosira,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Melosira,morphological,diatom size index,C5,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Melosira,morphological,life form,scf,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015
+Melosira,morphological,diatom life form,c,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Melosira,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Potapova 2009
+Melosira,ecological ,water type ,fm,categorical,"freshwater (f), marine water (m), estuarine water (e)",Potapova 2009; Wehr et al.2015
+Melosira,ecological ,habitat ,bp,categorical,"planktonic (p), benthic (b)",Wehr et al. 2015
+Melosira,ecological ,diatom guild,h,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Passy 2007; Riato et al. 2022; Rimet and Bouchez 2012
+Melosira,physiological,optimum ammonium concentration,0.17,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum nitrate concentration,0.46,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum dissolved organic nitrogen concentration,0.25,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum dissolved orthophosphate concentration,0.07,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum total phosphate concentration,0.12,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum silica concentration,15.42,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum Secchi disk depth ,79.33,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum specific conductance ,651,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum water temperature ,16.13,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum turbidity ,26.22,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum outflow,648.676,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Melosira,physiological,optimum San Joaquin River ,132.692,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,morphological,cell volume,911.31,um3,average daily cell volume for the genus ,computed from dataset
+Navicula,morphological,GALD,24.28,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Navicula,morphological,armour ,1,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Navicula,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Rushforth et al. 2010; Potapova and Ciugulea 2020
+Navicula,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Navicula,morphological,diatom size index,C4,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Navicula,morphological,life form,s,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Rushforth et al. 2010
+Navicula,morphological,diatom life form,mn,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Navicula,ecological ,mobility  ,m,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015
+Navicula,ecological ,water type ,f,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Navicula,ecological ,habitat ,b,categorical,"planktonic (p), benthic (b)",Rushforth et al. 2010
+Navicula,ecological ,diatom guild,m,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Passy 2007; Riato et al. 2022; Rimet and Bouchez 2012
+Navicula,physiological,optimum ammonium concentration,0.21,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum nitrate concentration,0.44,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum dissolved organic nitrogen concentration,0.24,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum dissolved orthophosphate concentration,0.08,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum total phosphate concentration,0.12,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum silica concentration,15.87,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum Secchi disk depth ,84.17,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum specific conductance ,1091,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum water temperature ,16.08,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum turbidity ,23.19,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum outflow,717.724,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Navicula,physiological,optimum San Joaquin River ,93.044,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,morphological,cell volume,3279.3,um3,average daily cell volume for the genus ,computed from dataset
+Nitzschia,morphological,GALD,25.29,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Nitzschia,morphological,armour ,1,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Nitzschia,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Garzon et al. 2018
+Nitzschia,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Nitzschia,morphological,diatom size index,C5,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Nitzschia,morphological,life form,sc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015
+Nitzschia,morphological,diatom life form,mn,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Nitzschia,ecological ,mobility  ,m,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015
+Nitzschia,ecological ,water type ,fm,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Nitzschia,ecological ,habitat ,pbe,categorical,"planktonic (p), benthic (b)",Wehr et al. 2015
+Nitzschia,ecological ,diatom guild,m,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Passy 2007; Riato et al. 2022; Rimet and Bouchez 2012
+Nitzschia,physiological,optimum ammonium concentration,0.21,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum nitrate concentration,0.37,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum dissolved organic nitrogen concentration,0.23,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum dissolved orthophosphate concentration,0.07,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum total phosphate concentration,0.11,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum silica concentration,15.62,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum Secchi disk depth ,86.12,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum specific conductance ,1540,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum water temperature ,16.58,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum turbidity ,22.73,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum outflow,644.196,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Nitzschia,physiological,optimum San Joaquin River ,116.172,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,morphological,cell volume,248,um3,average daily cell volume for the genus ,computed from dataset
+Plagioselmis,morphological,GALD,9.51,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Plagioselmis,morphological,armour ,0,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Plagioselmis,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Wehr et al. 2015
+Plagioselmis,morphological,pigment,acy,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Plagioselmis,morphological,diatom size index,NA,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,
+Plagioselmis,morphological,life form,s,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015
+Plagioselmis,morphological,diatom life form,NA,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",
+Plagioselmis,ecological ,mobility  ,m,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015
+Plagioselmis,ecological ,water type ,fm,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Plagioselmis,ecological ,habitat ,p,categorical,"planktonic (p), benthic (b)",Wehr et al. 2015
+Plagioselmis,ecological ,diatom guild,NA,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",
+Plagioselmis,physiological,optimum ammonium concentration,0.13,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum nitrate concentration,0.7,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum dissolved organic nitrogen concentration,0.24,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum dissolved orthophosphate concentration,0.11,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum total phosphate concentration,0.13,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum silica concentration,14.01,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum Secchi disk depth ,81.9,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum specific conductance ,4856,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum water temperature ,16.5,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum turbidity ,20.42,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum outflow,994.616,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Plagioselmis,physiological,optimum San Joaquin River ,135.38,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,morphological,cell volume,1770.58,um3,average daily cell volume for the genus ,computed from dataset
+Scenedesmus,morphological,GALD,6.8,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Scenedesmus,morphological,armour ,0,categorical,hard (1) or soft (0) body,Hegewald 1997
+Scenedesmus,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Guiry and Guiry 2023
+Scenedesmus,morphological,pigment,ab,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Scenedesmus,morphological,diatom size index,NA,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,
+Scenedesmus,morphological,life form,sc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Hegewald 1997
+Scenedesmus,morphological,diatom life form,NA,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",
+Scenedesmus,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Hegewald 1997
+Scenedesmus,ecological ,water type ,f,categorical,"freshwater (f), marine water (m), estuarine water (e)",Hegewald 1997
+Scenedesmus,ecological ,habitat ,p,categorical,"planktonic (p), benthic (b)",Hegewald 1997
+Scenedesmus,ecological ,diatom guild,NA,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",
+Scenedesmus,physiological,optimum ammonium concentration,0.21,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum nitrate concentration,0.74,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum dissolved organic nitrogen concentration,0.33,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum dissolved orthophosphate concentration,0.14,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum total phosphate concentration,0.29,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum silica concentration,14.79,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum Secchi disk depth ,68.77,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum specific conductance ,387,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum water temperature ,17.5,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum turbidity ,25.76,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum outflow,639.24,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Scenedesmus,physiological,optimum San Joaquin River ,131.264,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,morphological,cell volume,123.77,um3,average daily cell volume for the genus ,computed from dataset
+Skeletonema,morphological,GALD,8.57,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Skeletonema,morphological,armour ,1,categorical,hard (1) or soft (0) body,Spaulding et al. 2021
+Skeletonema,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Guiry and Guiry 2023
+Skeletonema,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Skeletonema,morphological,diatom size index,C2,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Skeletonema,morphological,life form,scf,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Spaulding et al. 2021
+Skeletonema,morphological,diatom life form,c,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Riato et al. 2022
+Skeletonema,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Spaulding et al. 2021
+Skeletonema,ecological ,water type ,fme,categorical,"freshwater (f), marine water (m), estuarine water (e)",Spaulding et al. 2021
+Skeletonema,ecological ,habitat ,p,categorical,"planktonic (p), benthic (b)",Spaulding et al. 2021
+Skeletonema,ecological ,diatom guild,p,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Rimet and Bouchez 2012
+Skeletonema,physiological,optimum ammonium concentration,0.06,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum nitrate concentration,0.18,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum dissolved organic nitrogen concentration,0.2,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum dissolved orthophosphate concentration,0.07,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum total phosphate concentration,0.15,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum silica concentration,13.42,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum Secchi disk depth ,46.84,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum specific conductance ,3147,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum water temperature ,19.24,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum turbidity ,12.75,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum outflow,527.464,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Skeletonema,physiological,optimum San Joaquin River ,155.932,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,morphological,cell volume,184.95,um3,average daily cell volume for the genus ,computed from dataset
+Synechococcus,morphological,GALD,4.86,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Synechococcus,morphological,armour ,0,categorical,hard (1) or soft (0) body,Wehr et al. 2015 
+Synechococcus,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Guiry and Guiry 2023
+Synechococcus,morphological,pigment,ay,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Synechococcus,morphological,diatom size index,NA,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,
+Synechococcus,morphological,life form,sc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015 
+Synechococcus,morphological,diatom life form,NA,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",
+Synechococcus,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015 
+Synechococcus,ecological ,water type ,fm,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015; Waterbury et al. 1979
+Synechococcus,ecological ,habitat ,p,categorical,"planktonic (p), benthic (b)",Wehr et al. 2015 
+Synechococcus,ecological ,diatom guild,NA,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",
+Synechococcus,physiological,optimum ammonium concentration,0.16,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum nitrate concentration,0.62,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum dissolved organic nitrogen concentration,0.35,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum dissolved orthophosphate concentration,0.09,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum total phosphate concentration,0.14,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum silica concentration,16.53,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum Secchi disk depth ,64.27,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum specific conductance ,5360,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum water temperature ,15.89,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum turbidity ,26.91,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum outflow,859.04,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Synechococcus,physiological,optimum San Joaquin River ,73.192,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,morphological,cell volume,4679.85,um3,average daily cell volume for the genus ,computed from dataset
+Synedra,morphological,GALD,14.52,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Synedra,morphological,armour ,1,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Synedra,morphological,attachment,p,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Bahls 2012
+Synedra,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Synedra,morphological,diatom size index,C5,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Synedra,morphological,life form,sc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Bahls 2012
+Synedra,morphological,diatom life form,np,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Berthon et al. 2011; Rimet and Bouchez 2012; Riato et al. 2022
+Synedra,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015
+Synedra,ecological ,water type ,f,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015
+Synedra,ecological ,habitat ,be,categorical,"planktonic (p), benthic (b)",Passy 2007
+Synedra,ecological ,diatom guild,h,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Rimet and Bouchez 2012
+Synedra,physiological,optimum ammonium concentration,0.15,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum nitrate concentration,0.3,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum dissolved organic nitrogen concentration,0.23,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum dissolved orthophosphate concentration,0.08,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum total phosphate concentration,0.12,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum silica concentration,15.51,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum Secchi disk depth ,75.06,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum specific conductance ,1686,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum water temperature ,16.95,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum turbidity ,19.95,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum outflow,903.784,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Synedra,physiological,optimum San Joaquin River ,156.828,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,morphological,cell volume,12020.76,um3,average daily cell volume for the genus ,computed from dataset
+Thalassiosira,morphological,GALD,14.04,um,average greatest axis linear dimention (GALD) of cells for the genus ,computed from dataset
+Thalassiosira,morphological,armour ,1,categorical,hard (1) or soft (0) body,Wehr et al. 2015
+Thalassiosira,morphological,attachment,u,categorical,"unattached (u), vertical (v), prostrate (p), tube forming (t)",Kociolek and Frankovich 2011
+Thalassiosira,morphological,pigment,acf,categorical,"chlorophyll a (a), chlorophyll b (b), chlorophyll c (c), fucoxanthin (f),  phycocyanin and phycoerythrin (y)",Wetzel 1975
+Thalassiosira,morphological,diatom size index,C5,rank,size categories based on benthic diatoms; nondiatoms are listed as NA,Berthon et al. 2011
+Thalassiosira,morphological,life form,fsc,categorical,"chain or filament forming (f), solitary (s), aggregated or colonial (c) ",Wehr et al. 2015; Kociolek and Frankovich 2011
+Thalassiosira,morphological,diatom life form,c,categorical,"diatom life form index as mobile(m), colonial (c), non-colonial (n), pedunculate (p), adnate (a) ; nondiatoms are listed as NA",Riato et al. 2022
+Thalassiosira,ecological ,mobility  ,n,categorical,"the ability of the cell to self propel in some way: mobile (m), nonmobile (n)",Wehr et al. 2015; Kociolek and Frankovich 2011
+Thalassiosira,ecological ,water type ,fme,categorical,"freshwater (f), marine water (m), estuarine water (e)",Wehr et al. 2015; Kociolek and Frankovich 2011
+Thalassiosira,ecological ,habitat ,p,categorical,"planktonic (p), benthic (b)",Kociolek and Frankovich 2011
+Thalassiosira,ecological ,diatom guild,p,categorical,"diatom guild index as high profile (h), low profile (l), motile (m), planktic (p); nondiatoms are listed as NA",Rimet and Bouchez 2012
+Thalassiosira,physiological,optimum ammonium concentration,0.06,mg/L,average dissolved ammoniuim concentration measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum nitrate concentration,0.32,mg/L,average nitrate plus nitrite concentration measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum dissolved organic nitrogen concentration,0.26,mg/L,average dissolved organic nitrogen measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum dissolved orthophosphate concentration,0.09,mg/L,average dissolved orthophosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum total phosphate concentration,0.18,mg/L,average total phosphate concentration measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum silica concentration,10.86,mg/L,average silica concentration measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum Secchi disk depth ,35.04,cm,average Secchi disk depth measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum specific conductance ,6638,uS/cm,average specific conductance measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum water temperature ,19.24,oC,average water temperature measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum turbidity ,14.59,NTU,average turbidity measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum outflow,381.892,m3/s,average Delta outflow measured for daily abundance values above the third quartile ,computed from dataset
+Thalassiosira,physiological,optimum San Joaquin River ,95.228,m3/s,average San Joaquin River streamflow measured for daily abundance values above the third quartile ,computed from dataset

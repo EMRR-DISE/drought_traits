@@ -1,0 +1,62 @@
+organism_code,target_taxon_name,target_taxon_level,lit_taxon_name,lit_taxon_level,lit_taxon_type,citation,population_country,population_state,population_description,trait,trait_value,trait_unit,trait_description,notes
+1010,Girardia tigrina,species,Girardia tigrina,species,target,Ball and Reynoldson 1981,NA,NA,NA,body_size_max,18,mm,,
+1130,Prostoma graecense,species,Prostoma graecense,species,target,Pennak 1989,NA,NA,NA,body_size_max,30,mm,,
+1230,Dorylaimus sp. A,genus,Dorylaimus,genus,congener,Andrassy 2009,NA,NA,NA,body_size_max,9,mm,,
+2090,Dero trifida,species,Dero trifida,species,target,Righi and Hamoui 2002,Surinam,NA,NA,body_size_max,3.8,mm,,body diameter: 225-282 um
+2270,Slavina appendiculata,species,Slavina appendiculata,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,20,mm,,
+2410,Aulodrilus limnobius,species,Aulodrilus limnobius,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,15,mm,,
+2430,Aulodrilus pigueti,species,Aulodrilus pigueti,species,target,Brinkhurst and Jamieson 1971,NA,NA,NA,body_size_max,28,mm,,
+2450,Aulodrilus japonicus,species,Aulodrilus japonicus,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,25,mm,,
+2470,Bothrioneurum vejdovskyanum,species,Bothrioneurum vejdovskyanum,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,35,mm,,
+2490,Branchiura sowerbyi,species,Branchiura sowerbyi,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,270,mm,based on max of range for genus,
+2510,Ilyodrilus frantzi,species,Ilyodrilus frantzi,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,20,mm,,
+2530,Ilyodrilus templetoni,species,Ilyodrilus templetoni,species,target,Pennak 1989,NA,NA,NA,body_size_max,65,mm,,
+2550,Limnodrilus hoffmeisteri,species,Limnodrilus hoffmeisteri,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,60,mm,,
+2570,Limnodrilus udekemianus,species,Limnodrilus udekemianus,species,target,Brinkhurst and Jamieson 1971,NA,NA,NA,body_size_max,90,mm,,
+2610,Psammoryctides californianus,species,Psammoryctides californianus,species,target,Brinkhurst and Jamieson 1971,NA,NA,NA,body_size_max,75,mm,,
+2630,Quistadrilus multisetosus,species,Quistadrilus multisetosus,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,35,mm,,
+2650,Embolocephalus nikolskyi,species,Embolocephalus nikolskyi,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,50,mm,,
+2720,Tubificoides heterochaetus,species,Tubificoides heterochaetus,species,target,Timm and Martin 2019,NA,NA,NA,body_size_max,9,mm,,
+2730,Varichaetadrilus angustipenis,species,Varichaetadrilus angustipenis,species,target,Brinkhurst and Jamieson 1971,NA,NA,NA,body_size_max,15,mm,,
+2810,Sparganophilus tamesis,species,Sparganophilus tamesis,species,target,Brinkhurst and Jamieson 1971,NA,NA,NA,body_size_max,200,mm,,
+2840,Altmanella freidris,species,Altmanella freidris,species,target,Brinkhurst and Jamieson 1971,NA,NA,NA,body_size_max,12,mm,,
+2850,Lumbriculus variegatus,species,Lumbriculus variegatus,species,target,Brinkhurst and Jamieson 1971,NA,NA,NA,body_size_max,100,mm,,
+2970,Mooreobdella microstoma,species,Mooreobdella microstoma,species,target,Thorp and Covich 2001,NA,NA,NA,body_size_max,50,mm,,
+3050,Boccardiella ligerica,species,Boccardiella ligerica,species,target,Blake and Woodwick 1971,Netherlands,NA,Zuider Zee,body_size_max,12,mm,,
+3090,Pseudopolydora kempi,species,Pseudopolydora kempi,species,target,Light 1978,US,CA,San Francisco Estuary,body_size_max,12,mm,average length for SFE; 22 mm for Japan (Sato-Okoshi 2000),Probably a complex of species
+3110,Streblospio benedicti,species,Streblospio benedicti,species,target,Bridges and Heppell 1996,NA,NA,NA,body_size_max,20,mm,< 20 mm,
+3130,Marenzelleria neglecta,species,Marenzelleria neglecta,species,target,Sikorski and Bick 2004,NA,NA,NA,body_size_max,115,mm,,
+3170,Heteromastus filiformis,species,Heteromastus filiformis,species,target,Hutchings and Rainer 1982,NA,NA,North Sea,body_size_max,180,mm,Specimens from the UK reach about 100 mm (Hayward and Ryland 1990); specimens from the US East Coast are about 40 mm (Hutchings and Rainier 1982),This is most likely a species complex
+3330,Hediste limnicola,species,Hediste limnicola,species,target,Smith 1958,US,CA,Lake Merced,body_size_max,122,mm,mean length of left valve of adult female for sample with largest body size,see Table 3 for measurements
+3370,Alitta succinea,species,Alitta succinea,species,target,Pettibone 1963,NA,NA,NA,body_size_max,170,mm,,
+3430,Manayunkia speciosa,species,Manayunkia eriensis,species,synonym,Pennak 1989,NA,NA,NA,body_size_max,4,mm,,
+3450,Laonome calida,species,Laonome calida,species,target,Capa et al. 2014,Netherlands,NA,Eijsden,body_size_max,15,mm,,body width: 0.5-0.8 mm
+4030,Isocypris sp. A,genus,Isocypris beauchampi,species,congener,Kulkoyluoglu 2002,Turkey,Bolu region,Lake Golkoy,body_size_max,1.2,mm,maximum length of left value of male (slightly larger than female),
+4050,Candona sp. A,genus,Candona alchichica,species,congener,Cohuo et al 2016,Mexico,NA,Lake Alchichica,body_size_max,1.3,mm,,
+4090,Cyprideis sp. A,genus,Cyprideis torosa,species,congener,Van Harten 1975,The Netherlands,North Holland West-Frisian Islands of Texel and Vlieland,brackish inland waters,body_size_max,1.1,mm,mean adult length at 25C,Author suggested was probably Physa acuta
+4150,Amphibalanus improvisus,species,Amphibalanus improvisus,species,target,Henry and McLauglin 1975,NA,NA,NA,body_size_max,17,mm,Maximum adult width,
+4230,Nippoleucon hinumensis,species,Nippoleucon hinumensis,species,target,Gamo 1967,Japan,lbaraki Prefecture,"Lake Hinuma, a brackish water lake connected to the open sea through the River Hinuma",body_size_max,5.5,mm,Female paratype.  The male holotype is 3.7 mm,
+4270,Sinelobus stanfordi,species,Sinelobus stanfordi,species,target,Gardiner 1975,NA,NA,NA,body_size_max,3.6,mm,"male, female is 3.0 mm",
+4310,Synidotea laticauda,species,Synidotea laticauda,species,target,Cuesta et al. 1996,Spain,NA,NA,body_size_max,25.3,mm," probably male (Japan); female, 16 mm (Netherlands, Faasse 2011)",
+4350,Gnorimosphaeroma insulare,species,Gnorimosphaeroma insulare,species,target,Wetzer et al 2021,United States,CA,San Nicolas Island,body_size_max,8,mm,,cited Menzies 1954 for size reference
+4370,Gnorimosphaeroma oregonense,species,Gnorimosphaeroma oregonense,species,target,Wetzer et al 2021,Canada,British Columbia,"Vancouver, Stanley Park",body_size_max,8.5,mm,male,
+4410,Uromunna sp. A,species,Uromunna reynoldsi,species,congener,Schultz 1969,NA,NA,NA,body_size_max,1.5,mm,,
+4510,Ampelisca abdita,species,Ampelisca abdita,species,target,Mills 1964,United States,Multiple,Eastern North America,body_size_max,8.2,mm,,
+4550,Sinocorophium alienense,species,Sinocorophium alienense,species,target,Chapman 1988,United States,CA,San Francisco Estuary,body_size_max,6.4,mm,female,
+4610,Americorophium spinicorne,species,Americorophium spinicorne,species,target,Burdi et al. 2021,United States,CA,San Francisco Estuary,body_size_max,7.5,mm,,samples from guts of field collected fish
+4630,Americorophium stimpsoni,species,Americorophium stimpsoni,species,target,Burdi et al. 2021,United States,CA,San Francisco Estuary,body_size_max,7.8,mm,,samples from guts of field collected fish
+4670,Grandidierella japonica,species,Grandidierella japonica,species,target,Chapman and Dorman 1975,NA,NA,NA,body_size_max,22,mm,"male, female is 13 mm",
+4750,Gammarus daiberi,species,Gammarus daiberi,species,target,Bousfield 1969,United States,Multiple,Estuaries in Middle Atlantic Region,body_size_max,12.5,mm,male.  Females are 6-8 mm,
+4810,Hyalella sp. A,genus,Hyalella,genus,target,Burdi et al. 2021,United States,CA,San Francisco Estuary,body_size_max,10,mm,,samples from guts of field collected fish
+4950,Rhithropanopeus harrisii,species,Rhithropanopeus harrisii,species,target,Williams 1984,NA,NA,NA,body_size_max,21.3,mm,male max width.  Female is 16 mm,
+5410,Procladius sp. A,genus,Procladius denticulatus,species,congener,Bath and Anderson 1969,United States,CA,Southern CA,body_size_max,12,mm,,
+5550,Cryptochironomus sp. A,genus,Cryptochironomus,genus,congener,Curry 1958,United States,Michigan,NA,body_size_max,15,mm,,
+6490,Fluminicola sp. A,genus,Fluminicola spp.,genus,congener,Pennak 1989,NA,NA,Pacific Northwest (coastal),body_size_max,7,mm,,
+6530,Gyraulus circumstriatus,species,Gyraulus parvus,species,congener,Brown 1998,United States,Wisconsin,"Carrol Lake, Vilas County",body_size_max,5,mm,,see Table 1 for measurement
+6570,Physa sp. A,genus,Physa,genus,congener,Arendt 2015,US,CA,Riverside,body_size_max,6.9,mm,,
+6630,Melanoides tuberculata,species,Melanoides tuberculata,species,target,Thompson 1989,NA,NA,NA,body_size_max,36,mm,,
+6730,Corbicula fluminea,species,Corbicula fluminea,species,target,McMahon 1983,NA,NA,NA,body_size_max,60,mm,,
+6750,Euglesa casertana,species,Pisidium spp.,genus,congener_synonym,Pennak 1989,NA,NA,NA,body_size_max,4,mm,,
+6770,Euglesa compressa,species,Pisidium spp.,genus,congener_synonym,Pennak 1989,NA,NA,NA,body_size_max,4,mm,,
+6810,Macoma petalum,species,Macoma petalum,species,target,Gosner 1978,NA,NA,NA,body_size_max,38,mm,,
+6890,Potamocorbula amurensis,species,Potamocorbula amurensis,species,target,Carlton et al. 1990,NA,NA,Asia,body_size_max,27.5,mm,,
