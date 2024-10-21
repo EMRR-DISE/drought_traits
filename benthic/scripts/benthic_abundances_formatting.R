@@ -773,6 +773,129 @@ cpue_indiv_prop_combo_nm_final <- left_join(cpue_indiv_prop_comb_nm,common5_pa) 
 #relative abundances of taxa without size data
 #write_csv(missing_size_df,"./benthic/data_output/benthic_relative_abundances_missing_size.csv")
 
+
+#look at taxa in at least 5% of samples for each of the three stations--------------
+
+#calculate the proportion of samples in which each taxon is present
+cpue_sample_prop_stn <- benthic_cpue_stfr %>%
+  #drop rows where cpue is zero for sake of counting samples in which species are present
+  filter(mean_cpue!=0) %>%   
+  group_by(station_code,organism_code) %>%   
+  #row counts by taxon now should be number of samples with the taxon
+  summarise(n_samp=n(),.groups = 'drop') %>% 
+  #order rows by number of samples, most to least
+  arrange(organism_code,-n_samp) %>% 
+  pivot_wider(id_cols=organism_code,names_from = station_code, values_from = n_samp) %>% 
+  rename(d28 = 'D28A-L'
+         ,d4 = 'D4-L'
+         ,d7 = 'D7-C') %>% 
+  glimpse()
+
+#need to calculate total number of samples
+total_samples_stn <- benthic_cpue_stfr %>% 
+  #look at distinct combinations of station and date
+  #necessary because there's a row for each taxon within each sample
+  distinct(sample_date, station_code) %>%  
+  count(station_code) 
+
+cpue_sample_prop_stn_calc <- cpue_sample_prop_stn %>% 
+  mutate(prop_d28 = d28/454 #see total_samples_stn above for station counts
+         ,prop_d4 = d4/453
+         ,prop_d7 = d7/453
+         ) %>% 
+  glimpse()
+
+#filter each station so only taxa present in at least 5% of samples remain
+cpue_stn_5 <- cpue_sample_prop_stn_calc %>% 
+  select(organism_code,starts_with("prop")) %>% 
+  #convert wide to long
+  pivot_longer(cols= starts_with("prop"),names_to = "station",values_to = "prop") %>% 
+  #keep taxa in at least 5% of samples
+  filter(prop > 0.05) %>% 
+  #convert back to wide
+  pivot_wider(id_cols = organism_code,names_from = station, values_from = prop) %>% 
+  #arrange so most frequent taxa are at top
+  arrange(prop_d28,prop_d4,prop_d7)
+#89 taxa across all three stations
+
+#now combine the station specific abundant taxa with the overall abundant taxa table
+glimpse(cpue_stn_5)
+glimpse(cpue_5plus)
+cpue_5_all <- full_join(cpue_5plus,cpue_stn_5) %>% 
+  select(-n_samp)
+#so there are 25 more taxa beyond the 64 that are currently in the all stations list when you look
+#at the three stations individually
+
+
+#look at taxa in at least 10% of samples for each of the three stations--------------
+
+#filter each station so only taxa present in at least 5% of samples remain
+cpue_stn_10 <- cpue_sample_prop_stn_calc %>% 
+  select(organism_code,starts_with("prop")) %>% 
+  #convert wide to long
+  pivot_longer(cols= starts_with("prop"),names_to = "station",values_to = "prop") %>% 
+  #keep taxa in at least 5% of samples
+  filter(prop > 0.1) %>% 
+  #convert back to wide
+  pivot_wider(id_cols = organism_code,names_from = station, values_from = prop) %>% 
+  #arrange so most frequent taxa are at top
+  arrange(prop_d28,prop_d4,prop_d7)
+#66 taxa across all three stations
+
+#now combine the station specific abundant taxa with the overall abundant taxa table
+cpue_10_all <- full_join(cpue_10plus,cpue_stn_10) %>% 
+  select(-n_samp)
+#there are 23 more taxa in set of stations than overall 
+
+#but let's instead compare the list of taxa that are in at least 10% of samples in each of the three stations
+#with the taxa in 5% of all samples becuase the latter is the list for which we have already gathered traits
+cpue_10_all_trait <- full_join(cpue_5plus,cpue_stn_10) %>% 
+  select(-n_samp)
+#there are only three taxa in the three station list that aren't in the 5% overall list that we used for 
+#gathering traits
+
+#create a list of remaining taxa for each station
+#this will be used to filter the main abundance data set
+cpue_stn_10_list <- cpue_stn_10 %>% 
+  #convert wide to long
+  pivot_longer(cols= starts_with("prop"),names_to = "station", values_to = "prop") %>% 
+  #remove rows with NA for prop
+  filter(!is.na(prop)) %>% 
+  #drop prop column now
+  select(organism_code,station) %>% 
+  glimpse()
+
+#create organism list for each station to use for filtering abundance data set
+taxa_10_d28 <- cpue_stn_10_list %>% 
+  filter(station == "prop_d28") %>%
+  arrange(organism_code) %>% 
+  pull(organism_code)
+  
+taxa_10_d4 <- cpue_stn_10_list %>% 
+  filter(station == "prop_d4")%>% 
+  arrange(organism_code) %>% 
+  pull(organism_code)
+
+taxa_10_d7 <- cpue_stn_10_list %>% 
+  filter(station == "prop_d7")%>% 
+  arrange(organism_code) %>% 
+  pull(organism_code)
+
+#now filter the main abundance data set to only keep data for the most abundant taxa from each station
+benthic_cpue_10 <- benthic_cpue_stfr %>% 
+  filter((station_code=="D28A-L" & organism_code %in% taxa_10_d28) |
+           (station_code=="D4-L" & organism_code %in% taxa_10_d4)  |
+           (station_code=="D7-C" & organism_code %in% taxa_10_d7)  
+         )
+
+#let's make sure the filtering worked correctly
+benthic_cpue_10_check <- benthic_cpue_10 %>% 
+  distinct(station_code,organism_code)
+#looks good
+
+#write the file for analysis in another script
+#write_csv(benthic_cpue10, "./benthic/data_output/benthic_common10_abundances_by_station.csv")
+
 #Calculate Bay-Delta wide seasonal Mean CPUE-----------------------
 #using data set that only keeps species in at least 5% of sample
 #note that EMP published their data by calendar year
