@@ -853,10 +853,11 @@ cpue_10_all_trait <- full_join(cpue_5plus,cpue_stn_10) %>%
   select(-n_samp)
 #there are only three taxa in the three station list that aren't in the 5% overall list that we used for 
 #gathering traits
-#seems to be one taxon in top 5% overall but not in top 10% for any of the three stations (6490)
+#seems to be one taxon in top 5% overall but not in top 10% for any of the three stations (6490, snail)
 
 #create a list of remaining taxa for each station
 #this will be used to filter the main abundance data set
+#NOTE: drop the one taxon that was in our original 5% list but didn't make the 10% by station list (ie, 6490)
 cpue_stn_10_list <- cpue_stn_10 %>% 
   #convert wide to long
   pivot_longer(cols= starts_with("prop"),names_to = "station", values_to = "prop") %>% 
@@ -897,7 +898,7 @@ benthic_cpue_10_check <- benthic_cpue_10 %>%
   distinct(station_code,organism_code)
 #looks good
 
-benthic_cpue_10_ct <- unique(benthic_cpue_10$organism_code) #n = 66 as expected
+#benthic_cpue_10_ct <- unique(benthic_cpue_10$organism_code) #n = 66 as expected
 
 #write the file for analysis in another script
 #write_csv(benthic_cpue_10, "./benthic/data_output/benthic_common10_abundances_by_station.csv")
@@ -908,16 +909,16 @@ benthic_spp_names2 <-   benthic_spp_names %>%
   mutate(organism_code = as.character(organism_code)) %>% 
   glimpse()
 
-benthic_cpue_10_list_prop <- cpue_10_all_trait %>% 
+benthic_cpue_10_list_prop <- cpue_10_all %>% 
   select(-prop) %>% 
   left_join(cpue_sample_prop) %>% 
   select(-n_samp) %>% 
   left_join(benthic_spp_names2) %>% 
-  select(organism_code,species_name,prop_d28:prop) %>% 
+  select(organism_code,prop_d28:prop) %>% 
   glimpse()
   
 #write the file for combining with trait data in another script
-#write_csv(benthic_cpue_10_list_prop, "./benthic/data_output/benthic_common10_names_prop_stations.csv")
+#write_csv(benthic_cpue_10_list_prop, "./benthic/data_output/benthic_common10_prop_stations.csv")
 
 
 #Calculate Bay-Delta wide seasonal Mean CPUE-----------------------
