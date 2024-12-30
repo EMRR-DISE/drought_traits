@@ -829,12 +829,12 @@ cpue_5_all <- full_join(cpue_5plus,cpue_stn_5) %>%
 
 #look at taxa in at least 10% of samples for each of the three stations--------------
 
-#filter each station so only taxa present in at least 5% of samples remain
+#filter each station so only taxa present in at least 10% of samples remain
 cpue_stn_10 <- cpue_sample_prop_stn_calc %>% 
   select(organism_code,starts_with("prop")) %>% 
   #convert wide to long
   pivot_longer(cols= starts_with("prop"),names_to = "station",values_to = "prop") %>% 
-  #keep taxa in at least 5% of samples
+  #keep taxa in at least 10% of samples
   filter(prop > 0.1) %>% 
   #convert back to wide
   pivot_wider(id_cols = organism_code,names_from = station, values_from = prop) %>% 
@@ -853,6 +853,7 @@ cpue_10_all_trait <- full_join(cpue_5plus,cpue_stn_10) %>%
   select(-n_samp)
 #there are only three taxa in the three station list that aren't in the 5% overall list that we used for 
 #gathering traits
+#seems to be one taxon in top 5% overall but not in top 10% for any of the three stations (6490)
 
 #create a list of remaining taxa for each station
 #this will be used to filter the main abundance data set
@@ -864,6 +865,9 @@ cpue_stn_10_list <- cpue_stn_10 %>%
   #drop prop column now
   select(organism_code,station) %>% 
   glimpse()
+
+#are there still 66 taxa?
+cpue_stn_10_list_ct <- unique(cpue_stn_10_list$organism_code) #yes, n = 66
 
 #create organism list for each station to use for filtering abundance data set
 taxa_10_d28 <- cpue_stn_10_list %>% 
@@ -893,8 +897,28 @@ benthic_cpue_10_check <- benthic_cpue_10 %>%
   distinct(station_code,organism_code)
 #looks good
 
+benthic_cpue_10_ct <- unique(benthic_cpue_10$organism_code) #n = 66 as expected
+
 #write the file for analysis in another script
-#write_csv(benthic_cpue10, "./benthic/data_output/benthic_common10_abundances_by_station.csv")
+#write_csv(benthic_cpue_10, "./benthic/data_output/benthic_common10_abundances_by_station.csv")
+
+#make a df with the taxa in 10% or more of samples and proportion of samples present overall and by station
+
+benthic_spp_names2 <-   benthic_spp_names %>% 
+  mutate(organism_code = as.character(organism_code)) %>% 
+  glimpse()
+
+benthic_cpue_10_list_prop <- cpue_10_all_trait %>% 
+  select(-prop) %>% 
+  left_join(cpue_sample_prop) %>% 
+  select(-n_samp) %>% 
+  left_join(benthic_spp_names2) %>% 
+  select(organism_code,species_name,prop_d28:prop) %>% 
+  glimpse()
+  
+#write the file for combining with trait data in another script
+#write_csv(benthic_cpue_10_list_prop, "./benthic/data_output/benthic_common10_names_prop_stations.csv")
+
 
 #Calculate Bay-Delta wide seasonal Mean CPUE-----------------------
 #using data set that only keeps species in at least 5% of sample
