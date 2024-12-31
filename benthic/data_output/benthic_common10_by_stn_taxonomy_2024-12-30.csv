@@ -30,9 +30,11 @@ organism_code,aphia_id,taxon,source,status,rank,kingdom,phylum,class,order,famil
 3170,129884,Heteromastus filiformis,worms,accepted,Species,Animalia,Annelida,Polychaeta,NA,Capitellidae,Heteromastus
 5550,181574,Cryptochironomus,worms,accepted,Genus,Animalia,Arthropoda,Hexapoda,Diptera,Chironomidae,Cryptochironomus
 5410,156905,Procladius,worms,accepted,Genus,Animalia,Arthropoda,Hexapoda,Diptera,Chironomidae,Procladius
+5130,NA,Stylurus olivaceus,itis,accepted,Species,Animalia,Arthropoda,Insecta,Odonata,Gomphidae,Stylurus
 4610,431330,Americorophium spinicorne,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium
 4630,431331,Americorophium stimpsoni,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Corophiidae,Americorophium
 4510,158020,Ampelisca abdita,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Ampeliscidae,Ampelisca
+4740,431482,Crangonyx floridanus,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Crangonyctidae,Crangonyx
 4750,158091,Gammarus daiberi,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Gammaridae,Gammarus
 4670,238740,Grandidierella japonica,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Amphipoda,Aoridae,Grandidierella
 4810,158104,Hyalella,worms,accepted,Genus,Animalia,Arthropoda,Malacostraca,Amphipoda,Hyalellidae,Hyalella
@@ -46,7 +48,7 @@ organism_code,aphia_id,taxon,source,status,rank,kingdom,phylum,class,order,famil
 4270,247737,Sinelobus stanfordi,worms,accepted,Species,Animalia,Arthropoda,Malacostraca,Tanaidacea,Tanaididae,Sinelobus
 4050,415154,Candona,worms,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Candonidae,Candona
 4090,127595,Cyprideis,worms,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Cytherideidae,Cyprideis
-4030,NA,Isocypris,itis,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Cyprididae,Isocypris
+4030,1672275,Isocypris,worms,accepted,Genus,Animalia,Arthropoda,Ostracoda,Podocopida,Cyprididae,Isocypris
 4150,421139,Amphibalanus improvisus,worms,accepted,Species,Animalia,Arthropoda,Thecostraca,Balanomorpha,Balanidae,Amphibalanus
 6810,397131,Macoma petalum,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Cardiida,Tellinidae,Macoma
 6890,397175,Potamocorbula amurensis,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Myida,Corbulidae,Potamocorbula
@@ -54,8 +56,8 @@ organism_code,aphia_id,taxon,source,status,rank,kingdom,phylum,class,order,famil
 6770,1299015,Euglesa compressa,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Sphaeriida,Sphaeriidae,Euglesa
 6730,181580,Corbicula fluminea,worms,accepted,Species,Animalia,Mollusca,Bivalvia,Venerida,Cyrenidae,Corbicula
 6630,225694,Melanoides tuberculata,worms,accepted,Species,Animalia,Mollusca,Gastropoda,Caenogastropoda incertae sedis,Thiaridae,Melanoides
-6490,717164,Fluminicola,worms,accepted,Genus,Animalia,Mollusca,Gastropoda,Littorinimorpha,Lithoglyphidae,Fluminicola
 6530,751827,Gyraulus circumstriatus,worms,accepted,Species,Animalia,Mollusca,Gastropoda,NA,Planorbidae,Gyraulus
+6565,159871,Helisoma anceps,worms,accepted,Species,Animalia,Mollusca,Gastropoda,NA,Planorbidae,Helisoma
 6570,181551,Physa,worms,accepted,Genus,Animalia,Mollusca,Gastropoda,NA,Physidae,Physa
 1230,582922,Dorylaimus,worms,accepted,Genus,Animalia,Nematoda,Enoplea,Dorylaimida,Dorylaimidae,Dorylaimus
 1270,1591089,Actinolaiminae,worms,accepted,Subfamily,Animalia,Nematoda,Enoplea,Dorylaimida,Actinolaimidae,NA

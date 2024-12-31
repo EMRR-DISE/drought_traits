@@ -668,7 +668,7 @@ all_format10 <- worms_format10 %>%
   glimpse()
 
 #write a file containing the updated taxonomy
-#write_csv(all_format,"./benthic/data_output/benthic_common10_by_stn_taxonomy_2024-12-30.csv")
+#write_csv(all_format10,"./benthic/data_output/benthic_common10_by_stn_taxonomy_2024-12-30.csv")
 
 
 #look for synonyms of target taxa on worms----------------
