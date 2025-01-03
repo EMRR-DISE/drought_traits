@@ -83,42 +83,71 @@ trait <- data.frame(
 combo <- crossing(tfo,trait) %>% 
   arrange(-prop,organism_code)
 
-#fill in existing size data-----
+#combine size and dominant taxa trait tables---------
 
-# scombo <- combo %>% 
-#   left_join(size)
 #size data didn't match properly for 4410; it's because of mismatch in target_taxon_level
-
-#drop target_taxon_level from size df to avoid this problem
+#drop target_taxon_level to avoid this problem
 sz <- size %>% 
-  select(-target_taxon_level)
-
-#add size data again
-scombo <- combo %>%
-  left_join(sz) %>% 
+  select(-target_taxon_level) %>% 
   #need to make trait_value of type character to combine properly with rest of traits below
-  mutate(trait_value = as.character(trait_value)) %>% 
-  glimpse()
+  mutate(trait_value = as.character(trait_value)) 
 
-#make sure it joined properly
-scomboc <- scombo %>% 
-  filter(trait == "body_size_max" & is.na(trait_value))
-#now only missing data for the three new taxa as expected
-
-#fill in data from dominant taxa df------------
-#most interested in trophic_habit, dispersal
-
+#just add the data for traits we most want
 dm <- dom %>% 
+  #just drop this column because also dropped it in size df
+  #reduces risk of mismatches later
+  select(-target_taxon_level) %>% 
   filter(trait == "trophic_habit" | trait == "dispersal") %>% 
   glimpse()
 
-sdcombo <- scombo %>% 
-  left_join(dm)
+#combine the two trait tables
+dmsz <- bind_rows(dm,sz)
 
-#make sure data combined properly
-sdcomboc <- sdcombo %>% 
+#combine trait table template with existing traits---------
+
+sdcombo <- combo %>% 
+  left_join(dmsz)
+
+#make sure it joined properly for size
+sdcombo_sc <- sdcombo %>% 
+  filter(trait == "body_size_max" & is.na(trait_value))
+#only missing data for the three new taxa as expected
+
+#make sure dominant taxa data combined properly
+sdcombo_dc <- sdcombo %>% 
   filter((trait == "trophic_habit" | trait=="dispersal") & !is.na(trait_value)) %>% 
   arrange(organism_code)
-#this didn't work; look back at structure of the two df's to figure out why
+#28 rows as expected (2 traits for each of 14 taxa)
+
+#add rest of dominant taxa traits case we decide later that we want those too---------
+
+#first drop the two traits we already integrated (disperal, trophic_habit)
+dom_sub <- dom %>% 
+  filter(!(trait == "trophic_habit" | trait == "dispersal")) %>% 
+  #need to combine with prop and native columns before row binding with rest of trait df
+  left_join(tfo) %>% 
+  glimpse()
+
+#add to rest of trait df
+all_traits <- sdcombo %>% 
+  bind_rows(dom_sub) %>% 
+  #reorder columns
+  select(
+    prop_d28:prop
+    ,native
+    ,organism_code
+    ,target_taxon_name
+    ,target_taxon_level
+    ,lit_taxon_name:population_description
+    ,trait
+    ,trait_value_rank:notes
+  ) %>% 
+  arrange(!is.na(trait_value),desc(prop),organism_code,trait)
+
+#write completed df as csv
+#write_csv(all_traits,"./benthic/data_output/benthic_common10_by_stn_trait_data_partially_filled.csv")
+
+
+
 
 
