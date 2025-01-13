@@ -1,6 +1,8 @@
 #Benthic Inverts
 #look at changes in abundances through time 
 #for taxa present in at least 10% of each of the three long term stations
+#start with total abundances
+#then look at abundances by trait (eg, native vs nonnative, size)
 
 #packages
 library(tidyverse)
