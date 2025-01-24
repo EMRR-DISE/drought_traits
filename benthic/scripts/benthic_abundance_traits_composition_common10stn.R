@@ -5,6 +5,10 @@
 
 #To do list
 #look at how many taxa per size class to make sure none have only a single taxon
+#make plots that look at data by water year type because benthic inverts respond a lot to that
+#make plots that exclude one or both clam species
+#could look at correlations between each clam species and each of the other species to see whether they
+#increase or decrease; would pair well with trait data like planktonic larvae
 
 #packages
 library(tidyverse)
@@ -76,7 +80,16 @@ abund_trait <- abund10stn_seas %>%
   left_join(traits_so) %>% 
   glimpse()
 
-#sum CPUE within samples by trait (ie, origin, size)-------------------
+#trait and abundance data without the two dominant invasive clams
+#Corbicula fluminea (6730)
+#Potamocorbula amurensis (6890)
+
+clam <- c("6730","6890")
+
+abund_trait_noclam <- abund_trait %>% 
+  filter(!(organism_code %in% clam))
+  
+#with clams: sum CPUE within samples by trait (ie, origin, size)-------------------
 
 #summarize station data by origin
 abund_trait_orig <- abund_trait %>% 
@@ -94,6 +107,29 @@ abund_trait_sz <- abund_trait %>%
 
 #summarize station data by origin and size
 abund_trait_orig_sz <- abund_trait %>% 
+  #sum cpue within station by origin
+  group_by(station_code,year_adjusted, season, native, body_size_cat) %>% 
+  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  glimpse()
+
+#without clams: sum CPUE within samples by trait (ie, origin, size)-------------------
+
+#summarize station data by origin
+abund_trait_noclam_orig <- abund_trait_noclam %>% 
+  #sum cpue within station by origin
+  group_by(station_code,year_adjusted, season, native) %>% 
+  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize station data by size
+abund_trait_noclam_sz <- abund_trait_noclam %>% 
+  #sum cpue within station by origin
+  group_by(station_code,year_adjusted, season, body_size_cat) %>% 
+  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize station data by origin and size
+abund_trait_noclam_orig_sz <- abund_trait_noclam %>% 
   #sum cpue within station by origin
   group_by(station_code,year_adjusted, season, native, body_size_cat) %>% 
   summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
@@ -145,6 +181,29 @@ abund_trait_orig_yr <- abund_trait_orig %>%
   summarise(cpue = mean(cpue),.groups ='drop') %>% 
   glimpse()
 
+
+
+#Calculate mean CPUE by origin and size at different time and space scales for plotting--------
+
+#summarize by year and station
+abund_trait_orig_sz_stn_yr <- abund_trait_orig_sz %>% 
+  group_by(station_code,year_adjusted, native, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year and season
+abund_trait_orig_sz_seas_yr <- abund_trait_orig_sz %>% 
+  group_by(year_adjusted, season, native, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year
+abund_trait_orig_sz_yr <- abund_trait_orig_sz %>% 
+  group_by(year_adjusted, native, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+
 #body size plots---------------------
 #might need to group these by water year too
 #Potamocorbula amurensis is sz3
@@ -188,9 +247,6 @@ abund_trait_orig_yr <- abund_trait_orig %>%
     facet_grid(season~.)
 )
 
-
-
-
 #origin based plots---------------------
 
 #absolute abundance stacked bar plot by year
@@ -211,6 +267,7 @@ abund_trait_orig_yr <- abund_trait_orig %>%
     facet_grid(station_code~.)
 )
 #wow D7 is virtually all non-natives starting in 1985
+#looks like currently maybe the natives only have a chance during really wet years like 2017 and 2011
 
 #relative abundance stacked bar plot by station and year
 (plot_abund_orig_stn_yr_rel <- ggplot(abund_trait_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = native))+
@@ -230,4 +287,215 @@ abund_trait_orig_yr <- abund_trait_orig %>%
     facet_grid(season~.)
 )
 
+#origin and body size plots---------------------
 
+#absolute abundance stacked bar plot by year
+(plot_abund_orig_sz_yr_abs <- ggplot(abund_trait_orig_sz_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+   geom_bar(stat = "identity", color = "black")+
+   facet_grid(native~.)
+)
+
+#relative abundance stacked bar plot by year
+(plot_abund_orig_sz_yr_rel <- ggplot(abund_trait_orig_sz_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(native~.)
+)
+
+#absolute abundance stacked bar plot by station and year
+(plot_abund_orig_sz_stn_yr_abs <- ggplot(abund_trait_orig_sz_stn_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(station_code~native)
+)
+
+#relative abundance stacked bar plot by station and year
+(plot_abund_orig_sz_stn_yr_rel <- ggplot(abund_trait_orig_sz_stn_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(station_code~native)
+)
+
+#absolute abundance stacked bar plot by season and year
+(plot_abund_orig_sz_seas_yr_abs <- ggplot(abund_trait_orig_sz_seas_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(season~.)
+)
+
+#relative abundance stacked bar plot by season and year
+(plot_abund_orig_sz_seas_yr_rel <- ggplot(abund_trait_orig_sz_seas_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(season~.)
+)
+
+
+
+
+#no clams: Calculate mean CPUE by size at different time and space scales for plotting--------
+
+#summarize by year and station
+abund_trait_noclam_sz_stn_yr <- abund_trait_noclam_sz %>% 
+  group_by(station_code,year_adjusted, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year and season
+abund_trait_noclam_sz_seas_yr <- abund_trait_noclam_sz %>% 
+  group_by(year_adjusted, season, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year
+abund_trait_noclam_sz_yr <- abund_trait_noclam_sz %>% 
+  group_by(year_adjusted, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#No clam: Calculate mean CPUE by origin at different time and space scales for plotting--------
+
+#summarize by year and station
+abund_trait_noclam_orig_stn_yr <- abund_trait_noclam_orig %>% 
+  group_by(station_code,year_adjusted, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year and season
+abund_trait_noclam_orig_seas_yr <- abund_trait_noclam_orig %>% 
+  group_by(year_adjusted, season, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year
+abund_trait_noclam_orig_yr <- abund_trait_noclam_orig %>% 
+  group_by(year_adjusted, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#No clam: Calculate mean CPUE by origin and size at different time and space scales for plotting--------
+
+#summarize by year and station
+abund_trait_noclam_orig_sz_stn_yr <- abund_trait_noclam_orig_sz %>% 
+  group_by(station_code,year_adjusted, native, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year and season
+abund_trait_noclam_orig_sz_seas_yr <- abund_trait_noclam_orig_sz %>% 
+  group_by(year_adjusted, season, native, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year
+abund_trait_noclam_orig_sz_yr <- abund_trait_noclam_orig_sz %>% 
+  group_by(year_adjusted, native, body_size_cat) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+
+#no clam: body size plots---------------------
+
+#absolute abundance stacked bar plot by year
+(plot_abund_noclam_sz_yr_abs <- ggplot(abund_trait_noclam_sz_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+   geom_bar(stat = "identity", color = "black")
+)
+
+#relative abundance stacked bar plot by year
+(plot_abund_noclam_sz_yr_rel <- ggplot(abund_trait_noclam_sz_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")
+)
+
+#absolute abundance stacked bar plot by station and year
+(plot_abund_noclam_sz_stn_yr_abs <- ggplot(abund_trait_noclam_sz_stn_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(station_code~.)
+)
+
+#relative abundance stacked bar plot by station and year
+(plot_abund_noclam_sz_stn_yr_rel <- ggplot(abund_trait_noclam_sz_stn_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(station_code~.)
+)
+
+#absolute abundance stacked bar plot by season and year
+(plot_abund_noclam_sz_seas_yr_abs <- ggplot(abund_trait_noclam_sz_seas_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(season~.)
+)
+
+#relative abundance stacked bar plot by season and year
+(plot_abund_noclam_sz_seas_yr_rel <- ggplot(abund_trait_noclam_sz_seas_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(season~.)
+)
+
+#origin based plots---------------------
+
+#absolute abundance stacked bar plot by year
+(plot_abund_noclam_orig_yr_abs <- ggplot(abund_trait_noclam_orig_yr, aes(x = year_adjusted, y = cpue, fill = native))+
+   geom_bar(stat = "identity", color = "black")
+)
+
+#relative abundance stacked bar plot by year
+(plot_abund_noclam_orig_yr_rel <- ggplot(abund_trait_noclam_orig_yr, aes(x = year_adjusted, y = cpue, fill = native))+
+    geom_bar(stat = "identity", position = "fill", color = "black")
+)
+
+
+#absolute abundance stacked bar plot by station and year
+(plot_abund_noclam_orig_stn_yr_abs <- ggplot(abund_trait_noclam_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = native))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(station_code~.)
+)
+
+#relative abundance stacked bar plot by station and year
+(plot_abund_noclam_orig_stn_yr_rel <- ggplot(abund_trait_noclam_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = native))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(station_code~.)
+)
+
+#absolute abundance stacked bar plot by season and year
+(plot_abund_noclam_orig_seas_yr_abs <- ggplot(abund_trait_noclam_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = native))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(season~.)
+)
+
+#relative abundance stacked bar plot by season and year
+(plot_abund_noclam_orig_seas_yr_rel <- ggplot(abund_trait_noclam_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = native))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(season~.)
+)
+
+#origin and body size plots---------------------
+
+#absolute abundance stacked bar plot by year
+(plot_abund_noclam_orig_sz_yr_abs <- ggplot(abund_trait_noclam_orig_sz_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+   geom_bar(stat = "identity", color = "black")+
+   facet_grid(native~.)
+)
+
+#relative abundance stacked bar plot by year
+(plot_abund_noclam_orig_sz_yr_rel <- ggplot(abund_trait_noclam_orig_sz_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(native~.)
+)
+
+#absolute abundance stacked bar plot by station and year
+(plot_abund_noclam_orig_sz_stn_yr_abs <- ggplot(abund_trait_noclam_orig_sz_stn_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(station_code~native)
+)
+
+#relative abundance stacked bar plot by station and year
+(plot_abund_noclam_orig_sz_stn_yr_rel <- ggplot(abund_trait_noclam_orig_sz_stn_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(station_code~native)
+)
+
+#absolute abundance stacked bar plot by season and year
+(plot_abund_noclam_orig_sz_seas_yr_abs <- ggplot(abund_trait_noclam_orig_sz_seas_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(season~.)
+)
+
+#relative abundance stacked bar plot by season and year
+(plot_abund_noclam_orig_sz_seas_yr_rel <- ggplot(abund_trait_noclam_orig_sz_seas_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(season~.)
+)
