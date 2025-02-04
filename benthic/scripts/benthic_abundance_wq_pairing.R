@@ -22,21 +22,21 @@ library(here)
 #https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=1036&revision=2
 
 #station data
-benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
+benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
   clean_names() %>% 
   glimpse()
 
-#benthic invert CPUE, 1975-2021
+#benthic invert CPUE, 1975-2023
 #data have been converted to CPUE (organisms/m2)
 #replicate grabs have been averaged for each site visit
 #all non-occurrence (zero) data for a site visit has been removed
 #Nick: samples with no organisms at all are probably included as "No catch"
-benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=df1caeb717202f06171601f793ca46bf") %>% 
+benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=cd7a52aa283d8d9dd8e806537bd5772f") %>% 
   clean_names() %>% 
   glimpse()
 
 #organism key list
-benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=d0f0dd3c1835fe5b669342f8c8e77024") %>% 
+benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=d0f0dd3c1835fe5b669342f8c8e77024") %>% 
   clean_names()
 
 #organism key with column for latin name for taxa
@@ -44,13 +44,13 @@ benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
 benthic_spp_names <- read_csv("./benthic/data_output/nmds/benthic_taxonomy_name_labels.csv") %>% 
   arrange(organism_code)
 
-#total annual site visits, 1975-2021
-benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=304bc4562046e0a6c35fbad3e2c85645") %>% 
+#total annual site visits, 1975-2023
+benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=a3d2580164bf06b94f1ff3145b819ade") %>% 
   clean_names() %>% 
   glimpse()
 
-#total annual grab samples, 1975-2021
-benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=c6c7b2ed7165cfa93cc1eda43fbb29f5") %>% 
+#total annual grab samples, 1975-2023
+benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=84539dd9c541ca53ee195330368dc531") %>% 
   clean_names() %>% 
   glimpse()
 
@@ -58,16 +58,15 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
 #specify the column types upon reading in data
 benthic_wq <-
  read_csv(
-   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.9&entityid=cf231071093ac2861893793517db26f3",
+   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.12&entityid=a8ca73ec21f14b58caf2152720403cf3",
    col_types = cols_only(
      Station = "c",
      Date = col_date("%Y-%m-%d"),
      Time = "t",
      Secchi = "d",
-     TurbiditySurface_FNU = "d", #some non-detects present
-     TurbiditySurface_NTU = "d", #some non-detects present
+     TurbiditySurface = "d", #some non-detects present
      SpCndSurface = "d",
-     WTSurface = "d",
+     WaterTempSurface = "d",
      DOSurface = "d",
    )
  ) %>%
@@ -79,7 +78,7 @@ benthic_wq <-
 # number for these
 
 #EMP water quality stations
-wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.4&entityid=827aa171ecae79731cc50ae0e590e5af") %>%
+wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.12&entityid=ada2f452284c8d88cde03fdf98280dc9") %>%
  clean_names() %>%
  glimpse()
 
