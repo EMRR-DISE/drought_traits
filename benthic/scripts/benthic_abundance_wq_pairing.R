@@ -107,10 +107,21 @@ wq_stn_g <- wq_stn %>%
   ) %>%  
   glimpse()
 
-#Convert coordinate reference system (CRS) of basemap and benthic_stn_g to EPSG = 26910
+#Set and convert coordinate reference system (CRS) of benthic_stn to EPSG = 26910
+benthic_stn_g <- benthic_stn %>% 
+  #specify the crs (wgs84)
+  st_as_sf(coords = c(x='longitude',y='latitude'), #identify the lat/long columns
+           crs = 4326 #EPSG code for WGS84
+           ,remove=F #retains original lat/long columns
+  )  
+
+benthic_stn_g_26910 <- benthic_stn_g %>% 
+  st_transform(crs = 26910)
+
+#Convert coordinate reference system (CRS) of wq_stn_g to EPSG = 26910
 wq_stn_g_26910 <- st_transform(wq_stn_g, crs = 26910)
 
-#Convert coordinate reference system (CRS) of basemap and benthic_stn_g to EPSG = 26910
+#Convert coordinate reference system (CRS) of basemap to EPSG = 26910
 WW_Delta_26910 <- st_transform(WW_Delta, crs = 26910)
 
 #create object from bounding box for the stations
@@ -164,6 +175,8 @@ benthic_stn_ltm$wq_station <- wq_stn_ltm$station[max.col(-mat)]
 #is pretty much always the closest in space
 #exception: benthic D12-C is closest to WQ D14A
 #though D14A is closer, the habitat of WQ D12 is still more similar to D12-C, which is still fairly close
+#so we really could just match benthic and WQ based on names
+#ie, create columns for benthic that split name by hyphen and then match benthic and wq names 
 
 #add distance between pairs of benthic and wq stations (in meters)
 benthic_stn_ltm$near_dist_m <- mat[matrix(c(1:53, max.col(-mat)), ncol = 2)]
@@ -184,6 +197,8 @@ ggplot(benthic_stn_ltm, aes(x=near_dist_m)) +
 #look at two pairs with large distances
 benthic_stn_ltm_far <- benthic_stn_ltm %>% 
   filter(near_dist_m>2000)
+#D7-L and D7 (based on map this is fine)
+#D12-C and D14A (based on map should pair D12-C with D12, not D14A)
 
 #look at sampling effort per month by station
 #there are periods when sampling occurred twice per month
@@ -245,7 +260,7 @@ leaflet() %>%
 
 
 #look at range of sampling effort     
-range(wq_effort$n) # up to 8 samples per month
+range(wq_effort$n) # up to 3 samples per month
 
 #histogram of sampling effort per month
 ggplot(wq_effort, aes(x=n))+
@@ -256,71 +271,52 @@ ggplot(wq_effort, aes(x=ym, y = n))+
   geom_point()+
   geom_line()+
   facet_wrap("station")
-#too many stations to visualize well
-#just look at subset that are relevant to benthic inverts
-#probably should make a leaflet map to look at wq and benthic stations
+#almost always 1 or 2 (exception NZ032 has 3 samples once, but not a benthic station)
 
 #look at earliest date that each of the WQ parameters was collected
 wq_start <- benthic_wq %>% 
   #convert wide to long; probably easier that way
-  pivot_longer(cols= c(secchi:turbidity_surface_ntu), names_to = "parameter", values_to = "value") %>%    
+  pivot_longer(cols= c(secchi:turbidity_surface), names_to = "parameter", values_to = "value") %>%    
   #drop rows with NAs for value
   filter(!is.na(value)) %>% 
   group_by(parameter) %>% 
   summarize(year_min = min(date)) %>% 
   arrange(parameter)
 #all parameters go back to 1975 so they probably work, as least for stations where WQ and benthic overlap
-#turbidity units changed in 2018, so need to decide how to handle that
-#I thought NTU and FNU were basically the same
 
 #only keep the WQ parameters that, more or less, cover the full benthic time series
-wq_focus1 <- benthic_wq %>%
+wq_focus <- benthic_wq %>%
   #add month and year column
   #will be used to match WQ to benthic samples
   mutate(month = month(date)
          , year = year(date)
-  ) %>% 
-  #columns to keep
-  select(station
-         , month
-         , year
-         , date
-         , secchi
-         , turbidity_surface_fnu
-         , turbidity_surface_ntu
-         , sp_cnd_surface 
-         , wt_surface 
-         , do_surface
-  ) %>% 
-  glimpse()
-
-#decide how to deal with different turbidity units
-#first see whether they are ever both collected
-#if not, for now just combine them into a single column
-#talk to Morgan to decide what is best to do
-wq_focus_turb <- wq_focus1 %>% 
-  filter(!is.na(turbidity_surface_fnu) & !is.na(turbidity_surface_ntu))
-#no cases in which both were recorded which makes combining the two simpler
-
-#modify WQ data set so turbidity is just one column
-wq_focus <- wq_focus1 %>% 
-  mutate(turbidity_surface = coalesce(turbidity_surface_fnu,turbidity_surface_ntu)
          #make date into dttm so I can round date to nearest month
          , date_time = as_datetime(date)
   ) %>% 
-  #drop the unneeded turbidity columns
-  #station, and date_time must be first two columns
-  #for samples to match by closest date
+  #columns to keep
   select(station
          ,date_time
+         ,month
+         ,year
          ,secchi
          ,sp_cnd_surface
-         ,wt_surface
+         ,water_temp_surface
          ,do_surface
          ,turbidity_surface
-  )  %>% 
+  ) %>% 
   glimpse()
 
+#let's look at when D24 was replaced by NZ068
+# wq_focus_replaced <- wq_focus %>% 
+#   filter(station == "D24" | station == "NZ068") %>% 
+#   arrange(date_time,station) 
+#   
+# wq_focus_replaced_sum <- wq_focus_replaced %>% 
+#   group_by(station) %>% 
+#   summarise(min = min(date_time)
+#             ,max = max(date_time)
+#             )
+#clean transition in data from one to the other; last date for D24 was 2017-05-16
 
 #create long form for plotting 
 wq_focus_long <- wq_focus %>% 
@@ -373,6 +369,7 @@ ggplot(wq_focus_long,aes(x=value))+
   ggtitle("WQ distributions")
 #fairly different looking distributions
 #Do and Temp normal-ish; others right skewed, especially SC
+#Removed 2212 rows containing non-finite values (`stat_bin()`). 
 
 #make same plot with data log transformed
 ggplot(wq_focus_long,aes(x=log(value)))+
@@ -394,16 +391,20 @@ ggplot(wq_focus_long,aes(x=log(value)))+
 #then the WQ and benthic stations will match; generally station C is closest to WQ station
 #NOTE: In many cases, one set of monthly WQ values will match to multiple benthic stations (up to three)
 #NOTE: there are sometimes multiple WQ samples per station so some benthic samples could have multiple WQ matches
-benthic_cpue_mod <- benthic_cpue %>% 
+benthic_cpue_mod <- benthic_invert_cpue %>% 
   #reduce df to just the needed columns
   select(station_code, sample_date, organism_code, mean_cpue) %>% 
   #for now, just drop the five samples with no organisms at all
-  #probably should include these so we know where all the organisms are not
-  filter(organism_code!=0) %>% 
+  #actually probably should include these so we know where all the organisms are not
+  #filter(organism_code!=0) %>% 
   complete(nesting(sample_date, station_code), organism_code, fill = list(mean_cpue = 0)) %>% 
   #add column that drops the last two characters of the benthic station names 
   #so they will match the WQ station names
   mutate(station = substr(station_code,1,nchar(station_code)-2)
+         #all benthic stations match the wq stations when you exclude the suffix with one caveat
+         #D24 was replaced with NZ068 after May 2017 so need to edit station column to reflect that
+         ,station = case_when(station_code == "D24-L" & sample_date > "2017-05-16" ~ "NZ068"
+                              ,TRUE ~ station)
   ) %>% 
   #reduce data frame to just the needed columns
   select(
@@ -417,6 +418,24 @@ benthic_cpue_mod <- benthic_cpue %>%
     , mean_cpue
   ) %>%
   glimpse()
+
+#make sure station name replacement worked as expected
+# test <- benthic_cpue_mod %>% 
+#   filter(station=="D24" | station == "NZ068") %>% 
+#   filter(date_time>"2017-01-01" & date_time < "2017-12-01") %>% 
+#   distinct(date_time,station)
+#yes, it worked
+
+# test <- benthic_cpue_mod %>% 
+#   filter(station == "D24") %>% 
+#   distinct(station_code)
+#there is just one benthic station associated with wq station D24 (ie, D24-L)
+
+#look at list of unique benthic station names to make sure no typos
+#unique(benthic_cpue_mod$station)
+
+#look at list of unique wq station names
+#unique(wq_focus$station)
 
 #combine benthic and WQ stations
 #should match by station and closest date_time (dttm)
@@ -438,7 +457,7 @@ setDT(wq_focus)
 
 setkey(wq_focus, station, date_time)[, dateMatch:=date_time]
 comb_wq_b <- wq_focus[benthic_cpue_mod, roll='nearest']
-count(matched)-count(benthic_cpue_mod) 
+count(comb_wq_b)-count(benthic_cpue_mod) 
 #same number of rows between benthic_cpue_mod and new df which is good sign
 
 #performs some quick visual checks to make sure the closest date matching worked properly
@@ -477,7 +496,7 @@ bwq <- comb_wq_b %>%
     ,date_diff
     ,organism = organism_code
     ,mean_cpue
-    ,temp = wt_surface
+    ,temp = water_temp_surface
     ,do = do_surface
     ,scond = sp_cnd_surface
     ,secchi
@@ -485,9 +504,23 @@ bwq <- comb_wq_b %>%
   ) %>% 
   glimpse()
 
+#how many samples do we lose by filtering out those that aren't done within 15 d of each other?
+#(count(comb_wq_b) - count(bwq))/count(comb_wq_b) #16% of samples 
+
 #histogram of difference in dates between benthic and WQ samples
+#without filtering out samples separated by more than 15 days
 bwq_dates <- bwq %>% 
-  distinct(b_stn,b_date,wq_date,date_diff)
+  distinct(b_stn,wq_stn,b_date,wq_date,date_diff) %>% 
+  arrange(b_stn,wq_stn,b_date,wq_date)
+#4,065 benthic samples with well matched wq data
+
+#summarize date diff by station
+bwq_dates_sum <- bwq_dates %>% 
+  group_by(b_stn,wq_stn) %>% 
+  summarize(min = min(date_diff)
+            ,max = max(date_diff)
+            ) %>% 
+  arrange(b_stn,wq_stn)
 
 range(bwq_dates$date_diff) 
 # before filtering out big date differences, range was 0 to 4626
@@ -496,23 +529,25 @@ ggplot(bwq_dates,aes(x=date_diff))+
   geom_histogram()
 #some date differences are insanely large
 #because stations weren't sampled in same month or year in some cases
+#benthic and wq stations blink in and out through time and not necessarily together
 
-dates_far <- bwq_dates %>% 
-  filter(date_diff> 15) %>% 
-  arrange(-date_diff)
+# dates_far <- bwq_dates %>% 
+#   filter(date_diff> 15) %>% 
+#   arrange(-date_diff)
 #771 cases
 
 #what proportion of benthic invert samples had no usable discrete wq data?
-count(benthic_focus) # starting number of benthic samples: 4625
-count(benthic_focus)-count(bwq_dates) #number without wq: 845
-(count(benthic_focus)-count(bwq_dates))/count(benthic_focus) 
-#proportion without wq data: 18.3% 
+# count(benthic_focus) # starting number of benthic samples: 4864
+# count(benthic_focus)-count(bwq_dates) #number without wq: 799
+# (count(benthic_focus)-count(bwq_dates))/count(benthic_focus) 
+#proportion without wq data: 16.4% 
 
 #look for cases where WQ data are missing
 bwq_issues <- bwq %>% 
   #just need to look at station matching so simplify to remove organism codes
   distinct(wq_stn,b_date,secchi, turb, scond, temp,do) %>% 
   filter(is.na(secchi) | is.na(turb) | is.na(scond) | is.na(temp) | is.na(do) )
+#180 samples, none of these samples are completely without WQ data though; mostly secchi data missing
 
 #just look at cases in which there is no wq data
 bwq_issues2 <- bwq %>% 
