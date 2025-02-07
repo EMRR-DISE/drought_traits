@@ -712,6 +712,17 @@ bwp_long_sum <- bwp_long_nrare %>%
     geom_errorbar(aes(xmin=q10, xmax=q90),width=0.5,cex=1)+ 
     facet_wrap(vars(parameter),scales = "free_x")
 )
+#SC is probably most important one and may be largely influencing patterns in other WQ parameters
+#secchi and turb are probably pretty correlated
+#DO and temp are also probalby pretty correlated
+
+#look at histogram of sample sizes for the taxa
+(plot_wq_sumstat_hist_n <- ggplot(bwp_long_sum, aes(x = n)) +
+    geom_histogram()+ 
+    facet_wrap(vars(parameter))
+  )
+#most taxa have at least 200 samples
+
 
   
 #make plotting function for panels of plots showing distribution of abundances across env gradients
@@ -723,7 +734,7 @@ distr_plot <- function(df, param){
 }
 
 #test the function
-test<-distr_plot(bwp_sc,"specific conductance")
+#test<-distr_plot(bwp_sc,"specific conductance")
 #ggsave(test,filename="benthic/figures/test.png",dpi=300, width = 8, height = 8, units = "in")
 #worked fine
 
@@ -735,16 +746,14 @@ parameter_nest <- bwp_long %>%
 
 
 #now save plot panel for every parameter
-#need to work on this
-#figure out how to specify file path (probably just in filename)
-walk2(parameter_nest$plots,parameter_nest$parameter
-     ,~ggsave(filename=paste0("BenthicInverts_WQ_Gradient/TaxonAbundace_",.y,".png")
-              ,plot = .x
-              ,dpi = 300
-              ,width = 12
-              ,height = 8
-              ,units = "in"
-     ))
+# walk2(parameter_nest$plots,parameter_nest$parameter
+#      ,~ggsave(filename=paste0("benthic/figures/TaxonAbundace_",.y,".png")
+#               ,plot = .x
+#               ,dpi = 300
+#               ,width = 24
+#               ,height = 12
+#               ,units = "in"
+#      ))
 
 
 
