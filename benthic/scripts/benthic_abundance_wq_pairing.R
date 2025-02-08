@@ -54,6 +54,23 @@ benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packa
   clean_names() %>% 
   glimpse()
 
+#list of benthic inverts present in at least 10% of samples in each of three stations
+#just remember this includes three taxa that are not IDed to species or genus and 
+#are therefore excluded from trait collection
+benthic_common10stn <- read_csv("./benthic/data_output/benthic_common10_by_stn_taxonomy_2024-12-30.csv")  
+
+#native vs nonnative status
+benthic_origin <- read_csv("./benthic/data_output/traits/benthic_traits_nemesis_origin_taxa249.csv") %>% 
+  select(organism = organism_code
+         ,native) %>% 
+  mutate(organism = as.character(organism)
+         ,native = as.factor(native)) %>% 
+  glimpse()
+
+#create a list of the organism codes
+organisms_common10stn <- benthic_common10stn %>% 
+  pull(organism_code)
+
 #EMP water quality data
 #specify the column types upon reading in data
 benthic_wq <-
@@ -561,111 +578,180 @@ bwq_issues2 <- bwq %>%
 #next filter cpue data to just that of taxa common (>10% samples) in the three long term stations
 #NOTE: check to make sure it removed and retained all the right taxa
 bw_of <- bwq %>% 
-  filter(organism %in% organisms_common5) %>% 
+  filter(organism %in% organisms_common10stn) %>% 
   glimpse()
 
 ctax <- unique(bw_of$organism)
-#got the right number of taxa (n=42)
+#got the right number of taxa (n=66)
 
-bwp <- bw_of %>% 
-  #create a new column that rounds WQ parameters to nearest degree
-  #some don't need rounding because they are already whole number values
-  #NOTE: need to try a better approach
-  mutate(temp_r = round(temp,0)
-         ,do_r = round(do,0)
-         ,turb_r = round(turb,0)
-         ,sc_r = round(scond,-2)
-  ) %>% 
-  #drop unneeded columns
-  select(-c(scond,temp,do,turb)) %>%  
-  glimpse()
-
+# bwp <- bw_of %>% 
+#   #create a new column that rounds WQ parameters to nearest degree
+#   #some don't need rounding because they are already whole number values
+#   #NOTE: need to try a better approach
+#   mutate(temp_r = round(temp,0)
+#          ,do_r = round(do,0)
+#          ,turb_r = round(turb,0)
+#          ,sc_r = round(scond,-2)
+#   ) %>% 
+#   #drop unneeded columns
+#   select(-c(scond,temp,do,turb)) %>%  
+#   glimpse()
 
 
 #maybe it's easier if we convert from wide to long
-bwp_long <- bwp %>% 
-  pivot_longer(c(secchi:sc_r),names_to = "parameter", values_to = "value") %>%  
+bwp_long <- bw_of %>% 
+  pivot_longer(c(temp:turb),names_to = "parameter", values_to = "value") %>% 
+  #remove cases where value for WQ parameter is NA and cpue is zero
+  filter(!is.na(value) & mean_cpue !=0) %>% 
+  #add column for presence-absence
+  #will be used to look at range of wq value each taxon is present
+  mutate(pa = case_when(mean_cpue > 0 ~ 1
+         ,TRUE ~ mean_cpue), .after = mean_cpue) %>% 
   glimpse()
 
-unique(bwp$temp_r) 
-#why are there NAs for the rounded temp?
-#probably cases in which WQ not collected in sample that best matched benthic sample date
+#tried to find a good way to remove samples with low densities using a taxon specific threshold
+#after playing around with it, decided not to do this and instead just drop a few clear outliers
+# bwp_long_max <- bwp_long %>% 
+#   group_by(organism) %>% 
+#   summarize(mn_cpue = mean(mean_cpue)
+#             #decided that there are too many cases where there is one extreme high value for max
+#             #so using that as basis for cutting low density samples is too aggressive
+#             #max_cpue = max(mean_cpue)
+#             , .groups = 'drop') %>% 
+#   mutate(rare_cpue = mn_cpue*.1) %>% 
+#   glimpse()
 
-#look at rows with NA for temp
-temp_na <- bwp %>% 
-  filter(is.na(temp_r))
-#126)
+#make another version where taxa are filtered out of samples where they have very low CPUE (ie, < 4)
+#picked this cutoff after look at at plots of CPUE vs SC
+# bwp_long_nrare <- bwp_long %>%
+#   left_join(bwp_long_max) %>% 
+#   mutate(nonrare = case_when(mean_cpue > rare_cpue~ 1, TRUE ~ 0)) %>% 
+#   filter(nonrare == 1)
 
-#which visits are missing WQ?
-wq_miss <- bwp %>% 
-  #start with focus on temp but should filter to where any WQ parameter is NA
-  filter(is.na(temp_r)) %>% 
-  #look at visits with NA
-  distinct(b_stn,b_date) %>%
-  group_by(b_stn) %>% 
-  count()
-#just three samples missing temp, which is pretty good
+#(count(bwp_long) - count(bwp_long_nrare))/count(bwp_long) #dropping 30% of samples
+
+#look at range of cpue after filtering out occurrences of each taxon where it is rare
+#range(bwp_long_nrare$mean_cpue) #4.807692 84884.615385
 
 # Plot distributions by taxa and wq parameter-----------------------
 #probably should plot sample sizes for each level of each parameter too
 #how often are extreme mean values based on a single year (or sample within year)?
 
-#instead of averaging CPUE by WQ parameter bins, just plot raw data
 #should produce unimodal curve for most taxa
 #for taxa for which CPUE distribution is not fully within Bay-Delta gradient,
 #we could try to extrapolate out to estimate where most extreme non-zero CPUE
 #would be; not ideal to extrapolate beyond data but could check against literature
 
-#calculate mean cpue for each level of each WQ parameter
-bwp_means <- bwp_long %>% 
-  group_by(organism,parameter,value) %>% 
-  summarise(cpue = mean(mean_cpue,na.rm=T))
-
-#start with just temperature panel
-#filter data to just temp
-bwp_means_temp <- bwp_means %>% 
-  filter(parameter == "temp_r") %>% 
+#start with just SC panel; all samples
+bwp_sc <- bwp_long %>%
+  #filter data to just SC and remove cases where SC is na
+  filter(parameter == "scond") %>%
   glimpse()
 
-#faceted plot showing distribution for all taxa across temperature gradient
-ggplot(bwp_means_temp,aes(x=value, y=cpue))+
-  geom_bar(stat="identity")+
-  facet_wrap(vars(organism),scales="free",nrow=6)+
-  ggtitle("water temperature")
-#Warning message:Removed 42 rows containing missing values (position_stack)
-#probably because of the temp = NA which I need to figure out
-#are bimodal distributions indicative of multiple spp lumped together?
-#consider also plotting proportion of samples at each temperature
-#consider making another panel of plots for rarer taxa, which might show a stronger 
-#response than the most common taxa (eg, >5% but <10% of samples)
+#start with just SC panel; excludes samples where taxa are at low cpue
+# bwp_sc_nr <- bwp_long_nrare %>%
+#   #filter data to just SC and remove cases where SC is na
+#   filter(parameter == "scond") %>%
+#   glimpse()
 
+#faceted plot showing distribution for all taxa across SC gradient
+#before filtering out samples where a taxon are at low densities
+(plot_dist_sc <-ggplot(bwp_sc,aes(x=value, y=mean_cpue))+
+    geom_point()+
+    facet_wrap(vars(organism),scales = "free_y",nrow=6)+
+    ggtitle("Specific Conductance")
+)
+#ggsave(plot_dist_sc,filename="./benthic/figures/benthic_10_plus_cpue_sc.png",dpi=300, width = 24, height = 12, units = "in")
+
+# (plot_dist_sc_nr <-ggplot(bwp_sc_nr,aes(x=value, y=mean_cpue))+
+#   geom_point()+
+#   facet_wrap(vars(organism),scales = "free_y",nrow=6)+
+#   ggtitle("Specific Conductance")
+# )
+
+#look at some cases where there are high end outliers for SC
+# hout <- c("1010","2720","3050","3330","4370","4950","6730")
+# 
+# bwp_sc_outl <- bwp_sc %>% 
+#   filter(organism %in% hout & value > 25000) %>% 
+#   arrange(organism, mean_cpue)
+
+#faceted histogram showing distribution of occurrence for all taxa across sc gradient
+# (plot_dist_sc_hist <-ggplot(bwp_sc,aes(x=value))+
+#     geom_histogram()+
+#     facet_wrap(vars(organism),scales="free",nrow=6)+
+#     ggtitle("Specific Conductance")
+# )
+
+#look at range of WQ values across entire dataset
+wq_sum <- bwp_long_nrare %>% 
+  group_by(parameter) %>% 
+  summarize(min = min(value)
+            ,max = max(value)
+            ,mean = mean(value))
+
+#look at summary stats for each parameter for each taxon 
+#use median and interquartile range instead of mean and SD because most distributions are pretty skewed
+#but use the version of data where samples where a given taxon is rare are removed (ie, cpue < 5)
+bwp_long_sum <- bwp_long_nrare %>% 
+  group_by(organism,parameter) %>% 
+  summarize(min = min(value)
+            ,max = max(value)
+            ,median = median(value)
+            ,q10 = quantile(value, probs = 0.10)
+            ,q90 = quantile(value, probs = 0.90)
+            ,n = n()
+            , .groups = 'drop')  %>% 
+  #add native vs nonnative
+  left_join(benthic_origin) %>% 
+  glimpse()
+
+#plot median, q5,q95 for each wq parameter
+(plot_wq_sumstat <-ggplot(bwp_long_sum,aes(x=median, y=organism, color = native))+
+    geom_point()+
+    geom_errorbar(aes(xmin=q10, xmax=q90),width=0.5,cex=1)+ 
+    facet_wrap(vars(parameter),scales = "free_x")
+)
+#SC is probably most important one and may be largely influencing patterns in other WQ parameters
+#secchi and turb are probably pretty correlated
+#DO and temp are also probalby pretty correlated
+
+#look at histogram of sample sizes for the taxa
+(plot_wq_sumstat_hist_n <- ggplot(bwp_long_sum, aes(x = n)) +
+    geom_histogram()+ 
+    facet_wrap(vars(parameter))
+  )
+#most taxa have at least 200 samples
+
+
+  
 #make plotting function for panels of plots showing distribution of abundances across env gradients
 distr_plot <- function(df, param){
-  ggplot(df,aes(x=value, y=cpue))+
-    geom_bar(stat="identity")+
+  ggplot(df,aes(x=value, y=mean_cpue))+
+    geom_point()+
     facet_wrap(vars(organism),scales="free",nrow=6)+
     ggtitle(param)
 }
 
 #test the function
-test<-distr_plot(bwp_means_temp,"water temperature")
-#ggsave(test,filename="test.png",dpi=300, width = 8, height = 8, units = "in")
+#test<-distr_plot(bwp_sc,"specific conductance")
+#ggsave(test,filename="benthic/figures/test.png",dpi=300, width = 8, height = 8, units = "in")
 #worked fine
 
 #nest data by parameter in preparation for making panels of plots
-#make a plot of distribution across temp gradient for every taxon
-parameter_nest <- bwp_means %>% 
+#make a plot of distribution across environmental gradient for every taxon
+parameter_nest <- bwp_long %>% 
   nest(abund_distr = -parameter) %>%  
   mutate(plots = map2(abund_distr,parameter, distr_plot))
 
 
 #now save plot panel for every parameter
-#walk2(parameter_nest$plots,parameter_nest$parameter
-#      ,~ggsave(filename=paste0("BenthicInverts_WQ_Gradient/TaxonAbundace_",.y,".png")
+# walk2(parameter_nest$plots,parameter_nest$parameter
+#      ,~ggsave(filename=paste0("benthic/figures/TaxonAbundace_",.y,".png")
 #               ,plot = .x
 #               ,dpi = 300
-#               ,width = 12
-#               ,height = 8
+#               ,width = 24
+#               ,height = 12
 #               ,units = "in"
 #      ))
 
