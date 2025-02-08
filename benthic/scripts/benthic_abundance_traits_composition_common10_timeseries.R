@@ -72,26 +72,34 @@ abund_trait_noclam <- abund_trait %>%
 
 
 
+
 #with clams: sum CPUE by trait----
 
 #sum station by dispersal
 abund_trait_disp <- abund_trait %>% 
-  #sum cpue within station by origin
+  #sum cpue within station by dispersal
   group_by(station_code,year_adjusted, season, dispersal) %>% 
   summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 #sum station by trophic habit
 abund_trait_tro <- abund_trait %>%
-  #sum cpue within station by origin
+  #sum cpue within station by trophic habit
   group_by(station_code,year_adjusted, season, trophic_habit) %>% 
   summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 #sum station by dispersal and trophic habit
 abund_trait_disp_tro <- abund_trait %>% 
-  #sum cpue within station by origin
+  #sum cpue within station by dispersal and trophic habit
   group_by(station_code,year_adjusted, season, dispersal, trophic_habit) %>% 
+  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  glimpse()
+
+#sum station by dispersal, th, and origin
+abund_trait_disp_tro_orig <- abund_trait %>% 
+  #sum cpue within station by dispersal, th, and origin
+  group_by(station_code,year_adjusted, season, native, dispersal, trophic_habit) %>% 
   summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
   glimpse()
 
@@ -136,8 +144,9 @@ abund_trait_tro_yr <- abund_trait_tro %>%
   summarise(cpue = mean(cpue),.groups ='drop') %>% 
   glimpse()
 
-#mean CPUE at different time scales by both traits----
+#mean CPUE at different time scales by combo traits----
 
+#dispersal and trophic habit
 #summarize by year and station
 abund_trait_disp_tro_stn_yr <- abund_trait_disp_tro %>% 
   group_by(station_code,year_adjusted, dispersal, trophic_habit) %>% 
@@ -156,6 +165,43 @@ abund_trait_disp_tro_yr <- abund_trait_disp_tro %>%
   summarise(cpue = mean(cpue),.groups ='drop') %>% 
   glimpse()
 
+#dispersal and origin
+#summarize by year and station
+abund_trait_disp_orig_stn_yr <- abund_trait_disp_tro_orig %>% 
+  group_by(station_code,year_adjusted, native, dispersal) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year and season
+abund_trait_disp_orig_seas_yr <- abund_trait_disp_tro_orig %>% 
+  group_by(year_adjusted, season, dispersal, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year
+abund_trait_disp_orig_yr <- abund_trait_disp_tro_orig %>% 
+  group_by(year_adjusted, dispersal, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#trophic habit and origin
+#summarize by year and station
+abund_trait_tro_orig_stn_yr <- abund_trait_disp_tro_orig %>% 
+  group_by(station_code,year_adjusted, native, trophic_habit) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year and season
+abund_trait_tro_orig_seas_yr <- abund_trait_disp_tro_orig %>% 
+  group_by(year_adjusted, season, trophic_habit, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year
+abund_trait_tro_orig_yr <- abund_trait_disp_tro_orig %>% 
+  group_by(year_adjusted, trophic_habit, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
 
 #dispersal plots----
 
@@ -226,7 +272,18 @@ abund_trait_disp_tro_yr <- abund_trait_disp_tro %>%
     geom_bar(stat = "identity", position = "fill", color = "black")+
     facet_grid(season~.))
 
-#trophic habit and dispersal plots----
+#combo plots----
+
+#trophic habit and dispersal
+#absolute abundance stacked bar plot by year
+(plot_abund_disp_tro_yr_abs <- ggplot(abund_trait_disp_tro_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+   geom_bar(stat = "identity", color = "black")+
+   facet_grid(dispersal~.))
+
+#relative abundance stacked bar plot by year
+(plot_abund_disp_tro_yr_rel <- ggplot(abund_trait_disp_tro_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(dispersal~.))
 
 #absolute abundance stacked bar plot by station and year
 (plot_abund_disp_tro_stn_yr_abs <- ggplot(abund_trait_disp_tro_stn_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
@@ -239,14 +296,76 @@ abund_trait_disp_tro_yr <- abund_trait_disp_tro %>%
     facet_grid(station_code~dispersal))
 
 #absolute abundance stacked bar plot by season and year
-(plot_abund_disp_tro_seas_yr_abs <- ggplot(abund_trait_disp_tro_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+(plot_abund_disp_tro_seas_yr_abs <- ggplot(abund_trait_disp_tro_seas_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
     geom_bar(stat = "identity", color = "black")+
-    facet_grid(season~dispersal))
+    facet_grid(season~trophic_habit))
 
 #relative abundance stacked bar plot by season and year
 (plot_abund_disp_tro_seas_yr_rel <- ggplot(abund_trait_disp_tro_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
     geom_bar(stat = "identity", position = "fill", color = "black")+
     facet_grid(season~dispersal))
+
+#trophic habit and origin
+#absolute abundance stacked bar plot by year
+(plot_abund_tro_orig_yr_abs <- ggplot(abund_trait_tro_orig_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(native~.))
+
+#relative abundance stacked bar plot by year
+(plot_abund_tro_orig_yr_rel <- ggplot(abund_trait_tro_orig_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(native~.))
+
+#absolute abundance stacked bar plot by station and year
+(plot_abund_tro_orig_stn_yr_abs <- ggplot(abund_trait_tro_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(station_code~native))
+
+#relative abundance stacked bar plot by station and year
+(plot_abund_tro_orig_stn_yr_rel <- ggplot(abund_trait_tro_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(station_code~native))
+
+#absolute abundance stacked bar plot by season and year
+(plot_abund_tro_orig_seas_yr_abs <- ggplot(abund_trait_tro_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(season~native))
+
+#relative abundance stacked bar plot by season and year
+(plot_abund_tro_orig_seas_yr_rel <- ggplot(abund_trait_tro_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(season~native))
+
+#dispersal and origin
+#absolute abundance stacked bar plot by year
+(plot_abund_disp_orig_yr_abs <- ggplot(abund_trait_disp_orig_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(native~.))
+
+#relative abundance stacked bar plot by year
+(plot_abund_disp_orig_yr_rel <- ggplot(abund_trait_disp_orig_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(native~.))
+
+#absolute abundance stacked bar plot by station and year
+(plot_abund_disp_orig_stn_yr_abs <- ggplot(abund_trait_disp_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(station_code~native))
+
+#relative abundance stacked bar plot by station and year
+(plot_abund_disp_orig_stn_yr_rel <- ggplot(abund_trait_disp_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(station_code~native))
+
+#absolute abundance stacked bar plot by season and year
+(plot_abund_disp_orig_seas_yr_abs <- ggplot(abund_trait_disp_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(season~native))
+
+#relative abundance stacked bar plot by season and year
+(plot_abund_disp_orig_seas_yr_rel <- ggplot(abund_trait_disp_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(season~native))
 
 
 #no clams: sum CPUE by trait----
@@ -265,10 +384,10 @@ abund_trait_noclam_tro <- abund_trait_noclam %>%
   summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
   glimpse()
 
-#summarize station data by origin and size
-abund_trait_noclam_disp_tro <- abund_trait_noclam %>% 
-  #sum cpue within station by origin
-  group_by(station_code,year_adjusted, season, dispersal, trophic_habit) %>% 
+#summarize station data by dispersal, trophic habit, origin
+abund_trait_noclam_disp_tro_orig <- abund_trait_noclam %>% 
+  #sum cpue within station by origin, dispersal, trophic habit
+  group_by(station_code,year_adjusted, season, native, dispersal, trophic_habit) %>% 
   summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
   glimpse()
 
@@ -313,8 +432,9 @@ abund_trait_noclam_tro_yr <- abund_trait_noclam_tro %>%
   glimpse()
 
 
-#no clams: mean CPUE by different time scales by both trait----
+#no clams: mean CPUE by different time scales by combo trait----
 
+#dispersal and trophic habit
 #summarize by year and station
 abund_trait_noclam_disp_tro_stn_yr <- abund_trait_noclam_disp_tro %>% 
   group_by(station_code,year_adjusted, dispersal, trophic_habit) %>% 
@@ -330,6 +450,44 @@ abund_trait_noclam_disp_tro_seas_yr <- abund_trait_noclam_disp_tro %>%
 #summarize by year
 abund_trait_noclam_disp_tro_yr <- abund_trait_noclam_disp_tro %>% 
   group_by(year_adjusted, dispersal, trophic_habit) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#dispersal and origin
+#summarize by year and station
+abund_trait_noclam_disp_orig_stn_yr <- abund_trait_noclam_disp_tro_orig %>% 
+  group_by(station_code,year_adjusted, dispersal, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year and season
+abund_trait_noclam_disp_orig_seas_yr <- abund_trait_noclam_disp_tro_orig %>% 
+  group_by(year_adjusted, season, dispersal, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year
+abund_trait_noclam_disp_orig_yr <- abund_trait_noclam_disp_tro_orig %>% 
+  group_by(year_adjusted, dispersal, native) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#trophic habit and origin
+#summarize by year and station
+abund_trait_noclam_tro_orig_stn_yr <- abund_trait_noclam_disp_tro_orig %>% 
+  group_by(station_code,year_adjusted, native, trophic_habit) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year and season
+abund_trait_noclam_tro_orig_seas_yr <- abund_trait_noclam_disp_tro_orig %>% 
+  group_by(year_adjusted, season, native, trophic_habit) %>% 
+  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  glimpse()
+
+#summarize by year
+abund_trait_noclam_tro_orig_yr <- abund_trait_noclam_disp_tro_orig %>% 
+  group_by(year_adjusted, native, trophic_habit) %>% 
   summarise(cpue = mean(cpue),.groups ='drop') %>% 
   glimpse()
 
@@ -395,8 +553,9 @@ abund_trait_noclam_disp_tro_yr <- abund_trait_noclam_disp_tro %>%
     geom_bar(stat = "identity", position = "fill", color = "black")+
     facet_grid(season~.))
 
-#no clam: trophic habit and dispersal plots----
+#no clam: combo plots----
 
+#trophic habit and dispersal
 #absolute abundance stacked bar plot by year
 (plot_abund_noclam_disp_tro_yr_abs <- ggplot(abund_trait_noclam_disp_tro_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
    geom_bar(stat = "identity", color = "black")+
@@ -423,9 +582,71 @@ abund_trait_noclam_disp_tro_yr <- abund_trait_noclam_disp_tro %>%
     facet_grid(season~dispersal))
 
 #relative abundance stacked bar plot by season and year
-(plot_abund_noclam_disp_tro_seas_yr_rel <- ggplot(abund_trait_noclam_disp_tro_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+(plot_abund_noclam_disp_tro_seas_yr_rel <- ggplot(abund_trait_noclam_tro_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
     geom_bar(stat = "identity", position = "fill", color = "black")+
     facet_grid(season~dispersal))
+
+#trophic habit and origin
+#absolute abundance stacked bar plot by year
+(plot_abund_noclam_tro_orig_yr_abs <- ggplot(abund_trait_noclam_tro_orig_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(native~.))
+
+#relative abundance stacked bar plot by year
+(plot_abund_noclam_tro_orig_yr_rel <- ggplot(abund_trait_noclam_tro_orig_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(native~.))
+
+#absolute abundance stacked bar plot by station and year
+(plot_abund_noclam_tro_orig_stn_yr_abs <- ggplot(abund_trait_noclam_tro_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(station_code~native))
+
+#relative abundance stacked bar plot by station and year
+(plot_abund_noclam_tro_orig_stn_yr_rel <- ggplot(abund_trait_noclam_tro_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(station_code~native))
+
+#absolute abundance stacked bar plot by season and year
+(plot_abund_noclam_tro_orig_seas_yr_abs <- ggplot(abund_trait_noclam_tro_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(season~native))
+
+#relative abundance stacked bar plot by season and year
+(plot_abund_noclam_disp_tro_seas_yr_rel <- ggplot(abund_trait_noclam_tro_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(season~native))
+
+#dispersal and origin
+#absolute abundance stacked bar plot by year
+(plot_abund_noclam_disp_orig_yr_abs <- ggplot(abund_trait_noclam_disp_orig_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(native~.))
+
+#relative abundance stacked bar plot by year
+(plot_abund_noclam_disp_orig_yr_rel <- ggplot(abund_trait_noclam_disp_orig_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(native~.))
+
+#absolute abundance stacked bar plot by station and year
+(plot_abund_noclam_disp_orig_stn_yr_abs <- ggplot(abund_trait_noclam_disp_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(station_code~native))
+
+#relative abundance stacked bar plot by station and year
+(plot_abund_noclam_disp_orig_stn_yr_rel <- ggplot(abund_trait_noclam_disp_orig_stn_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(station_code~native))
+
+#absolute abundance stacked bar plot by season and year
+(plot_abund_noclam_disp_orig_seas_yr_abs <- ggplot(abund_trait_noclam_disp_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", color = "black")+
+    facet_grid(season~native))
+
+#relative abundance stacked bar plot by season and year
+(plot_abund_noclam_disp_orig_seas_yr_rel <- ggplot(abund_trait_noclam_disp_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = dispersal))+
+    geom_bar(stat = "identity", position = "fill", color = "black")+
+    facet_grid(season~native))
 
 #community composition by station----
 #community compostion by station, pre and post clam invasion----
