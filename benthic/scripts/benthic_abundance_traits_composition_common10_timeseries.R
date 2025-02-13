@@ -436,19 +436,19 @@ abund_trait_noclam_tro_yr <- abund_trait_noclam_tro %>%
 
 #dispersal and trophic habit
 #summarize by year and station
-abund_trait_noclam_disp_tro_stn_yr <- abund_trait_noclam_disp_tro %>% 
+abund_trait_noclam_disp_tro_stn_yr <- abund_trait_noclam_disp_tro_orig %>% 
   group_by(station_code,year_adjusted, dispersal, trophic_habit) %>% 
   summarise(cpue = mean(cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year and season
-abund_trait_noclam_disp_tro_seas_yr <- abund_trait_noclam_disp_tro %>% 
+abund_trait_noclam_disp_tro_seas_yr <- abund_trait_noclam_disp_tro_orig %>% 
   group_by(year_adjusted, season, dispersal, trophic_habit) %>% 
   summarise(cpue = mean(cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year
-abund_trait_noclam_disp_tro_yr <- abund_trait_noclam_disp_tro %>% 
+abund_trait_noclam_disp_tro_yr <- abund_trait_noclam_disp_tro_orig %>% 
   group_by(year_adjusted, dispersal, trophic_habit) %>% 
   summarise(cpue = mean(cpue),.groups ='drop') %>% 
   glimpse()
