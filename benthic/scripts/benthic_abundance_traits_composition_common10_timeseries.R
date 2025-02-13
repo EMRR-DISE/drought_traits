@@ -582,7 +582,7 @@ abund_trait_noclam_tro_orig_yr <- abund_trait_noclam_disp_tro_orig %>%
     facet_grid(season~dispersal))
 
 #relative abundance stacked bar plot by season and year
-(plot_abund_noclam_disp_tro_seas_yr_rel <- ggplot(abund_trait_noclam_tro_orig_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
+(plot_abund_noclam_disp_tro_seas_yr_rel <- ggplot(abund_trait_noclam_disp_tro_seas_yr, aes(x = year_adjusted, y = cpue, fill = trophic_habit))+
     geom_bar(stat = "identity", position = "fill", color = "black")+
     facet_grid(season~dispersal))
 
