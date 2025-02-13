@@ -610,7 +610,7 @@ bwp_long <- bw_of %>%
   glimpse()
 
 #tried to find a good way to remove samples with low densities using a taxon specific threshold
-#after playing around with it, decided not to do this and instead just drop a few clear outliers
+#after playing around with it, decided not to do this 
 # bwp_long_max <- bwp_long %>% 
 #   group_by(organism) %>% 
 #   summarize(mn_cpue = mean(mean_cpue)
@@ -684,16 +684,23 @@ bwp_sc <- bwp_long %>%
 # )
 
 #look at range of WQ values across entire dataset
-wq_sum <- bwp_long_nrare %>% 
+wq_sum <- bwp_long %>% 
   group_by(parameter) %>% 
   summarize(min = min(value)
             ,max = max(value)
             ,mean = mean(value))
 
+#create version of organism code list with just the phyla
+#will be used to facet plots below
+benthic_common10stn_phyla <- benthic_common10stn %>% 
+  select(organism = organism_code
+         ,phylum) %>% 
+  mutate(organism = as.character(organism))
+
 #look at summary stats for each parameter for each taxon 
 #use median and interquartile range instead of mean and SD because most distributions are pretty skewed
 #but use the version of data where samples where a given taxon is rare are removed (ie, cpue < 5)
-bwp_long_sum <- bwp_long_nrare %>% 
+bwp_long_sum <- bwp_long %>% 
   group_by(organism,parameter) %>% 
   summarize(min = min(value)
             ,max = max(value)
@@ -702,8 +709,11 @@ bwp_long_sum <- bwp_long_nrare %>%
             ,q90 = quantile(value, probs = 0.90)
             ,n = n()
             , .groups = 'drop')  %>% 
+  #add interquantile length between q10 and q90
+  mutate(interquantile = q90-q10,.after = q90) %>% 
   #add native vs nonnative
-  left_join(benthic_origin) %>% 
+  left_join(benthic_origin) %>%
+  left_join(benthic_common10stn_phyla) %>% 
   glimpse()
 
 #plot median, q5,q95 for each wq parameter
@@ -716,6 +726,34 @@ bwp_long_sum <- bwp_long_nrare %>%
 #secchi and turb are probably pretty correlated
 #DO and temp are also probalby pretty correlated
 
+#do same plot but just for SC and facet by phylum (6 groups)
+bwp_long_sum_sc <- bwp_long_sum %>% 
+  filter(parameter == "scond")
+
+#SC: plot median, q5,q95 for each wq parameter
+(plot_wq_sumstat_sc <-ggplot(bwp_long_sum_sc,aes(x=median, y=organism))+
+    #add vertical lines to indicate border between limnetic vs oligohaline and oligohaline vs mesohaline
+    #geom_vline(xintercept=c(1000,9000),linetype = "dashed", color="darkgray",size = 1.25)+
+    geom_errorbar(aes(xmin=q10, xmax=q90, color = native),width=0.5,cex=1) +
+    geom_point(aes(shape = factor(phylum)),size = 2)
+      )
+#ggsave(plot_wq_sumstat_sc,filename="benthic/figures/benthic_sc_median_quantiles.png",dpi=300, width = 8, height = 8, units = "in")
+
+#does interquantile length increase with median?
+(plot_wq_sumstat_sc_mi <- ggplot(bwp_long_sum_sc,aes(x = median,interquantile))+
+    geom_point()
+)
+#no, hump shaped line; species at low and high SC have low variation while species with intermediate
+#SC (ie brackish) have high variation, which makes sense
+
+#do non-natives tolerate higher variation in SC?
+(plot_wq_sumstat_sc_box <- ggplot(bwp_long_sum_sc, aes(x = factor(native), y = interquantile))+
+    geom_boxplot()
+  
+)
+#yes, nonnatives handle much more variation in SC
+#two exceptions are 4370 (native isopod Gnorimosphaeroma oregonense) and 2720 (native tubificid Tubificoides heterochaetus)
+
 #look at histogram of sample sizes for the taxa
 (plot_wq_sumstat_hist_n <- ggplot(bwp_long_sum, aes(x = n)) +
     geom_histogram()+ 
@@ -723,6 +761,27 @@ bwp_long_sum <- bwp_long_nrare %>%
   )
 #most taxa have at least 200 samples
 
+#where do nonnatives start invasion within salinity gradient based on EMP survey?
+bwp_long_sum_sc_invader <- bwp_long %>% 
+  #add native vs nonnative
+  left_join(benthic_origin) %>%
+  #just look at SC and nonnatives and their presence
+  filter(parameter == "scond" & native == 0 & pa == 1) %>% 
+  #add year column
+  mutate(year = year(b_date),.before = b_date) %>% 
+  #calculate median SC by year for each taxon
+  group_by(organism,year) %>% 
+    summarize(median = median(value)
+              ,n = n()
+              , .groups = 'drop')  
+
+#plot median SC through time by taxon
+(plot_wq_sumstat_sc_invader <- ggplot(bwp_long_sum_sc_invader, aes(x = year, y = median))+
+    geom_point()+
+    geom_line()+
+    facet_wrap(vars(organism))
+  )
+#probably not the best way to look at this   
 
   
 #make plotting function for panels of plots showing distribution of abundances across env gradients
