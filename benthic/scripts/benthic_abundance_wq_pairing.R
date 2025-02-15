@@ -736,7 +736,7 @@ bwp_long_sum_sc <- bwp_long_sum %>%
     #geom_vline(xintercept=c(1000,9000),linetype = "dashed", color="darkgray",size = 1.25)+
     geom_errorbar(aes(xmin=q10, xmax=q90, color = native),width=0.5,cex=1) +
     geom_point(aes(shape = factor(phylum)),size = 2)
-      )
+)
 #ggsave(plot_wq_sumstat_sc,filename="benthic/figures/benthic_sc_median_quantiles.png",dpi=300, width = 8, height = 8, units = "in")
 
 #does interquantile length increase with median?
@@ -758,7 +758,7 @@ bwp_long_sum_sc <- bwp_long_sum %>%
 (plot_wq_sumstat_hist_n <- ggplot(bwp_long_sum, aes(x = n)) +
     geom_histogram()+ 
     facet_wrap(vars(parameter))
-  )
+)
 #most taxa have at least 200 samples
 
 #where do nonnatives start invasion within salinity gradient based on EMP survey?
