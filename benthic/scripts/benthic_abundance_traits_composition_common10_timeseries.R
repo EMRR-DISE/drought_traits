@@ -648,5 +648,146 @@ abund_trait_noclam_tro_orig_yr <- abund_trait_noclam_disp_tro_orig %>%
     geom_bar(stat = "identity", position = "fill", color = "black")+
     facet_grid(season~native))
 
+
+#Plots of proportion of organisms with planktonic larvae vs total organisms---------------
+#inspired by Nichols and Thompson 1985
+
+
+#create df that calculates proportion of organisms with planktonic larvae
+abund_trait_sample_sum_plank <- abund_trait %>% 
+  group_by(sample_date,station_code,dispersal) %>% 
+  summarize(total_cpue = sum(mean_cpue)) %>% 
+  #convert long to wide
+  pivot_wider(names_from = dispersal, values_from = total_cpue) %>% 
+  #calculate proportion
+  mutate(plankton_prop = P/(N+P)
+         ,total_ct = N + P
+         )
+  
+#plot data
+(plot_plankton_prop <- ggplot(abund_trait_sample_sum_plank, aes(x = total_ct, y = plankton_prop))+
+    geom_point()+
+    facet_grid("station_code")
+  )
+
+#Plots of proportion of organisms with planktonic larvae (except clams) vs total clams---------------
+
+
+#create df that calculates proportion of organisms with planktonic larvae
+abund_trait_sample_sum_plank_no_clam <- abund_trait_noclam %>% 
+  group_by(sample_date,station_code,dispersal) %>% 
+  summarize(total_cpue = sum(mean_cpue)) %>% 
+  #convert long to wide
+  pivot_wider(names_from = dispersal, values_from = total_cpue) %>% 
+  #calculate proportion
+  mutate(plankton_prop = P/(N+P)
+         ,total_ct = N + P
+  )
+
+#create df that calculates total clams by sample
+abund_trait_sample_sum_clams <- abund_trait %>% 
+  filter(organism_code %in% clam) %>% 
+  group_by(sample_date,station_code) %>% 
+  summarize(clam_cpue = sum(mean_cpue))
+
+#combine prop plankton and total clams dfs
+plank_clam <- abund_trait_sample_sum_plank_no_clam %>% 
+  left_join(abund_trait_sample_sum_clams)
+
+#plot count data
+# (plot_plankton_ct_noclam <- ggplot(plank_clam, aes(x = clam_cpue, y = total_ct))+
+#     geom_point()+
+#     facet_grid("station_code")
+# )
+#prop plot below is better
+
+#plot count data
+# (plot_plankton_count_noclam <- ggplot(plank_clam, aes(x = clam_cpue, y = P))+
+#     geom_point()+
+#     facet_grid("station_code")
+# )
+#because of outliers it is just harder to see pattern compared to looking at prop plot below
+
+#plot prop data
+(plot_plankton_prop_noclam <- ggplot(plank_clam, aes(x = clam_cpue, y = plankton_prop))+
+    geom_point()+
+    facet_grid("station_code")
+)
+#plot makes sense but I wonder if ALL organisms (regardless of traits) are at low abundance when clams are high
+
+#plot non-clam cpue vs clam cpue
+(plot_total_organisms_noclam <- ggplot(plank_clam, aes(x = clam_cpue, y = total_ct))+
+    geom_point()+
+    facet_grid("station_code")
+)
+#yes, at high clam densities everything else is low regardless of traits
+
+#Plots of proportion of organisms (except clams) in different feeding habits vs total clams---------------
+
+#create df that calculates proportion of organisms that filter feed
+abund_trait_sample_sum_filter_no_clam <- abund_trait_noclam %>% 
+  group_by(sample_date,station_code,trophic_habit) %>% 
+  summarize(total_cpue = sum(mean_cpue)) %>% 
+  #convert long to wide
+  pivot_wider(names_from = trophic_habit, values_from = total_cpue) %>%   
+  #calculate proportion
+  mutate(total_cpue = sum(across(C:S),na.rm = T)
+         ,filter_prop = F/total_cpue
+  )
+
+#combine prop filter and total clams dfs
+filter_clam <- abund_trait_sample_sum_filter_no_clam %>% 
+  left_join(abund_trait_sample_sum_clams)
+
+
+#plot filter prop data
+(plot_filter_prop_noclam <- ggplot(filter_clam, aes(x = clam_cpue, y = filter_prop))+
+    geom_point()+
+    facet_grid("station_code")
+)
+#declines with increasing clams
+
+#plot shredder prop data
+(plot_shredder_prop_noclam <- ggplot(filter_clam, aes(x = clam_cpue, y = S/total_cpue))+
+    geom_point()+
+    facet_grid("station_code")
+)
+#declines with increasing clams
+
+#plot deposit feeder prop data
+(plot_shredder_prop_noclam <- ggplot(filter_clam, aes(x = clam_cpue, y = D/total_cpue))+
+    geom_point()+
+    facet_grid("station_code")
+)
+#increases with clams; basically at high densities only deposit feeders coexist with clams
+
+#plot deposit feeder count data
+(plot_shredder_count_noclam <- ggplot(filter_clam, aes(x = clam_cpue, y = D))+
+    geom_point()+
+    facet_grid("station_code")
+)
+#what are the deposit feeds that remain with high clam abundance (>15,000 clams)?
+
+#Look at the taxa present at very high clam densities-------------
+
+#create dataframe
+high_clam <- abund_trait_sample_sum_clams %>% 
+  filter(clam_cpue > 15000) 
+
+high_clam_taxa <- abund_trait %>% 
+  inner_join(high_clam)  %>% 
+  filter(mean_cpue>0 & !(organism_code%in%clam))
+
+#plot high clam abundance vs other organism abundance
+(plot_high_clam_taxa <- ggplot(high_clam_taxa, aes(x=clam_cpue, y=mean_cpue))+
+    geom_point()+
+    facet_wrap("organism_code",scales = "free_y")
+  
+)
+#at high clam abundances (which is really just high Potamocorbula abundances) virtually all other
+#are present at fairly low abundances compared to 4550 (amphipod Sinocorophium alienense)
+
+
+
 #community composition by station----
 #community compostion by station, pre and post clam invasion----
