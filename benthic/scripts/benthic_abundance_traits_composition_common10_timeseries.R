@@ -787,6 +787,15 @@ high_clam_taxa <- abund_trait %>%
 #at high clam abundances (which is really just high Potamocorbula abundances) virtually all other
 #are present at fairly low abundances compared to 4550 (amphipod Sinocorophium alienense)
 
+#similar plot but by trophic habitat rather than taxon
+(plot_high_clam_th <- ggplot(high_clam_taxa, aes(x=clam_cpue, y=mean_cpue))+
+    geom_point()+
+    facet_wrap("trophic_habit"
+               ,scales = "free_y"
+               ,ncol = 1
+               )
+  
+)
 
 
 #community composition by station----
