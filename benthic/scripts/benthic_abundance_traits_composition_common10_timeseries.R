@@ -69,38 +69,34 @@ clam <- c("6730","6890")
 abund_trait_noclam <- abund_trait %>% 
   filter(!(organism_code %in% clam))
 
-
-
-
-
 #with clams: sum CPUE by trait----
 
 #sum station by dispersal
 abund_trait_disp <- abund_trait %>% 
   #sum cpue within station by dispersal
   group_by(station_code,year_adjusted, season, dispersal) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  summarise(cpue = (mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 #sum station by trophic habit
 abund_trait_tro <- abund_trait %>%
   #sum cpue within station by trophic habit
   group_by(station_code,year_adjusted, season, trophic_habit) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  summarise(cpue = (mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 #sum station by dispersal and trophic habit
 abund_trait_disp_tro <- abund_trait %>% 
   #sum cpue within station by dispersal and trophic habit
   group_by(station_code,year_adjusted, season, dispersal, trophic_habit) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  summarise(cpue = (mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 #sum station by dispersal, th, and origin
 abund_trait_disp_tro_orig <- abund_trait %>% 
   #sum cpue within station by dispersal, th, and origin
   group_by(station_code,year_adjusted, season, native, dispersal, trophic_habit) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  summarise(cpue = (mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 
@@ -374,21 +370,21 @@ abund_trait_tro_orig_yr <- abund_trait_disp_tro_orig %>%
 abund_trait_noclam_disp <- abund_trait_noclam %>%
   #sum cpue within station by origin
   group_by(station_code,year_adjusted, season, dispersal) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  summarise(cpue = (mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 #sum station by trophic habit
 abund_trait_noclam_tro <- abund_trait_noclam %>%
   #sum cpue within station by origin
   group_by(station_code,year_adjusted, season, trophic_habit) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  summarise(cpue = (mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize station data by dispersal, trophic habit, origin
 abund_trait_noclam_disp_tro_orig <- abund_trait_noclam %>% 
   #sum cpue within station by origin, dispersal, trophic habit
   group_by(station_code,year_adjusted, season, native, dispersal, trophic_habit) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
+  summarise(cpue = (mean_cpue),.groups ='drop') %>% 
   glimpse()
 
 #no clams: mean CPUE by different time scales per trait----
