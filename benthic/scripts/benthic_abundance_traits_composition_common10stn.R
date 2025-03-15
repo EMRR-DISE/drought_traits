@@ -18,17 +18,14 @@ library(tidyverse)
 #three taxa that are not IDed below family level
 high_taxa <- c(1090, 1270, 1290 )
 
-#three new taxa that don't have size data yet
-new_taxa <- c(4740, 5130, 6565)
-
 #abundances for the common 10 stn taxa by station and month (n = 66)
 abund10stn <- read_csv("./benthic/data_output/benthic_common10_abundances_by_station.csv") %>% 
   #drop the three taxa that are not IDed below family level
-  filter(!(organism_code %in% high_taxa) & !(organism_code %in% new_taxa))
+  filter(!(organism_code %in% high_taxa))
 
 #trait data for the common 10 stn taxa
 #mostly just origin and size data but also more trait data for the 14 dominant taxa
-traits <- read_csv("./benthic/data_output/benthic_common10_by_stn_trait_data_partially_filled.csv") %>% 
+traits <- read_csv("./benthic/data_output/benthic_common10_by_stn_trait_data_filled.csv") %>% 
   glimpse()
 
 #format the trait data--------------
@@ -43,9 +40,8 @@ traits_so <- traits %>%
          ,trait_value
   ) %>% 
   #filter traits to just include size
-  #for now, drop the three taxa with missing size data
-  #only 60 taxa because three were dropped because of NAs)
-  filter(trait == "body_size_max" & !is.na(trait_value)) %>% 
+  #only 63 taxa because three were dropped because of NAs)
+  filter(trait == "body_size_max") %>% 
   #bin size data
   mutate(
     trait_value = as.numeric(trait_value)
@@ -89,53 +85,7 @@ clam <- c("6730","6890")
 abund_trait_noclam <- abund_trait %>% 
   filter(!(organism_code %in% clam))
   
-#with clams: sum CPUE within samples by trait (ie, origin, size)-------------------
-
-#summarize station data by origin
-abund_trait_orig <- abund_trait %>% 
-  #sum cpue within station by origin
-  group_by(station_code,year_adjusted, season, native) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
-  glimpse()
-  
-#summarize station data by size
-abund_trait_sz <- abund_trait %>% 
-  #sum cpue within station by origin
-  group_by(station_code,year_adjusted, season, body_size_cat) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
-  glimpse()
-
-#summarize station data by origin and size
-abund_trait_orig_sz <- abund_trait %>% 
-  #sum cpue within station by origin
-  group_by(station_code,year_adjusted, season, native, body_size_cat) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
-  glimpse()
-
-#without clams: sum CPUE within samples by trait (ie, origin, size)-------------------
-
-#summarize station data by origin
-abund_trait_noclam_orig <- abund_trait_noclam %>% 
-  #sum cpue within station by origin
-  group_by(station_code,year_adjusted, season, native) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
-  glimpse()
-
-#summarize station data by size
-abund_trait_noclam_sz <- abund_trait_noclam %>% 
-  #sum cpue within station by origin
-  group_by(station_code,year_adjusted, season, body_size_cat) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
-  glimpse()
-
-#summarize station data by origin and size
-abund_trait_noclam_orig_sz <- abund_trait_noclam %>% 
-  #sum cpue within station by origin
-  group_by(station_code,year_adjusted, season, native, body_size_cat) %>% 
-  summarise(cpue = sum(mean_cpue),.groups ='drop') %>% 
-  glimpse()
-
-#Calculate mean CPUE by size at different time and space scales for plotting--------
+#with clams: Calculate mean CPUE by size at different time and space scales for plotting--------
 
 #summarizing to do for plots
 #year, season, station: 12 plots, 3 stations x 4 seasons (previous step accomplished this already)
@@ -144,63 +94,97 @@ abund_trait_noclam_orig_sz <- abund_trait_noclam %>%
 #year: one plot showing annual time series combining data across all samples at all stations
 
 #summarize by year and station
-abund_trait_sz_stn_yr <- abund_trait_sz %>% 
+abund_trait_sz_stn_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
   group_by(station_code,year_adjusted, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year and season
-abund_trait_sz_seas_yr <- abund_trait_sz %>% 
+abund_trait_sz_seas_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date,station_code,year_adjusted, season, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
   group_by(year_adjusted, season, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year
-abund_trait_sz_yr <- abund_trait_sz %>% 
+abund_trait_sz_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
   group_by(year_adjusted, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
-#Calculate mean CPUE by origin at different time and space scales for plotting--------
+#with clams: Calculate mean CPUE by origin at different time and space scales for plotting--------
 
 #summarize by year and station
-abund_trait_orig_stn_yr <- abund_trait_orig %>% 
+abund_trait_orig_stn_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, native) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
   group_by(station_code,year_adjusted, native) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year and season
-abund_trait_orig_seas_yr <- abund_trait_orig %>% 
+abund_trait_orig_seas_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date,station_code,year_adjusted, season, native) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
   group_by(year_adjusted, season, native) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year
-abund_trait_orig_yr <- abund_trait_orig %>% 
+abund_trait_orig_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, native) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
   group_by(year_adjusted, native) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
-
-
-#Calculate mean CPUE by origin and size at different time and space scales for plotting--------
+#with clams: Calculate mean CPUE by origin and size at different time and space scales for plotting--------
 
 #summarize by year and station
-abund_trait_orig_sz_stn_yr <- abund_trait_orig_sz %>% 
-  group_by(station_code,year_adjusted, native, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+abund_trait_orig_sz_stn_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, native,body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
+  group_by(station_code,year_adjusted, native,body_size_cat) %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year and season
-abund_trait_orig_sz_seas_yr <- abund_trait_orig_sz %>% 
-  group_by(year_adjusted, season, native, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+abund_trait_orig_sz_seas_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, season, native,body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
+  group_by(season,year_adjusted, native,body_size_cat) %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year
-abund_trait_orig_sz_yr <- abund_trait_orig_sz %>% 
-  group_by(year_adjusted, native, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+abund_trait_orig_sz_yr <- abund_trait %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, native,body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
+  #calculate mean cpue across samples within stations and years
+  group_by(year_adjusted, native,body_size_cat) %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 
@@ -326,66 +310,91 @@ abund_trait_orig_sz_yr <- abund_trait_orig_sz %>%
 )
 
 
-
-
 #no clams: Calculate mean CPUE by size at different time and space scales for plotting--------
 
 #summarize by year and station
-abund_trait_noclam_sz_stn_yr <- abund_trait_noclam_sz %>% 
+abund_trait_noclam_sz_stn_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(station_code,year_adjusted, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year and season
-abund_trait_noclam_sz_seas_yr <- abund_trait_noclam_sz %>% 
+abund_trait_noclam_sz_seas_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, season, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(year_adjusted, season, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year
-abund_trait_noclam_sz_yr <- abund_trait_noclam_sz %>% 
+abund_trait_noclam_sz_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(year_adjusted, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #No clam: Calculate mean CPUE by origin at different time and space scales for plotting--------
 
 #summarize by year and station
-abund_trait_noclam_orig_stn_yr <- abund_trait_noclam_orig %>% 
+abund_trait_noclam_orig_stn_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, native) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(station_code,year_adjusted, native) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year and season
-abund_trait_noclam_orig_seas_yr <- abund_trait_noclam_orig %>% 
+abund_trait_noclam_orig_seas_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, season, native) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(year_adjusted, season, native) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year
-abund_trait_noclam_orig_yr <- abund_trait_noclam_orig %>% 
+abund_trait_noclam_orig_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, native) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(year_adjusted, native) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #No clam: Calculate mean CPUE by origin and size at different time and space scales for plotting--------
 
 #summarize by year and station
-abund_trait_noclam_orig_sz_stn_yr <- abund_trait_noclam_orig_sz %>% 
+abund_trait_noclam_orig_sz_stn_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, native, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(station_code,year_adjusted, native, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year and season
-abund_trait_noclam_orig_sz_seas_yr <- abund_trait_noclam_orig_sz %>% 
+abund_trait_noclam_orig_sz_seas_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, season, native, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(year_adjusted, season, native, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 #summarize by year
-abund_trait_noclam_orig_sz_yr <- abund_trait_noclam_orig_sz %>% 
+abund_trait_noclam_orig_sz_yr <- abund_trait_noclam %>% 
+  #sum cpue within samples
+  group_by(sample_date, station_code,year_adjusted, native, body_size_cat) %>% 
+  summarise(tot_cpue = sum(mean_cpue),.groups ='drop')  %>% 
   group_by(year_adjusted, native, body_size_cat) %>% 
-  summarise(cpue = mean(cpue),.groups ='drop') %>% 
+  summarise(cpue = mean(tot_cpue),.groups ='drop') %>% 
   glimpse()
 
 
@@ -425,7 +434,7 @@ abund_trait_noclam_orig_sz_yr <- abund_trait_noclam_orig_sz %>%
     facet_grid(season~.)
 )
 
-#origin based plots---------------------
+#no clams: origin based plots---------------------
 
 #absolute abundance stacked bar plot by year
 (plot_abund_noclam_orig_yr_abs <- ggplot(abund_trait_noclam_orig_yr, aes(x = year_adjusted, y = cpue, fill = native))+
@@ -462,7 +471,7 @@ abund_trait_noclam_orig_sz_yr <- abund_trait_noclam_orig_sz %>%
     facet_grid(season~.)
 )
 
-#origin and body size plots---------------------
+#no clams: origin and body size plots---------------------
 
 #absolute abundance stacked bar plot by year
 (plot_abund_noclam_orig_sz_yr_abs <- ggplot(abund_trait_noclam_orig_sz_yr, aes(x = year_adjusted, y = cpue, fill = body_size_cat))+

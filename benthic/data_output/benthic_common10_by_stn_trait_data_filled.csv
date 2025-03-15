@@ -42,7 +42,7 @@ citation?,prop_d28,prop_d4,prop_d7,prop,native,organism_code,target_taxon_name,t
 0,NA,NA,0.214128035,0.072058824,0,3090,Pseudopolydora kempi,species,,,,,,,,dispersal,NA,P,categorical,,
 0,NA,NA,0.214128035,0.072058824,0,3090,Pseudopolydora kempi,species,,,,,,,,trophic_habit,NA,D,categorical,,
 0,NA,NA,0.158940397,0.054411765,0,3110,Streblospio benedicti,species,,,,,,,,dispersal,NA,P,categorical,,
-0,NA,NA,0.158940397,0.054411765,0,3110,Streblospio benedicti,species,,,,,,,,trophic_habit,NA,D,categorical,,
+0,NA,NA,0.158940397,0.054411765,0,3110,Streblospio benedicti,species,,,,,,,,trophic_habit,NA,D,categorical,"yes, see Nichols and Thompson 1985; side note probably reproduces year round and can apparently release young as feeding planktonic larvae or non-feeding larvae that settle upon release",
 0,NA,0.637969095,0.649006623,0.429411765,0,3130,Marenzelleria neglecta,species,,,,,,,,dispersal,NA,N,categorical,some polychaetes have planktonic larvae,
 0,NA,0.637969095,0.649006623,0.429411765,0,3130,Marenzelleria neglecta,species,,,,,,,,trophic_habit,NA,D,categorical,some polychaetes are filter feeders,
 0,NA,NA,0.189845475,0.063235294,0,3170,Heteromastus filiformis,species,,,,,,,,dispersal,NA,P,categorical,,
@@ -60,7 +60,7 @@ citation?,prop_d28,prop_d4,prop_d7,prop,native,organism_code,target_taxon_name,t
 0,NA,0.150110375,NA,0.0625,0,4270,Sinelobus stanfordi,species,,,,,,,,dispersal,NA,N,categorical,,
 0,NA,0.150110375,NA,0.0625,0,4270,Sinelobus stanfordi,species,,,,,,,,trophic_habit,NA,D,categorical,,
 0,NA,0.103752759,0.258278146,0.120588235,0,4310,Synidotea laticauda,species,,,,,,,,dispersal,NA,N,categorical,,
-0,NA,0.103752759,0.258278146,0.120588235,0,4310,Synidotea laticauda,species,,,,,,,,trophic_habit,NA,S,categorical,,
+0,NA,0.103752759,0.258278146,0.120588235,0,4310,Synidotea laticauda,species,,,,,,,,trophic_habit,NA,S,categorical,"NEMESIS makes it sounds like an omnivore including predator (Polychaetes, bryozoans, isopods, algae, carrion)",
 0,NA,0.231788079,NA,0.088235294,1,4350,Gnorimosphaeroma insulare,species,,,,,,,,dispersal,NA,N,categorical,,
 0,NA,0.231788079,NA,0.088235294,1,4350,Gnorimosphaeroma insulare,species,,,,,,,,trophic_habit,NA,D,categorical,,
 0,NA,0.14790287,NA,0.066911765,1,4370,Gnorimosphaeroma oregonense,species,,,,,,,,dispersal,NA,N,categorical,,
@@ -68,26 +68,26 @@ citation?,prop_d28,prop_d4,prop_d7,prop,native,organism_code,target_taxon_name,t
 0,NA,0.12803532,NA,0.063235294,0,4410,Uromunna sp. A,genus,,,,,,,,dispersal,NA,N,categorical,,
 0,NA,0.12803532,NA,0.063235294,0,4410,Uromunna sp. A,genus,,,,,,,,trophic_habit,NA,D,categorical,,
 0,NA,NA,0.286975717,0.097794118,0,4510,Ampelisca abdita,species,,,,,,,,dispersal,NA,N,categorical,,
-0,NA,NA,0.286975717,0.097794118,0,4510,Ampelisca abdita,species,,,,,,,,trophic_habit,NA,D,categorical,,
+0,NA,NA,0.286975717,0.097794118,0,4510,Ampelisca abdita,species,,,,,,,,trophic_habit,NA,D,categorical,probably also suspension feeder (Nichols and Thompson 1985); side note has two generations per year in South Bay and offspring develop in brood pouch as junveniles,
 0,NA,0.229580574,0.474613687,0.234558824,0,4670,Grandidierella japonica,species,,,,,,,,dispersal,NA,N,categorical,,
 0,NA,0.229580574,0.474613687,0.234558824,0,4670,Grandidierella japonica,species,,,,,,,,trophic_habit,NA,D,categorical,could be shredder,
-0,0.105726872,NA,NA,0.043382353,NA,4740,Crangonyx floridanus,species,,,,,,,,body_size_max,NA,10,mm,female max length,
-0,0.105726872,NA,NA,0.043382353,NA,4740,Crangonyx floridanus,species,,,,,,,,dispersal,NA,N,categorical,,
-0,0.105726872,NA,NA,0.043382353,NA,4740,Crangonyx floridanus,species,,,,,,,,trophic_habit,NA,D,categorical,,
+0,0.105726872,NA,NA,0.043382353,0,4740,Crangonyx floridanus,species,,,,,,,,body_size_max,NA,10,mm,female max length,
+0,0.105726872,NA,NA,0.043382353,0,4740,Crangonyx floridanus,species,,,,,,,,dispersal,NA,N,categorical,,
+0,0.105726872,NA,NA,0.043382353,0,4740,Crangonyx floridanus,species,,,,,,,,trophic_habit,NA,D,categorical,,
 0,0.295154185,0.119205298,NA,0.138970588,1,4810,Hyalella sp. A,genus,,,,,,,,dispersal,NA,N,categorical,,
 0,0.295154185,0.119205298,NA,0.138970588,1,4810,Hyalella sp. A,genus,,,,,,,,trophic_habit,NA,S,categorical,,
 0,NA,0.163355408,NA,0.072058824,0,4950,Rhithropanopeus harrisii,species,,,,,,,,dispersal,NA,P,categorical,,
 0,NA,0.163355408,NA,0.072058824,0,4950,Rhithropanopeus harrisii,species,,,,,,,,trophic_habit,NA,D,categorical,"omnivorous eating detritus, plants, animals",
-0,NA,0.121412804,NA,0.043382353,NA,5130,Stylurus olivaceus,species,,,,,,,,dispersal,NA,N,categorical,,
-0,NA,0.121412804,NA,0.043382353,NA,5130,Stylurus olivaceus,species,,,,,,,,trophic_habit,NA,C,categorical,,
+0,NA,0.121412804,NA,0.043382353,1,5130,Stylurus olivaceus,species,,,,,,,,dispersal,NA,N,categorical,,
+0,NA,0.121412804,NA,0.043382353,1,5130,Stylurus olivaceus,species,,,,,,,,trophic_habit,NA,C,categorical,,
 0,0.218061674,NA,NA,0.1,1,5410,Procladius sp. A,genus,,,,,,,,dispersal,NA,N,categorical,,
 0,0.218061674,NA,NA,0.1,1,5410,Procladius sp. A,genus,,,,,,,,trophic_habit,NA,D,categorical,but very diverse family with many feeding modes represented,
 0,0.140969163,NA,NA,0.058823529,1,5550,Cryptochironomus sp. A,genus,,,,,,,,dispersal,NA,N,categorical,,
 0,0.140969163,NA,NA,0.058823529,1,5550,Cryptochironomus sp. A,genus,,,,,,,,trophic_habit,NA,D,categorical,but very diverse family with many feeding modes represented,
 0,0.129955947,NA,NA,0.054411765,1,6530,Gyraulus circumstriatus,species,,,,,,,,dispersal,NA,N,categorical,actually no info...,
 0,0.129955947,NA,NA,0.054411765,1,6530,Gyraulus circumstriatus,species,,,,,,,,trophic_habit,NA,H,categorical,probably a scraper,
-0,0.101321586,NA,NA,0.042647059,NA,6565,Helisoma anceps,species,,,,,,,,dispersal,NA,N,categorical,,
-0,0.101321586,NA,NA,0.042647059,NA,6565,Helisoma anceps,species,,,,,,,,trophic_habit,NA,H,categorical,scraper/grazer of algae,
+0,0.101321586,NA,NA,0.042647059,1,6565,Helisoma anceps,species,,,,,,,,dispersal,NA,N,categorical,,
+0,0.101321586,NA,NA,0.042647059,1,6565,Helisoma anceps,species,,,,,,,,trophic_habit,NA,H,categorical,scraper/grazer of algae,
 0,0.167400881,NA,NA,0.069852941,1,6570,Physa sp. A,genus,,,,,,,,dispersal,NA,N,categorical,,
 0,0.167400881,NA,NA,0.069852941,1,6570,Physa sp. A,genus,,,,,,,,trophic_habit,NA,H,categorical,probably an algae scraper,
 0,0.59030837,0.289183223,NA,0.293382353,0,6630,Melanoides tuberculata,species,,,,,,,,dispersal,NA,N,categorical,,
@@ -250,11 +250,11 @@ citation?,prop_d28,prop_d4,prop_d7,prop,native,organism_code,target_taxon_name,t
 1,0.751101322,0.841059603,0.337748344,0.643382353,0,4750,Gammarus daiberi,species,Gammarus spp.,genus,congener,Sutcliffe 1992,NA,NA,NA,voltinism,1,M,categorical,"eggs develop between 17-35 days at 10C dependig on egg size, and enter diapause sometime between mid summer and early winter. Become ovigerous depending on daylight hours.",NA
 1,0.295154185,0.119205298,NA,0.138970588,1,4810,Hyalella sp. A,genus,Hyalella,genus,target,Burdi et al. 2021,United States,CA,San Francisco Estuary,body_size_max,NA,10,mm,NA,samples from guts of field collected fish
 1,NA,0.163355408,NA,0.072058824,0,4950,Rhithropanopeus harrisii,species,Rhithropanopeus harrisii,species,target,Williams 1984,NA,NA,NA,body_size_max,NA,21.3,mm,male max width.  Female is 16 mm,NA
-1,NA,0.121412804,NA,0.043382353,NA,5130,Stylurus olivaceus,species,Stylurus spiniceps,species,congener,Dragonflies of North America,NA,NA,NA,body_size_max,1,60,mm,measured length from USGS Benthic Invert Trait Database; not necessarily maximum,"Of the four Stylurus species with naiad body length in USGS database, S. spiniceps was closest to S. olivacea in adult body length, with S. spiniceps a couple mm longer (and presumably naiad body length)"
+1,NA,0.121412804,NA,0.043382353,1,5130,Stylurus olivaceus,species,Stylurus spiniceps,species,congener,Dragonflies of North America,NA,NA,NA,body_size_max,1,60,mm,measured length from USGS Benthic Invert Trait Database; not necessarily maximum,"Of the four Stylurus species with naiad body length in USGS database, S. spiniceps was closest to S. olivacea in adult body length, with S. spiniceps a couple mm longer (and presumably naiad body length)"
 1,0.218061674,NA,NA,0.1,1,5410,Procladius sp. A,genus,Procladius denticulatus,species,congener,Bath and Anderson 1969,United States,CA,Southern CA,body_size_max,NA,12,mm,NA,NA
 1,0.140969163,NA,NA,0.058823529,1,5550,Cryptochironomus sp. A,genus,Cryptochironomus,genus,congener,Curry 1958,United States,Michigan,NA,body_size_max,NA,15,mm,NA,NA
 1,0.129955947,NA,NA,0.054411765,1,6530,Gyraulus circumstriatus,species,Gyraulus parvus,species,congener,Brown 1998,United States,Wisconsin,"Carrol Lake, Vilas County",body_size_max,NA,5,mm,NA,see Table 1 for measurement
-1,0.101321586,NA,NA,0.042647059,NA,6565,Helisoma anceps,species,Helisoma anceps,species,target,Hung et al 2018,United States,California,San Francisco Estuary,body_size_max,1,12,mm,,Boerger 1975 cited in this paper has length-weight relationships for this species
+1,0.101321586,NA,NA,0.042647059,1,6565,Helisoma anceps,species,Helisoma anceps,species,target,Hung et al 2018,United States,California,San Francisco Estuary,body_size_max,1,12,mm,,Boerger 1975 cited in this paper has length-weight relationships for this species
 1,0.167400881,NA,NA,0.069852941,1,6570,Physa sp. A,genus,Physa,genus,congener,Arendt 2015,US,CA,Riverside,body_size_max,NA,6.9,mm,NA,NA
 1,0.59030837,0.289183223,NA,0.293382353,0,6630,Melanoides tuberculata,species,Melanoides tuberculata,species,target,Thompson 1989,NA,NA,NA,body_size_max,NA,36,mm,NA,NA
 1,0.995594714,0.997792494,0.271523179,0.755147059,0,6730,Corbicula fluminea,species,Corbicula fluminea,species,target,Sousa et al 2008,NA,NA,NA,armoring,1,G,categorical,shells-clam,NA
