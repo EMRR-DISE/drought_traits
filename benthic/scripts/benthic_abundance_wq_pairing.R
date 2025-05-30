@@ -3,6 +3,8 @@
 
 # Load required packages -----------------
 
+library(glue)
+library(purrr)
 library(data.table) #matches data by nearest date 
 #NOTE: data.table masks some useful tidyverse functions so load first
 library(ggpmisc) #add correlation results to plots; load before ggplot2
@@ -16,13 +18,49 @@ library(ggrepel) #no-noverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
 library(here)
 
+#function for downloading data from EDI
+
+get_edi_file = function(pkg_id, fnames){
+  # Get revision
+  revision_url = glue::glue('https://pasta.lternet.edu/package/eml/edi/{pkg_id}')
+  all_revisions = readLines(revision_url, warn = FALSE) 
+  latest_revision = tail(all_revisions, 1)
+  
+  # Get entities 
+  pkg_url = glue::glue('https://pasta.lternet.edu/package/data/eml/edi/{pkg_id}/{latest_revision}')
+  all_entities = readLines(pkg_url, warn = FALSE)
+  name_urls = glue::glue('https://pasta.lternet.edu/package/name/eml/edi/{pkg_id}/{latest_revision}/{all_entities}')
+  names(all_entities) = purrr::map_chr(name_urls, readLines, warn = FALSE)
+  
+  # Select entities that match fnames
+  fname_regex = stringr::str_c(glue::glue('({fnames})'), collapse = '|')
+  included_entities = all_entities[stringr::str_detect(names(all_entities), fname_regex)]
+  if(length(included_entities) != length(fnames)){
+    stop('Not all specified filenames are included in package')
+  }
+  # Download data
+  dfs = purrr::map(glue::glue('https://pasta.lternet.edu/package/data/eml/edi/{pkg_id}/{latest_revision}/{included_entities}'),
+                   readr::read_csv, guess_max = 1000000, show_col_types = FALSE)
+  names(dfs) = names(included_entities)
+  
+  if (length(dfs) == 1) {
+    return(dfs[[1]])
+  } else {
+    return(dfs)
+  }
+}
+
+
 # Read in the data-----------------------
 
 #most of what I need is published on EDI
 #https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=1036&revision=2
 
 #station data
-benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
+# benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
+#   clean_names() %>% 
+#   glimpse()
+benthic_stn <- get_edi_file(pkg_id = 1036, fnames = "DWR benthic monitoring, active and historic site locations") %>% 
   clean_names() %>% 
   glimpse()
 
@@ -31,28 +69,35 @@ benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?package
 #replicate grabs have been averaged for each site visit
 #all non-occurrence (zero) data for a site visit has been removed
 #Nick: samples with no organisms at all are probably included as "No catch"
-benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=cd7a52aa283d8d9dd8e806537bd5772f") %>% 
+# benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=cd7a52aa283d8d9dd8e806537bd5772f") %>% 
+#   clean_names() %>% 
+#   glimpse()
+benthic_invert_cpue <- get_edi_file(pkg_id = 1036, fnames = "DWR Benthic CPUE data 1975-2023") %>% 
   clean_names() %>% 
   glimpse()
 
 #organism key list
-benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=d0f0dd3c1835fe5b669342f8c8e77024") %>% 
-  clean_names()
+# benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=d0f0dd3c1835fe5b669342f8c8e77024") %>% 
+#   clean_names()
+#code doesn't actually use this so haven't updated code to download it
 
 #organism key with column for latin name for taxa
 #see BenthicInverts_EMP_TaxonomyUpdating for how this was done
-benthic_spp_names <- read_csv("./benthic/data_output/nmds/benthic_taxonomy_name_labels.csv") %>% 
-  arrange(organism_code)
+# benthic_spp_names <- read_csv("./benthic/data_output/nmds/benthic_taxonomy_name_labels.csv") %>% 
+#   arrange(organism_code)
+#code doesn't actually use this so haven't updated code to download it
 
 #total annual site visits, 1975-2023
-benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=a3d2580164bf06b94f1ff3145b819ade") %>% 
-  clean_names() %>% 
-  glimpse()
+# benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=a3d2580164bf06b94f1ff3145b819ade") %>% 
+#   clean_names() %>% 
+#   glimpse()
+#code doesn't actually use this so haven't updated code to download it
 
 #total annual grab samples, 1975-2023
-benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=84539dd9c541ca53ee195330368dc531") %>% 
-  clean_names() %>% 
-  glimpse()
+# benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=84539dd9c541ca53ee195330368dc531") %>% 
+#   clean_names() %>% 
+#   glimpse()
+#code doesn't actually use this so haven't updated code to download it
 
 #list of benthic inverts present in at least 10% of samples in each of three stations
 #just remember this includes three taxa that are not IDed to species or genus and 
@@ -73,32 +118,39 @@ organisms_common10stn <- benthic_common10stn %>%
 
 #EMP water quality data
 #specify the column types upon reading in data
+# benthic_wq <-
+#  read_csv(
+#    "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.12&entityid=a8ca73ec21f14b58caf2152720403cf3",
+#    col_types = cols_only(
+#      Station = "c",
+#      Date = col_date("%Y-%m-%d"),
+#      Time = "t",
+#      Secchi = "d",
+#      TurbiditySurface = "d", #some non-detects present
+#      SpCndSurface = "d",
+#      WaterTempSurface = "d",
+#      DOSurface = "d"
+#    )
+#  ) %>%
+#  clean_names() %>%
+#  glimpse()
 benthic_wq <-
- read_csv(
-   "https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.12&entityid=a8ca73ec21f14b58caf2152720403cf3",
-   col_types = cols_only(
-     Station = "c",
-     Date = col_date("%Y-%m-%d"),
-     Time = "t",
-     Secchi = "d",
-     TurbiditySurface = "d", #some non-detects present
-     SpCndSurface = "d",
-     WaterTempSurface = "d",
-     DOSurface = "d",
-   )
- ) %>%
- clean_names() %>%
- glimpse()
+  get_edi_file(pkg_id = 458, fnames = "EMP_DWQ_1975_2023") %>% 
+  clean_names() %>%
+  glimpse()
 
 # turbidity_surface has two ND values at MD10A - not sure if this matters; if it
 # does, we'll need to decide if we're okay with substituting 0 or some other
 # number for these
 
 #EMP water quality stations
-wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.12&entityid=ada2f452284c8d88cde03fdf98280dc9") %>%
- clean_names() %>%
- glimpse()
+# wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.12&entityid=ada2f452284c8d88cde03fdf98280dc9") %>%
+#  clean_names() %>%
+#  glimpse()
 
+wq_stn <- get_edi_file(pkg_id = 458, fnames = "EMP_DWQ_Stations_1975-2023") %>% 
+  clean_names() %>% 
+  glimpse()
 
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
