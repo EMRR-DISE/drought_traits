@@ -708,6 +708,24 @@ bwp_sc <- bwp_long %>%
 #     ggtitle("Specific Conductance")
 # )
 
+#look at histograms of SC for the three focal stations
+
+stn_focal <- c("D28A-L", "D4-L", "D7-C")
+
+bwp_sc_fc <- bwp_sc %>% 
+  filter(b_stn %in% stn_focal) %>% 
+  #collapse data back to one measurement per sample date
+  distinct(b_stn, wq_stn,b_date,wq_date,value) %>% 
+  glimpse()
+
+#histogram of SC by station
+
+(plot_sc_stn_fc_hist <- ggplot(bwp_sc_fc, aes(x=value)) +
+  geom_histogram() + 
+  facet_grid(factor(b_stn)~.)
+)
+
+
 #look at range of WQ values across entire dataset
 wq_sum <- bwp_long %>% 
   group_by(parameter) %>% 
