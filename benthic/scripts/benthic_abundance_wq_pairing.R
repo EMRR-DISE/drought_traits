@@ -3,8 +3,6 @@
 
 # Load required packages -----------------
 
-library(glue)
-library(purrr)
 library(data.table) #matches data by nearest date 
 #NOTE: data.table masks some useful tidyverse functions so load first
 library(ggpmisc) #add correlation results to plots; load before ggplot2
@@ -17,50 +15,26 @@ library(leaflet) #make interactive maps
 library(ggrepel) #no-noverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
 library(here)
-
-#function for downloading data from EDI
-
-get_edi_file = function(pkg_id, fnames){
-  # Get revision
-  revision_url = glue::glue('https://pasta.lternet.edu/package/eml/edi/{pkg_id}')
-  all_revisions = readLines(revision_url, warn = FALSE) 
-  latest_revision = tail(all_revisions, 1)
-  
-  # Get entities 
-  pkg_url = glue::glue('https://pasta.lternet.edu/package/data/eml/edi/{pkg_id}/{latest_revision}')
-  all_entities = readLines(pkg_url, warn = FALSE)
-  name_urls = glue::glue('https://pasta.lternet.edu/package/name/eml/edi/{pkg_id}/{latest_revision}/{all_entities}')
-  names(all_entities) = purrr::map_chr(name_urls, readLines, warn = FALSE)
-  
-  # Select entities that match fnames
-  fname_regex = stringr::str_c(glue::glue('({fnames})'), collapse = '|')
-  included_entities = all_entities[stringr::str_detect(names(all_entities), fname_regex)]
-  if(length(included_entities) != length(fnames)){
-    stop('Not all specified filenames are included in package')
-  }
-  # Download data
-  dfs = purrr::map(glue::glue('https://pasta.lternet.edu/package/data/eml/edi/{pkg_id}/{latest_revision}/{included_entities}'),
-                   readr::read_csv, guess_max = 1000000, show_col_types = FALSE)
-  names(dfs) = names(included_entities)
-  
-  if (length(dfs) == 1) {
-    return(dfs[[1]])
-  } else {
-    return(dfs)
-  }
-}
-
+library(EDIutils) #download EDI data
 
 # Read in the data-----------------------
 
 #most of what I need is published on EDI
 #https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=1036&revision=2
 
+#read in all data files from EDI
+
 #station data
 # benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
 #   clean_names() %>% 
 #   glimpse()
-benthic_stn <- get_edi_file(pkg_id = 1036, fnames = "DWR benthic monitoring, active and historic site locations") %>% 
+
+#use EDIutils package to read in all file names and download the ones you want to use
+#https://docs.ropensci.org/EDIutils/index.html
+
+#list all data files from EMP benthic inverts EDI package
+benthic_pkg <- read_data_entity_names(packageId = "edi.1036.4")
+benthic_stn <- read_csv(read_data_entity(packageId = "edi.1036.4", entityId= benthic_pkg$entityId[3])) %>% 
   clean_names() %>% 
   glimpse()
 
@@ -72,7 +46,7 @@ benthic_stn <- get_edi_file(pkg_id = 1036, fnames = "DWR benthic monitoring, act
 # benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.4&entityid=cd7a52aa283d8d9dd8e806537bd5772f") %>% 
 #   clean_names() %>% 
 #   glimpse()
-benthic_invert_cpue <- get_edi_file(pkg_id = 1036, fnames = "DWR Benthic CPUE data 1975-2023") %>% 
+benthic_invert_cpue <- read_csv(read_data_entity(packageId = "edi.1036.4", entityId= benthic_pkg$entityId[2])) %>% 
   clean_names() %>% 
   glimpse()
 
@@ -134,9 +108,9 @@ organisms_common10stn <- benthic_common10stn %>%
 #  ) %>%
 #  clean_names() %>%
 #  glimpse()
-benthic_wq <-
-  get_edi_file(pkg_id = 458, fnames = "EMP_DWQ_1975_2023") %>% 
-  clean_names() %>%
+wq_pkg <- read_data_entity_names(packageId = "edi.458.12")
+benthic_wq <- read_csv(read_data_entity(packageId = "edi.458.12", entityId= wq_pkg$entityId[1])) %>% 
+  clean_names() %>% 
   glimpse()
 
 # turbidity_surface has two ND values at MD10A - not sure if this matters; if it
@@ -147,8 +121,7 @@ benthic_wq <-
 # wq_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.458.12&entityid=ada2f452284c8d88cde03fdf98280dc9") %>%
 #  clean_names() %>%
 #  glimpse()
-
-wq_stn <- get_edi_file(pkg_id = 458, fnames = "EMP_DWQ_Stations_1975-2023") %>% 
+wq_stn <- read_csv(read_data_entity(packageId = "edi.458.12", entityId= wq_pkg$entityId[2])) %>% 
   clean_names() %>% 
   glimpse()
 
