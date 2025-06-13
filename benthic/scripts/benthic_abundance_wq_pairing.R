@@ -16,6 +16,7 @@ library(ggrepel) #no-noverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
 library(here)
 library(EDIutils) #download EDI data
+library(wql) #convert EC to PSS
 
 # Read in the data-----------------------
 
@@ -127,6 +128,9 @@ wq_stn <- read_csv(read_data_entity(packageId = "edi.458.12", entityId= wq_pkg$e
 
 # Read in region shapefile
 region_shape <- read_sf(here("spatial_files/region.shp"))
+
+#list of focal stations
+stn_focal <- c("D28A-L", "D4-L", "D7-C")
 
 
 # Explore water quality data----------------
@@ -348,6 +352,13 @@ wq_focus <- benthic_wq %>%
   ) %>% 
   glimpse()
 
+#histogram of salinity
+#hist(wq_focus$pss_surface)
+#mostly pretty fresh as expected but up to 30 PSU
+#but this is still all stations and dates
+#we trim this down
+
+
 #let's look at when D24 was replaced by NZ068
 # wq_focus_replaced <- wq_focus %>% 
 #   filter(station == "D24" | station == "NZ068") %>% 
@@ -524,6 +535,16 @@ bwq <- comb_wq_b %>%
     #change organism code from numeric to character
     #so it matches with cpue_10plus data frame
     ,organism_code=as.character(organism_code)
+    #use function from 'wql' package
+    #requires ec in mS/cm NOT uS/cm, so divide by 1000
+    #temperature: using 25C because conductance is standardized to this temp
+    #pressure 1 m below surface is 0.0981 bar or 0.981 decibar (for freshwater)
+    #https://engineeringunits.com/pressure-at-depth-calculator/
+    #for simplicity, maybe just stick to zero for pressure though; doesn't change answer much at all
+    ,pss_surface = ec2pss(ec = sp_cnd_surface/1000, t = 25, p = 0)
+    ,year = year(date_time)
+    #adjust year definition from Jan 1 - Dec 31 to Dec 1 - Nov 30
+    ,year_adjusted = if_else(month > 11, year + 1, year)
   ) %>% 
   #filter out any cases in which closest wq and benthic sample time match 
   #exceeds 15 days 
@@ -532,6 +553,7 @@ bwq <- comb_wq_b %>%
   filter(date_diff<15) %>% 
   select(
     b_stn = station_code
+    ,year_adjusted
     ,wq_stn = station
     ,b_date = date_time
     ,wq_date = dateMatch
@@ -542,6 +564,7 @@ bwq <- comb_wq_b %>%
     ,do = do_surface
     ,scond = sp_cnd_surface
     ,secchi
+    ,pss = pss_surface
     ,turb = turbidity_surface
   ) %>% 
   glimpse()
@@ -551,24 +574,24 @@ bwq <- comb_wq_b %>%
 
 #histogram of difference in dates between benthic and WQ samples
 #without filtering out samples separated by more than 15 days
-bwq_dates <- bwq %>% 
-  distinct(b_stn,wq_stn,b_date,wq_date,date_diff) %>% 
-  arrange(b_stn,wq_stn,b_date,wq_date)
+# bwq_dates <- bwq %>% 
+#   distinct(b_stn,wq_stn,b_date,wq_date,date_diff) %>% 
+#   arrange(b_stn,wq_stn,b_date,wq_date)
 #4,065 benthic samples with well matched wq data
 
 #summarize date diff by station
-bwq_dates_sum <- bwq_dates %>% 
-  group_by(b_stn,wq_stn) %>% 
-  summarize(min = min(date_diff)
-            ,max = max(date_diff)
-            ) %>% 
-  arrange(b_stn,wq_stn)
+# bwq_dates_sum <- bwq_dates %>% 
+#   group_by(b_stn,wq_stn) %>% 
+#   summarize(min = min(date_diff)
+#             ,max = max(date_diff)
+#             ) %>% 
+#   arrange(b_stn,wq_stn)
 
-range(bwq_dates$date_diff) 
+# range(bwq_dates$date_diff) 
 # before filtering out big date differences, range was 0 to 4626
 
-ggplot(bwq_dates,aes(x=date_diff))+
-  geom_histogram()
+# ggplot(bwq_dates,aes(x=date_diff))+
+#   geom_histogram()
 #some date differences are insanely large
 #because stations weren't sampled in same month or year in some cases
 #benthic and wq stations blink in and out through time and not necessarily together
@@ -585,17 +608,17 @@ ggplot(bwq_dates,aes(x=date_diff))+
 #proportion without wq data: 16.4% 
 
 #look for cases where WQ data are missing
-bwq_issues <- bwq %>% 
-  #just need to look at station matching so simplify to remove organism codes
-  distinct(wq_stn,b_date,secchi, turb, scond, temp,do) %>% 
-  filter(is.na(secchi) | is.na(turb) | is.na(scond) | is.na(temp) | is.na(do) )
+# bwq_issues <- bwq %>% 
+#   #just need to look at station matching so simplify to remove organism codes
+#   distinct(wq_stn,b_date,secchi, turb, scond, temp,do) %>% 
+#   filter(is.na(secchi) | is.na(turb) | is.na(scond) | is.na(temp) | is.na(do) )
 #180 samples, none of these samples are completely without WQ data though; mostly secchi data missing
 
 #just look at cases in which there is no wq data
-bwq_issues2 <- bwq %>% 
-  #just need to look at station matching so simplify to remove organism codes
-  distinct(b_stn,b_date,secchi, turb, scond, temp, do) %>% 
-  filter(is.na(secchi) & is.na(turb) & is.na(scond) & is.na(temp) & is.na(do) )
+# bwq_issues2 <- bwq %>% 
+#   #just need to look at station matching so simplify to remove organism codes
+#   distinct(b_stn,b_date,secchi, turb, scond, temp, do) %>% 
+#   filter(is.na(secchi) & is.na(turb) & is.na(scond) & is.na(temp) & is.na(do) )
 #zero - because we matched benthic samples with closest wq data
 #as long as at least one set of wq data was collected at a station, there will always be a match,
 #though a very poor one in some cases, and those have already been filtered out (ie, any date difference over 15 d)
@@ -606,7 +629,7 @@ bw_of <- bwq %>%
   filter(organism %in% organisms_common10stn) %>% 
   glimpse()
 
-ctax <- unique(bw_of$organism)
+# ctax <- unique(bw_of$organism)
 #got the right number of taxa (n=66)
 
 # bwp <- bw_of %>% 
@@ -657,6 +680,86 @@ bwp_long <- bw_of %>%
 
 #look at range of cpue after filtering out occurrences of each taxon where it is rare
 #range(bwp_long_nrare$mean_cpue) #4.807692 84884.615385
+
+#make data frames with year x station combo categorized by salinity bin for the three focal stations---------------
+
+bwp_long_filter <- bwp_long %>% 
+  #filter to just include focal stations and just pss
+  filter(b_stn %in% stn_focal & parameter == "pss") %>% 
+  mutate(b_stn = as.factor(b_stn)
+         ,year_adjusted = as.factor(year_adjusted)
+         ) %>% 
+  #just keep distinct combos of stn and date
+  #currently there's a row for every organism code within this combo
+  distinct(b_stn, year_adjusted, b_date, value) %>% 
+  glimpse()
+
+#box and whisker plot of PSS values by station
+(plot_pss_bw <- ggplot(bwp_long_filter, aes(x = year_adjusted, y = value))+
+  geom_boxplot()+
+    #geom_jitter(width = 0.2)+
+    facet_grid(b_stn~.)
+  )
+
+bwp_fstn_pss_bin <- bwp_long_filter %>% 
+  #calculate median for each water year and station combo
+  group_by(b_stn, year_adjusted) %>% 
+  summarize(pss_n = length(value)
+            ,pss_median = median(value,na.rm = T)
+            ,pss_mean = mean(value,na.rm = T)) %>% 
+  #add column that bins PSS into five categories
+  mutate(
+    pss_median_category = as.factor(case_when(pss_median < 0.5 ~ "fresh"
+                             ,pss_median >= 0.5 & pss_median < 2 ~ "very low"
+                             ,pss_median >= 2 & pss_median < 6 ~ "low"
+                             ,pss_median >= 6 & pss_median < 12 ~ "brackish"
+                             ,pss_median >=12 & pss_median < 20 ~ "very brackish"
+                             )
+  )
+  ,pss_mean_category = as.factor(case_when(pss_mean < 0.5 ~ "fresh"
+                                             ,pss_mean >= 0.5 & pss_mean < 2 ~ "very low"
+                                             ,pss_mean >= 2 & pss_mean < 6 ~ "low"
+                                             ,pss_mean >= 6 & pss_mean < 12 ~ "brackish"
+                                             ,pss_mean >=12 & pss_mean < 20 ~ "very brackish"
+  ))
+  #reorder factor levels so they make sense in plots
+  ,pss_median_category = fct_relevel(pss_median_category, c("fresh","very low","low","brackish","very brackish"))
+  ,pss_mean_category = fct_relevel(pss_mean_category, c("fresh","very low","low","brackish","very brackish"))
+  ,pss_comp = as.factor(pss_median_category == pss_mean_category)
+  ) %>% 
+  arrange(b_stn, year_adjusted) %>% 
+  glimpse()
+#write_csv(bwp_fstn_pss_bin, "./benthic/data_output/psu_categories_stn_yr.csv")
+
+#determine if the two sets of categories are generally the same
+pss_cat_comp <- bwp_fstn_pss_bin %>% 
+  filter(pss_comp == FALSE)
+
+#percent of stn x year that different between pss categories
+28/144 #0.1944444 so about 1/5th of them differ categorically
+
+#range(bwp_fstn_pss_bin$pss_median)
+#0.07470777 13.68181792
+
+#count categories by station and average type
+#with(bwp_fstn_pss_bin,table(b_stn,pss_median_category))
+#with(bwp_fstn_pss_bin,table(b_stn,pss_mean_category))
+
+
+#plot median PSS by station and year
+(plot_pss_stn_yr_md <- ggplot(bwp_fstn_pss_bin, aes(x=year_adjusted,y=pss_median, fill =pss_median_category))+
+  geom_col()+
+  facet_grid(b_stn~.)
+)
+#ggsave(plot_pss_stn_yr_md,filename="./benthic/figures/PSU_median_stn_yr.png",dpi=300, width = 24, height = 12, units = "in")
+
+
+#plot mean PSS by station and year
+(plot_pss_stn_yr_mn <- ggplot(bwp_fstn_pss_bin, aes(x=year_adjusted,y=pss_mean, fill =pss_mean_category))+
+    geom_col()+
+    facet_grid(b_stn~.)
+)
+#ggsave(plot_pss_stn_yr_mn,filename="./benthic/figures/PSU_mean_stn_yr.png",dpi=300, width = 24, height = 12, units = "in")
 
 # Plot distributions by taxa and wq parameter-----------------------
 #probably should plot sample sizes for each level of each parameter too
@@ -710,7 +813,6 @@ bwp_sc <- bwp_long %>%
 
 #look at histograms of SC for the three focal stations
 
-stn_focal <- c("D28A-L", "D4-L", "D7-C")
 
 bwp_sc_fc <- bwp_sc %>% 
   filter(b_stn %in% stn_focal) %>% 
@@ -903,18 +1005,19 @@ ggplot(bw_temp_exz,aes(x=temp, y=mean_cpue))+
   ggtitle("water temperature")
 
 #faceted plot showing distribution for all taxa across temperature gradient
-ggplot(bwq,aes(x=wt_surface, y=mean_cpue))+
-  geom_point()+
-  geom_smooth(method='lm', na.rm=T)+
-  facet_wrap(vars(organism_code),scales="free",nrow=6)+
-  ggtitle("water temperature")
+# ggplot(bwq,aes(x=temp, y=mean_cpue))+
+#   geom_point()+
+#   geom_smooth(method='lm', na.rm=T)+
+#   facet_wrap(vars(organism),scales="free",nrow=6)+
+#   ggtitle("water temperature")
+#NOTE: this takes a long time to render and might not be working right
 
 
 #make plotting function for panels of plots showing distribution of abundances across env gradients
 distr_plot <- function(df, param){
   ggplot(df,aes(x=value, y=cpue))+
     geom_bar(stat="identity")+
-    facet_wrap(vars(organism_code),scales="free",nrow=6)+
+    facet_wrap(vars(organism),scales="free",nrow=6)+
     ggtitle(param)
 }
 
