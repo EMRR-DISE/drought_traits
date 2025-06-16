@@ -1,4 +1,4 @@
-b_stn,year_adjusted,pss_n,pss_median,pss_mean,pss_median_category,pss_mean_category,pss_comp
+station_code,year_adjusted,pss_n,pss_median,pss_mean,pss_median_category,pss_mean_category,pss_comp
 D28A-L,1977,2,0.619264710262418,0.619264710262418,very low,very low,TRUE
 D28A-L,1979,2,0.2688528938078607,0.2688528938078607,fresh,fresh,TRUE
 D28A-L,1980,6,0.1097661406629818,0.11221968341335617,fresh,fresh,TRUE

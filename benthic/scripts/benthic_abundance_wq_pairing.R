@@ -728,6 +728,7 @@ bwp_fstn_pss_bin <- bwp_long_filter %>%
   ,pss_comp = as.factor(pss_median_category == pss_mean_category)
   ) %>% 
   arrange(b_stn, year_adjusted) %>% 
+  rename(station_code = b_stn) %>% 
   glimpse()
 #write_csv(bwp_fstn_pss_bin, "./benthic/data_output/psu_categories_stn_yr.csv")
 
