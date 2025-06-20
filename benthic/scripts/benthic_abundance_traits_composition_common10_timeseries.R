@@ -23,7 +23,7 @@ abund10stn <- read_csv("./benthic/data_output/benthic_common10_abundances_by_sta
 
 #trait data for the common 10 stn taxa
 #mostly just origin and size data but also more trait data for the 14 dominant taxa
-traits <- read_csv("./benthic/data_output/benthic_common10_by_stn_trait_data_filled_06062025.csv") %>% 
+traits <- read_csv("./benthic/data_output/benthic_common10_by_stn_trait_data_filled_06162025.csv") %>% 
   glimpse()
 
 #categorical salinity data
@@ -804,20 +804,26 @@ trait_sal <- full_join(abund_trait, sal, by= "station_code")
 
 #larva for median salinity categories
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_median_category, y=mean_cpue, fill=larva))+
-  geom_bar(stat="identity", position ="fill")+
-  scale_x_discrete(limits=c('very low', 'low', 'fresh', 'brackish', 'very brackish')))
+  geom_bar(stat="identity")+
+  facet_grid(station_code~.)+
+  scale_x_discrete(limits=c('fresh', 'very low', 'low', 'brackish', 'very brackish')))
 
 #trophic_habit for median salinity categories
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_median_category, y=mean_cpue, fill=feeding_position))+
-    geom_bar(stat="identity", position ="fill")+
-    scale_x_discrete(limits=c('very low', 'low', 'fresh', 'brackish', 'very brackish')))
+    geom_bar(stat="identity")+
+    facet_grid(station_code~.)+
+    scale_x_discrete(limits=c('fresh', 'very low', 'low','brackish', 'very brackish')))
+
+(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_median_category, y=mean_cpue, fill=feeding_position))+
+    geom_bar(stat="identity", position="fill")+
+    scale_x_discrete(limits=c('fresh','very low', 'low','brackish', 'very brackish')))
 
 #larva for mean salinity categories
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_mean_category, y=mean_cpue, fill=larva))+
     geom_bar(stat="identity", position ="fill")+
-    scale_x_discrete(limits=c('very low', 'low', 'fresh', 'brackish', 'very brackish')))
+    scale_x_discrete(limits=c('fresh', 'very low', 'low', 'brackish', 'very brackish')))
 
 #trophic_habit for mean salinity categories
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_mean_category, y=mean_cpue, fill=feeding_position))+
     geom_bar(stat="identity", position ="fill")+
-    scale_x_discrete(limits=c('very low', 'low', 'fresh', 'brackish', 'very brackish')))
+    scale_x_discrete(limits=c('fresh', 'very low', 'low', 'brackish', 'very brackish')))
