@@ -27,6 +27,8 @@ library(leaflet) #make interactive maps
 library(ggrepel) #no-noverlapping point labels on maps
 library(deltamapr) #Bay-Delta spatial data
 library(here)
+library(EDIutils) #download EDI data
+
 
 # To do list -----------------------------
 
@@ -42,26 +44,43 @@ library(here)
 
 # Read in the data-----------------------
 
+#use EDIutils package to read in all file names and download the ones you want to use
+#https://docs.ropensci.org/EDIutils/index.html
+
 #most of what I need is published on EDI
 #https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=1036&revision=2
 
-#station data
-benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
+#list all data files from EMP benthic inverts EDI package
+benthic_pkg <- read_data_entity_names(packageId = "edi.1036.4")
+benthic_stn <- read_csv(read_data_entity(packageId = "edi.1036.4", entityId= benthic_pkg$entityId[3])) %>% 
   clean_names() %>% 
   glimpse()
+
+#station data
+# benthic_stn <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=4e6948186ad756dc2b6de4de41b601f3") %>% 
+#   clean_names() %>% 
+#   glimpse()
 
 #benthic invert CPUE, 1975-2021
 #data have been converted to CPUE (organisms/m2)
 #replicate grabs have been averaged for each site visit
 #all non-occurrence (zero) data for a site visit has been removed
 #Nick: samples with no organisms at all are probably included as "No catch"
-benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=df1caeb717202f06171601f793ca46bf") %>% 
+# benthic_invert_cpue <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=df1caeb717202f06171601f793ca46bf") %>% 
+#   clean_names() %>% 
+#   glimpse()
+
+benthic_invert_cpue <- read_csv(read_data_entity(packageId = "edi.1036.4", entityId= benthic_pkg$entityId[2])) %>% 
   clean_names() %>% 
   glimpse()
 
 #organism key list
-benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=d0f0dd3c1835fe5b669342f8c8e77024") %>% 
-  clean_names()
+# benthic_spp <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=d0f0dd3c1835fe5b669342f8c8e77024") %>% 
+#   clean_names()
+
+benthic_spp <- read_csv(read_data_entity(packageId = "edi.1036.4", entityId= benthic_pkg$entityId[4])) %>% 
+  clean_names() %>% 
+  glimpse()
 
 #organism key with column for latin name for taxa
 #see BenthicInverts_EMP_TaxonomyUpdating for how this was done
@@ -69,12 +88,20 @@ benthic_spp_names <- read_csv("./benthic/data_output/nmds/benthic_taxonomy_name_
   arrange(organism_code)
 
 #total annual site visits, 1975-2021
-benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=304bc4562046e0a6c35fbad3e2c85645") %>% 
+# benthic_visits <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=304bc4562046e0a6c35fbad3e2c85645") %>% 
+#   clean_names() %>% 
+#   glimpse()
+
+benthic_visits <- read_csv(read_data_entity(packageId = "edi.1036.4", entityId= benthic_pkg$entityId[5])) %>% 
   clean_names() %>% 
   glimpse()
 
 #total annual grab samples, 1975-2021
-benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=c6c7b2ed7165cfa93cc1eda43fbb29f5") %>% 
+# benthic_grabs <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=edi.1036.2&entityid=c6c7b2ed7165cfa93cc1eda43fbb29f5") %>% 
+#   clean_names() %>% 
+#   glimpse()
+
+benthic_grabs <- read_csv(read_data_entity(packageId = "edi.1036.4", entityId= benthic_pkg$entityId[6])) %>% 
   clean_names() %>% 
   glimpse()
 
