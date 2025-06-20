@@ -26,6 +26,8 @@ abund10stn <- read_csv("./benthic/data_output/benthic_common10_abundances_by_sta
 traits <- read_csv("./benthic/data_output/benthic_common10_by_stn_trait_data_filled_06062025.csv") %>% 
   glimpse()
 
+#categorical salinity data
+sal <- read_csv("./benthic/data_output/psu_categories_stn_yr.csv")
 
 #format trait data----
 
@@ -795,4 +797,27 @@ high_clam_taxa <- abund_trait %>%
 
 
 #community composition by station----
-#community compostion by station, pre and post clam invasion----
+#trait composition by salinity category----
+
+#join trait data with salinity data
+trait_sal <- full_join(abund_trait, sal, by= "station_code")
+
+#larva for median salinity categories
+(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_median_category, y=mean_cpue, fill=larva))+
+  geom_bar(stat="identity", position ="fill")+
+  scale_x_discrete(limits=c('very low', 'low', 'fresh', 'brackish', 'very brackish')))
+
+#trophic_habit for median salinity categories
+(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_median_category, y=mean_cpue, fill=feeding_position))+
+    geom_bar(stat="identity", position ="fill")+
+    scale_x_discrete(limits=c('very low', 'low', 'fresh', 'brackish', 'very brackish')))
+
+#larva for mean salinity categories
+(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_mean_category, y=mean_cpue, fill=larva))+
+    geom_bar(stat="identity", position ="fill")+
+    scale_x_discrete(limits=c('very low', 'low', 'fresh', 'brackish', 'very brackish')))
+
+#trophic_habit for mean salinity categories
+(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_mean_category, y=mean_cpue, fill=feeding_position))+
+    geom_bar(stat="identity", position ="fill")+
+    scale_x_discrete(limits=c('very low', 'low', 'fresh', 'brackish', 'very brackish')))
