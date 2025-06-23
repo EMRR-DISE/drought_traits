@@ -21,6 +21,7 @@
 library(janitor) #used to quickly clean up column names
 library(tidyverse) #suite of data science tools
 library(readxl) #reading xlsx files
+library(EDIutils) #download EDI data
 
 # Read in the data-----------------------
 
@@ -38,6 +39,20 @@ focal_taxa <- read_csv("./benthic/data_output/benthic_common5_taxonomy_2023-03-2
 #these names haven't been updated, just used the ones from EMP
 all_taxa <- read_csv("./benthic/data_output/benthic_relative_abundances.csv")
 
+#read in the whole CPUE data set to make list of all taxa present in monitoring program
+
+#list all data files from EMP benthic inverts EDI package
+benthic_pkg <- read_data_entity_names(packageId = "edi.1036.4")
+
+#benthic invert CPUE, 1975-2021
+#data have been converted to CPUE (organisms/m2)
+#replicate grabs have been averaged for each site visit
+#all non-occurrence (zero) data for a site visit has been removed
+#Nick: samples with no organisms at all are probably included as "No catch"
+benthic_invert_cpue <- read_csv(read_data_entity(packageId = "edi.1036.4", entityId= benthic_pkg$entityId[2])) %>% 
+  clean_names() %>% 
+  glimpse()
+
 # Format data in prep for combining ---------------------
 
 #focal taxa data
@@ -52,6 +67,11 @@ all_taxa_format <- all_taxa %>%
          ,common_5perc
          ,species_name) %>% 
   glimpse()
+
+#whole EMP monitoring program data
+emp_format <- benthic_invert_cpue %>% 
+  distinct(organism_code)
+#420 taxa
 
 #NEMESIS data
 aliens_format <- benthic_aliens %>% 
@@ -147,3 +167,4 @@ aliens_all_format <- aliens_all %>%
 #export the complete file
 #write_csv(aliens_all_format,"./benthic/data_output/traits/benthic_traits_nemesis_origin_taxa249.csv")
 
+#format the full data set
