@@ -4,8 +4,9 @@
 #Leela Dixit
 
 #packages----
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
+library(stringr)
 
 
 #read in data----
@@ -799,8 +800,13 @@ high_clam_taxa <- abund_trait %>%
 #community composition by station----
 #trait composition by salinity category----
 
+med_cat_str = c('F'='fresh','VL'='very low','L'='low','B'='brackish',"VB'='very brackish")
+
 #join trait data with salinity data
-trait_sal <- full_join(abund_trait, sal, by= "station_code")
+trait_sal <- full_join(abund_trait, sal, by= "station_code")%>%
+  as.character(trait_sal$pss_median_category)
+trait_sal$median_cat_short=trait_sal$pss_median_category
+trait_sal$median_cat_short <- str_replace_all(string=text, pattern=med_cat_str)
 
 #larva for median salinity categories
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_median_category, y=mean_cpue, fill=larva))+
@@ -827,3 +833,38 @@ trait_sal <- full_join(abund_trait, sal, by= "station_code")
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_mean_category, y=mean_cpue, fill=feeding_position))+
     geom_bar(stat="identity", position ="fill")+
     scale_x_discrete(limits=c('fresh', 'very low', 'low', 'brackish', 'very brackish')))
+
+#no clam: trait composition by salinity category----
+
+#join trait data with salinity data
+trait_sal_noclam <- full_join(abund_trait_noclam, sal, by= "station_code")
+
+#larva for median salinity categories
+(plot_abund_trait_sal_noclam <- ggplot(trait_sal_noclam, aes(x=pss_median_category, y=mean_cpue, fill=larva))+
+    geom_bar(stat="identity")+
+    facet_grid(station_code~.)+
+    scale_x_discrete(limits=c('fresh', 'very low', 'low', 'brackish', 'very brackish')))
+
+#trophic_habit for median salinity categories
+(plot_abund_trait_sal_noclam <- ggplot(trait_sal_noclam, aes(x=pss_median_category, y=mean_cpue, fill=feeding_position))+
+    geom_bar(stat="identity")+
+    facet_grid(station_code~.)+
+    scale_x_discrete(limits=c('fresh', 'very low', 'low','brackish', 'very brackish')))
+
+#larva for mean salinity categories
+(plot_abund_trait_sal_noclam <- ggplot(trait_sal_noclam, aes(x=pss_mean_category, y=mean_cpue, fill=larva))+
+    geom_bar(stat="identity", position ="fill")+
+    scale_x_discrete(limits=c('fresh', 'very low', 'low', 'brackish', 'very brackish')))
+
+#trophic_habit for mean salinity categories
+(plot_abund_trait_sal_noclam <- ggplot(trait_sal_noclam, aes(x=pss_mean_category, y=mean_cpue, fill=feeding_position))+
+    geom_bar(stat="identity", position ="fill")+
+    scale_x_discrete(limits=c('fresh', 'very low', 'low', 'brackish', 'very brackish')))
+
+#trait composition over time with salinity category----
+
+(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=year, y=mean_cpue, fill=larva))+
+   geom_bar(stat="identity")+
+   facet_grid(station_code~.)+
+  geom_text(data=trait_sal, label=trait_sal$pss_median_category))
+  
