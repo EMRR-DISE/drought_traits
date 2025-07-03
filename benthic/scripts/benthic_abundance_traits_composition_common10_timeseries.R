@@ -28,8 +28,9 @@ traits <- read_csv("./benthic/data_output/benthic_common10_by_stn_trait_data_fil
   glimpse()
 
 #categorical salinity data
-sal <- read_csv("./benthic/data_output/psu_categories_stn_yr.csv")
-
+sal <- read_csv("./benthic/data_output/psu_categories_stn_yr.csv")%>%
+  subset(sal$year_adjusted > '1979' )%>% #remove early years, abund data is from 1980
+  rename(year=year_adjusted)
 #format trait data----
 
 #only keep planktonic larvae and trophic habit info
@@ -63,6 +64,7 @@ abund10stn_seas <- abund10stn %>%
 #join trait data to abundance data
 abund_trait <- abund10stn_seas %>% 
   left_join(traits_pt) %>% 
+  select(-c(year_adjusted))
   glimpse()
 
 #trait/abund data without clams
@@ -797,16 +799,21 @@ high_clam_taxa <- abund_trait %>%
 )
 
 
-#community composition by station----
 #trait composition by salinity category----
 
-med_cat_str = c('F'='fresh','VL'='very low','L'='low','B'='brackish',"VB'='very brackish")
+med_cat_str = c('fresh'='F','very low'='VL','low'='L','brackish'='B',"very brackish'='VB")
 
 #join trait data with salinity data
-trait_sal <- full_join(abund_trait, sal, by= "station_code")%>%
-  as.character(trait_sal$pss_median_category)
-trait_sal$median_cat_short=trait_sal$pss_median_category
-trait_sal$median_cat_short <- str_replace_all(string=text, pattern=med_cat_str)
+trait_sal <- full_join(abund_trait, sal, by= c("year", "station_code"), relationship = "many-to-many")%>%
+  mutate(median_cat_short=case_when(
+    pss_median_category=='fresh'~'F',
+    pss_median_category=='very low'~'VL',
+    pss_median_category=='low'~'L',
+    pss_median_category=='brackish'~'B',
+    pss_median_category=='very brackish'~'VB',))
+trait_sal$native <- as.factor(trait_sal$native)
+head(trait_sal)
+
 
 #larva for median salinity categories
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_median_category, y=mean_cpue, fill=larva))+
@@ -820,9 +827,6 @@ trait_sal$median_cat_short <- str_replace_all(string=text, pattern=med_cat_str)
     facet_grid(station_code~.)+
     scale_x_discrete(limits=c('fresh', 'very low', 'low','brackish', 'very brackish')))
 
-(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_median_category, y=mean_cpue, fill=feeding_position))+
-    geom_bar(stat="identity", position="fill")+
-    scale_x_discrete(limits=c('fresh','very low', 'low','brackish', 'very brackish')))
 
 #larva for mean salinity categories
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=pss_mean_category, y=mean_cpue, fill=larva))+
@@ -837,7 +841,7 @@ trait_sal$median_cat_short <- str_replace_all(string=text, pattern=med_cat_str)
 #no clam: trait composition by salinity category----
 
 #join trait data with salinity data
-trait_sal_noclam <- full_join(abund_trait_noclam, sal, by= "station_code")
+trait_sal_noclam <- full_join(abund_trait_noclam, sal, by= c("year", "station_code"), relationship = "many-to-many")
 
 #larva for median salinity categories
 (plot_abund_trait_sal_noclam <- ggplot(trait_sal_noclam, aes(x=pss_median_category, y=mean_cpue, fill=larva))+
@@ -866,5 +870,17 @@ trait_sal_noclam <- full_join(abund_trait_noclam, sal, by= "station_code")
 (plot_abund_trait_sal <- ggplot(trait_sal, aes(x=year, y=mean_cpue, fill=larva))+
    geom_bar(stat="identity")+
    facet_grid(station_code~.)+
-  geom_text(data=trait_sal, label=trait_sal$pss_median_category))
+   geom_text(label=trait_sal$median_cat_short, 
+             check_overlap = TRUE))
+
+(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=year, y=mean_cpue, fill=feeding_position))+
+    geom_bar(stat="identity")+
+    facet_grid(station_code~.)+
+    geom_text(label=trait_sal$median_cat_short, 
+              check_overlap = TRUE))
   
+(plot_abund_trait_sal <- ggplot(trait_sal, aes(x=year, y=mean_cpue, fill=native))+
+    geom_bar(stat="identity")+
+    facet_grid(station_code~.)+
+    geom_text(label=trait_sal$median_cat_short, 
+              check_overlap = TRUE))
