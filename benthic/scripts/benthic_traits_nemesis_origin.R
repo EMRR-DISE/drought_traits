@@ -22,6 +22,7 @@ library(janitor) #used to quickly clean up column names
 library(tidyverse) #suite of data science tools
 library(readxl) #reading xlsx files
 library(EDIutils) #download EDI data
+#library(patchwork) #make figure panels
 
 # Read in the data-----------------------
 
@@ -166,5 +167,183 @@ aliens_all_format <- aliens_all %>%
 
 #export the complete file
 #write_csv(aliens_all_format,"./benthic/data_output/traits/benthic_traits_nemesis_origin_taxa249.csv")
+#NOTE: there is an NA in the "native" column for "Needs review"
 
-#format the full data set
+#format the full data set---------------------------
+
+full_taxa <- emp_format %>% 
+  left_join(benthic_aliens)
+
+#look at all unique status names
+unique(full_taxa$status_in_cal_nemo)
+#NA               "Cryptogenic"    "Introduced"     "Introduced?"    "?"              "Needs review"  "Boundary issue"
+
+#look at all cases that aren't NA or "Introduced"
+full_taxa_unk <- full_taxa %>% 
+  filter(status_in_cal_nemo!="Introduced" & !is.na(status_in_cal_nemo))
+#all of these alternative statuses are singletons
+#we will follow same approach used above for dealing with Cryptogenic and Introduced? (make Introduced)
+#for "?" we will assume it is non-native because probably sp. 1 like in NEMESIS
+#for "boundary issue" we will assume introduced because described as such in Cohen and Carlton 1995
+#for "needs review" we will assume native; worms lists this species as terrestrial so maybe misIDed
+
+full_taxa_format <- full_taxa %>% 
+  mutate(
+    #clean up origin column so everything is native or introduced
+    #everything will be considered introduced except NA and "Needs review"
+    native = case_when((is.na(status_in_cal_nemo) | status_in_cal_nemo == "Needs review") ~ "1"
+                       ,TRUE ~ "0")
+  ) %>% 
+  select(organism_code
+         ,native
+         ,phylum:common_name
+         ,origin = status_in_cal_nemo
+         ,comments
+         ) %>% 
+  glimpse()
+
+#create version with just organism code and native columns
+#most of other columns either aren't needed or are redundant with what is in the destination df
+full_taxa_truc <- full_taxa_format %>% 
+  select(organism_code,native)
+
+#add info about native vs nonnative to cpue dataset
+emp_origin <- benthic_invert_cpue %>% 
+  left_join(full_taxa_truc)
+
+#filter the EMP abundance data to just the nonnatives
+emp_invader <- emp_origin %>% 
+  filter(native==0) %>% 
+  glimpse()
+#note: there are 70 non-natives
+
+#filter the EMP abundance data to just the natives
+emp_native <- emp_origin %>% 
+  filter(native==1) %>% 
+  glimpse()
+#could consider plotting the native composition too, even doing a faceted plot with native/non-native
+#tried it and there is a lot more class level diversity and taxa generally within natives
+
+#summarize abundance data to show first detection of a taxon within a given year
+emp_invader_yr <- emp_invader %>% 
+  #organize data so first detection of a taxon within a year is first row
+  arrange(organism_code, sample_date) %>% 
+  #now group by the organism code
+  group_by(organism_code, year) %>% 
+  #keep only the first record of each taxon within year
+  slice(1) 
+
+#are there any invaders who disappeared after arriving?
+emp_invader_extinct <- emp_invader %>% 
+  #organize data by organism code and date
+  arrange(organism_code, sample_date) %>%
+  group_by(organism_code) %>% 
+  slice_tail(n=1) %>% 
+  arrange(sample_date)
+
+#create subset of taxa that haven't been seen in past five years
+emp_invader_extinct_old <- emp_invader_extinct %>% 
+  filter(year < 2019) %>% 
+  arrange(organism_code) %>% 
+  select(sample_date:month
+         ,common_name
+         ,organism_code:native) %>% 
+  glimpse()
+#are any of these taxa in our trait data set (probably not)?
+
+#3394 Neoamphitrite sp. A just showed up a couple times; not much known
+#https://invasions.si.edu/nemesis/species_summary/67932
+
+#4330 Asellus hilgendorfii  quite abundant at times in the past in low salinity zone
+#https://invasions.si.edu/nemesis/species_summary/-263 no idea where it went
+
+#4390 Sphaeroma quoianum has broad salinity tolerance (5-40 PSU)
+#https://invasions.si.edu/nemesis/species_summary/92340 burrows in wood so maybe not caught in ponar
+
+#4580 Monocorophium uenoi seems to have broad salinity tolerance based on collection localities
+#https://invasions.si.edu/nemesis/species_summary/-244
+
+#4715 Stenothoe valida
+#https://invasions.si.edu/nemesis/species_summary/206574 seems to generally stay in saltier areas
+
+#4940 Eriocheir sinensis (mitten crab)
+#https://invasions.si.edu/nemesis/species_summary/99058 disappeared
+
+#6640 Tritia obsoleta
+#https://invasions.si.edu/nemesis/species_summary/74111 probalby mostly in the saltier areas
+
+#6850 Gemma gemma
+#https://invasions.si.edu/nemesis/species_summary/81511 not clear what happened to it
+
+#6999 Styela clava
+#https://invasions.si.edu/nemesis/species_summary/159337 probably in saltier areas mostly
+
+#make a list of the organism codes for the extinct ones
+extinct <- emp_invader_extinct_old %>% 
+  pull(organism_code)
+
+#look at which years those extinct taxa were present
+extinct_time_series <- emp_origin %>% 
+  filter(organism_code %in% extinct) %>% 
+  #sum mean CPUE by year
+  group_by(organism_code,year,genus, species, common_name) %>% 
+  summarize(total_cpue = sum(mean_cpue),.groups = 'drop')
+
+#plot time series for each taxon
+(plot_extinct_time_series <- ggplot(extinct_time_series,aes(year,total_cpue))+
+  geom_line()+
+  geom_point()+
+    facet_grid(organism_code~., scales = "free_y")
+)
+
+#count invader spp by year
+emp_invader_yr_ct <- emp_invader_yr %>% 
+  group_by(year) %>% 
+  summarise(invaders = n_distinct(organism_code))
+
+#count invader spp by year and class
+emp_invader_yr_tx <- emp_invader_yr %>% 
+  group_by(year,class_level) %>% 
+  summarise(invaders = n_distinct(organism_code),.groups = 'drop')
+
+#plot total invaders by year
+(plot_invader_count_yr <- ggplot(emp_invader_yr_ct, aes(x = year, y = invaders)) +
+  geom_line()+
+  geom_point()+
+  scale_x_continuous(limits = c(1974,2024))
+)
+#increasing trend in nonnative taxa detected over time series as expected
+
+#determine which classes have most taxa so we can set order of them in stacked bar plot
+emp_invader_class_ct <- emp_invader %>% 
+  distinct(organism_code,class_level) %>% 
+  group_by(class_level) %>% 
+  count() %>% 
+  arrange(n)
+
+emp_invader_order <- emp_invader_class_ct %>% 
+  pull(class_level)
+
+emp_invader_yr_tx$class_level <- factor(emp_invader_yr_tx$class_level,levels = emp_invader_order)
+
+#plot taxonomic composition of invaders through time
+(plot_invader_count_yr_tx_stack_bar <- ggplot(emp_invader_yr_tx, aes(x = year, y = invaders, fill = class_level))+
+    geom_bar(stat = 'identity', color = "black")+
+    scale_x_continuous(limits = c(1974,2024))+
+  labs(fill="Class", x = "Year", y="Number of Non-native Taxa")
+    )
+
+# ggsave(plot = plot_invader_count_yr_tx_stack_bar #tell ggsave which plot to export
+#        , filename = "benthic/figures/benthic_all_emp_number_comp_invasive_timeline.png" #provide the name for the image file
+#        , width = 8, height =6, units = "in" #dimensions of the exported image
+#        , dpi = 300 #resolution of the image (dots per inch)
+# )
+
+#create figure panel
+#plot_invader_count_yr/plot_invader_count_yr_tx_stack_bar
+#I guess we don't need the line plot because the stacked bar plot shows the total count too
+
+#are there invasive taxa that have disappeared?
+
+#show same stacked bar plot with natives
+  
