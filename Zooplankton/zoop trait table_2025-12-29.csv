@@ -1,0 +1,165 @@
+target_taxon_name,target_taxon_level,lit_taxon_name,lit_taxon_level,lit_taxon_type,citation,sfe_data,trait_group,trait_value,trait_unit,notes
+Acartia spp.,Genus,Acartia californiensis,Species,congener,Trujillo-Ortiz 1986,0,body_length_max,0.92,mm,male
+Acartia spp.,Genus,Acartia californiensis,Species,congener,Razouls et al. 2005,0,body_length_max,0.96,mm,male
+Acartia spp.,Genus,Acartia californiensis,Species,congener,Razouls et al. 2005,0,body_length_max,1.04,mm,female
+Acartia spp.,Genus,Acartia californiensis,Species,congener,Trujillo-Ortiz 1986,0,body_length_max,1.1,mm,female
+Acartia spp.,Genus,Acartia hudsonica,Species,congener,Bradford-Grieve 1999,0,body_length_max,1.07,mm,male
+Acartia spp.,Genus,Acartia hudsonica,Species,congener,Razouls et al. 2005,0,body_length_max,1.07,mm,male
+Acartia spp.,Genus,Acartia hudsonica,Species,congener,Bradford-Grieve 1999,0,body_length_max,1.32,mm,female
+Acartia spp.,Genus,Acartia hudsonica,Species,congener,Razouls et al. 2005,0,body_length_max,1.32,mm,female
+Acartia spp.,Genus,Acartia tonsa,Species,congener,Bradford-Grieve 1999,0,body_length_max,1.1,mm,male
+Acartia spp.,Genus,Acartia tonsa,Species,congener,Hirst and Kiorboe 2014,0,body_length_max,1.1,mm,male
+Acartia spp.,Genus,Acartia tonsa,Species,congener,John and Conway 2012,0,body_length_max,1.1,mm,male
+Acartia spp.,Genus,Acartia tonsa,Species,congener,Nielsen and Hansen 1999,0,body_length_max,1.1,mm,male
+Acartia spp.,Genus,Acartia tonsa,Species,congener,Razouls et al. 2005,0,body_length_max,1.34,mm,male
+Acartia spp.,Genus,Acartia tonsa,Species,congener,Bradford-Grieve 1999,0,body_length_max,1.5,mm,female
+Acartia spp.,Genus,Acartia tonsa,Species,congener,Hirst and Kiorboe 2014,0,body_length_max,1.5,mm,female
+Acartia spp.,Genus,Acartia tonsa,Species,congener,John and Conway 2012,0,body_length_max,1.5,mm,female
+Acartia spp.,Genus,Acartia tonsa,Species,congener,Nielsen and Hansen 1999,0,body_length_max,1.5,mm,female
+Acartia spp.,Genus,Acartia tonsa,Species,congener,Razouls et al. 2005,0,body_length_max,1.5,mm,female
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Razouls et al. 2005,0,body_length_max,1.23,mm,male
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Orsi and Ohtsuka 1999,1,body_length_max,1.34,mm,male
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Razouls et al. 2005,0,body_length_max,1.48,mm,female
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Orsi and Ohtsuka 1999,1,body_length_max,1.64,mm,female
+Bosmina longirostris,Species,Bosmina longirostris,Species,target,Lynch 1980,0,body_length_max,0.52,mm,See Table 1 of reference
+Daphnia spp.,Genus,Daphnia lumholtzi,Species,congener,Lynch 1980,0,body_length_max,1.64,mm,See Table 1 of reference
+Daphnia spp.,Genus,Daphnia lumholtzi,Species,congener,Muzinic 2000,0,body_length_max,5.3,mm,male; Lake Erie (The length includes spines)
+Daphnia spp.,Genus,Daphnia lumholtzi,Species,congener,Muzinic 2000,0,body_length_max,5.7,mm,female; Lake Erie (The length includes spines)
+Daphnia spp.,Genus,Daphnia magna,Species,congener,Lynch 1980,0,body_length_max,5.9,mm,See Table 1 of reference
+Eurytemora affinis,Species,Eurytemora affinis affinis,Species,target - complex,Nielsen and Hansen 1999,0,body_length_max,1.1,mm,male
+Eurytemora affinis,Species,Eurytemora affinis affinis,Species,target - complex,Nielsen and Hansen 1999,0,body_length_max,1.5,mm,female
+Eurytemora carolleeae,Species,Eurytemora affinis,Species,target - complex,Heron and Damkaer 1976,0,body_length_max,1.65,mm,male
+Eurytemora carolleeae,Species,Eurytemora affinis,Species,target - complex,Hirst and Kiorboe 2014,0,body_length_max,1.65,mm,male
+Eurytemora carolleeae,Species,Eurytemora affinis,Species,target - complex,Hirst and Kiorboe 2014,0,body_length_max,1.65,mm,female
+Eurytemora carolleeae,Species,Eurytemora affinis,Species,target - complex,Heron and Damkaer 1976,0,body_length_max,1.9,mm,female
+Eurytemora carolleeae,Species,Eurytemora affinis affinis,Species,target - complex,John and Conway 2012,0,body_length_max,1.65,mm,male
+Eurytemora carolleeae,Species,Eurytemora affinis affinis,Species,target - complex,John and Conway 2012,0,body_length_max,1.65,mm,female
+Eurytemora carolleeae,Species,Eurytemora carolleeae,Species,target - complex,Razouls et al. 2005,0,body_length_max,1.65,mm,female
+Eurytemora carolleeae,Species,Eurytemora carolleeae,Species,target - complex,Razouls et al. 2005,0,body_length_max,1.78,mm,male
+Hyperacanthomysis longirostris,Species,Acanthomysis bowmani,Species,synonym,Modlin and Orsi 1997,1,body_length_max,11.8,mm,
+Neomysis kadiakensis,Species,Neomysis kadiakensis,Species,target,Mecum 2006,1,body_length_max,17,mm,measured from base of the eyestalks to base of the telson
+Neomysis kadiakensis,Species,Neomysis kadiakensis,Species,target,Dean et al. 2005,1,body_length_max,17,mm,
+Neomysis kadiakensis,Species,Neomysis kadiakensis,Species,target,Mauchline and Murano 1977,0,body_length_max,23,mm,no information provided on what was/wasn't included in measurement (eg uropods too?)
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Knutson and Orsi 1983,1,body_length_max,17,mm,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Mecum 2006,1,body_length_max,17,mm,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Mauchline and Murano 1977,0,body_length_max,19,mm,
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Orsi and Walter 1991,1,body_length_max,1,mm,male
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Orsi and Walter 1991,1,body_length_max,1.2,mm,female
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Razouls et al. 2005,0,body_length_max,1.35,mm,female
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Ohtsuka et al. 1992,0,body_length_max,1.76,mm,male
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Ohtsuka et al. 1992,0,body_length_max,1.79,mm,female
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Razouls et al. 2005,0,body_length_max,2.05,mm,male
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Razouls et al. 2005,0,body_length_max,2.25,mm,female
+Tortanus spp.,Genus,Tortanus discaudatus,Species,congener,Johnson 1934,0,body_length_max,2.5,mm,male
+Tortanus spp.,Genus,Tortanus discaudatus,Species,congener,Ohtsuka and Reid 1998,0,body_length_max,2.5,mm,male
+Tortanus spp.,Genus,Tortanus discaudatus,Species,congener,Razouls et al. 2005,0,body_length_max,2.62,mm,male
+Tortanus spp.,Genus,Tortanus discaudatus,Species,congener,Johnson 1934,0,body_length_max,2.8,mm,female
+Tortanus spp.,Genus,Tortanus discaudatus,Species,congener,Ohtsuka and Reid 1998,0,body_length_max,3.1,mm,female
+Tortanus spp.,Genus,Tortanus discaudatus,Species,congener,Razouls et al. 2005,0,body_length_max,3.1,mm,female
+Acanthocyclops spp.,Genus,Acanthocyclops americanus,Species,target - complex,Alekseev et al 2002,0,body_length_mean,0.95,mm,"male, without caudal setae, max = 1.0 mm"
+Acanthocyclops spp.,Genus,Acanthocyclops americanus,Species,target - complex,Alekseev 2021,0,body_length_mean,1.1,mm,male; see Fig. 4 and Table 1
+Acanthocyclops spp.,Genus,Acanthocyclops americanus,Species,target - complex,Alekseev et al 2002,0,body_length_mean,1.1,mm,"female, without caudal setae; max = 1.2 mm"
+Acanthocyclops spp.,Genus,Acanthocyclops robustus,Species,target - complex,Lescher- Moutoue 1996,0,body_length_mean,0.9031,mm,"male, in spring and fall"
+Acanthocyclops spp.,Genus,Acanthocyclops robustus,Species,target - complex,Lescher- Moutoue 1996,0,body_length_mean,0.9288,mm,"male, first generation, reared at 7 degrees C"
+Acanthocyclops spp.,Genus,Acanthocyclops robustus,Species,target - complex,Barnett et al. 2007,0,body_length_mean,1.14,mm,see Table 2
+Acanthocyclops spp.,Genus,Acanthocyclops robustus,Species,target - complex,Lescher- Moutoue 1996,0,body_length_mean,1.3024,mm,"female, first generation, reared at 7 degrees C"
+Acanthocyclops spp.,Genus,Acanthocyclops robustus,Species,target - complex,Lescher- Moutoue 1996,0,body_length_mean,1.3364,mm,"female, in spring and fall"
+Acanthocyclops spp.,Genus,Acanthocyclops vernalis,Species,target - complex,Barnett et al. 2007,0,body_length_mean,0.72,mm,see Table 2
+Acanthocyclops spp.,Genus,Acanthocyclops vernalis,Species,target - complex,Alekseev 2021,0,body_length_mean,1.08,mm,male; see Fig. 4 and Table 2
+Acartia spp.,Genus,Acartia hudsonica,Species,congener,Kimmerer et al. 2011,1,body_length_mean,1.071,mm,live female
+Bosmina longirostris,Species,Bosmina longirostris,Species,target,Barnett et al. 2007,0,body_length_mean,0.44,mm,See Table 1
+Diaphanosoma spp.,Genus,Diaphanosoma brachyurum,Species,congener,Barnett et al. 2007,0,body_length_mean,0.85,mm,See Table 1
+Eurytemora affinis,Species,Eurytemora affinis,Species,target - complex,Kimmerer et al. 2011,1,body_length_mean,1.273,mm,live female
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Kimmerer et al. 2011,1,body_length_mean,0.25,mm,male; preserved in 5% glutaraldehyde
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Kimmerer et al. 2011,1,body_length_mean,0.29,mm,female; preserved in 5% glutaraldehyde
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Kimmerer et al. 2011,1,body_length_mean,0.916,mm,live male
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Kimmerer et al. 2011,1,body_length_mean,1.198,mm,live female
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,Kimmerer et al. 2011,1,body_length_mean,1.487,mm,live female
+Acanthocyclops spp.,Genus,Acanthocyclops spp.,Genus,target - complex,Bashevkin et al 2023,1,carbon_weight,3.36,ug,adults
+Acartia spp.,Genus,Acartia hudsonica,Species,congener,Kimmerer et al. 2011,1,carbon_weight,3.38,ug,live female
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Kimmerer et al. 2011,1,carbon_weight,2.9,ug,live female
+Bosmina longirostris,Species,Bosmina longirostris,Species,target,Dumont et al. 1975,0,carbon_weight,0.6,ug,
+Daphnia spp.,Genus,Daphnia spp.,Genus,congener,Dumont et al. 1975,0,carbon_weight,4,ug,
+Diaphanosoma spp.,Genus,Diapahnosoma brachyurum,Species,congener,Dumont et al. 1975,0,carbon_weight,1,ug,
+Eurytemora affinis,Species,Eurytemora affinis,Species,target - complex,Kimmerer et al. 2011,1,carbon_weight,3.2,ug,live female
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Gould and Kimmerer 2010,1,carbon_weight,0.09,ug,average of adult male and females
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Kimmerer et al. 2011,1,carbon_weight,0.23,ug,live female
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Kimmerer et al. 2011,1,carbon_weight,3,ug,live female
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,Kimmerer et al. 2011,1,carbon_weight,4.55,ug,live female
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Hooff and Bollens 2004,1,carbon_weight,15.9,ug,
+Acanthocyclops spp.,Genus,Acanthocyclops americanus,Species,target - complex,Alekseev 2021,0,feeding_guild,Predatory,categorical,
+Acanthocyclops spp.,Genus,Acanthocyclops vernalis,Species,target - complex,Barnett et al. 2007,0,feeding_guild,Omnivorous,categorical,See Table 4
+Acanthocyclops spp.,Genus,Acanthocyclops vernalis,Species,target - complex,Li and Li 1979,0,feeding_guild,Predatory,categorical,
+Acartia spp.,Genus,Acartia spp.,Genus,congener,Bollens and Penry 2003,1,feeding_guild,Omnivorous,categorical,
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Kayfetz and Kimmerer 2017,1,feeding_guild,Predatory,categorical,
+Bosmina longirostris,Species,Bosmina longirostris,Species,target,Barnett et al. 2007,0,feeding_guild,Herbivorous,categorical,see Table 3
+Bosmina longirostris,Species,Bosmina longirostris,Species,target,Orsi 1995,1,feeding_guild,Herbivorous,categorical,
+Daphnia spp.,Genus,Daphnia magna,Species,congener,Barnett et al. 2007,0,feeding_guild,Herbivorous,categorical,see Table 3
+Daphnia spp.,Genus,Daphnia parvula,Species,congener,Orsi 1995,1,feeding_guild,Herbivorous,categorical,
+Diaphanosoma spp.,Genus,Diaphanosoma brachyurum,Species,congener,Barnett et al. 2007,0,feeding_guild,Herbivorous,categorical,See Table 3
+Eurytemora affinis,Species,Eurytemora affinis,Species,target - complex,Bollens et al. 2011,0,feeding_guild,Herbivorous,categorical,
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Barnes 1983,0,feeding_guild,Omnivorous,categorical,
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Bouley and Kimmerer 2006,1,feeding_guild,Omnivorous,categorical,
+Neomysis kadiakensis,Species,Neomysis kadiakensis,Species,target,Dean et al. 2005,1,feeding_guild,Omnivorous,categorical,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Knutson and Orsi 1983,1,feeding_guild,Omnivorous,categorical,"phytoplankton, zooplankton, detritus"
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Wilson 1951,0,feeding_guild,Omnivorous,categorical,
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Bollens et al. 2011,0,feeding_guild,Herbivorous,categorical,
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,Bollens et al. 2011,0,feeding_guild,Herbivorous,categorical,
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Orsi and Ohtsuka 1999,1,feeding_guild,Predatory,categorical,
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Orsi and Ohtsuka 1999,1,origin,Non-native,categorical,
+Eurytemora affinis,Species,Eurytemora carolleeae,Species,target - complex,Alekseev and Souissi 2011,1,origin,Non-native,categorical,
+Eurytemora carolleeae,Species,Eurytemora affinis,Species,target - complex,Lee 2000,1,origin,Non-native,categorical,
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Modlin and Orsi 1997,1,origin,Non-native,categorical,
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Orsi and Ohtsuka 1999,1,origin,Non-native,categorical,
+Neomysis kadiakensis,Species,Neomysis kadiakensis,Species,target,Dean et al. 2005,1,origin,Native,categorical,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Mecum 2006,1,origin,Native,categorical,
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Orsi and Walter 1991,1,origin,Non-native,categorical,
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,Orsi et al 1983,1,origin,Non-native,categorical,
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Orsi and Ohtsuka 1999,1,origin,Non-native,categorical,
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Orsi and Ohtsuka 1999,1,salinity_tolerance_max,20,PSU,Upper limit for abundant occurrence in San Francisco estuary 8.6 PSU
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Orsi and Ohtsuka 1999,1,salinity_tolerance_max,20,PSU,"recorded as "">20 PSU"" from field data"
+Daphnia spp.,Genus,Daphnia lumholtzi,Species,congener,DeVries et al. 2006,0,salinity_tolerance_max,1.5,PSU,based on field data
+Eurytemora affinis,Species,Eurytemora affinis,Species,target - complex,Lee and Petersen 2002,0,salinity_tolerance_max,27,PSU,27 was the max value tested in lab; authors note that E. affinis is found in hypersaline (25-40 PSU) environment but include no references aside from Lee 1999
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Bouley and Kimmerer 2006,1,salinity_tolerance_max,10,psu,"Of the L. tetraspina population, 80% occurred within the 0.5 to 10 psu salinity range"
+Neomysis kadiakensis,Species,Neomysis kadiakensis,Species,target,Mecum 2006,1,salinity_tolerance_max,28,PSU,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Avila and Hartman 2020,1,salinity_tolerance_max,17,PSU,based on field data
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Mecum 2006,1,salinity_tolerance_max,26,PSU,
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Orsi and Walter 1991,1,salinity_tolerance_max,16,PSU,"In experiments, nauplii of P. forbesi tolerated salinities at least as high as 14 PSU, and adults, at least 8 PSU. but it has become rare at salinities above 2 PSU, probably because of predation by A. sinensis and by Corbula amurensis."
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,Orsi et al. 1983,1,salinity_tolerance_max,14.8,PSU,"based on field data; ""but ~6.2 is a more common limit"" (Orsi et al. 1983)."
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Hooff and Bollens 2004,1,salinity_tolerance_max,28,PSU,based on field data
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Orsi and Ohtsuka 1999,1,salinity_tolerance_min,0,PSU,Lower limit for abundant occurrence in San Francisco estuary 2.5 PSU
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Orsi and Ohtsuka 1999,1,salinity_tolerance_min,0,PSU,based on field data
+Eurytemora affinis,Species,Eurytemora affinis,Species,target - complex,Lee and Petersen 2002,0,salinity_tolerance_min,0,PSU,lab study
+Eurytemora affinis,Species,Eurytemora affinis,Species,target - complex,Lee 1999,0,salinity_tolerance_min,0,PSU,"Field and lab observations; results indicate extremely low survival at 0 PSU but suggest the ""...possibility of rapid transitions to fresh water, but require large numbers of founders to form viable populations (Fig. 4)""."
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Modlin and Orsi 1997,1,salinity_tolerance_min,0.5,PSU,Ranges into tidal freshwater part of Delta; records the minimum salinity at which the species was collected--not a true minimum
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Bouley and Kimmerer 2006,1,salinity_tolerance_min,0.5,psu,"Of the L. tetraspina population, 80% occurred within the 0.5 to 10 psu salinity range"
+Neomysis kadiakensis,Species,Neomysis kadiakensis,Species,target,Mecum 2006,1,salinity_tolerance_min,0,PSU,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Avila and Hartman 2020,1,salinity_tolerance_min,0,PSU,based on field data
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Mecum 2006,1,salinity_tolerance_min,0,PSU,
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Orsi and Walter 1991,1,salinity_tolerance_min,0,PSU,
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,Orsi et al 1983,1,salinity_tolerance_min,0,PSU,based on field data
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Orsi and Ohtsuka 1999,1,salinity_tolerance_min,1.2,PSU,based on field data
+Acanthocyclops spp.,Genus,Acanthocyclops robustus,Species,target - complex,Lescher- Moutoue 1996,0,thermal_tolerance_max,20,C,lowest temperature recorded in field while sampling over one year
+Daphnia spp.,Genus,Daphnia lumholtzi,Species,congener,Havens et al. 2012,0,thermal_tolerance_max,32,C,based on field data
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Avila and Hartman 2020,1,thermal_tolerance_max,26,C,based on range of field conditions where collected
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Suzuki et al. 2009,0,thermal_tolerance_max,30,C,
+Limnoithona tetraspina,Species,Limnoithona tetraspina,Species,target,Bouley and Kimmerer 2006,1,thermal_tolerance_max,21.1,C,highest temperature recorded in field collections
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Avila and Hartman 2020,1,thermal_tolerance_max,22,C,"based on field data; see also Hair 1971, Heubach 1969, Knutson and Orsi 1979"
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Wilson 1951,0,thermal_tolerance_max,23,C,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Knutson and Orsi 1983,1,thermal_tolerance_max,25.5,C,based on field data
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Orsi and Mecum 1986,1,thermal_tolerance_max,27,C,"Maximum in San Joaquin river, near Stockton"
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Hooff and Bollens 2004,1,thermal_tolerance_max,22,C,based on field data
+Acanthocyclops spp.,Genus,Acanthocyclops robustus,Species,target - complex,Lescher- Moutoue 1996,0,thermal_tolerance_min,2,C,highest temperature recorded in field while sampling over one year
+Daphnia spp.,Genus,Daphnia lumholtzi,Species,congener,Beaver et al. 2018,0,thermal_tolerance_min,8,C,"Dense swarms of adult females were observed in a Kentucky reservoir, at a water temperature of 8 C"
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Avila and Hartman 2020,1,thermal_tolerance_min,8,C,based on range of field conditions where collected
+Hyperacanthomysis longirostris,Species,Hyperacanthomysis longirostris,Species,target,Suzuki et al. 2009,0,thermal_tolerance_min,10,C,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Wilson 1951,0,thermal_tolerance_min,0,C,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Avila and Hartman 2020,1,thermal_tolerance_min,12,C,based on field data
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Bollens et al. 2011,0,thermal_tolerance_min,5,C,based on field data
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,Bollens et al. 2011,0,thermal_tolerance_min,5,C,NEMESIS cites 2C but lowest value measured in paper is 5C
+Tortanus spp.,Genus,Tortanus dextrilobatus,Species,congener,Hooff and Bollens 2004,1,thermal_tolerance_min,8,C,based on field data
+Acartiella sinensis,Species,Acartiella sinensis,Species,target,Kimmerer et al. 2002,1,vertical_migration,Migrator,categorical,
+Hyperacanthomysis longirostris,Species,Acanthomysis sp.,Genus,synonym,Kimmerer et al. 1998,1,vertical_migration,Migrator,categorical,
+Neomysis mercedis,Species,Neomysis mercedis,Species,target,Kimmerer et al 1998,1,vertical_migration,Migrator,categorical,
+Pseudodiaptomus forbesi,Species,Pseudodiaptomus forbesi,Species,target,Kimmerer et al. 1998,1,vertical_migration,Migrator,categorical,
+Sinocalanus doerrii,Species,Sinocalanus doerrii,Species,target,Kimmerer et al. 1998,1,vertical_migration,Migrator,categorical,

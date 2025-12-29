@@ -1,0 +1,16 @@
+target_taxon_name,target_taxon_level,source,aphia_id,kingdom,phylum,class,order,family,genus
+Acanthocyclops spp.,Genus,worms,149771,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopidae,Acanthocyclops
+Acartia spp.,Genus,worms,104108,Animalia,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartia
+Acartiella sinensis,Species,worms,346070,Animalia,Arthropoda,Copepoda,Calanoida,Acartiidae,Acartiella
+Bosmina longirostris,Species,worms,148379,Animalia,Arthropoda,Branchiopoda,Anomopoda,Bosminidae,Bosmina
+Daphnia spp.,Genus,worms,148370,Animalia,Arthropoda,Branchiopoda,Anomopoda,Daphniidae,Daphnia
+Diaphanosoma spp.,Genus,worms,234062,Animalia,Arthropoda,Branchiopoda,Ctenopoda,Sididae,Diaphanosoma
+Eurytemora affinis,Species,worms,104872,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora
+Eurytemora carolleeae,Species,worms,564863,Animalia,Arthropoda,Copepoda,Calanoida,Temoridae,Eurytemora
+Hyperacanthomysis longirostris,Species,worms,226635,Animalia,Arthropoda,Malacostraca,Mysida,Mysidae,Hyperacanthomysis
+Limnoithona tetraspina,Species,worms,346621,Animalia,Arthropoda,Copepoda,Cyclopoida,Cyclopettidae,Limnoithona
+Neomysis kadiakensis,Species,worms,226583,Animalia,Arthropoda,Malacostraca,Mysida,Mysidae,Neomysis
+Neomysis mercedis,Species,worms,226693,Animalia,Arthropoda,Malacostraca,Mysida,Mysidae,Neomysis
+Pseudodiaptomus forbesi,Species,worms,355153,Animalia,Arthropoda,Copepoda,Calanoida,Pseudodiaptomidae,Pseudodiaptomus
+Sinocalanus doerrii,Species,worms,359463,Animalia,Arthropoda,Copepoda,Calanoida,Centropagidae,Sinocalanus
+Tortanus spp.,Genus,worms,157683,Animalia,Arthropoda,Copepoda,Calanoida,Tortanidae,Tortanus
