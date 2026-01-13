@@ -83,5 +83,5 @@ taxon_final_formatted <- tt1 %>%
   ) %>% 
   glimpse()
 
-#write_csv(final_formatted,"./benthic/data_output/edi/benthic_common66_taxonomy_origin_edi.csv")
+#write_csv(taxor_final,"./benthic/data_output/edi/benthic_common66_taxonomy_origin_edi.csv")
 
